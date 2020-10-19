@@ -1,0 +1,13 @@
+{
+  "license": "MIT",
+  "scripts": {
+    "docs": "spot docs api.ts",
+    "validate": "spot validate api.ts",
+    "mock": "spot mock api.ts",
+    "lint": "spot lint api.ts",
+    "generate": "spot generate -c api.ts -g openapi3 -l yaml -o target/"
+  },
+  "dependencies": {
+    "@airtasker/spot": "^1.2.0"
+  }
+}
