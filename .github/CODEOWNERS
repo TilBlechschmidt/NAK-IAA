@@ -1,0 +1,6 @@
+# These owners will be the default owners for everything in the repo.
+*           @TilBlechschmidt @NoahPeeters @hpr1999 @HenryWedge
+
+api/*       @TilBlechschmidt
+backend/*   @NoahPeeters @hpr1999
+frontend/*  @TilBlechschmidt @HenryWedge
