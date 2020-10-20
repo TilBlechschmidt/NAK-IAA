@@ -1,0 +1,36 @@
+import {body, endpoint, headers, pathParams, request, response} from "@airtasker/spot";
+import {AuthenticationHeaders, Identifier, MalformedRequestErrorResponse, UnauthorizedErrorResponse} from "../types";
+import {SurveyMetadata} from "./types";
+
+/** Irreversibly deletes a survey and all associated responses */
+@endpoint({
+    method: "DELETE",
+    path: "/surveys/:id",
+    tags: ["Surveys"]
+})
+class DeleteSurvey {
+    @request
+    request(@headers headers: AuthenticationHeaders, @pathParams pathParams: DeleteSurveyRequest) {}
+
+    /** Survey deleted */
+    @response({ status: 204 })
+    successfulResponse(@body body: SurveyMetadata) {}
+
+    // MARK: - Generic response
+
+    /** Resource not found */
+    @response({ status: 404 })
+    notFoundResponse() {}
+
+    /** Malformed request */
+    @response({ status: 400 })
+    malformedRequestResponse(@body body: MalformedRequestErrorResponse) {}
+
+    /** Missing or invalid authentication */
+    @response({ status: 401 })
+    unauthorizedResponse(@body body: UnauthorizedErrorResponse) {}
+}
+
+interface DeleteSurveyRequest {
+    id: Identifier;
+}

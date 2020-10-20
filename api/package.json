@@ -1,13 +1,15 @@
 {
   "license": "MIT",
   "scripts": {
-    "docs": "spot docs api.ts",
-    "validate": "spot validate api.ts",
-    "mock": "spot mock api.ts",
-    "lint": "spot lint api.ts",
-    "generate": "spot generate -c api.ts -g openapi3 -l yaml -o target/"
+    "docs": "spot docs specification/api.ts",
+    "validate": "spot validate specification/api.ts",
+    "mock": "spot mock specification/api.ts",
+    "lint": "spot lint specification/api.ts",
+    "generate": "spot generate -c specification/api.ts -g openapi3 -l yaml -o target/",
+    "generate-docs": "yarn generate && redoc-cli bundle target/api.yml -o target/api.html --title 'API Documentation' --options.pathInMiddlePanel=true"
   },
   "dependencies": {
-    "@airtasker/spot": "^1.2.0"
+    "@airtasker/spot": "^1.2.0",
+    "redoc-cli": "^0.9.12"
   }
 }
