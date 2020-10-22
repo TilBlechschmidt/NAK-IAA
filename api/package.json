@@ -10,6 +10,18 @@
   },
   "dependencies": {
     "@airtasker/spot": "^1.2.0",
-    "redoc-cli": "^0.9.12"
+
+    "redoc-cli": "^0.9.12",
+    "core-js": "^3.1.4",
+    "styled-components": "^4.1.1",
+    "react": ">=16.3.0",
+    "react-dom": ">=16.3.0",
+    "react-is": ">=16.8.0",
+    "ajv": "4.11.8",
+
+    "ng-openapi-gen": "^0.12.1",
+    "@angular/core": "^10.2.0",
+    "rxjs": "^6.5.3",
+    "zone.js": "~0.10.3"
   }
 }
