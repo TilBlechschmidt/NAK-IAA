@@ -5,8 +5,10 @@
     "validate": "spot validate specification/api.ts",
     "mock": "spot mock specification/api.ts",
     "lint": "spot lint specification/api.ts",
-    "generate": "spot generate -c specification/api.ts -g openapi3 -l yaml -o target/",
-    "generate-docs": "yarn generate && redoc-cli bundle target/api.yml -o target/api.html --title 'API Documentation' --options.pathInMiddlePanel=true"
+    "generate": "yarn generate-spec && yarn generate-docs && yarn generate-frontend",
+    "generate-spec": "spot generate -c specification/api.ts -g openapi3 -l yaml -o target/",
+    "generate-docs": "redoc-cli bundle target/api.yml -o target/api.html --title 'API Documentation' --options.pathInMiddlePanel=true",
+    "generate-frontend": "ng-openapi-gen --input target/api.yml --output ../frontend/src/app/api"
   },
   "dependencies": {
     "@airtasker/spot": "^1.2.0",

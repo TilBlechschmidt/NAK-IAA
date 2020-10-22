@@ -1,4 +1,5 @@
 **/target/
+frontend/src/app/api/
 
 # Created by https://www.toptal.com/developers/gitignore/api/node,java,yarn,macos,linux,windows,intellij,java-web,visualstudiocode,gradle
 # Edit at https://www.toptal.com/developers/gitignore?templates=node,java,yarn,macos,linux,windows,intellij,java-web,visualstudiocode,gradle
