@@ -18,7 +18,7 @@ export interface SurveyMetadata {
     description: String;
 
     /** List of available time slots for the survey */
-    timeSlot: TimeSlot[];
+    timeSlots: TimeSlot[];
 }
 
 export interface Survey extends SurveyMetadata {
