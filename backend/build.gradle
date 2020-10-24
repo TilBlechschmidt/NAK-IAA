@@ -1,30 +1,79 @@
 plugins {
-	id 'org.springframework.boot' version '2.3.4.RELEASE'
-	id 'io.spring.dependency-management' version '1.0.10.RELEASE'
-	id 'java'
+    id 'org.springframework.boot' version '2.3.4.RELEASE'
+    id 'io.spring.dependency-management' version '1.0.10.RELEASE'
+    id 'java'
+    id "org.openapi.generator" version "4.3.1"
 }
 
 group = 'de.nordakademie.iaa'
 version = '0.0.1-SNAPSHOT'
 sourceCompatibility = '15'
 
+compileJava.dependsOn('openApiGenerate')
+
+openApiValidate {
+    inputSpec = "${rootDir}/../api/target/api.yml".toString()
+}
+
+openApiGenerate {
+    generatorName = "spring"
+    library = "spring-boot"
+    inputSpec = "${rootDir}/../api/target/api.yml".toString()
+    outputDir = "${rootDir}".toString()
+    systemProperties = [
+        modelDocs      : "false",
+        models         : "",
+        apis           : "",
+        supportingFiles: "false"
+    ]
+    configOptions = [
+        title                : rootProject.name,
+        artifactId           : rootProject.name,
+
+        java8                : "true",
+        dateLibrary          : "java8",
+
+        interfaceOnly        : "true",
+        performBeanValidation: "false",
+        useBeanValidation    : "false",
+        useTags              : "true",
+        singleContentTypes   : "true",
+        openApiNullable      : "false",
+        skipDefaultInterface: "true",
+
+        useOptional          : "true",
+        swaggerDocketConfig  : "true",
+        serializableModel    : "true",
+
+        basePackage          : "de.nordakademie.iaa.noodle.api",
+        configPackage        : "de.nordakademie.iaa.noodle.api",
+        apiPackage           : "de.nordakademie.iaa.noodle.api",
+        modelPackage         : "de.nordakademie.iaa.noodle.api.model",
+        invokerPackage       : "de.nordakademie.iaa.noodle.api"
+    ]
+}
+
 repositories {
-	mavenCentral()
+    mavenCentral()
 }
 
 dependencies {
-	implementation 'org.springframework.boot:spring-boot-starter-data-jpa'
-	implementation 'org.springframework.boot:spring-boot-starter-mail'
-	implementation 'org.springframework.boot:spring-boot-starter-security'
-	implementation 'org.springframework.boot:spring-boot-starter-web'
-	developmentOnly 'org.springframework.boot:spring-boot-devtools'
-	runtimeOnly 'com.h2database:h2'
-	testImplementation('org.springframework.boot:spring-boot-starter-test') {
-		exclude group: 'org.junit.vintage', module: 'junit-vintage-engine'
-	}
-	testImplementation 'org.springframework.security:spring-security-test'
+    implementation 'org.springframework.boot:spring-boot-starter-data-jpa'
+    implementation 'org.springframework.boot:spring-boot-starter-mail'
+    implementation 'org.springframework.boot:spring-boot-starter-security'
+    implementation 'org.springframework.boot:spring-boot-starter-web'
+    implementation 'io.springfox:springfox-boot-starter:3.0.0'
+    implementation 'io.springfox:springfox-swagger2:3.0.0'
+    implementation 'io.springfox:springfox-swagger-ui:3.0.0'
+    implementation 'org.openapitools:jackson-databind-nullable:0.2.1'
+    developmentOnly 'org.springframework.boot:spring-boot-devtools'
+    runtimeOnly 'com.h2database:h2'
+    testImplementation('org.springframework.boot:spring-boot-starter-test') {
+        exclude group: 'org.junit.vintage', module: 'junit-vintage-engine'
+    }
+    testImplementation 'org.springframework.security:spring-security-test'
 }
 
 test {
-	useJUnitPlatform()
+    useJUnitPlatform()
 }
