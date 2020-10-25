@@ -16,7 +16,8 @@ public class Response {
     @OneToMany(cascade = CascadeType.ALL, orphanRemoval = true, mappedBy = "response")
     private Set<ResponseTimeslot> responseTimeslots;
 
-    public Response() {}
+    public Response() {
+    }
 
     public Response(Participation participation, Set<ResponseTimeslot> responseTimeslots) {
         this.participation = participation;

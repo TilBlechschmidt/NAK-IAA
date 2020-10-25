@@ -23,7 +23,8 @@ public class Timeslot {
     private Date end;
 
 
-    public Timeslot() {}
+    public Timeslot() {
+    }
 
     public Timeslot(Survey survey, Date start, Date end) {
         this.survey = survey;

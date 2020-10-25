@@ -23,7 +23,8 @@ public class User {
     @Column(nullable = false)
     private String passwordSalt;
 
-    public User() {}
+    public User() {
+    }
 
     public User(Set<Survey> createdSurveys, Set<Participation> participations, String fullName, String passwordHash, String passwordSalt) {
         this.createdSurveys = createdSurveys;

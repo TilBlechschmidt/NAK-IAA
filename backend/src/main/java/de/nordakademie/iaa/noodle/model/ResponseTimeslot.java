@@ -19,7 +19,8 @@ public class ResponseTimeslot {
     @Enumerated(EnumType.STRING)
     private ResponseType responseType;
 
-    public ResponseTimeslot() {}
+    public ResponseTimeslot() {
+    }
 
     public ResponseTimeslot(Response response, Timeslot timeslot, ResponseType responseType) {
         this.response = response;

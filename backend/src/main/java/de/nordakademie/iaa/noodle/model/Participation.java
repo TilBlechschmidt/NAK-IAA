@@ -19,7 +19,8 @@ public class Participation {
     @OneToOne(optional = true, cascade = CascadeType.ALL)
     private Response response;
 
-    public Participation() {}
+    public Participation() {
+    }
 
     public Participation(User participant, Survey survey, Response response) {
         this.participant = participant;

@@ -16,16 +16,17 @@ public class Survey {
     @ManyToOne(optional = false)
     private User creator;
 
-    @OneToMany(cascade = CascadeType.ALL,orphanRemoval = true,mappedBy = "survey")
+    @OneToMany(cascade = CascadeType.ALL, orphanRemoval = true, mappedBy = "survey")
     private Set<Participation> participations;
 
     @Column(nullable = false)
     private String title;
 
-    @Column(nullable = false,length = 2048)
+    @Column(nullable = false, length = 2048)
     private String description;
 
-    public Survey() {}
+    public Survey() {
+    }
 
     public Survey(Set<Timeslot> timeslots, User creator, Set<Participation> participations, String title, String description) {
         this.timeslots = timeslots;
