@@ -1,6 +1,8 @@
 package de.nordakademie.iaa.noodle.controller;
 
+import de.nordakademie.iaa.noodle.TestUtil;
 import de.nordakademie.iaa.noodle.api.model.*;
+import de.nordakademie.iaa.noodle.model.User;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 import org.springframework.http.HttpStatus;
@@ -11,13 +13,18 @@ import java.util.Collections;
 import static java.util.Optional.empty;
 import static org.junit.jupiter.api.Assertions.*;
 import static org.mockito.Mockito.mock;
+import static org.mockito.Mockito.when;
 
 public class SurveyControllerTest {
     private SurveyController surveyController;
+    private User authenticatedUser;
 
     @BeforeEach
     public void setUp() {
+        authenticatedUser = TestUtil.setupAuthentication();
         surveyController = new SurveyController();
+
+        when(authenticatedUser.getFullName()).thenReturn("TESTUSER");
     }
 
     @Test
@@ -49,7 +56,7 @@ public class SurveyControllerTest {
         assertEquals(HttpStatus.OK, response.getStatusCode());
         assertNotNull(survey);
         assertEquals("This is the title for 42.", survey.getTitle());
-        assertEquals("This is the description", survey.getDescription());
+        assertEquals("You are authenticated as TESTUSER", survey.getDescription());
         assertArrayEquals(Collections.EMPTY_LIST.toArray(), survey.getResponses().toArray());
         assertArrayEquals(Collections.EMPTY_LIST.toArray(), survey.getTimeslots().toArray());
     }

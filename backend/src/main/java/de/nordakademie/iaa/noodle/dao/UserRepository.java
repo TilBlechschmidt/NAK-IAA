@@ -7,5 +7,7 @@ public interface UserRepository extends Repository<User, Long> {
 
     User findByEmail(String email);
 
+    User findByid(Long id);
+
     User save(User toSave);
 }

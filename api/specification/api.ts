@@ -1,7 +1,8 @@
 import {api, config} from "@airtasker/spot";
 
-import './account/create';
 import './account/auth';
+import './account/activate';
+import './account/request';
 import './surveys/create';
 import './surveys/query';
 import './surveys/get';

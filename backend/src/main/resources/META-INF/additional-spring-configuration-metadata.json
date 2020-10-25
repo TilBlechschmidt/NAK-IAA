@@ -1,0 +1,8 @@
+{
+  "properties": [
+    {
+      "name": "spring.noodle.mail.from",
+      "type": "java.lang.String",
+      "description": "E-Mail address used for outgoing emails."
+  }
+] }
