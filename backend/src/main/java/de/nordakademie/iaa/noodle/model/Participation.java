@@ -9,13 +9,10 @@ public class Participation {
     @Id
     @GeneratedValue
     private Long id;
-
     @ManyToOne(optional = false)
     private User participant;
-
     @ManyToOne(optional = false)
     private Survey survey;
-
     @OneToOne(optional = true, cascade = CascadeType.ALL)
     private Response response;
 
@@ -42,6 +39,10 @@ public class Participation {
 
     public Response getResponse() {
         return response;
+    }
+
+    public void setResponse(Response response) {
+        this.response = response;
     }
 
     @Override
