@@ -16,11 +16,12 @@ import static org.junit.jupiter.api.Assertions.*;
 class UserTest {
     private static Long id;
     private static User user;
+    private static int emailCounter = 0;
     @Autowired
     private EntityManager entityManager;
 
     public static User testUser() {
-        return new User(new HashSet<>(), new HashSet<>(), "testName", "testHash", "testSalt");
+        return new User(new HashSet<>(), new HashSet<>(), "email" + (emailCounter++), "testName", "testHash", "testSalt");
     }
 
     @AfterEach
@@ -46,6 +47,7 @@ class UserTest {
         assertEquals(new HashSet<>(), user.getCreatedSurveys());
         assertEquals(new HashSet<>(), user.getParticipations());
         assertEquals("testName", user.getFullName());
+        assertEquals("email" + (emailCounter - 1), user.getEmail());
         assertEquals("testHash", user.getPasswordHash());
         assertEquals("testSalt", user.getPasswordSalt());
     }

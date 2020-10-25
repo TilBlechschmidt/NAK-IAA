@@ -9,29 +9,32 @@ public class User {
     @Id
     @GeneratedValue
     private Long id;
-
     @OneToMany(mappedBy = "creator")
     private Set<Survey> createdSurveys;
-
     @OneToMany(mappedBy = "participant", orphanRemoval = true, cascade = CascadeType.ALL)
     private Set<Participation> participations;
-
+    @Column(nullable = false, unique = true)
+    private String email;
     @Column(nullable = false)
     private String fullName;
     @Column(nullable = false, length = 2048)
     private String passwordHash;
     @Column(nullable = false)
     private String passwordSalt;
-
     public User() {
     }
 
-    public User(Set<Survey> createdSurveys, Set<Participation> participations, String fullName, String passwordHash, String passwordSalt) {
+    public User(Set<Survey> createdSurveys, Set<Participation> participations, String email, String fullName, String passwordHash, String passwordSalt) {
         this.createdSurveys = createdSurveys;
         this.participations = participations;
+        this.email = email;
         this.fullName = fullName;
         this.passwordHash = passwordHash;
         this.passwordSalt = passwordSalt;
+    }
+
+    public String getEmail() {
+        return email;
     }
 
     public Long getId() {
