@@ -365,3 +365,6 @@ gradle-app.setting
 **/build/
 
 # End of https://www.toptal.com/developers/gitignore/api/node,java,yarn,macos,linux,windows,intellij,java-web,visualstudiocode,gradle
+
+/.idea/dataSources.xml
+/backend/src/main/resources/application-dev.properties
