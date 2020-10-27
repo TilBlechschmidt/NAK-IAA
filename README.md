@@ -15,6 +15,17 @@ Installation Instructions can be found
 [here for the frontend](#setting-up-the-frontend) and 
 [here for the backend](#setting-up-the-backend).
 
+## Setting up the API
+
+This project uses an Open-API 3 specification.
+To set up and generate the API access code in the frontend and the `api.yml` for the backend, 
+clone the repository, open a terminal in its root directory and use the following instructions: 
+
+```shell script
+cd api
+yarn install
+yarn generate
+```
 
 ## Frontend
 
@@ -26,22 +37,7 @@ and [yarn](https://classic.yarnpkg.com/en/).
 For a start, you will need 
 [yarn](https://classic.yarnpkg.com/en/docs/install/) and [Angular CLI](https://cli.angular.io).
 
-To make sure everything works right, follow the instructions in [Setting up the API](#setting-up-the-api) first
-and then the ones in [Installing and starting the frontend](#installing-and-starting-the-frontend).
-
-### Setting up the API
-
-This project uses an Open-API 3 specification.
-To set up and generate the API access code in the frontend, clone the repository, 
-open a terminal in its root directory and use the following instructions: 
-
-```shell script
-cd api
-yarn install
-yarn generate
-```
-
-### Installing and starting the frontend
+To make sure everything works right, follow the instructions in [Setting up the API](#setting-up-the-api) first.
 
 Then, to set up and start the frontend, clone the repository, 
 open a terminal in its root directory and use the following instructions:
@@ -61,7 +57,10 @@ The build is done by [Gradle](https://gradle.org).
 
 You will need a Java15-JDK like 
 [this one](https://adoptopenjdk.net/?variant=openjdk15&jvmVariant=hotspot).
-To set up and start the backend, clone the repository, 
+
+To make sure everything works right, follow the instructions in [Setting up the API](#setting-up-the-api) first.
+
+Then, to set up and start the backend, clone the repository, 
 open a terminal in its root directory and use the following command: 
 
 ```shell script
