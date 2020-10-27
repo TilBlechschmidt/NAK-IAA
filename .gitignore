@@ -1,5 +1,6 @@
 **/target/
 frontend/src/app/api/
+.idea/dataSources.xml
 backend/src/main/resources/application-dev.properties
 
 # Created by https://www.toptal.com/developers/gitignore/api/node,java,yarn,macos,linux,windows,intellij,java-web,visualstudiocode,gradle
@@ -366,5 +367,3 @@ gradle-app.setting
 
 # End of https://www.toptal.com/developers/gitignore/api/node,java,yarn,macos,linux,windows,intellij,java-web,visualstudiocode,gradle
 
-.idea/dataSources.xml
-backend/src/main/resources/application-dev.properties
