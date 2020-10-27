@@ -26,21 +26,22 @@ WHERE ID <= 26
 
 
 -- UNUSED USERS
-INSERT INTO USER
+INSERT INTO USER -- PW = password4
 VALUES (-1, 'Name-1@examle.com', 'Name-1', '$2a$10$rioMMSS1Me84n.y9HzbGTusQFM5cFXYxxDUV1j1tfe3h02MkHZnPG', 'salt4');
 
-INSERT INTO USER
+INSERT INTO USER -- PW = password0
 VALUES (0, 'Name0@example.com', 'Name-0', '$2a$10$RSJQfB5Wl0wRZHJOAMPtjOVXS3DMjsNCefi.iwV6.XEn9W2bxzarC', 'salt0');
+
 
 -- USED USERS
 
-INSERT INTO USER
+INSERT INTO USER -- PW = password1
 VALUES (1, 'Name1@example.com', 'Name1', '$2a$10$6r9uMBgk1/XE8wA59NEux.JAtNx8nqs72.YmZY6paNOKUkvUl0ADK', 'salt1');
 
-INSERT INTO USER
+INSERT INTO USER -- PW = password2
 VALUES (2, 'Name2@example.com', 'Name2', '$2a$10$VUk9xTmPRkgdPoTjVjQm2uSUrz8gCDZgzOHvucCoC4.HD8FrmEguO', 'salt2');
 
-INSERT INTO USER
+INSERT INTO USER -- PW = password3
 VALUES (3, 'Name3@example.com', 'Name3', '$2a$10$Il5DsBonV24V7R2I4VtzGecazA.QYIq0EXLLMxC2gWFuJ3vHveK/G', 'salt3');
 
 -- SURVEYS
