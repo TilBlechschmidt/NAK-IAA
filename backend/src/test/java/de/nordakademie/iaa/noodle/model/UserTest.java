@@ -21,7 +21,7 @@ class UserTest {
     private EntityManager entityManager;
 
     public static User testUser() {
-        return new User(new HashSet<>(), new HashSet<>(), "email" + (emailCounter++), "testName", "testHash", "testSalt");
+        return new User(new HashSet<>(), new HashSet<>(), "email" + (emailCounter++), "testName", "testHash");
     }
 
     @AfterEach
@@ -49,7 +49,6 @@ class UserTest {
         assertEquals("testName", user.getFullName());
         assertEquals("email" + (emailCounter - 1), user.getEmail());
         assertEquals("testHash", user.getPasswordHash());
-        assertEquals("testSalt", user.getPasswordSalt());
     }
 
     @Test

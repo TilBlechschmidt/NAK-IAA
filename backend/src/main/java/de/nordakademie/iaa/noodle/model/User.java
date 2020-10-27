@@ -19,18 +19,15 @@ public class User {
     private String fullName;
     @Column(nullable = false, length = 2048)
     private String passwordHash;
-    @Column(nullable = false)
-    private String passwordSalt;
     public User() {
     }
 
-    public User(Set<Survey> createdSurveys, Set<Participation> participations, String email, String fullName, String passwordHash, String passwordSalt) {
+    public User(Set<Survey> createdSurveys, Set<Participation> participations, String email, String fullName, String passwordHash) {
         this.createdSurveys = createdSurveys;
         this.participations = participations;
         this.email = email;
         this.fullName = fullName;
         this.passwordHash = passwordHash;
-        this.passwordSalt = passwordSalt;
     }
 
     public String getEmail() {
@@ -55,10 +52,6 @@ public class User {
 
     public String getPasswordHash() {
         return passwordHash;
-    }
-
-    public String getPasswordSalt() {
-        return passwordSalt;
     }
 
     @Override

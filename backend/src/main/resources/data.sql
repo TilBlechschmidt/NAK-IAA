@@ -27,22 +27,22 @@ WHERE ID <= 26
 
 -- UNUSED USERS
 INSERT INTO USER -- PW = password4
-VALUES (-1, 'Name-1@examle.com', 'Name-1', '$2a$10$rioMMSS1Me84n.y9HzbGTusQFM5cFXYxxDUV1j1tfe3h02MkHZnPG', 'salt4');
+VALUES (-1, 'Name-1@examle.com', 'Name-1', '$2a$10$upLmX5blX639STzhEuLwZ.PiFLHEBJXeglUPuKiYLpxvTvyyI1ppm');
 
 INSERT INTO USER -- PW = password0
-VALUES (0, 'Name0@example.com', 'Name-0', '$2a$10$RSJQfB5Wl0wRZHJOAMPtjOVXS3DMjsNCefi.iwV6.XEn9W2bxzarC', 'salt0');
+VALUES (0, 'Name0@example.com', 'Name-0', '$2a$10$.U2xt8HHisWlSGDdUfBO4e4RpgZ41CYVb/YnC/F/XWHT1.gBepqDW');
 
 
 -- USED USERS
 
 INSERT INTO USER -- PW = password1
-VALUES (1, 'Name1@example.com', 'Name1', '$2a$10$6r9uMBgk1/XE8wA59NEux.JAtNx8nqs72.YmZY6paNOKUkvUl0ADK', 'salt1');
+VALUES (1, 'Name1@example.com', 'Name1', '$2a$10$Ls0kE/AydHiuaHFdZXJXBuPpp4O51XC2vt.qfk4RlfVLn8OCry4aG');
 
 INSERT INTO USER -- PW = password2
-VALUES (2, 'Name2@example.com', 'Name2', '$2a$10$VUk9xTmPRkgdPoTjVjQm2uSUrz8gCDZgzOHvucCoC4.HD8FrmEguO', 'salt2');
+VALUES (2, 'Name2@example.com', 'Name2', '$2a$10$VxrZo8ixzU09.72TdMVew.CYbou0XwCN5c6Wza7fYPYKa4pdJLx7i');
 
 INSERT INTO USER -- PW = password3
-VALUES (3, 'Name3@example.com', 'Name3', '$2a$10$Il5DsBonV24V7R2I4VtzGecazA.QYIq0EXLLMxC2gWFuJ3vHveK/G', 'salt3');
+VALUES (3, 'Name3@example.com', 'Name3', '$2a$10$6mAknVUkgduqjCOmUePP7uO.Bgibgbbd9dpv.bJdGDUu11sXB6gz.');
 
 -- SURVEYS
 
