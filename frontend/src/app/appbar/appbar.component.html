@@ -1,9 +1,13 @@
 <p>
-    <mat-toolbar color="primary">
-        <span>Noodle5</span>
-            <div>
-                <app-authentication-button></app-authentication-button>
-                <app-registration-button></app-registration-button>
-            </div>
+    <mat-toolbar color="primary" class="toolbar">
+        <div [routerLink]="'survey'" class="logo">
+            <!--Icons made by <a href="https://www.flaticon.com/authors/iconixar" title="iconixar">iconixar</a> from <a href="https://www.flaticon.com/" title="Flaticon"> www.flaticon.com</a>-->
+            <img class="image" src="assets/noodle.svg" alt="Logo" />
+            <span>Noodle</span>
+        </div>
+        <div>
+            <app-authentication-button></app-authentication-button>
+            <app-registration-button></app-registration-button>
+        </div>
     </mat-toolbar>
 </p>

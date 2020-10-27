@@ -11,5 +11,4 @@ export class AuthenticationButtonComponent implements OnInit {
 
   ngOnInit(): void {
   }
-
 }

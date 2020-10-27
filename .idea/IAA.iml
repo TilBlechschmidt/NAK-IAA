@@ -6,6 +6,7 @@
       <sourceFolder url="file://$MODULE_DIR$/api/target" isTestSource="false" generated="true" />
       <sourceFolder url="file://$MODULE_DIR$/frontend/src/app/api" isTestSource="false" generated="true" />
       <sourceFolder url="file://$MODULE_DIR$/backend/src/main/java/de/nordakademie/iaa/noodle/api" isTestSource="false" generated="true" />
+            <sourceFolder url="file://$MODULE_DIR$/frontend/src/app/resources" type="java-resource" />
       <excludeFolder url="file://$MODULE_DIR$/.idea/dataSources" />
       <excludeFolder url="file://$MODULE_DIR$/frontend/dist" />
     </content>
