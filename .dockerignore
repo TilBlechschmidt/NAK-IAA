@@ -1,0 +1,10 @@
+api/node_modules
+api/target
+
+backend/build
+backend/.gradle
+backend/Dockerfile
+
+frontend/dist
+frontend/node_modules
+frontend/Dockerfile
