@@ -5,7 +5,8 @@ import de.nordakademie.iaa.noodle.api.model.*;
 import de.nordakademie.iaa.noodle.filter.NoodleException;
 import de.nordakademie.iaa.noodle.model.User;
 import de.nordakademie.iaa.noodle.services.AuthenticatedUser;
-import de.nordakademie.iaa.noodle.services.JWTService;
+import de.nordakademie.iaa.noodle.services.SignInService;
+import de.nordakademie.iaa.noodle.services.SignUpService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.RestController;
@@ -14,11 +15,13 @@ import static org.springframework.http.HttpStatus.CREATED;
 
 @RestController
 public class AccountController implements AccountApi {
-    private final JWTService jwtService;
+    private final SignUpService signUpService;
+    private final SignInService signInService;
 
     @Autowired
-    public AccountController(JWTService jwtService) {
-        this.jwtService = jwtService;
+    public AccountController(SignUpService signUpService, SignInService signInService) {
+        this.signUpService = signUpService;
+        this.signInService = signInService;
     }
 
     @Override
@@ -26,14 +29,14 @@ public class AccountController implements AccountApi {
         String token = activateUserRequest.getToken();
         String password = activateUserRequest.getPassword();
 
-        return jwtService.createAccount(token, password)
+        return signUpService.createAccount(token, password)
             .map(this::responseForCreatedUser)
             .orElseThrow(() -> NoodleException.badRequest("Invalid Token for account creation"));
     }
 
     @Override
     public ResponseEntity<AuthenticatedResponse> authenticate(AuthenticationRequest authenticationRequest) {
-        return jwtService.attemptAuthentication(authenticationRequest.getEmail(), authenticationRequest.getPassword())
+        return signInService.attemptAuthentication(authenticationRequest.getEmail(), authenticationRequest.getPassword())
             .map(this::responseForAuthenticatedUser)
             .orElseThrow(() -> NoodleException.unauthorized("Username or password incorrect"));
     }
@@ -42,7 +45,7 @@ public class AccountController implements AccountApi {
     public ResponseEntity<RequestRegistrationEmailResponse> requestRegistrationEmail(RequestRegistrationEmailRequest requestRegistrationEmailRequest) {
         String email = requestRegistrationEmailRequest.getEmail();
         String fullName = requestRegistrationEmailRequest.getName();
-        jwtService.mailSignupToken(email, fullName);
+        signUpService.mailSignupToken(email, fullName);
 
         RequestRegistrationEmailResponse requestRegistrationEmailResponse = new RequestRegistrationEmailResponse();
         requestRegistrationEmailResponse.setEmail(email);

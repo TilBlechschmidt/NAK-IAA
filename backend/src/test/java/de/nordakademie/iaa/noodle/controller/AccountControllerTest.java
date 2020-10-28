@@ -3,7 +3,8 @@ package de.nordakademie.iaa.noodle.controller;
 import de.nordakademie.iaa.noodle.api.model.*;
 import de.nordakademie.iaa.noodle.model.User;
 import de.nordakademie.iaa.noodle.services.AuthenticatedUser;
-import de.nordakademie.iaa.noodle.services.JWTService;
+import de.nordakademie.iaa.noodle.services.SignInService;
+import de.nordakademie.iaa.noodle.services.SignUpService;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 import org.springframework.http.HttpStatus;
@@ -11,17 +12,20 @@ import org.springframework.http.ResponseEntity;
 
 import java.util.Optional;
 
-import static org.junit.jupiter.api.Assertions.*;
+import static org.junit.jupiter.api.Assertions.assertEquals;
+import static org.junit.jupiter.api.Assertions.assertNotNull;
 import static org.mockito.Mockito.*;
 
 public class AccountControllerTest {
     private AccountController accountController;
-    private JWTService jwtService;
+    private SignInService signInService;
+    private SignUpService signUpService;
 
     @BeforeEach
     public void setUp() {
-        jwtService = mock(JWTService.class);
-        accountController = new AccountController(jwtService);
+        signInService = mock(SignInService.class);
+        signUpService = mock(SignUpService.class);
+        accountController = new AccountController(signUpService, signInService);
     }
 
     @Test
@@ -38,7 +42,7 @@ public class AccountControllerTest {
         when(authenticatedUser.getJwtToken()).thenReturn("TOKEN");
         when(authenticatedUser.getUser()).thenReturn(user);
 
-        when(jwtService.attemptAuthentication("EMAIL", "PASSWORD")).thenReturn(Optional.of(authenticatedUser));
+        when(signInService.attemptAuthentication("EMAIL", "PASSWORD")).thenReturn(Optional.of(authenticatedUser));
 
         ResponseEntity<AuthenticatedResponse> response = accountController.authenticate(authenticationRequest);
         AuthenticatedResponse authenticatedResponse = response.getBody();
@@ -53,7 +57,7 @@ public class AccountControllerTest {
     @Test
     public void testCreateUser() {
         User user = mock(User.class);
-        when(jwtService.createAccount("TOKEN", "PASSWORD")).thenReturn(Optional.of(user));
+        when(signUpService.createAccount("TOKEN", "PASSWORD")).thenReturn(Optional.of(user));
         when(user.getId()).thenReturn(42L);
         when(user.getFullName()).thenReturn("FULL_NAME");
         when(user.getEmail()).thenReturn("EMAIL");
@@ -81,7 +85,7 @@ public class AccountControllerTest {
         ResponseEntity<RequestRegistrationEmailResponse> response = accountController.requestRegistrationEmail(requestRegistrationEmailRequest);
         RequestRegistrationEmailResponse requestRegistrationEmailResponse = response.getBody();
 
-        verify(jwtService).mailSignupToken("EMAIL", "FULL_NAME");
+        verify(signUpService).mailSignupToken("EMAIL", "FULL_NAME");
 
         assertEquals(HttpStatus.OK, response.getStatusCode());
         assertNotNull(requestRegistrationEmailResponse);

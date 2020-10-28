@@ -1,6 +1,6 @@
 package de.nordakademie.iaa.noodle.filter;
 
-import de.nordakademie.iaa.noodle.services.JWTService;
+import de.nordakademie.iaa.noodle.services.SignInService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.stereotype.Component;
@@ -13,21 +13,21 @@ import javax.servlet.http.HttpServletResponse;
 import java.io.IOException;
 import java.util.Optional;
 
-import static de.nordakademie.iaa.noodle.config.SecurityConstants.*;
+import static de.nordakademie.iaa.noodle.config.SecurityConstants.HEADER_STRING;
 
 @Component
 public class JWTAuthorizationFilter extends OncePerRequestFilter {
-    private final JWTService jwtService;
+    private final SignInService signInService;
 
     @Autowired
-    public JWTAuthorizationFilter(JWTService jwtService) {
-        this.jwtService = jwtService;
+    public JWTAuthorizationFilter(SignInService signInService) {
+        this.signInService = signInService;
     }
 
     @Override
     protected void doFilterInternal(HttpServletRequest request, HttpServletResponse response, FilterChain chain) throws ServletException, IOException {
         getJWTToken(request)
-            .flatMap(jwtService::springAuthenticationForToken)
+            .flatMap(signInService::springAuthenticationForToken)
             .ifPresentOrElse(
                 SecurityContextHolder.getContext()::setAuthentication,
                 SecurityContextHolder::clearContext);
