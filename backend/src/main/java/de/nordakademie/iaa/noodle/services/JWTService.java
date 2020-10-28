@@ -5,7 +5,6 @@ import io.jsonwebtoken.Claims;
 import io.jsonwebtoken.JwtBuilder;
 import io.jsonwebtoken.Jwts;
 import io.jsonwebtoken.SignatureAlgorithm;
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.core.GrantedAuthority;
 import org.springframework.security.core.authority.AuthorityUtils;
 import org.springframework.stereotype.Component;
@@ -24,17 +23,6 @@ public class JWTService {
     private final static String CLAIM_AUTHORITIES = "authorities";
     private final static String CLAIM_EMAIL = "email";
     private final static String CLAIM_FULL_NAME = "fullName";
-
-    private final UserService userService;
-    private final PasswordService passwordService;
-    private final MailService mailService;
-
-    @Autowired
-    public JWTService(UserService userService, PasswordService passwordService, MailService mailService) {
-        this.userService = userService;
-        this.passwordService = passwordService;
-        this.mailService = mailService;
-    }
 
     private static JwtBuilder baseTokenBuilder(String email) {
         long currentTimestamp = System.currentTimeMillis();
@@ -66,7 +54,20 @@ public class JWTService {
             .compact();
     }
 
-    public Optional<Claims> extractClaimsFromToken(String jwtToken) {
+    public Optional<UserDetails> userDetailsForToken(String token) {
+        return Optional.of(token)
+            .flatMap(this::extractClaimsFromToken)
+            .flatMap(this::extractUserDetailsFromClaims);
+    }
+
+    public Optional<SpringAuthenticationDetails> authenticationDetailsForToken(String token) {
+        return Optional.of(token)
+            .flatMap(this::extractClaimsFromToken)
+            .flatMap(this::extractSpringAuthenticationDetailsFromClaims);
+    }
+
+
+    private Optional<Claims> extractClaimsFromToken(String jwtToken) {
         try {
             Claims claims = Jwts.parser()
                 .setSigningKey(SECRET.getBytes())
@@ -78,7 +79,7 @@ public class JWTService {
         }
     }
 
-    public Optional<SpringAuthenticationDetails> extractSpringAuthenticationDetailsFromClaims(Claims claims) {
+    private Optional<SpringAuthenticationDetails> extractSpringAuthenticationDetailsFromClaims(Claims claims) {
         @SuppressWarnings("unchecked")
         List<String> authorities = claims.get(CLAIM_AUTHORITIES, List.class);
         Long userID = claims.get(CLAIM_USER_ID, Long.class);
@@ -91,7 +92,7 @@ public class JWTService {
     }
 
 
-    public Optional<UserDetails> extractUserDetailsFromClaims(Claims claims) {
+    private Optional<UserDetails> extractUserDetailsFromClaims(Claims claims) {
         String email = claims.get(CLAIM_EMAIL, String.class);
         String fullName = claims.get(CLAIM_FULL_NAME, String.class);
 

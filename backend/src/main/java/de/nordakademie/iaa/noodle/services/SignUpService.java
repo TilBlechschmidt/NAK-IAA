@@ -26,17 +26,9 @@ public class SignUpService {
     public Optional<User> createAccount(String token, String password) {
         // Token does not have the TOKEN_PREFIX, because it is not used for authentication
         return Optional.of(token)
-            .flatMap(jwtService::extractClaimsFromToken)
-            .flatMap(jwtService::extractUserDetailsFromClaims)
+            .flatMap(jwtService::userDetailsForToken)
             .flatMap(userDetails -> this.createUser(password, userDetails));
     }
-
-    private Optional<User> createUser(String password, UserDetails userDetails) {
-        String passwordHash = passwordService.hashPassword(password);
-        User user = userService.createNewUser(userDetails.email, userDetails.fullName, passwordHash);
-        return Optional.of(user);
-    }
-
 
     public void mailSignupToken(String email, String fullName) {
         try {
@@ -47,5 +39,11 @@ public class SignUpService {
         } catch (MailException e) {
             throw NoodleException.serviceUnavailable("Failed to send email");
         }
+    }
+
+    private Optional<User> createUser(String password, UserDetails userDetails) {
+        String passwordHash = passwordService.hashPassword(password);
+        User user = userService.createNewUser(userDetails.email, userDetails.fullName, passwordHash);
+        return Optional.of(user);
     }
 }

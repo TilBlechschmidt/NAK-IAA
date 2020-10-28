@@ -35,15 +35,14 @@ public class SignInService {
         return Optional.of(token)
             .filter(header -> header.startsWith(TOKEN_PREFIX))
             .map(header -> header.replaceFirst(TOKEN_PREFIX, ""))
-            .flatMap(jwtService::extractClaimsFromToken)
-            .flatMap(jwtService::extractSpringAuthenticationDetailsFromClaims)
-            .flatMap(this::sprintAuthenticationFromDetails);
+            .flatMap(jwtService::authenticationDetailsForToken)
+            .flatMap(this::springAuthenticationFromDetails);
     }
 
-    private Optional<Authentication> sprintAuthenticationFromDetails(SpringAuthenticationDetails details) {
-       return Optional.of(details.userID)
-                .flatMap(userService::getUserByUserID)
-                .map(user -> buildSpringAuthentication(user, details.authorities));
+    private Optional<Authentication> springAuthenticationFromDetails(SpringAuthenticationDetails details) {
+        return Optional.of(details.userID)
+            .flatMap(userService::getUserByUserID)
+            .map(user -> buildSpringAuthentication(user, details.authorities));
     }
 
     private AuthenticatedUser authenticateUser(User user) {
