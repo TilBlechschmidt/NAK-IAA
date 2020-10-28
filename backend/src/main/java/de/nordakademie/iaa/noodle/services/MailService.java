@@ -18,21 +18,35 @@ public class MailService {
         this.emailSender = emailSender;
     }
 
+    private static String greeting(String fullName) {
+        return "Hello " + fullName + "!\n" + "Thank you for your registration. ";
+    }
+
+    private static String regards() {
+        return "\n\nBest regards\nYour team @Noodle";
+    }
+
+    private static String assembleContent(String fullName, String body) {
+        return greeting(fullName) + body + regards();
+    }
+
     public void sendRegistrationMail(String token, String fullName, String email) {
-        SimpleMailMessage message = new SimpleMailMessage();
-        message.setFrom(fromEmail);
-        message.setTo(email);
-        message.setSubject("Your registration");
-        message.setText("Hello " + fullName + "!\n" + "Thank you for your registration. Below, you can find your registration token:\n\n" + token + "\n\nBest regards\nYour team @Noodle");
-        emailSender.send(message);
+        String body = "Below, you can find your registration token:\n\n" + token;
+        sendMail(body, fullName, email);
     }
 
     public void sendRegistrationMailDuplicateEmail(String fullName, String email) {
+        String body = "We have to inform you, that you already have an account with this email." +
+            " Please try to sign in using this email.";
+        sendMail(body, fullName, email);
+    }
+
+    public void sendMail(String body, String fullName, String email) {
         SimpleMailMessage message = new SimpleMailMessage();
         message.setFrom(fromEmail);
         message.setTo(email);
         message.setSubject("Your registration");
-        message.setText("Hello " + fullName + "!\n" + "Thank you for your registration. We have to inform you, that you already have an account with this email. Please try to sign in using this email.\n\nBest regards\nYour team @Noodle");
+        message.setText(assembleContent(fullName, body));
         emailSender.send(message);
     }
 }
