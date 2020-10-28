@@ -1,19 +1,27 @@
 <mat-card class="card">
     <h1 class="greeting">Herzlich Willkommen!</h1>
     <span class="greeting2">Erzähl uns, wer du bist</span>
-    <form class="auth-form">
+    <form class="auth-form" name="form" [formGroup]="form" (ngSubmit)="submit()">
         <mat-form-field class="auth-full-width">
             <mat-label>Name</mat-label>
-            <input matInput placeholder="Name">
+            <input matInput type="text" formControlName="name" placeholder="Name" required>
+            <mat-error *ngIf="isError(form, 'name')">Name is required</mat-error>
         </mat-form-field>
         <mat-form-field class="auth-full-width">
-            <mat-label>E-Mail</mat-label>
-            <input matInput type="email" placeholder="E-Mail">
+            <mat-label>Enter your email</mat-label>
+            <input matInput formControlName="email" required>
+            <mat-error *ngIf="isError(form,'email')">Invalid email</mat-error>
         </mat-form-field>
         <mat-form-field class="auth-full-width">
             <mat-label>Password</mat-label>
-            <input matInput type="password" placeholder="Password">
+            <input matInput formControlName="password" name="password" type="password" placeholder="Password">
+            <mat-error *ngIf="isError(form,'password')">Password requires between 16 to 64 characters</mat-error>
         </mat-form-field>
+        <mat-form-field class="auth-full-width">
+            <mat-label>Confirm Password</mat-label>
+            <input matInput formControlName="passwordConfirmation" name="password" type="password" placeholder="Password">
+            <mat-error *ngIf="!isConfirmationPasswordMatching()">Passwords don't match</mat-error>
+        </mat-form-field>
+        <button [disabled]="!isFormValid()" mat-raised-button type="submit" color="primary" class="button">Sign up</button>
     </form>
-    <button mat-raised-button color="primary" class="button">Sign up</button>
 </mat-card>

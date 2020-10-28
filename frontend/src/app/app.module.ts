@@ -25,8 +25,10 @@ import { FixedAppointmentViewComponent } from "./survey/tabs/fixed-appointment-v
 import { DashboardComponent } from './survey/tabs/dashboard/dashboard.component';
 import { NotificationComponent } from './survey/tabs/dashboard/notification/notification.component';
 import { CreateSurveyDialogComponent } from './survey/create/create-survey-dialog/create-survey-dialog.component';
-import {FormsModule} from "@angular/forms";
-import {MatDialogModule} from "@angular/material/dialog";
+import {FormGroup, FormsModule, ReactiveFormsModule} from "@angular/forms";
+import { MatDialogModule } from "@angular/material/dialog";
+import { AuthenticationService } from "./api/services";
+import {HttpClient, HttpClientModule} from "@angular/common/http";
 
 @NgModule({
     declarations: [
@@ -60,9 +62,13 @@ import {MatDialogModule} from "@angular/material/dialog";
         MatTableModule,
         MatIconModule,
         MatDialogModule,
-        FormsModule
+        FormsModule,
+        HttpClientModule,
+        ReactiveFormsModule
     ],
-  providers: [],
+  providers: [
+      AuthenticationService
+  ],
   bootstrap: [AppComponent]
 })
 export class AppModule { }
