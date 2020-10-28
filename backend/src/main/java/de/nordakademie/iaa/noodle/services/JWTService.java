@@ -15,7 +15,9 @@ import org.springframework.security.core.authority.AuthorityUtils;
 import org.springframework.security.core.authority.SimpleGrantedAuthority;
 import org.springframework.stereotype.Component;
 
-import java.util.*;
+import java.util.Date;
+import java.util.List;
+import java.util.Optional;
 import java.util.stream.Collectors;
 
 import static de.nordakademie.iaa.noodle.config.SecurityConstants.*;
@@ -39,53 +41,50 @@ public class JWTService {
         this.mailService = mailService;
     }
 
-    public Optional<AuthenticatedUser> getAuthenticatedUser(String email, String password) {
-        return userService.getUserByEMail(email)
-            .filter(user -> passwordService.isPasswordCorrect(user, password))
-            .map(this::getAuthenticatedUserForUser);
+    private static String buildEmailToken(String email, String fullName) {
+        // Token does not get the TOKEN_PREFIX, because it is not used for authentication
+        return baseTokenBuilder(email)
+            .claim(CLAIM_EMAIL, email)
+            .claim(CLAIM_FULL_NAME, fullName)
+            .compact();
     }
 
-    public Optional<Authentication> getAuthentication(String token) {
+    public Optional<AuthenticatedUser> attemptAuthentication(String email, String password) {
+        return userService.getUserByEMail(email)
+            .filter(user -> passwordService.isPasswordCorrect(user, password))
+            .map(this::authenticateUser);
+    }
+
+    public Optional<Authentication> springAuthenticationForToken(String token) {
         return Optional.of(token)
             .filter(header -> header.startsWith(TOKEN_PREFIX))
             .map(header -> header.replaceFirst(TOKEN_PREFIX, ""))
-            .flatMap(this::getClaimsFromRawToken)
-            .flatMap(this::getSpringAuthenticationForClaims);
+            .flatMap(this::extractClaimsFromRawToken)
+            .flatMap(this::springAuthenticationForClaims);
     }
 
     public Optional<User> createAccount(String token, String password) {
         // Token does not have the TOKEN_PREFIX, because it is not used for authentication
         return Optional.of(token)
-            .flatMap(this::getClaimsFromRawToken)
+            .flatMap(this::extractClaimsFromRawToken)
             .flatMap(claims -> createUserForClaims(claims, password));
     }
 
-    public void sendCreateUserToken(String email, String fullName) {
-        if (userService.getUserByEMail(email).isPresent()) {
-            try {
-                mailService.sendRegistrationMailDuplicateEmail(fullName, email);
-            } catch (MailException e) {
-                throw NoodleException.serviceUnavailable("Failed to send email");
-            }
-        } else {
-            // Token does not get the TOKEN_PREFIX, because it is not used for authentication
-            String token = getBaseTokenBuilder(email)
-                .claim(CLAIM_EMAIL, email)
-                .claim(CLAIM_FULL_NAME, fullName)
-                .compact();
-
-            try {
-                mailService.sendRegistrationMail(token, fullName, email);
-            } catch (MailException e) {
-                throw NoodleException.serviceUnavailable("Failed to send email");
-            }
+    public void mailSignupToken(String email, String fullName) {
+        try {
+            userService.getUserByEMail(email).ifPresentOrElse(
+                user -> mailService.sendRegistrationMailDuplicateEmail(fullName, email),
+                () -> mailService.sendRegistrationMail(buildEmailToken(email, fullName), fullName, email)
+            );
+        } catch (MailException e) {
+            throw NoodleException.serviceUnavailable("Failed to send email");
         }
     }
 
-    private AuthenticatedUser getAuthenticatedUserForUser(User user) {
+    private AuthenticatedUser authenticateUser(User user) {
         List<GrantedAuthority> grantedAuthorities = AuthorityUtils.commaSeparatedStringToAuthorityList("ROLE_USER");
 
-        String token = getBaseTokenBuilder(user.getEmail())
+        String token = baseTokenBuilder(user.getEmail())
             .claim(CLAIM_USER_ID, user.getId())
             .claim(CLAIM_AUTHORITIES,
                 grantedAuthorities.stream()
@@ -96,7 +95,7 @@ public class JWTService {
         return new AuthenticatedUser(user, TOKEN_PREFIX + token);
     }
 
-    private JwtBuilder getBaseTokenBuilder(String email) {
+    private static JwtBuilder baseTokenBuilder(String email) {
         long currentTimestamp = System.currentTimeMillis();
 
         return Jwts.builder()
@@ -106,7 +105,7 @@ public class JWTService {
             .signWith(SignatureAlgorithm.HS256, SECRET.getBytes(UTF_8));
     }
 
-    private Optional<Claims> getClaimsFromRawToken(String jwtToken) {
+    private Optional<Claims> extractClaimsFromRawToken(String jwtToken) {
         try {
             Claims claims = Jwts.parser()
                 .setSigningKey(SECRET.getBytes())
@@ -118,10 +117,10 @@ public class JWTService {
         }
     }
 
-    private Optional<Authentication> getSpringAuthenticationForClaims(Claims claims) {
+    private Optional<Authentication> springAuthenticationForClaims(Claims claims) {
         @SuppressWarnings("unchecked")
         List<String> authorities = claims.get(CLAIM_AUTHORITIES, List.class);
-        Integer userID = claims.get(CLAIM_USER_ID, Integer.class);
+        Long userID = claims.get(CLAIM_USER_ID, Long.class);
 
         if (authorities == null || userID == null) {
             return Optional.empty();
@@ -129,10 +128,10 @@ public class JWTService {
 
         return Optional.of(userID)
             .flatMap(userService::getUserByUserID)
-            .map(user -> getSpringAuthentication(user, authorities));
+            .map(user -> buildSpringAuthentication(user, authorities));
     }
 
-    private Authentication getSpringAuthentication(User user, List<String> authorities) {
+    private Authentication buildSpringAuthentication(User user, List<String> authorities) {
         UsernamePasswordAuthenticationToken auth = new UsernamePasswordAuthenticationToken(
             user.getFullName(),
             null,

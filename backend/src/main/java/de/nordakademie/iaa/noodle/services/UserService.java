@@ -5,14 +5,10 @@ import de.nordakademie.iaa.noodle.filter.NoodleException;
 import de.nordakademie.iaa.noodle.model.User;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.dao.DataIntegrityViolationException;
-import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
-import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Component;
 
 import java.util.HashSet;
 import java.util.Optional;
-
-import static de.nordakademie.iaa.noodle.config.SecurityConstants.HASH_PEPPER;
 
 @Component
 public class UserService {
@@ -27,7 +23,7 @@ public class UserService {
         return Optional.ofNullable(userRepository.findByEmail(email));
     }
 
-    public Optional<User> getUserByUserID(long userID) {
+    public Optional<User> getUserByUserID(Long userID) {
         return Optional.ofNullable(userRepository.findByid(userID));
     }
 

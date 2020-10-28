@@ -27,7 +27,7 @@ public class JWTAuthorizationFilter extends OncePerRequestFilter {
     @Override
     protected void doFilterInternal(HttpServletRequest request, HttpServletResponse response, FilterChain chain) throws ServletException, IOException {
         getJWTToken(request)
-            .flatMap(jwtService::getAuthentication)
+            .flatMap(jwtService::springAuthenticationForToken)
             .ifPresentOrElse(
                 SecurityContextHolder.getContext()::setAuthentication,
                 SecurityContextHolder::clearContext);

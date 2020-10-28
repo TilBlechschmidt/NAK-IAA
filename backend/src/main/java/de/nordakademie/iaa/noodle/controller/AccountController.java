@@ -33,7 +33,7 @@ public class AccountController implements AccountApi {
 
     @Override
     public ResponseEntity<AuthenticatedResponse> authenticate(AuthenticationRequest authenticationRequest) {
-        return jwtService.getAuthenticatedUser(authenticationRequest.getEmail(), authenticationRequest.getPassword())
+        return jwtService.attemptAuthentication(authenticationRequest.getEmail(), authenticationRequest.getPassword())
             .map(this::responseForAuthenticatedUser)
             .orElseThrow(() -> NoodleException.unauthorized("Username or password incorrect"));
     }
@@ -42,7 +42,7 @@ public class AccountController implements AccountApi {
     public ResponseEntity<RequestRegistrationEmailResponse> requestRegistrationEmail(RequestRegistrationEmailRequest requestRegistrationEmailRequest) {
         String email = requestRegistrationEmailRequest.getEmail();
         String fullName = requestRegistrationEmailRequest.getName();
-        jwtService.sendCreateUserToken(email, fullName);
+        jwtService.mailSignupToken(email, fullName);
 
         RequestRegistrationEmailResponse requestRegistrationEmailResponse = new RequestRegistrationEmailResponse();
         requestRegistrationEmailResponse.setEmail(email);

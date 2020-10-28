@@ -38,7 +38,7 @@ public class AccountControllerTest {
         when(authenticatedUser.getJwtToken()).thenReturn("TOKEN");
         when(authenticatedUser.getUser()).thenReturn(user);
 
-        when(jwtService.getAuthenticatedUser("EMAIL", "PASSWORD")).thenReturn(Optional.of(authenticatedUser));
+        when(jwtService.attemptAuthentication("EMAIL", "PASSWORD")).thenReturn(Optional.of(authenticatedUser));
 
         ResponseEntity<AuthenticatedResponse> response = accountController.authenticate(authenticationRequest);
         AuthenticatedResponse authenticatedResponse = response.getBody();
@@ -81,7 +81,7 @@ public class AccountControllerTest {
         ResponseEntity<RequestRegistrationEmailResponse> response = accountController.requestRegistrationEmail(requestRegistrationEmailRequest);
         RequestRegistrationEmailResponse requestRegistrationEmailResponse = response.getBody();
 
-        verify(jwtService).sendCreateUserToken("EMAIL", "FULL_NAME");
+        verify(jwtService).mailSignupToken("EMAIL", "FULL_NAME");
 
         assertEquals(HttpStatus.OK, response.getStatusCode());
         assertNotNull(requestRegistrationEmailResponse);
