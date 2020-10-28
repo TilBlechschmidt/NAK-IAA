@@ -8,7 +8,7 @@
     "generate": "yarn generate-spec && yarn generate-docs && yarn generate-frontend",
     "generate-spec": "spot generate -c specification/api.ts -g openapi3 -l yaml -o target/ && ts-node --skip-project postprocess.ts",
     "generate-docs": "redoc-cli bundle target/api.yml -o target/api.html --title 'API Documentation' --options.pathInMiddlePanel=true",
-    "generate-frontend": "ng-openapi-gen --input target/api.yml --output ../frontend/src/app/api"
+    "generate-frontend": "ng-openapi-gen --input target/api.yml --output ../frontend/src/app/api --mockDataDirectory mockData"
   },
   "dependencies": {
     "@airtasker/spot": "^1.2.0",
@@ -16,7 +16,7 @@
     "ajv": "4.11.8",
     "core-js": "^3.1.4",
     "fs-extra": "^9.0.1",
-    "ng-openapi-gen": "^0.12.1",
+    "ng-openapi-mock-gen": "^0.13.3",
     "react": ">=16.3.0",
     "react-dom": ">=16.3.0",
     "react-is": ">=16.8.0",
