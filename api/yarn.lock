@@ -1921,10 +1921,10 @@ neo-async@^2.6.0:
   resolved "https://registry.yarnpkg.com/neo-async/-/neo-async-2.6.2.tgz#b4aafb93e3aeb2d8174ca53cf163ab7d7308305f"
   integrity sha512-Yd3UES5mWCSqR+qNT93S3UoYUkqAZ9lLg8a7g9rimsWmYGK8cVToA4/sF3RrshdyV3sAGMXVUmpMYOw+dLpOuw==
 
-ng-openapi-gen@^0.12.1:
-  version "0.12.1"
-  resolved "https://registry.yarnpkg.com/ng-openapi-gen/-/ng-openapi-gen-0.12.1.tgz#1a4d61df7bd8e6dd3997034e9eee1e4836214414"
-  integrity sha512-lfBYSWLrFzKvmTyY0Vqzam4leodhTE4jR2nAQ6J3h7jNoqUIxMRMUqXKXSzwanHUQM36lh4cxiJrIqcmQ+5XpA==
+ng-openapi-mock-gen@^0.13.3:
+  version "0.13.3"
+  resolved "https://registry.yarnpkg.com/ng-openapi-mock-gen/-/ng-openapi-mock-gen-0.13.3.tgz#3312cc18fbee16920ccac0f61be063f01eb1cf68"
+  integrity sha512-i2yhypCY8jnK6Jx8II1Lx0nJYqROJslXBNvoNLw6OX8AO4OTFRX/vW3kBL3OFQXy1Rd30/EooWgDFpEn5Xq1jg==
   dependencies:
     "@loopback/openapi-v3-types" "^1.2.1"
     "@types/argparse" "^1.0.38"

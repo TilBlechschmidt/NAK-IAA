@@ -1,0 +1,26 @@
+{
+    "creator": {
+        "id": 42,
+        "name": "Max Mustermann"
+    },
+    "isClosed": false,
+    "title": "Game night",
+    "description": "Veniam aut reprehenderit fugiat nisi ut. Libero nostrum dolores voluptatem enim sed explicabo. Non in sed minus. Optio voluptatem qui et eaque a sit perferendis dolores. Ab ratione dicta excepturi explicabo quia quasi. Distinctio fugiat nesciunt cumque nobis et et et qui.",
+    "timeslots": [
+        {
+            "id": 0,
+            "start": "2019-08-24T14:15:00Z",
+            "end": "2019-08-24T14:30:00Z"
+        },
+        {
+            "id": 1,
+            "start": "2019-08-24T14:30:00Z",
+            "end": "2019-08-24T14:45:00Z"
+        },
+        {
+            "id": 2,
+            "start": "2019-08-24T14:45:00Z",
+            "end": "2019-08-24T15:00:00Z"
+        }
+    ]
+}

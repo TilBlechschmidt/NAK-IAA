@@ -1,0 +1,9 @@
+{
+    "surveys": [
+        {
+            "id": 42,
+            "title": "Game night",
+            "participantCount": 2
+        }
+    ]
+}
