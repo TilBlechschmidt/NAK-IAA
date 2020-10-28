@@ -7,6 +7,7 @@
       <sourceFolder url="file://$MODULE_DIR$/frontend/src/app/api" isTestSource="false" generated="true" />
       <sourceFolder url="file://$MODULE_DIR$/backend/src/main/java/de/nordakademie/iaa/noodle/api" isTestSource="false" generated="true" />
       <excludeFolder url="file://$MODULE_DIR$/.idea/dataSources" />
+      <excludeFolder url="file://$MODULE_DIR$/frontend/dist" />
     </content>
     <orderEntry type="inheritedJdk" />
     <orderEntry type="sourceFolder" forTests="false" />
