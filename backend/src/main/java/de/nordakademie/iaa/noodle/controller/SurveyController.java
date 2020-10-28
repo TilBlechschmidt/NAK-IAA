@@ -4,12 +4,15 @@ import de.nordakademie.iaa.noodle.api.SurveysApi;
 import de.nordakademie.iaa.noodle.api.model.*;
 import de.nordakademie.iaa.noodle.model.User;
 import org.springframework.http.ResponseEntity;
-import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.web.bind.annotation.RestController;
 
 import java.util.ArrayList;
 import java.util.Optional;
 
+/**
+ * FIXME: Implement this
+ * This is mostly a stub to show the structure of future controllers.
+ */
 @RestController
 public class SurveyController extends AuthenticatedController implements SurveysApi {
     @Override
@@ -42,7 +45,9 @@ public class SurveyController extends AuthenticatedController implements Surveys
     }
 
     @Override
-    public ResponseEntity<QuerySurveysResponse> querySurveys(Optional<Boolean> didParticipateIn, Optional<Boolean> isCompleted, Optional<Boolean> isOwnSurvey, Optional<Boolean> isUpcoming, Optional<Boolean> requiresAttention) {
+    public ResponseEntity<QuerySurveysResponse> querySurveys(
+        Optional<Boolean> didParticipateIn, Optional<Boolean> isCompleted,
+        Optional<Boolean> isOwnSurvey, Optional<Boolean> isUpcoming, Optional<Boolean> requiresAttention) {
         return null;
     }
 
