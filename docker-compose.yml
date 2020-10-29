@@ -14,8 +14,6 @@ services:
         build:
             context: .
             dockerfile: frontend/Dockerfile
-        ports:
-            - "5000:5000"
         networks:
             - services
         depends_on:
@@ -26,8 +24,6 @@ services:
             dockerfile: backend/Dockerfile
         environment:
             - "SERVER_SERVLET_CONTEXT_PATH=/api"
-        ports:
-            - "8080:8080"
         networks:
             - services
 
