@@ -49,6 +49,7 @@ class SurveyTest {
         assertEquals(userId, survey.getCreator().getId());
         assertEquals("title", survey.getTitle());
         assertEquals("description", survey.getDescription());
+        assertNull(survey.getChosenTimeslot());
     }
 
     @Test

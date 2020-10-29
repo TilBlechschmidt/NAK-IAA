@@ -15,16 +15,12 @@ public class Survey {
 
     @OneToOne(cascade = CascadeType.ALL, optional = true)
     private Timeslot chosenTimeslot;
-
     @ManyToOne(optional = false)
     private User creator;
-
     @OneToMany(cascade = CascadeType.ALL, orphanRemoval = true, mappedBy = "survey")
     private Set<Participation> participations;
-
     @Column(nullable = false)
     private String title;
-
     @Column(nullable = false, length = 2048)
     private String description;
 
@@ -38,6 +34,10 @@ public class Survey {
         this.participations = participations;
         this.title = title;
         this.description = description;
+    }
+
+    public Timeslot getChosenTimeslot() {
+        return chosenTimeslot;
     }
 
     public Long getId() {
