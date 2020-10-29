@@ -19,7 +19,7 @@ jobs:
               run: yarn --frozen-lockfile
             - name: Generate API specification
               working-directory: ./api
-              run: yarn generate
+              run: yarn lint && yarn generate
             - uses: actions/upload-artifact@v2
               with:
                   name: API specification
