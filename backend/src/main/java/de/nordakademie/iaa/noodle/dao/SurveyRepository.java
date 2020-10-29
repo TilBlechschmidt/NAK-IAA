@@ -1,6 +1,7 @@
 package de.nordakademie.iaa.noodle.dao;
 
 import de.nordakademie.iaa.noodle.model.Survey;
+import org.springframework.data.jpa.repository.Query;
 import org.springframework.data.repository.RepositoryDefinition;
 import org.springframework.stereotype.Repository;
 import org.springframework.transaction.annotation.Propagation;
@@ -15,16 +16,13 @@ public interface SurveyRepository {
 
     List<Survey> findAllByCreator_id(Long creatorId);
 
-    /**
-     * @deprecated For extensibility Reasons, please use {@link #findSurveysWhereUserHasNotParticipated(Long)}
-     * instead of this method.
-     */
-    @Deprecated
-    List<Survey> findAllByParticipations_participant_idNot(Long id);
+    @Query("""
+        SELECT s1 FROM Survey s1 WHERE ?1 NOT IN
+            (SELECT p.participant
+            FROM Survey s LEFT OUTER JOIN Participation p ON p.survey=s
+            WHERE s.id = s1.id )""")
+    List<Survey> findSurveysWhereUserHasNotParticipated(Long userID);
 
-    default List<Survey> findSurveysWhereUserHasNotParticipated(Long userID) {
-        return findAllByParticipations_participant_idNot(userID);
-    }
 
     /**
      * @deprecated For extensibility Reasons, please use {@link #findSurveysThatNeedAttentionBy(Long)}}
