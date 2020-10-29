@@ -11,8 +11,9 @@ import java.util.Optional;
 
 @RestController
 public class SurveyController implements SurveysApi {
+
     @Override
-    public ResponseEntity<SurveyMetadata> closeSurvey(Integer id, String authorization) {
+    public ResponseEntity<SurveyMetadata> closeSurvey(Integer id, String authorization, CloseSurveyRequest closeSurveyRequest) {
         return null;
     }
 
@@ -39,7 +40,7 @@ public class SurveyController implements SurveysApi {
     }
 
     @Override
-    public ResponseEntity<QuerySurveysResponse> querySurveys(String authorization, Optional<Integer> createdBy, Optional<Integer> needsAttentionBy, Optional<Integer> notParticipatedBy, Optional<Integer> participatedBy) {
+    public ResponseEntity<QuerySurveysResponse> querySurveys(String authorization, Optional<Boolean> didParticipateIn, Optional<Boolean> isCompleted, Optional<Boolean> isOwnSurvey, Optional<Boolean> isUpcoming, Optional<Boolean> requiresAttention) {
         return null;
     }
 
