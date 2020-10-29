@@ -13,7 +13,7 @@ public class Participation {
     private User participant;
     @ManyToOne(optional = false)
     private Survey survey;
-    @OneToOne(optional = true, cascade = CascadeType.ALL,mappedBy = "participation")
+    @OneToOne(optional = true, cascade = CascadeType.ALL, mappedBy = "participation")
     private Response response;
 
     public Participation() {
