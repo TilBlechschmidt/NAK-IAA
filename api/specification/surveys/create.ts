@@ -37,6 +37,6 @@ interface CreateSurveyResponse extends SurveyMetadata {
     id: Identifier;
 }
 
-interface CreateSurveyErrorResponse {
-    code: "invalidDate" | "missingTitle" | "titleTooLong" | "descriptionTooLong";
+export interface CreateSurveyErrorResponse {
+    code: "invalidTimeslot" | "missingTitle" | "titleTooLong" | "descriptionTooLong" | "atLeastOneTimeslotRequired";
 }

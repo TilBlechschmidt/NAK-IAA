@@ -1,12 +1,21 @@
 import {Identifier} from "../../types";
+import {IdentifiableUser} from "../../users/types";
 
-export type ResponseValue = 'yes' | 'maybe' | 'no';
+export interface ResponseValue {
+    timeslotID: Identifier;
+    value: boolean;
+}
 
 export interface Response {
-    /** Unique resource identifier for the user to which this response belongs */
-    userID: Identifier;
+    /** Whether the authenticated user can modify this response */
+    isEditable: boolean;
+    /** Resource object of the user that created the response */
+    user: IdentifiableUser;
     /** Unique resource identifier for the survey to which this response belongs */
     surveyID: Identifier;
-    /** Response values in chronological order */
-    values: ResponseValue[];
+    /**
+     * List of responses
+     * @type {Object.<Identifier, Timeslot>}
+     */
+    responses: ResponseValue[];
 }

@@ -1,5 +1,11 @@
 import {body, endpoint, headers, pathParams, request, response} from "@airtasker/spot";
-import {AuthenticationHeaders, Identifier, MalformedRequestErrorResponse, UnauthorizedErrorResponse} from "../types";
+import {
+    AuthenticationHeaders,
+    Identifier,
+    MalformedRequestErrorResponse,
+    NotFoundErrorResponse,
+    UnauthorizedErrorResponse
+} from "../types";
 import {SurveyMetadata} from "./types";
 
 /** Irreversibly deletes a survey and all associated responses */
@@ -20,7 +26,7 @@ class DeleteSurvey {
 
     /** Resource not found */
     @response({ status: 404 })
-    notFoundResponse() {}
+    notFoundResponse(@body body: NotFoundErrorResponse) {}
 
     /** Malformed request */
     @response({ status: 400 })

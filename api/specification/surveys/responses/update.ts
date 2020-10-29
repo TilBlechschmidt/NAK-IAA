@@ -1,5 +1,11 @@
 import {body, headers, endpoint, request, response, pathParams} from "@airtasker/spot";
-import {AuthenticationHeaders, Identifier, MalformedRequestErrorResponse, UnauthorizedErrorResponse} from "../../types";
+import {
+    AuthenticationHeaders,
+    Identifier,
+    MalformedRequestErrorResponse,
+    NotFoundErrorResponse,
+    UnauthorizedErrorResponse
+} from "../../types";
 import {Response, ResponseValue} from "./types";
 import {CreateResponseErrorResponse, CreateResponseRequest} from "./create";
 
@@ -25,7 +31,7 @@ class UpdateResponse {
 
     /** Resource not found */
     @response({ status: 404 })
-    notFoundResponse() {}
+    notFoundResponse(@body body: NotFoundErrorResponse) {}
 
     /** Malformed request */
     @response({ status: 400 })
