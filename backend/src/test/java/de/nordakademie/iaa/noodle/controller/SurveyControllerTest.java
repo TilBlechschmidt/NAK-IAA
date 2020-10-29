@@ -3,12 +3,10 @@ package de.nordakademie.iaa.noodle.controller;
 import de.nordakademie.iaa.noodle.api.model.*;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
-import org.mockito.Mockito;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 
 import java.util.Collections;
-import java.util.Optional;
 
 import static java.util.Optional.empty;
 import static org.junit.jupiter.api.Assertions.*;
@@ -24,7 +22,8 @@ public class SurveyControllerTest {
 
     @Test
     public void testCloseSurvey() {
-        ResponseEntity<SurveyMetadata> response = surveyController.closeSurvey(42, "Fake");
+        CloseSurveyRequest closeSurveyRequest = new CloseSurveyRequest();
+        ResponseEntity<SurveyMetadata> response = surveyController.closeSurvey(42, "Fake", closeSurveyRequest);
         assertNull(response);
     }
 
@@ -52,12 +51,12 @@ public class SurveyControllerTest {
         assertEquals("This is the title for 42.", survey.getTitle());
         assertEquals("This is the description", survey.getDescription());
         assertArrayEquals(Collections.EMPTY_LIST.toArray(), survey.getResponses().toArray());
-        assertArrayEquals(Collections.EMPTY_LIST.toArray(), survey.getTimeSlots().toArray());
+        assertArrayEquals(Collections.EMPTY_LIST.toArray(), survey.getTimeslots().toArray());
     }
 
     @Test
     public void testQuerySurveys() {
-        ResponseEntity<QuerySurveysResponse> response = surveyController.querySurveys("Fake", empty(), empty(), empty(), empty());
+        ResponseEntity<QuerySurveysResponse> response = surveyController.querySurveys("Fake", empty(), empty(), empty(), empty(), empty());
         assertNull(response);
     }
 
