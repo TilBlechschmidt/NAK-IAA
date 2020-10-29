@@ -1,5 +1,5 @@
-import {body, endpoint, request, response, String} from "@airtasker/spot";
-import {EMail, Password} from "./types";
+import {body, endpoint, request, response} from "@airtasker/spot";
+import {IdentifiableUser, Password, User} from "./types";
 import {Identifier} from "../types";
 
 /** Registers a new user account */
@@ -21,19 +21,11 @@ class CreateUser {
     conflictResponse(@body body: CreateUserErrorResponse) {}
 }
 
-export interface User {
-    email: EMail;
-    /** Full name of the associated person */
-    name: String;
-}
-
 interface CreateUserRequest extends User {
     password: Password;
 }
 
-interface CreateUserResponse extends User {
-    id: Identifier;
-}
+interface CreateUserResponse extends IdentifiableUser {}
 
 interface CreateUserErrorResponse {
     code: "emailDuplicated";

@@ -17,3 +17,7 @@ export interface UnauthorizedErrorResponse {
 export interface MalformedRequestErrorResponse {
     code: "malformedRequest"
 }
+
+export interface NotFoundErrorResponse {
+    code: "notFound"
+}

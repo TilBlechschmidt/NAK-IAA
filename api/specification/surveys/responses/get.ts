@@ -1,5 +1,11 @@
 import {body, endpoint, headers, pathParams, request, response} from "@airtasker/spot";
-import {AuthenticationHeaders, Identifier, MalformedRequestErrorResponse, UnauthorizedErrorResponse} from "../../types";
+import {
+    AuthenticationHeaders,
+    Identifier,
+    MalformedRequestErrorResponse,
+    NotFoundErrorResponse,
+    UnauthorizedErrorResponse
+} from "../../types";
 import {Response} from "./types";
 
 /** Fetches a survey response by its unique identifier */
@@ -20,7 +26,7 @@ class QueryResponse {
 
     /** Resource not found */
     @response({ status: 404 })
-    notFoundResponse() {}
+    notFoundResponse(@body body: NotFoundErrorResponse) {}
 
     /** Malformed request */
     @response({ status: 400 })

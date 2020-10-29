@@ -28,14 +28,16 @@ class QuerySurveys {
 }
 
 interface QuerySurveysRequest {
-    /** Resource identifier for author of survey */
-    createdBy?: Identifier;
-    /** Resource identifier for participating users */
-    participatedBy?: Identifier;
-    /** Resource identifier for users not participating */
-    notParticipatedBy?: Identifier;
-    /** Resource identifier for users which need to update their answers */
-    needsAttentionBy?: Identifier;
+    /** Return only upcoming surveys */
+    isUpcoming?: boolean;
+    /** Return only completed surveys */
+    isCompleted?: boolean;
+    /** Return only surveys which have been modified by the owner after a response has been given */
+    requiresAttention?: boolean;
+    /** Return only surveys created by the authenticated user */
+    isOwnSurvey?: boolean;
+    /** Return only surveys the authenticated user has participated in */
+    didParticipateIn?: boolean;
 }
 
 interface QuerySurveysResult {

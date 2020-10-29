@@ -1,5 +1,11 @@
 import {body, endpoint, headers, pathParams, request, response} from "@airtasker/spot";
-import {AuthenticationHeaders, Identifier, MalformedRequestErrorResponse, UnauthorizedErrorResponse} from "../types";
+import {
+    AuthenticationHeaders,
+    Identifier,
+    MalformedRequestErrorResponse,
+    NotFoundErrorResponse,
+    UnauthorizedErrorResponse
+} from "../types";
 import {SurveyMetadata} from "./types";
 
 /** Ends the survey and notifies all participants */
@@ -10,7 +16,7 @@ import {SurveyMetadata} from "./types";
 })
 class CloseSurvey {
     @request
-    request(@headers headers: AuthenticationHeaders, @pathParams pathParams: { id: Identifier }) {}
+    request(@headers headers: AuthenticationHeaders, @pathParams pathParams: { id: Identifier }, @body body: CloseSurveyRequest) {}
 
     /** Survey closed */
     @response({ status: 200 })
@@ -20,7 +26,7 @@ class CloseSurvey {
 
     /** Resource not found */
     @response({ status: 404 })
-    notFoundResponse() {}
+    notFoundResponse(@body body: NotFoundErrorResponse) {}
 
     /** Malformed request */
     @response({ status: 400 })
@@ -31,3 +37,8 @@ class CloseSurvey {
     unauthorizedResponse(@body body: UnauthorizedErrorResponse) {}
 }
 
+interface CloseSurveyRequest {
+    operation: "close";
+    /** Unique resource identifier for the timeslot that is going to take effect */
+    selectedTimeslot: Identifier;
+}
