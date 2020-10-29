@@ -13,7 +13,7 @@ import static org.assertj.core.api.Assumptions.assumeThatCode;
 import static org.junit.jupiter.api.Assertions.*;
 
 @DataJpaTest
-class ResponseTest {
+public class ResponseTest {
 
     private static Response response;
     private static Long participationId;

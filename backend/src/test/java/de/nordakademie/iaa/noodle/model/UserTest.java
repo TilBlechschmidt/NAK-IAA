@@ -13,6 +13,7 @@ import static org.assertj.core.api.Assumptions.assumeThatCode;
 import static org.junit.jupiter.api.Assertions.*;
 
 @DataJpaTest
+public
 class UserTest {
     private static Long id;
     private static User user;
