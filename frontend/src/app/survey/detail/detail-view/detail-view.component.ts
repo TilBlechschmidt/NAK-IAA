@@ -7,9 +7,17 @@ import { Component, OnInit } from '@angular/core';
 })
 export class DetailViewComponent implements OnInit {
 
+   isEdit: boolean = false;
+   title: string = "";
+   description: string = "";
+
   constructor() { }
 
   ngOnInit(): void {
+  }
+
+  toggleEdit() {
+      this.isEdit = !this.isEdit;
   }
 
 }

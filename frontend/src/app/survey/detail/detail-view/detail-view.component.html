@@ -1,12 +1,23 @@
 <mat-card class="container">
     <div class="info">
-        <div class="title">
-            <h2>Nudeln essen</h2>
-            <span>Beschreibung: Wir essen zusammen Nudeln!</span>
+        <div class="title" *ngIf="!isEdit">
+            <h2>{{ title }}</h2>
+            <span>{{ description }}</span>
+        </div>
+        <div class="title" *ngIf="isEdit">
+            <mat-form-field class="form-field">
+                <mat-label>Title</mat-label>
+                <input matInput [(ngModel)]="title" name="title">
+            </mat-form-field>
+            <mat-form-field class="form-field">
+                <mat-label>Description</mat-label>
+                <textarea matInput [(ngModel)]="description" name="description"></textarea>
+            </mat-form-field>
         </div>
         <div class="edit">
-            <button mat-mini-fab color="primary" aria-label="Edit">
-                <mat-icon>edit</mat-icon>
+            <button mat-mini-fab color="accent" aria-label="Edit" (click)="toggleEdit()">
+                <mat-icon *ngIf="!isEdit">edit</mat-icon>
+                <mat-icon *ngIf="isEdit">visibility</mat-icon>
             </button>
         </div>
     </div>
