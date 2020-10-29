@@ -24,7 +24,7 @@ public class UserService {
     }
 
     public Optional<User> getUserByUserID(Long userID) {
-        return Optional.ofNullable(userRepository.findByid(userID));
+        return Optional.ofNullable(userRepository.findById(userID));
     }
 
     public User createNewUser(String email, String fullName, String passwordHash) {
