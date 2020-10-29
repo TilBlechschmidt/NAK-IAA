@@ -12,4 +12,9 @@ export class AppbarComponent implements OnInit {
   ngOnInit(): void {
   }
 
+  changeLanguage(code: string) {
+      localStorage.setItem('locale', code);
+      window.location.reload();
+  }
+
 }

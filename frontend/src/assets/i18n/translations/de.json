@@ -1,0 +1,42 @@
+{
+    "appbar": {
+        "title": "Noodle"
+    },
+    "auth": {
+        "name": "Name",
+        "email": "Email",
+        "password": "Passwort",
+        "password_confirmation": "Passwort Bestätigen",
+        "sign_in": {
+            "display": "Anmelden",
+            "welcome": "Schön dich wiederzusehen"
+        },
+        "sign_up": {
+            "display": "Registrieren",
+            "welcome": "Willkommen",
+            "greeting": "Erzähl uns etwas über dich",
+            "enter": {
+                "name": "Gib deinen Namen ein",
+                "email": "Gib deine E-Mail-Addresse ein"
+            },
+            "errors": {
+                "name_required": "Kein Name angegeben",
+                "invalid_mail": "Invalide Mailadresse",
+                "password_length": "Das Passwort muss zwischen 16 und 64 Zeichen besitzen",
+                "password_confirmation": "Passwörter stimmen nicht überein"
+            }
+        }
+    },
+    "survey": {
+        "title": "Titel",
+        "description": "Beschreibung",
+        "create": "Neue Terminumfrage erstellen",
+        "tabs": {
+            "dashboard": "Dashboard",
+            "fixed_appointments": "Feste Termine",
+            "my_surveys": "Meine Umfragen",
+            "answered_surveys": "Beantwortete Umfragen",
+            "open_surveys": "Offene Umfragen"
+        }
+    }
+}

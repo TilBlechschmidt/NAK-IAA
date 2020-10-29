@@ -1,14 +1,14 @@
 <mat-card class="card">
-    <h1 class="greeting">Nice to see you again</h1>
+    <h1 class="greeting">{{ "auth.sign_in.welcome" | translate }}</h1>
     <form class="auth-form">
         <mat-form-field class="auth-full-width">
-            <mat-label>E-Mail</mat-label>
-            <input matInput placeholder="E-Mail">
+            <mat-label>{{ "auth.email" | translate }}</mat-label>
+            <input matInput placeholder='{{ "auth.email" | translate }}'>
         </mat-form-field>
         <mat-form-field class="auth-full-width">
-            <mat-label>Password</mat-label>
-            <input matInput placeholder="Password">
+            <mat-label>{{ "auth.password" | translate }}</mat-label>
+            <input matInput placeholder='{{ "auth.password" | translate }}'>
         </mat-form-field>
     </form>
-    <button mat-raised-button color="primary" class="button">Sign in</button>
+    <button mat-raised-button color="primary" class="button">{{ "auth.sign_in.display" | translate }}</button>
 </mat-card>

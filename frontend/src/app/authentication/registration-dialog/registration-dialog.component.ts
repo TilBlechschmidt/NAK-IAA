@@ -17,7 +17,7 @@ export class RegistrationDialogComponent implements OnInit {
             email: new FormControl('', [Validators.required, Validators.email]),
             password: new FormControl('', [Validators.required, Validators.minLength(16), Validators.maxLength(64)]),
             passwordConfirmation: new FormControl('', [Validators.required])
-        }, {validator: this.checkPasswords});
+        }, );
     }
 
     ngOnInit(): void {
@@ -47,13 +47,9 @@ export class RegistrationDialogComponent implements OnInit {
     }
 
     isConfirmationPasswordMatching() : boolean {
+        console.log(this.form.get('password')?.value === this.form.get('passwordConfirmation')?.value);
         return this.form.get('password')?.value === this.form.get('passwordConfirmation')?.value;
     }
 
-    checkPasswords(group: FormGroup) {
-        let pass = group.get('password')?.value;
-        let confirmPass = group.get('passwordConfirmation')?.value;
-        return pass === confirmPass ? null : {notSame: true}
-    }
 }
 

@@ -3,9 +3,14 @@
         <div [routerLink]="'survey'" class="logo">
             <!--Icons made by <a href="https://www.flaticon.com/authors/iconixar" title="iconixar">iconixar</a> from <a href="https://www.flaticon.com/" title="Flaticon"> www.flaticon.com</a>-->
             <img class="image" src="assets/noodle.svg" alt="Logo" />
-            <span>Noodle</span>
+            <span>{{ 'appbar.title' | translate }}</span>
         </div>
         <div>
+            <button mat-button [matMenuTriggerFor]="menu"><mat-icon>language</mat-icon></button>
+            <mat-menu #menu="matMenu">
+                <button mat-menu-item (click)="changeLanguage('en')">English</button>
+                <button mat-menu-item (click)="changeLanguage('de')">Deutsch</button>
+            </mat-menu>
             <app-authentication-button></app-authentication-button>
             <app-registration-button></app-registration-button>
         </div>

@@ -2,12 +2,12 @@
     <form class="create-survey">
         <mat-form-field>
             <mat-label>Title</mat-label>
-            <input matInput [(ngModel)]="data.title" placeholder="Title">
+            <input matInput [(ngModel)]="data.title" placeholder='{{ "survey.title" | translate }}'>
         </mat-form-field>
 
         <mat-form-field>
             <mat-label>Description</mat-label>
-            <textarea matInput placeholder="Description"></textarea>
+            <textarea matInput placeholder='{{ "survey.description" | translate }}'></textarea>
         </mat-form-field>
     </form>
 </div>
