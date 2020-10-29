@@ -26,13 +26,7 @@ class SurveyTest {
         User testUser = TestUtil.requireEntity(UserTest::testUser, entityManager);
         userId = testUser.getId();
 
-        return new Survey(new HashSet<>(), testUser, new HashSet<>(), "title", "description");
-    }
-
-    @AfterEach
-    void tearDown() {
-        entityManager.flush();
-        entityManager.clear();
+        return new Survey(new HashSet<>(), null, testUser, new HashSet<>(), "title", "description");
     }
 
     @Test
@@ -73,6 +67,12 @@ class SurveyTest {
         assertNotNull(entityManager.find(Survey.class, id));
         entityManager.remove(survey);
         assertNull(entityManager.find(Survey.class, id));
+    }
+
+    @AfterEach
+    void tearDown() {
+        entityManager.flush();
+        entityManager.clear();
     }
 }
 

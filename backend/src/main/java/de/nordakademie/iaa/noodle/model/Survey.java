@@ -13,6 +13,9 @@ public class Survey {
     @OneToMany(mappedBy = "survey", cascade = CascadeType.ALL, orphanRemoval = true)
     private Set<Timeslot> timeslots;
 
+    @OneToOne(cascade = CascadeType.ALL, optional = true)
+    private Timeslot chosenTimeslot;
+
     @ManyToOne(optional = false)
     private User creator;
 
@@ -28,8 +31,9 @@ public class Survey {
     public Survey() {
     }
 
-    public Survey(Set<Timeslot> timeslots, User creator, Set<Participation> participations, String title, String description) {
+    public Survey(Set<Timeslot> timeslots, Timeslot chosenTimeslot, User creator, Set<Participation> participations, String title, String description) {
         this.timeslots = timeslots;
+        this.chosenTimeslot = chosenTimeslot;
         this.creator = creator;
         this.participations = participations;
         this.title = title;
