@@ -25,7 +25,7 @@ import { CreateSurveyDialogComponent } from './survey/create/create-survey-dialo
 import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 import { MatDialogModule } from '@angular/material/dialog';
 import { HttpClient, HttpClientModule } from '@angular/common/http';
-import {TranslateModule, TranslateService, TranslateStore} from '@ngx-translate/core';
+import {TranslateModule, TranslateService} from '@ngx-translate/core';
 import {forkJoin, of} from 'rxjs';
 import { catchError } from 'rxjs/operators';
 import {MatMenuModule} from '@angular/material/menu';

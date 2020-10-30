@@ -4,7 +4,6 @@ import {DetailViewComponent} from '../detail-view/detail-view.component';
 import {SurveysService} from '../../../api/services/surveys.service';
 import {Identifier} from '../../../api/models';
 import {Router} from '@angular/router';
-import {TokenService} from '../../../authentication/service/token.service';
 
 @Component({
     selector: 'app-delete-survey',
@@ -17,7 +16,7 @@ export class DeleteSurveyComponent implements OnInit {
 
     constructor(public dialogRef: MatDialogRef<DetailViewComponent>,
                 @Inject(MAT_DIALOG_DATA) public data: DialogData,
-                public service: SurveysService, public router: Router, private tokenService: TokenService) {
+                public service: SurveysService, public router: Router) {
     }
 
     ngOnInit(): void {

@@ -3,7 +3,6 @@ import {SurveysService} from '../../../api/services/surveys.service';
 import {Router} from '@angular/router';
 import {MatDialog} from '@angular/material/dialog';
 import {DeleteSurveyComponent} from '../delete-survey/delete-survey.component';
-import {TokenService} from '../../../authentication/service/token.service';
 
 @Component({
     selector: 'app-detail-view',
@@ -17,7 +16,7 @@ export class DetailViewComponent implements OnInit {
     description = '';
     saveError = false;
 
-    constructor(public service: SurveysService, public router: Router, public dialog: MatDialog, private tokenService: TokenService) {
+    constructor(public service: SurveysService, public router: Router, public dialog: MatDialog) {
     }
 
     ngOnInit(): void {
