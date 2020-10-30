@@ -1,5 +1,5 @@
-import {body, headers, endpoint, request, response} from "@airtasker/spot";
-import {AuthenticationHeaders, Identifier, MalformedRequestErrorResponse, UnauthorizedErrorResponse} from "../types";
+import {body, endpoint, request, response} from "@airtasker/spot";
+import {Identifier, MalformedRequestErrorResponse, UnauthorizedErrorResponse} from "../types";
 import {SurveyMetadata} from "./types";
 
 /** Creates a new survey for other users to participate */
@@ -10,7 +10,7 @@ import {SurveyMetadata} from "./types";
 })
 class CreateSurvey {
     @request
-    request(@headers headers: AuthenticationHeaders, @body body: CreateSurveyRequest) {}
+    request(@body body: CreateSurveyRequest) {}
 
     /** Survey created */
     @response({ status: 201 })

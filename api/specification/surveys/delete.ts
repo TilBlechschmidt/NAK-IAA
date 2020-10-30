@@ -1,6 +1,5 @@
-import {body, endpoint, headers, pathParams, request, response} from "@airtasker/spot";
+import {body, endpoint, pathParams, request, response} from "@airtasker/spot";
 import {
-    AuthenticationHeaders,
     Identifier,
     MalformedRequestErrorResponse,
     NotFoundErrorResponse,
@@ -16,7 +15,7 @@ import {SurveyMetadata} from "./types";
 })
 class DeleteSurvey {
     @request
-    request(@headers headers: AuthenticationHeaders, @pathParams pathParams: DeleteSurveyRequest) {}
+    request(@pathParams pathParams: DeleteSurveyRequest) {}
 
     /** Survey deleted */
     @response({ status: 204 })

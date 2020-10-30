@@ -1,6 +1,6 @@
-import {body, endpoint, headers, Int32, queryParams, request, response} from "@airtasker/spot";
-import {AuthenticationHeaders, Identifier, MalformedRequestErrorResponse, UnauthorizedErrorResponse} from "../types";
-import {SurveyMetadata, SurveyTitle} from "./types";
+import {body, endpoint, Int32, queryParams, request, response} from "@airtasker/spot";
+import {Identifier, MalformedRequestErrorResponse, UnauthorizedErrorResponse} from "../types";
+import {SurveyTitle} from "./types";
 
 /** Retrieves a list of survey metadata with optional filters */
 @endpoint({
@@ -10,7 +10,7 @@ import {SurveyMetadata, SurveyTitle} from "./types";
 })
 class QuerySurveys {
     @request
-    request(@headers headers: AuthenticationHeaders, @queryParams queryParams: QuerySurveysRequest) {}
+    request(@queryParams queryParams: QuerySurveysRequest) {}
 
     /** OK */
     @response({ status: 200 })

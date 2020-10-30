@@ -1,6 +1,5 @@
-import {body, endpoint, headers, pathParams, request, response} from "@airtasker/spot";
+import {body, endpoint, pathParams, request, response} from "@airtasker/spot";
 import {
-    AuthenticationHeaders,
     Identifier,
     MalformedRequestErrorResponse,
     NotFoundErrorResponse,
@@ -16,7 +15,7 @@ import {Survey} from "./types";
 })
 class QuerySurvey {
     @request
-    request(@headers headers: AuthenticationHeaders, @pathParams pathParams: QuerySurveyRequest) {}
+    request(@pathParams pathParams: QuerySurveyRequest) {}
 
     /** OK */
     @response({ status: 200 })

@@ -1,5 +1,5 @@
-import {body, headers, endpoint, request, response, pathParams} from "@airtasker/spot";
-import {AuthenticationHeaders, Identifier, MalformedRequestErrorResponse, UnauthorizedErrorResponse} from "../../types";
+import {body, endpoint, request, response, pathParams} from "@airtasker/spot";
+import {Identifier, MalformedRequestErrorResponse, UnauthorizedErrorResponse} from "../../types";
 import {Response, ResponseValue} from "./types";
 
 /** Responds to an existing survey as the user associated with the provided credentials */
@@ -10,7 +10,7 @@ import {Response, ResponseValue} from "./types";
 })
 class CreateResponse {
     @request
-    request(@headers headers: AuthenticationHeaders, @pathParams pathParams: CreateResponsePathParams, @body body: CreateResponseRequest) {}
+    request(@pathParams pathParams: CreateResponsePathParams, @body body: CreateResponseRequest) {}
 
     /** Response submitted */
     @response({ status: 201 })

@@ -1,0 +1,14 @@
+{
+    "schemes": {
+        "user": {
+            "type": "apiKey",
+            "description": "[RFC 7519](https://tools.ietf.org/html/rfc7519) compliant authentication token created by the server. Used to identify the user making the request.",
+            "in": "header",
+            "name": "Authorization"
+        }
+    },
+    "defaultScheme": "user",
+    "overrides": {
+        "CreateUser": []
+    }
+}

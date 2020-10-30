@@ -1,6 +1,5 @@
-import {body, endpoint, headers, pathParams, request, response} from "@airtasker/spot";
+import {body, endpoint, pathParams, request, response} from "@airtasker/spot";
 import {
-    AuthenticationHeaders,
     Identifier,
     MalformedRequestErrorResponse,
     NotFoundErrorResponse,
@@ -16,7 +15,7 @@ import {SurveyMetadata} from "./types";
 })
 class CloseSurvey {
     @request
-    request(@headers headers: AuthenticationHeaders, @pathParams pathParams: { id: Identifier }, @body body: CloseSurveyRequest) {}
+    request(@pathParams pathParams: { id: Identifier }, @body body: CloseSurveyRequest) {}
 
     /** Survey closed */
     @response({ status: 200 })

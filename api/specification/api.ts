@@ -1,6 +1,6 @@
 import {api, config} from "@airtasker/spot";
 
-import './users/create';
+import './account/create';
 import './surveys/create';
 import './surveys/query';
 import './surveys/get';
@@ -10,7 +10,6 @@ import './surveys/close';
 import './surveys/responses/create';
 import './surveys/responses/get';
 import './surveys/responses/update';
-import './auth';
 
 @api({
     name: "AppointmentPlanner",
