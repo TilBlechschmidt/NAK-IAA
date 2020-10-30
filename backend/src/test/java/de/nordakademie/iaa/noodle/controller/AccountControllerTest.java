@@ -2,7 +2,7 @@ package de.nordakademie.iaa.noodle.controller;
 
 import de.nordakademie.iaa.noodle.api.model.*;
 import de.nordakademie.iaa.noodle.model.User;
-import de.nordakademie.iaa.noodle.services.AuthenticatedUser;
+import de.nordakademie.iaa.noodle.services.model.AuthenticatedUser;
 import de.nordakademie.iaa.noodle.services.SignInService;
 import de.nordakademie.iaa.noodle.services.SignUpService;
 import org.junit.jupiter.api.BeforeEach;

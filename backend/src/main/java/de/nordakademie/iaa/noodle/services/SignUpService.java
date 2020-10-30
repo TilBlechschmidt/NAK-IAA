@@ -2,6 +2,7 @@ package de.nordakademie.iaa.noodle.services;
 
 import de.nordakademie.iaa.noodle.filter.NoodleException;
 import de.nordakademie.iaa.noodle.model.User;
+import de.nordakademie.iaa.noodle.services.model.UserDetails;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.mail.MailException;
 import org.springframework.stereotype.Component;
@@ -43,7 +44,7 @@ public class SignUpService {
 
     private Optional<User> createUser(String password, UserDetails userDetails) {
         String passwordHash = passwordService.hashPassword(password);
-        User user = userService.createNewUser(userDetails.email, userDetails.fullName, passwordHash);
+        User user = userService.createNewUser(userDetails.getEmail(), userDetails.getFullName(), passwordHash);
         return Optional.of(user);
     }
 }

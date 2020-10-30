@@ -4,7 +4,7 @@ import de.nordakademie.iaa.noodle.api.AccountApi;
 import de.nordakademie.iaa.noodle.api.model.*;
 import de.nordakademie.iaa.noodle.filter.NoodleException;
 import de.nordakademie.iaa.noodle.model.User;
-import de.nordakademie.iaa.noodle.services.AuthenticatedUser;
+import de.nordakademie.iaa.noodle.services.model.AuthenticatedUser;
 import de.nordakademie.iaa.noodle.services.SignInService;
 import de.nordakademie.iaa.noodle.services.SignUpService;
 import org.springframework.beans.factory.annotation.Autowired;

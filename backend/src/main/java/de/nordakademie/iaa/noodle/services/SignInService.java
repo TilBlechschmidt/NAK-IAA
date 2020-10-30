@@ -1,6 +1,8 @@
 package de.nordakademie.iaa.noodle.services;
 
 import de.nordakademie.iaa.noodle.model.User;
+import de.nordakademie.iaa.noodle.services.model.AuthenticatedUser;
+import de.nordakademie.iaa.noodle.services.model.SpringAuthenticationDetails;
 import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
 import org.springframework.security.core.Authentication;
 import org.springframework.security.core.authority.SimpleGrantedAuthority;
@@ -40,9 +42,9 @@ public class SignInService {
     }
 
     private Optional<Authentication> springAuthenticationFromDetails(SpringAuthenticationDetails details) {
-        return Optional.of(details.userID)
+        return Optional.of(details.getUserID())
             .flatMap(userService::getUserByUserID)
-            .map(user -> buildSpringAuthentication(user, details.authorities));
+            .map(user -> buildSpringAuthentication(user, details.getAuthorities()));
     }
 
     private AuthenticatedUser authenticateUser(User user) {

@@ -1,4 +1,4 @@
-package de.nordakademie.iaa.noodle.services;
+package de.nordakademie.iaa.noodle.services.model;
 
 import de.nordakademie.iaa.noodle.model.User;
 

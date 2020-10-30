@@ -1,6 +1,8 @@
 package de.nordakademie.iaa.noodle.services;
 
 import de.nordakademie.iaa.noodle.model.User;
+import de.nordakademie.iaa.noodle.services.model.SpringAuthenticationDetails;
+import de.nordakademie.iaa.noodle.services.model.UserDetails;
 import io.jsonwebtoken.Claims;
 import io.jsonwebtoken.JwtBuilder;
 import io.jsonwebtoken.Jwts;
