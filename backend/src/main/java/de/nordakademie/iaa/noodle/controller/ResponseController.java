@@ -9,17 +9,17 @@ import org.springframework.web.bind.annotation.RestController;
 @RestController
 public class ResponseController implements ResponsesApi {
     @Override
-    public ResponseEntity<Response> createResponse(Integer surveyID, String authorization, CreateResponseRequest createResponseRequest) {
+    public ResponseEntity<Response> createResponse(Integer surveyID, CreateResponseRequest createResponseRequest) {
         return null;
     }
 
     @Override
-    public ResponseEntity<Response> queryResponse(Integer responseID, Integer surveyID, String authorization) {
+    public ResponseEntity<Response> queryResponse(Integer responseID, Integer surveyID) {
         return null;
     }
 
     @Override
-    public ResponseEntity<Response> updateResponse(Integer responseID, Integer surveyID, String authorization, CreateResponseRequest createResponseRequest) {
+    public ResponseEntity<Response> updateResponse(Integer responseID, Integer surveyID, CreateResponseRequest createResponseRequest) {
         return null;
     }
 }

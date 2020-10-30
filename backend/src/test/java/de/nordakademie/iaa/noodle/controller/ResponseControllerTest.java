@@ -20,20 +20,20 @@ public class ResponseControllerTest {
     @Test
     public void testCreateResponse() {
         CreateResponseRequest request = mock(CreateResponseRequest.class);
-        ResponseEntity<Response> response = responseController.createResponse(42, "Fake", request);
+        ResponseEntity<Response> response = responseController.createResponse(42, request);
         assertNull(response);
     }
 
     @Test
     public void testQueryResponse() {
-        ResponseEntity<Response> response = responseController.queryResponse(42, 43, "Fake");
+        ResponseEntity<Response> response = responseController.queryResponse(42, 43);
         assertNull(response);
     }
 
     @Test
     public void testUpdateResponse() {
         CreateResponseRequest request = mock(CreateResponseRequest.class);
-        ResponseEntity<Response> response = responseController.updateResponse(42, 43, "Fake", request);
+        ResponseEntity<Response> response = responseController.updateResponse(42, 43, request);
         assertNull(response);
     }
 }

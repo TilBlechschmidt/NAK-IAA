@@ -23,27 +23,27 @@ public class SurveyControllerTest {
     @Test
     public void testCloseSurvey() {
         CloseSurveyRequest closeSurveyRequest = new CloseSurveyRequest();
-        ResponseEntity<SurveyMetadata> response = surveyController.closeSurvey(42, "Fake", closeSurveyRequest);
+        ResponseEntity<SurveyMetadata> response = surveyController.closeSurvey(42, closeSurveyRequest);
         assertNull(response);
     }
 
     @Test
     public void testCreateSurvey() {
         CreateSurveyRequest createSurveyRequest = mock(CreateSurveyRequest.class);
-        ResponseEntity<CreateSurveyResponse> response = surveyController.createSurvey("Fake", createSurveyRequest);
+        ResponseEntity<CreateSurveyResponse> response = surveyController.createSurvey(createSurveyRequest);
         assertNull(response);
     }
 
     @Test
     public void testDeleteSurvey() {
-        ResponseEntity<SurveyMetadata> response = surveyController.deleteSurvey(42, "Fake");
+        ResponseEntity<SurveyMetadata> response = surveyController.deleteSurvey(42);
         assertNull(response);
     }
 
 
     @Test
     public void testQuerySurvey() {
-        ResponseEntity<Survey> response = surveyController.querySurvey(42, "Fake");
+        ResponseEntity<Survey> response = surveyController.querySurvey(42);
         Survey survey = response.getBody();
 
         assertEquals(HttpStatus.OK, response.getStatusCode());
@@ -56,14 +56,14 @@ public class SurveyControllerTest {
 
     @Test
     public void testQuerySurveys() {
-        ResponseEntity<QuerySurveysResponse> response = surveyController.querySurveys("Fake", empty(), empty(), empty(), empty(), empty());
+        ResponseEntity<QuerySurveysResponse> response = surveyController.querySurveys(empty(), empty(), empty(), empty(), empty());
         assertNull(response);
     }
 
     @Test
     public void testUpdateSurvey() {
         SurveyMetadata surveyMetadata = mock(SurveyMetadata.class);
-        ResponseEntity<SurveyMetadata> response = surveyController.updateSurvey(42, "Fake", surveyMetadata);
+        ResponseEntity<SurveyMetadata> response = surveyController.updateSurvey(42, surveyMetadata);
         assertNull(response);
     }
 }
