@@ -13,22 +13,22 @@ import java.util.Optional;
 public class SurveyController implements SurveysApi {
 
     @Override
-    public ResponseEntity<SurveyMetadata> closeSurvey(Integer id, String authorization, CloseSurveyRequest closeSurveyRequest) {
+    public ResponseEntity<SurveyMetadata> closeSurvey(Integer id, CloseSurveyRequest closeSurveyRequest) {
         return null;
     }
 
     @Override
-    public ResponseEntity<CreateSurveyResponse> createSurvey(String authorization, CreateSurveyRequest createSurveyRequest) {
+    public ResponseEntity<CreateSurveyResponse> createSurvey(CreateSurveyRequest createSurveyRequest) {
         return null;
     }
 
     @Override
-    public ResponseEntity<SurveyMetadata> deleteSurvey(Integer id, String authorization) {
+    public ResponseEntity<SurveyMetadata> deleteSurvey(Integer id) {
         return null;
     }
 
     @Override
-    public ResponseEntity<Survey> querySurvey(Integer id, String authorization) {
+    public ResponseEntity<Survey> querySurvey(Integer id) {
         Survey survey = new Survey();
         survey.setTitle("This is the title for " + id + ".");
         survey.setDescription("This is the description");
@@ -40,12 +40,12 @@ public class SurveyController implements SurveysApi {
     }
 
     @Override
-    public ResponseEntity<QuerySurveysResponse> querySurveys(String authorization, Optional<Boolean> didParticipateIn, Optional<Boolean> isCompleted, Optional<Boolean> isOwnSurvey, Optional<Boolean> isUpcoming, Optional<Boolean> requiresAttention) {
+    public ResponseEntity<QuerySurveysResponse> querySurveys(Optional<Boolean> didParticipateIn, Optional<Boolean> isCompleted, Optional<Boolean> isOwnSurvey, Optional<Boolean> isUpcoming, Optional<Boolean> requiresAttention) {
         return null;
     }
 
     @Override
-    public ResponseEntity<SurveyMetadata> updateSurvey(Integer id, String authorization, SurveyMetadata surveyMetadata) {
+    public ResponseEntity<SurveyMetadata> updateSurvey(Integer id, SurveyMetadata surveyMetadata) {
         return null;
     }
 }

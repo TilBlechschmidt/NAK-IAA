@@ -1,6 +1,6 @@
 package de.nordakademie.iaa.noodle.controller;
 
-import de.nordakademie.iaa.noodle.api.AuthenticationApi;
+import de.nordakademie.iaa.noodle.api.AccountApi;
 import de.nordakademie.iaa.noodle.api.model.AuthenticatedResponse;
 import de.nordakademie.iaa.noodle.api.model.AuthenticationRequest;
 import de.nordakademie.iaa.noodle.api.model.CreateUserRequest;
@@ -9,7 +9,7 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.RestController;
 
 @RestController
-public class AuthenticationController implements AuthenticationApi {
+public class AuthenticationController implements AccountApi {
     @Override
     public ResponseEntity<AuthenticatedResponse> authenticate(AuthenticationRequest authenticationRequest) {
         return null;
