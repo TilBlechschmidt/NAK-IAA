@@ -23,7 +23,7 @@ export interface SurveyMetadata {
     timeslots: Timeslot[];
 
     /** Final timeslot that has been selected by the creator */
-    selectedTimeslot: Timeslot;
+    selectedTimeslot?: Timeslot;
 
     /** Whether the survey has been closed */
     isClosed: boolean;
