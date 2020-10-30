@@ -1,6 +1,5 @@
-import {body, endpoint, headers, pathParams, request, response} from "@airtasker/spot";
+import {body, endpoint, pathParams, request, response} from "@airtasker/spot";
 import {
-    AuthenticationHeaders,
     Identifier,
     MalformedRequestErrorResponse,
     NotFoundErrorResponse,
@@ -17,7 +16,7 @@ import {CreateSurveyErrorResponse} from "./create";
 })
 class UpdateSurvey {
     @request
-    request(@headers headers: AuthenticationHeaders, @pathParams pathParams: { id: Identifier }, @body body: SurveyMetadata) {}
+    request(@pathParams pathParams: { id: Identifier }, @body body: SurveyMetadata) {}
 
     /** Survey updated */
     @response({ status: 200 })

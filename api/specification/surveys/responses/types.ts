@@ -1,5 +1,5 @@
 import {Identifier} from "../../types";
-import {IdentifiableUser} from "../../users/types";
+import {IdentifiableUser} from "../../account/types";
 
 export interface ResponseValue {
     timeslotID: Identifier;

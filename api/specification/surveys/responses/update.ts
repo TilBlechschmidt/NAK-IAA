@@ -1,12 +1,11 @@
-import {body, headers, endpoint, request, response, pathParams} from "@airtasker/spot";
+import {body, endpoint, request, response, pathParams} from "@airtasker/spot";
 import {
-    AuthenticationHeaders,
     Identifier,
     MalformedRequestErrorResponse,
     NotFoundErrorResponse,
     UnauthorizedErrorResponse
 } from "../../types";
-import {Response, ResponseValue} from "./types";
+import {Response} from "./types";
 import {CreateResponseErrorResponse, CreateResponseRequest} from "./create";
 
 /** Updates an existing response */
@@ -17,7 +16,7 @@ import {CreateResponseErrorResponse, CreateResponseRequest} from "./create";
 })
 class UpdateResponse {
     @request
-    request(@headers headers: AuthenticationHeaders, @pathParams pathParams: UpdateResponsePathParams, @body body: CreateResponseRequest) {}
+    request(@pathParams pathParams: UpdateResponsePathParams, @body body: CreateResponseRequest) {}
 
     /** Response submitted */
     @response({ status: 201 })

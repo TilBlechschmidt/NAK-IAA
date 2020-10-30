@@ -1,12 +1,12 @@
 import {endpoint, request, body, response} from "@airtasker/spot";
-import {JWT, MalformedRequestErrorResponse, UnauthorizedErrorResponse} from "./types";
-import {EMail, Password, User} from "./users/types";
+import {JWT, MalformedRequestErrorResponse, UnauthorizedErrorResponse} from "../types";
+import {EMail, Password, User} from "./types";
 
 /** Generates credentials to make authenticated requests with a limited lifetime */
 @endpoint({
     method: "POST",
     path: "/authenticate",
-    tags: ["Authentication"]
+    tags: ["Account"]
 })
 class Authenticate {
     @request

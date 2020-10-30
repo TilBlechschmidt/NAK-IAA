@@ -1,12 +1,11 @@
 import {body, endpoint, request, response} from "@airtasker/spot";
 import {IdentifiableUser, Password, User} from "./types";
-import {Identifier} from "../types";
 
 /** Registers a new user account */
 @endpoint({
     method: "POST",
     path: "/users",
-    tags: ["Authentication"]
+    tags: ["Account"]
 })
 class CreateUser {
     @request
