@@ -39,6 +39,8 @@ jobs:
                   path: backend/build/libs
             - name: Test backend
               working-directory: ./backend
+              env:
+                  SPRING_PROFILES_ACTIVE: test
               run: ./gradlew test
 
             # Frontend sub-task
