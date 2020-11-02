@@ -7,12 +7,15 @@ export type EMail = String;
 /** 32 character ASCII string representing the SHA-512 hash of a users password */
 export type Password = String;
 
-export interface User {
-    email: EMail;
+interface NamedUser {
     /** Full name of the associated person */
     name: String;
 }
 
-export interface IdentifiableUser extends User {
+export interface User extends NamedUser {
+    email: EMail;
+}
+
+export interface IdentifiableUser extends NamedUser {
     id: Identifier;
 }
