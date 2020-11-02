@@ -1,6 +1,8 @@
 package de.nordakademie.iaa.noodle.dao;
 
 import de.nordakademie.iaa.noodle.model.Response;
+import org.springframework.data.jpa.repository.EntityGraph;
+import org.springframework.data.jpa.repository.Query;
 import org.springframework.data.repository.RepositoryDefinition;
 import org.springframework.stereotype.Repository;
 import org.springframework.transaction.annotation.Propagation;
@@ -12,7 +14,16 @@ import java.util.List;
 @RepositoryDefinition(idClass = Long.class, domainClass = Response.class)
 @Transactional(propagation = Propagation.REQUIRED)
 public interface ResponseRepository {
-    Response findById(Long id);
+
+    @Query("SELECT response FROM Response response WHERE response.id = ?1 AND response.participation.survey.id = ?2")
+    @EntityGraph(attributePaths = {
+        "participation",
+        "participation.survey",
+        "participation.survey.creator",
+        "participation.participant",
+        "responseTimeslots"
+    })
+    Response findByIdAndSurveyId(Long id, Long surveyId);
 
     /**
      * @deprecated For extensibility Reasons, please use {@link #findBySurveyId(Long)}
