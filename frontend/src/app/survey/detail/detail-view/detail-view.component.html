@@ -25,6 +25,8 @@
     <div class="buttonWithErrorMsg">
         <mat-error *ngIf="saveError">{{ "survey.errors.saveError" | translate }}</mat-error>
         <div class="buttons">
+            <button mat-raised-button class="button"
+                    [routerLink]="'/survey'">{{ "back" | translate }}</button>
             <button mat-raised-button color="warn" class="button"
                     (click)="delete()">{{ "survey.delete" | translate }}</button>
             <button mat-raised-button color="primary" class="button"

@@ -36,6 +36,7 @@ import {DetailViewComponent} from './survey/detail/detail-view/detail-view.compo
 import {SurveyTabViewComponent} from './survey/survey-tab-view/survey-tab-view.component';
 import {AccountService} from './api/services/account.service';
 import { AbstractSurveyTableComponent } from './survey/tabs/abstract-survey-table/abstract-survey-table.component';
+import { EditSurveyWarnComponent } from './survey/detail/edit-view/edit-survey-warn.component';
 
 
 export function initApp(http: HttpClient, translate: TranslateService): () => Promise<boolean>{
@@ -88,7 +89,8 @@ export function initApp(http: HttpClient, translate: TranslateService): () => Pr
         CreateSurveyDialogComponent,
         DeleteSurveyComponent,
         LogoutButtonComponent,
-        AbstractSurveyTableComponent
+        AbstractSurveyTableComponent,
+        EditSurveyWarnComponent
     ],
     imports: [
         BrowserModule,

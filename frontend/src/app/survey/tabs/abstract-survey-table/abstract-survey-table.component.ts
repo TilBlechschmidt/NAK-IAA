@@ -19,8 +19,8 @@ export class AbstractSurveyTableComponent implements OnInit {
 
     mockData: QuerySurveysResult[] =
         [{id: 1, title: 'Fest', participantCount: 4},
-         {id: 1, title: 'Fest2', participantCount: 6},
-         {id: 1, title: 'Fest3', participantCount: 8}];
+         {id: 2, title: 'Fest2', participantCount: 6},
+         {id: 3, title: 'Fest3', participantCount: 8}];
 
     constructor(protected surveysService: SurveysService, protected tokenService: TokenService) {}
 

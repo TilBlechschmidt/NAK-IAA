@@ -1,4 +1,5 @@
 {
+    "back": "Back",
     "appbar": {
         "title": "Noodle"
     },
@@ -36,6 +37,9 @@
         "create": "Create New Survey",
         "delete": "Delete",
         "save": "Save",
+        "edit": "Edit",
+        "edit_warning": "Do you really want to edit this survey? All participants have to answer them again!",
+        "edited": "The survey \"{{ title }}\" was edited. You have answer the again",
         "tabs": {
             "dashboard": "Dashboard",
             "fixed_appointments": "Fixed Appointments",
@@ -46,7 +50,8 @@
         "delete_confirmation": "Do you really want to delete survey \"{{title}}\"?",
         "errors": {
             "editError": "An error has occurred while editing",
-            "deleteError": "An error has occurred while deleting"
+            "deleteError": "An error has occurred while deleting",
+            "saveError": "An error has occurred while saving"
         }
     }
 }

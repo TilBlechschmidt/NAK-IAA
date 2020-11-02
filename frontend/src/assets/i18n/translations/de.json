@@ -1,4 +1,5 @@
 {
+    "back": "Zurück",
     "appbar": {
         "title": "Noodle"
     },
@@ -36,6 +37,9 @@
         "create": "Neue Terminumfrage erstellen",
         "delete": "Löschen",
         "save": "Speichern",
+        "edit": "Bearbeiten",
+        "edit_warning": "Möchtest du die Terminumfrage wirklich bearbeiten? Alle Teilnehmer müssen sie dann nochmals ausfüllen",
+        "edited": "Die Terminumfrage \"{{ title }}\" wurde bearbeitet. Du musst sie nochmals beantworten",
         "tabs": {
             "dashboard": "Dashboard",
             "fixed_appointments": "Feste Termine",
@@ -46,7 +50,8 @@
         "delete_confirmation": "Möchtest du wirklich die Terminumfrage \"{{title}}\" löschen?",
         "errors": {
             "editError": "Es ist ein Fehler beim Bearbeiten aufgetreten",
-            "deleteError": "Es ist ein Fehler beim Löschen aufgetreten"
+            "deleteError": "Es ist ein Fehler beim Löschen aufgetreten",
+            "saveError": "Es ist ein Fehler beim Speichern aufgetreten"
         }
     }
 }

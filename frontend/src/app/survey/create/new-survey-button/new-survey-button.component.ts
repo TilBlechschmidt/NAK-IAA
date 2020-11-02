@@ -18,15 +18,10 @@ export class NewSurveyButtonComponent implements OnInit {
   }
 
   openDialog(): void {
-      const dialogRef = this.dialog.open(CreateSurveyDialogComponent, {
-          width: '250px',
-          data: {title: this.title, description: this.description}
+      this.dialog.open(CreateSurveyDialogComponent, {
+          width: '300px'
       });
 
-      dialogRef.afterClosed().subscribe(result => {
-          this.title = result.title;
-          this.description = result.description;
-      });
   }
 
 }

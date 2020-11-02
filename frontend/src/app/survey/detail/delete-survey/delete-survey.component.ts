@@ -31,7 +31,6 @@ export class DeleteSurveyComponent implements OnInit {
             id: this.data.id
         }).subscribe(next => this.router.navigateByUrl('survey'), error => this.deleteError = true);
     }
-
 }
 
 interface DialogData {
