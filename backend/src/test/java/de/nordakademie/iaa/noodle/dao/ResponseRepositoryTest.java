@@ -24,9 +24,15 @@ class ResponseRepositoryTest {
     // CHECK data.sql for the TestData referenced here.
 
     @Test
-    public void findByIdTest() {
-        response = responseRepository.findById(15L);
+    public void findByIdAndSurveyIdTest() {
+        response = responseRepository.findByIdAndSurveyId(15L, 5L);
         assertEquals(12, response.getParticipation().getId());
+    }
+
+    @Test
+    public void findByIdAndSurveyIdMismatchedSurveyIDTest() {
+        response = responseRepository.findByIdAndSurveyId(15L, 6L);
+        assertNull(response);
     }
 
     @Test
