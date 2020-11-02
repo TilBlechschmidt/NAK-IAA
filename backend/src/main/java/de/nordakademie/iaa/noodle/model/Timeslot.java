@@ -10,7 +10,7 @@ public class Timeslot {
     @GeneratedValue
     private Long id;
 
-    @ManyToOne(optional = false)
+    @ManyToOne(optional = false, fetch = FetchType.LAZY)
     private Survey survey;
 
     @Temporal(TemporalType.TIMESTAMP)

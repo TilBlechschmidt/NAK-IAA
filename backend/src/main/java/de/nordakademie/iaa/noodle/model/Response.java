@@ -10,10 +10,10 @@ public class Response {
     @GeneratedValue
     private Long id;
 
-    @OneToOne(optional = false)
+    @OneToOne(optional = false, fetch = FetchType.LAZY)
     private Participation participation;
 
-    @OneToMany(cascade = CascadeType.ALL, orphanRemoval = true, mappedBy = "response")
+    @OneToMany(cascade = CascadeType.ALL, orphanRemoval = true, mappedBy = "response", fetch = FetchType.LAZY)
     private Set<ResponseTimeslot> responseTimeslots;
 
     public Response() {

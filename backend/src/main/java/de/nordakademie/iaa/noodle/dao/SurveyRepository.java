@@ -1,6 +1,7 @@
 package de.nordakademie.iaa.noodle.dao;
 
 import de.nordakademie.iaa.noodle.model.Survey;
+import org.springframework.data.jpa.repository.EntityGraph;
 import org.springframework.data.jpa.repository.Query;
 import org.springframework.data.repository.RepositoryDefinition;
 import org.springframework.stereotype.Repository;
@@ -35,6 +36,13 @@ public interface SurveyRepository {
         return findAllByParticipations_participant_idAndParticipations_responseNull(userID);
     }
 
+    @EntityGraph(attributePaths = {
+        "timeslots",
+        "participations",
+        "participations.participant",
+        "participations.response",
+        "participations.response.responseTimeslots"
+        })
     Survey findById(Long id);
 
     Survey save(Survey toSave);

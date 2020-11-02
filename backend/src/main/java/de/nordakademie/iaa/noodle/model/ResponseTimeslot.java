@@ -10,10 +10,10 @@ public class ResponseTimeslot {
     @GeneratedValue
     private Long id;
 
-    @ManyToOne(optional = false)
+    @ManyToOne(optional = false, fetch = FetchType.LAZY)
     private Response response;
 
-    @ManyToOne(optional = false)
+    @ManyToOne(optional = false, fetch = FetchType.LAZY)
     private Timeslot timeslot;
 
     @Enumerated(EnumType.STRING)

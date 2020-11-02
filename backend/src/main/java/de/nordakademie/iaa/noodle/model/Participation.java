@@ -9,11 +9,11 @@ public class Participation {
     @Id
     @GeneratedValue
     private Long id;
-    @ManyToOne(optional = false)
+    @ManyToOne(optional = false, fetch = FetchType.LAZY)
     private User participant;
-    @ManyToOne(optional = false)
+    @ManyToOne(optional = false, fetch = FetchType.LAZY)
     private Survey survey;
-    @OneToOne(optional = true, cascade = CascadeType.ALL, mappedBy = "participation")
+    @OneToOne(optional = true, cascade = CascadeType.ALL, mappedBy = "participation", fetch = FetchType.LAZY)
     private Response response;
 
     public Participation() {

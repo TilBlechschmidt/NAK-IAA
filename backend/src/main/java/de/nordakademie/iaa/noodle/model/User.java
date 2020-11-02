@@ -9,9 +9,9 @@ public class User {
     @Id
     @GeneratedValue
     private Long id;
-    @OneToMany(mappedBy = "creator")
+    @OneToMany(mappedBy = "creator", fetch = FetchType.LAZY)
     private Set<Survey> createdSurveys;
-    @OneToMany(mappedBy = "participant", orphanRemoval = true, cascade = CascadeType.ALL)
+    @OneToMany(mappedBy = "participant", orphanRemoval = true, cascade = CascadeType.ALL, fetch = FetchType.LAZY)
     private Set<Participation> participations;
     @Column(nullable = false, unique = true)
     private String email;

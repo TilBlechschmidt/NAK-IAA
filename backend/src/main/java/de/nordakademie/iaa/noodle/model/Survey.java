@@ -10,14 +10,14 @@ public class Survey {
     @GeneratedValue
     private Long id;
 
-    @OneToMany(mappedBy = "survey", cascade = CascadeType.ALL, orphanRemoval = true)
+    @OneToMany(mappedBy = "survey", cascade = CascadeType.ALL, orphanRemoval = true, fetch = FetchType.LAZY)
     private Set<Timeslot> timeslots;
 
-    @OneToOne(cascade = CascadeType.ALL, optional = true)
+    @OneToOne(cascade = CascadeType.ALL, optional = true, fetch = FetchType.LAZY)
     private Timeslot chosenTimeslot;
-    @ManyToOne(optional = false)
+    @ManyToOne(optional = false, fetch = FetchType.LAZY)
     private User creator;
-    @OneToMany(cascade = CascadeType.ALL, orphanRemoval = true, mappedBy = "survey")
+    @OneToMany(cascade = CascadeType.ALL, orphanRemoval = true, mappedBy = "survey", fetch = FetchType.LAZY)
     private Set<Participation> participations;
     @Column(nullable = false)
     private String title;
