@@ -1,12 +1,12 @@
 import {DateTime, String} from "@airtasker/spot";
-import {Response} from './responses/types';
+import {ResponseDTO} from './responses/types';
 import {Identifier} from "../types";
-import {IdentifiableUser} from "../account/types";
+import {IdentifiableUserDTO} from "../account/types";
 
 /** Short title to be displayed in survey list (max. 64 characters) */
 export type SurveyTitle = String;
 
-export interface Timeslot {
+export interface TimeslotDTO {
     id: Identifier;
     /** Beginning of the timeslot */
     start: DateTime;
@@ -14,25 +14,25 @@ export interface Timeslot {
     end: DateTime;
 }
 
-export interface SurveyMetadata {
+export interface SurveyMetadataDTO {
     title: SurveyTitle;
 
     /** Text describing what this survey is about (max. 1024 characters) */
     description: String;
 
     /** The user who created the survey. */
-    creator: IdentifiableUser;
+    creator: IdentifiableUserDTO;
 
     /** List of available timeslots for the survey */
-    timeslots: Timeslot[];
+    timeslots: TimeslotDTO[];
 
     /** Final timeslot that has been selected by the creator */
-    selectedTimeslot?: Timeslot;
+    selectedTimeslot?: TimeslotDTO;
 
     /** Whether the survey has been closed */
     isClosed: boolean;
 }
 
-export interface Survey extends SurveyMetadata {
-    responses: Response[]
+export interface SurveyDTO extends SurveyMetadataDTO {
+    responses: ResponseDTO[]
 }

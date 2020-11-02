@@ -1,6 +1,6 @@
 import {body, endpoint, request, response, pathParams} from "@airtasker/spot";
 import {Identifier, MalformedRequestErrorResponse, UnauthorizedErrorResponse} from "../../types";
-import {Response, ResponseValue} from "./types";
+import {ResponseDTO, ResponseValueDTO} from "./types";
 
 /** Responds to an existing survey as the user associated with the provided credentials */
 @endpoint({
@@ -14,7 +14,7 @@ class CreateResponse {
 
     /** Response submitted */
     @response({ status: 201 })
-    successfulResponse(@body body: Response) {}
+    successfulResponse(@body body: ResponseDTO) {}
 
     /** Invalid semantics */
     @response({ status: 422 })
@@ -42,7 +42,7 @@ interface CreateResponsePathParams {
 
 export interface CreateResponseRequest {
     /** Response values in chronological order */
-    values: ResponseValue[];
+    values: ResponseValueDTO[];
 }
 
 export interface CreateResponseErrorResponse {

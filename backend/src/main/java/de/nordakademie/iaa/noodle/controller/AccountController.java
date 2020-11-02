@@ -63,7 +63,7 @@ public class AccountController implements AccountApi {
 
     private ResponseEntity<ActivateUserResponse> responseForCreatedUser(User user) {
         ActivateUserResponse activateUserResponse = new ActivateUserResponse();
-        activateUserResponse.setId(user.getId().intValue());
+        activateUserResponse.setId(user.getId());
         activateUserResponse.setEmail(user.getEmail());
         activateUserResponse.setName(user.getFullName());
         return ResponseEntity.status(CREATED).body(activateUserResponse);

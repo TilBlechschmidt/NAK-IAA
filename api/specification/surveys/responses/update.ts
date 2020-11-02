@@ -5,7 +5,7 @@ import {
     NotFoundErrorResponse,
     UnauthorizedErrorResponse
 } from "../../types";
-import {Response} from "./types";
+import {ResponseDTO} from "./types";
 import {CreateResponseErrorResponse, CreateResponseRequest} from "./create";
 
 /** Updates an existing response */
@@ -20,7 +20,7 @@ class UpdateResponse {
 
     /** Response submitted */
     @response({ status: 201 })
-    successfulResponse(@body body: Response) {}
+    successfulResponse(@body body: ResponseDTO) {}
 
     /** Invalid semantics */
     @response({ status: 422 })

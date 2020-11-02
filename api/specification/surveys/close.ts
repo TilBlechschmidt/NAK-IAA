@@ -5,7 +5,7 @@ import {
     NotFoundErrorResponse,
     UnauthorizedErrorResponse
 } from "../types";
-import {SurveyMetadata} from "./types";
+import {SurveyMetadataDTO} from "./types";
 
 /** Ends the survey and notifies all participants */
 @endpoint({
@@ -19,7 +19,7 @@ class CloseSurvey {
 
     /** Survey closed */
     @response({ status: 200 })
-    successfulResponse(@body body: SurveyMetadata) {}
+    successfulResponse(@body body: SurveyMetadataDTO) {}
 
     // MARK: - Generic response
 

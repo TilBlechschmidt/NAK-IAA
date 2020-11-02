@@ -30,7 +30,7 @@ public class SurveyControllerTest {
     @Test
     public void testCloseSurvey() {
         CloseSurveyRequest closeSurveyRequest = new CloseSurveyRequest();
-        ResponseEntity<SurveyMetadata> response = surveyController.closeSurvey(42, closeSurveyRequest);
+        ResponseEntity<SurveyMetadataDTO> response = surveyController.closeSurvey(42L, closeSurveyRequest);
         assertNull(response);
     }
 
@@ -43,22 +43,22 @@ public class SurveyControllerTest {
 
     @Test
     public void testDeleteSurvey() {
-        ResponseEntity<SurveyMetadata> response = surveyController.deleteSurvey(42);
+        ResponseEntity<SurveyMetadataDTO> response = surveyController.deleteSurvey(42L);
         assertNull(response);
     }
 
 
     @Test
     public void testQuerySurvey() {
-        ResponseEntity<Survey> response = surveyController.querySurvey(42);
-        Survey survey = response.getBody();
+        ResponseEntity<SurveyDTO> response = surveyController.querySurvey(42L);
+        SurveyDTO surveyDTO = response.getBody();
 
         assertEquals(HttpStatus.OK, response.getStatusCode());
-        assertNotNull(survey);
-        assertEquals("This is the title for 42.", survey.getTitle());
-        assertEquals("You are authenticated as TESTUSER", survey.getDescription());
-        assertArrayEquals(Collections.EMPTY_LIST.toArray(), survey.getResponses().toArray());
-        assertArrayEquals(Collections.EMPTY_LIST.toArray(), survey.getTimeslots().toArray());
+        assertNotNull(surveyDTO);
+        assertEquals("This is the title for 42.", surveyDTO.getTitle());
+        assertEquals("You are authenticated as TESTUSER", surveyDTO.getDescription());
+        assertArrayEquals(Collections.EMPTY_LIST.toArray(), surveyDTO.getResponses().toArray());
+        assertArrayEquals(Collections.EMPTY_LIST.toArray(), surveyDTO.getTimeslots().toArray());
     }
 
     @Test
@@ -69,8 +69,8 @@ public class SurveyControllerTest {
 
     @Test
     public void testUpdateSurvey() {
-        SurveyMetadata surveyMetadata = mock(SurveyMetadata.class);
-        ResponseEntity<SurveyMetadata> response = surveyController.updateSurvey(42, surveyMetadata);
+        SurveyMetadataDTO surveyMetadata = mock(SurveyMetadataDTO.class);
+        ResponseEntity<SurveyMetadataDTO> response = surveyController.updateSurvey(42L, surveyMetadata);
         assertNull(response);
     }
 }

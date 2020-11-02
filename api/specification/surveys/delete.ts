@@ -5,7 +5,7 @@ import {
     NotFoundErrorResponse,
     UnauthorizedErrorResponse
 } from "../types";
-import {SurveyMetadata} from "./types";
+import {SurveyMetadataDTO} from "./types";
 
 /** Irreversibly deletes a survey and all associated responses */
 @endpoint({
@@ -19,7 +19,7 @@ class DeleteSurvey {
 
     /** Survey deleted */
     @response({ status: 204 })
-    successfulResponse(@body body: SurveyMetadata) {}
+    successfulResponse(@body body: SurveyMetadataDTO) {}
 
     // MARK: - Generic response
 

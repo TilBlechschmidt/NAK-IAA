@@ -1,7 +1,7 @@
 import {body, endpoint, request, response, String} from "@airtasker/spot";
 import {Password} from "./types";
 import {Identifier} from "../types";
-import {User} from "./request";
+import {RegistrationUserDTO} from "./request";
 
 /** Registers a new user account */
 @endpoint({
@@ -23,6 +23,6 @@ interface ActivateUserRequest {
     password: Password;
 }
 
-interface ActivateUserResponse extends User {
+interface ActivateUserResponse extends RegistrationUserDTO {
     id: Identifier;
 }

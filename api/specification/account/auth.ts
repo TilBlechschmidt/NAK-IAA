@@ -1,6 +1,6 @@
 import {endpoint, request, body, response} from "@airtasker/spot";
 import {JWT, MalformedRequestErrorResponse, UnauthorizedErrorResponse} from "../types";
-import {EMail, Password, User} from "./types";
+import {EMail, Password, UserDTO} from "./types";
 
 /** Generates credentials to make authenticated requests with a limited lifetime */
 @endpoint({
@@ -32,6 +32,6 @@ interface AuthenticationRequest {
     password: Password;
 }
 
-interface AuthenticatedResponse extends User {
+interface AuthenticatedResponse extends UserDTO {
     token: JWT;
 }

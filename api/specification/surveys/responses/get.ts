@@ -5,7 +5,7 @@ import {
     NotFoundErrorResponse,
     UnauthorizedErrorResponse
 } from "../../types";
-import {Response} from "./types";
+import {ResponseDTO} from "./types";
 
 /** Fetches a survey response by its unique identifier */
 @endpoint({
@@ -19,7 +19,7 @@ class QueryResponse {
 
     /** OK */
     @response({ status: 200 })
-    successfulResponse(@body body: Response) {}
+    successfulResponse(@body body: ResponseDTO) {}
 
     // MARK: - Generic response
 

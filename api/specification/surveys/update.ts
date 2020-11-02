@@ -5,7 +5,7 @@ import {
     NotFoundErrorResponse,
     UnauthorizedErrorResponse
 } from "../types";
-import {SurveyMetadata} from "./types";
+import {SurveyMetadataDTO} from "./types";
 import {CreateSurveyErrorResponse} from "./create";
 
 /** Updates metadata of survey <strong>and deletes all responses</strong> */
@@ -16,11 +16,11 @@ import {CreateSurveyErrorResponse} from "./create";
 })
 class UpdateSurvey {
     @request
-    request(@pathParams pathParams: { id: Identifier }, @body body: SurveyMetadata) {}
+    request(@pathParams pathParams: { id: Identifier }, @body body: SurveyMetadataDTO) {}
 
     /** Survey updated */
     @response({ status: 200 })
-    successfulResponse(@body body: SurveyMetadata) {}
+    successfulResponse(@body body: SurveyMetadataDTO) {}
 
     /** Invalid semantics */
     @response({ status: 422 })

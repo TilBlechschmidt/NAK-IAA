@@ -16,12 +16,12 @@ class RequestRegistrationEmail {
     successfulResponse(@body body: RequestRegistrationEmailResponse) {}
 }
 
-export interface User {
+export interface RegistrationUserDTO {
     email: EMail;
     /** Full name of the associated person */
     name: String;
 }
 
-interface RequestRegistrationEmailRequest extends User {}
+interface RequestRegistrationEmailRequest extends RegistrationUserDTO {}
 
-interface RequestRegistrationEmailResponse extends User {}
+interface RequestRegistrationEmailResponse extends RegistrationUserDTO {}

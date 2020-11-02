@@ -1,21 +1,21 @@
 import {Identifier} from "../../types";
-import {IdentifiableUser} from "../../account/types";
+import {IdentifiableUserDTO} from "../../account/types";
 
-export interface ResponseValue {
+export interface ResponseValueDTO {
     timeslotID: Identifier;
     value: boolean;
 }
 
-export interface Response {
+export interface ResponseDTO {
     /** Whether the authenticated user can modify this response */
     isEditable: boolean;
     /** Resource object of the user that created the response */
-    user: IdentifiableUser;
+    user: IdentifiableUserDTO;
     /** Unique resource identifier for the survey to which this response belongs */
     surveyID: Identifier;
     /**
      * List of responses
-     * @type {Object.<Identifier, Timeslot>}
+     * @type {Object.<Identifier, TimeslotDTO>}
      */
-    responses: ResponseValue[];
+    responses: ResponseValueDTO[];
 }

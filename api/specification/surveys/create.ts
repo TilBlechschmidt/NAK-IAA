@@ -1,6 +1,6 @@
 import {body, endpoint, request, response} from "@airtasker/spot";
 import {Identifier, MalformedRequestErrorResponse, UnauthorizedErrorResponse} from "../types";
-import {SurveyMetadata} from "./types";
+import {SurveyMetadataDTO} from "./types";
 
 /** Creates a new survey for other users to participate */
 @endpoint({
@@ -31,9 +31,9 @@ class CreateSurvey {
     unauthorizedResponse(@body body: UnauthorizedErrorResponse) {}
 }
 
-interface CreateSurveyRequest extends SurveyMetadata {}
+interface CreateSurveyRequest extends SurveyMetadataDTO {}
 
-interface CreateSurveyResponse extends SurveyMetadata {
+interface CreateSurveyResponse extends SurveyMetadataDTO {
     id: Identifier;
 }
 
