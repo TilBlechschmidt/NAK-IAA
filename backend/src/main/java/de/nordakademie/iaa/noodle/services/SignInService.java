@@ -7,6 +7,7 @@ import org.springframework.security.authentication.UsernamePasswordAuthenticatio
 import org.springframework.security.core.Authentication;
 import org.springframework.security.core.authority.SimpleGrantedAuthority;
 import org.springframework.stereotype.Component;
+import org.springframework.stereotype.Service;
 
 import java.util.List;
 import java.util.Optional;
@@ -14,7 +15,7 @@ import java.util.stream.Collectors;
 
 import static de.nordakademie.iaa.noodle.config.SecurityConstants.TOKEN_PREFIX;
 
-@Component
+@Service
 public class SignInService {
 
     private final PasswordService passwordService;

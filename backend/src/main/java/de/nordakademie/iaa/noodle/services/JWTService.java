@@ -10,6 +10,7 @@ import io.jsonwebtoken.SignatureAlgorithm;
 import org.springframework.security.core.GrantedAuthority;
 import org.springframework.security.core.authority.AuthorityUtils;
 import org.springframework.stereotype.Component;
+import org.springframework.stereotype.Service;
 
 import java.util.Date;
 import java.util.List;
@@ -19,7 +20,7 @@ import java.util.stream.Collectors;
 import static de.nordakademie.iaa.noodle.config.SecurityConstants.*;
 import static java.nio.charset.StandardCharsets.UTF_8;
 
-@Component
+@Service
 public class JWTService {
     private final static String CLAIM_USER_ID = "userID";
     private final static String CLAIM_AUTHORITIES = "authorities";

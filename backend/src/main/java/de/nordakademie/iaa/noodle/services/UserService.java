@@ -6,11 +6,15 @@ import de.nordakademie.iaa.noodle.model.User;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.dao.DataIntegrityViolationException;
 import org.springframework.stereotype.Component;
+import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Propagation;
+import org.springframework.transaction.annotation.Transactional;
 
 import java.util.HashSet;
 import java.util.Optional;
 
-@Component
+@Service
+@Transactional(propagation = Propagation.REQUIRED)
 public class UserService {
     private final UserRepository userRepository;
 

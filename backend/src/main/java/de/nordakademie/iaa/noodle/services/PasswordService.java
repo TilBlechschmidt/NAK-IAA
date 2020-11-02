@@ -4,10 +4,11 @@ import de.nordakademie.iaa.noodle.model.User;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Component;
+import org.springframework.stereotype.Service;
 
 import static de.nordakademie.iaa.noodle.config.SecurityConstants.HASH_PEPPER;
 
-@Component
+@Service
 public class PasswordService {
     private final PasswordEncoder passwordEncoder;
 

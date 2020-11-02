@@ -6,10 +6,11 @@ import de.nordakademie.iaa.noodle.services.model.UserDetails;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.mail.MailException;
 import org.springframework.stereotype.Component;
+import org.springframework.stereotype.Service;
 
 import java.util.Optional;
 
-@Component
+@Service
 public class SignUpService {
     private final PasswordService passwordService;
     private final UserService userService;
