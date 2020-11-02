@@ -10,5 +10,6 @@
             <input matInput placeholder='{{ "auth.password" | translate }}'>
         </mat-form-field>
     </form>
-    <button mat-raised-button color="primary" class="button">{{ "auth.sign_in.display" | translate }}</button>
+    <mat-error *ngIf="authError">{{ "auth.sign_in.error" | translate }}</mat-error>
+    <button mat-raised-button color="primary" class="button" (click)="signIn()">{{ "auth.sign_in.display" | translate }}</button>
 </mat-card>

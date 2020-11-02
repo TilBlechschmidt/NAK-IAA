@@ -7,9 +7,11 @@
         "email": "Email",
         "password": "Password",
         "password_confirmation": "Confirm Password",
+        "logout": "Logout",
         "sign_in": {
             "display": "Sign In",
-            "welcome": "Nice to see you again"
+            "welcome": "Nice to see you again",
+            "error": "email or password is wrong"
         },
         "sign_up": {
             "display": "Sign Up",
@@ -31,12 +33,19 @@
         "title": "Title",
         "description": "Description",
         "create": "Create New Survey",
+        "delete": "Delete",
+        "save": "Save",
         "tabs": {
             "dashboard": "Dashboard",
             "fixed_appointments": "Fixed Appointments",
             "my_surveys": "My Surveys",
             "answered_surveys": "Answered Surveys",
             "open_surveys": "Open Surveys"
+        },
+        "delete_confirmation": "Do you really want to delete survey \"{{title}}\"?",
+        "errors": {
+            "editError": "An error has occurred while editing",
+            "deleteError": "An error has occurred while deleting"
         }
     }
 }

@@ -7,9 +7,11 @@
         "email": "Email",
         "password": "Passwort",
         "password_confirmation": "Passwort Bestätigen",
+        "logout": "Logout",
         "sign_in": {
             "display": "Anmelden",
-            "welcome": "Schön dich wiederzusehen"
+            "welcome": "Schön dich wiederzusehen",
+            "error": "Email oder Passwort ist falsch"
         },
         "sign_up": {
             "display": "Registrieren",
@@ -31,12 +33,19 @@
         "title": "Titel",
         "description": "Beschreibung",
         "create": "Neue Terminumfrage erstellen",
+        "delete": "Löschen",
+        "save": "Speichern",
         "tabs": {
             "dashboard": "Dashboard",
             "fixed_appointments": "Feste Termine",
             "my_surveys": "Meine Umfragen",
             "answered_surveys": "Beantwortete Umfragen",
             "open_surveys": "Offene Umfragen"
+        },
+        "delete_confirmation": "Möchtest du wirklich die Terminumfrage \"{{title}}\" löschen?",
+        "errors": {
+            "editError": "Es ist ein Fehler beim Bearbeiten aufgetreten",
+            "deleteError": "Es ist ein Fehler beim Löschen aufgetreten"
         }
     }
 }

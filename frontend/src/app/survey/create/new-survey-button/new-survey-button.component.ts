@@ -17,14 +17,13 @@ export class NewSurveyButtonComponent implements OnInit {
   ngOnInit(): void {
   }
 
-  openDialog(): void{
+  openDialog(): void {
       const dialogRef = this.dialog.open(CreateSurveyDialogComponent, {
           width: '250px',
           data: {title: this.title, description: this.description}
       });
 
       dialogRef.afterClosed().subscribe(result => {
-          console.log('The dialog was closed');
           this.title = result.title;
           this.description = result.description;
       });

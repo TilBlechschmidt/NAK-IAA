@@ -1,6 +1,8 @@
 import { ComponentFixture, TestBed } from '@angular/core/testing';
 
 import { CreateSurveyDialogComponent } from './create-survey-dialog.component';
+import {MAT_DIALOG_DATA, MatDialogRef} from "@angular/material/dialog";
+import {TranslateModule} from "@ngx-translate/core";
 
 describe('CreateSurveyDialogComponent', () => {
   let component: CreateSurveyDialogComponent;
@@ -8,7 +10,9 @@ describe('CreateSurveyDialogComponent', () => {
 
   beforeEach(async () => {
     await TestBed.configureTestingModule({
-      declarations: [ CreateSurveyDialogComponent ]
+      declarations: [ CreateSurveyDialogComponent ],
+        imports: [TranslateModule.forRoot()],
+        providers: [ { provide: MatDialogRef, useValue: {} }, { provide: MAT_DIALOG_DATA, useValue: {}} ]
     })
     .compileComponents();
   });

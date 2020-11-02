@@ -1,4 +1,5 @@
 import { Component, OnInit } from '@angular/core';
+import {TokenService} from "../authentication/service/token.service";
 
 @Component({
   selector: 'app-appbar',
@@ -7,7 +8,7 @@ import { Component, OnInit } from '@angular/core';
 })
 export class AppbarComponent implements OnInit {
 
-  constructor() { }
+  constructor(private authService: TokenService) { }
 
   ngOnInit(): void {
   }
@@ -15,6 +16,10 @@ export class AppbarComponent implements OnInit {
   changeLanguage(code: string) {
       localStorage.setItem('locale', code);
       window.location.reload();
+  }
+
+  isAuthenticated() {
+      return this.authService.isAuthenticated();
   }
 
 }

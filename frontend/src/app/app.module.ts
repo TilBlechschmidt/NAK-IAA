@@ -29,10 +29,13 @@ import { FormsModule, ReactiveFormsModule } from "@angular/forms";
 import { MatDialogModule } from "@angular/material/dialog";
 import { AuthenticationService } from "./api/services";
 import { HttpClient, HttpClientModule } from "@angular/common/http";
-import { TranslateModule, TranslateService } from "@ngx-translate/core";
+import {TranslateModule, TranslateService, TranslateStore} from "@ngx-translate/core";
 import {forkJoin, of} from "rxjs";
 import { catchError } from "rxjs/operators";
 import {MatMenuModule} from "@angular/material/menu";
+import { DeleteSurveyComponent } from './survey/detail/delete-survey/delete-survey.component';
+import { LogoutButtonComponent } from './authentication/logout-button/logout-button.component';
+import {LoggedInGuard} from "./authentication/service/LoggedInGuard";
 
 export function initApp(http: HttpClient, translate: TranslateService) {
     return () => new Promise<boolean>((resolve: (res: boolean) => void) => {
@@ -83,7 +86,9 @@ export function initApp(http: HttpClient, translate: TranslateService) {
         FixedAppointmentViewComponent,
         DashboardComponent,
         NotificationComponent,
-        CreateSurveyDialogComponent
+        CreateSurveyDialogComponent,
+        DeleteSurveyComponent,
+        LogoutButtonComponent
     ],
     imports: [
         BrowserModule,
@@ -102,9 +107,10 @@ export function initApp(http: HttpClient, translate: TranslateService) {
         HttpClientModule,
         ReactiveFormsModule,
         TranslateModule.forRoot(),
-        MatMenuModule
+        MatMenuModule,
     ],
   providers: [
+      LoggedInGuard,
       AuthenticationService,
       {
           provide: APP_INITIALIZER,

@@ -11,8 +11,9 @@
                 <button mat-menu-item (click)="changeLanguage('en')">English</button>
                 <button mat-menu-item (click)="changeLanguage('de')">Deutsch</button>
             </mat-menu>
-            <app-authentication-button></app-authentication-button>
-            <app-registration-button></app-registration-button>
+            <app-authentication-button *ngIf="!isAuthenticated()"></app-authentication-button>
+            <app-registration-button *ngIf="!isAuthenticated()"></app-registration-button>
+            <app-logout-button *ngIf="isAuthenticated()"></app-logout-button>
         </div>
     </mat-toolbar>
 </p>

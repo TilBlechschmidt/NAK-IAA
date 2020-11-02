@@ -6,24 +6,29 @@
         </div>
         <div class="title" *ngIf="isEdit">
             <mat-form-field class="form-field">
-                <mat-label>Title</mat-label>
+                <mat-label>{{ "survey.title" | translate }}</mat-label>
                 <input matInput [(ngModel)]="title" name="title">
             </mat-form-field>
             <mat-form-field class="form-field">
-                <mat-label>Description</mat-label>
+                <mat-label>{{ "survey.description" | translate }}</mat-label>
                 <textarea matInput [(ngModel)]="description" name="description"></textarea>
             </mat-form-field>
         </div>
         <div class="edit">
-            <button mat-mini-fab color="accent" aria-label="Edit" (click)="toggleEdit()">
+            <button mat-mini-fab color="primary" aria-label="Edit" (click)="toggleEdit()">
                 <mat-icon *ngIf="!isEdit">edit</mat-icon>
                 <mat-icon *ngIf="isEdit">visibility</mat-icon>
             </button>
         </div>
     </div>
     <app-response-overview></app-response-overview>
-    <div class="buttons">
-        <button mat-raised-button color="warn" class="button">Delete</button>
-        <button mat-raised-button color="primary" class="button">Save</button>
+    <div class="buttonWithErrorMsg">
+        <mat-error *ngIf="saveError">{{ "survey.errors.saveError" | translate }}</mat-error>
+        <div class="buttons">
+            <button mat-raised-button color="warn" class="button"
+                    (click)="delete()">{{ "survey.delete" | translate }}</button>
+            <button mat-raised-button color="primary" class="button"
+                    (click)="submit()">{{ "survey.save" | translate }}</button>
+        </div>
     </div>
 </mat-card>

@@ -1,0 +1,11 @@
+<div>
+    <h3>
+       {{ "survey.delete_confirmation" | translate: {title: data.title} }}
+    </h3>
+    <mat-error *ngIf="deleteError">{{ "survey.errors.deleteError" | translate }}</mat-error>
+    <div class="container">
+        <button mat-raised-button color="warn" (click)="delete()">
+            {{ "survey.delete" | translate }}
+        </button>
+    </div>
+</div>
