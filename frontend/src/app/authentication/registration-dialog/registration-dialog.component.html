@@ -9,7 +9,7 @@
         </mat-form-field>
         <mat-form-field class="auth-full-width">
             <mat-label>{{ 'auth.sign_up.enter.email' | translate }}</mat-label>
-            <input matInput formControlName="email" required>
+            <input matInput formControlName="email" type="email" required>
             <mat-error *ngIf="isError(form,'email')">{{ 'auth.sign_up.errors.invalid_mail' | translate }}</mat-error>
         </mat-form-field>
         <mat-form-field class="auth-full-width">

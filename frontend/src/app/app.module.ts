@@ -28,14 +28,14 @@ import { HttpClient, HttpClientModule } from '@angular/common/http';
 import {TranslateModule, TranslateService} from '@ngx-translate/core';
 import {forkJoin, of} from 'rxjs';
 import { catchError } from 'rxjs/operators';
-import {MatMenuModule} from '@angular/material/menu';
+import { MatMenuModule} from '@angular/material/menu';
 import { DeleteSurveyComponent } from './survey/detail/delete-survey/delete-survey.component';
 import { LogoutButtonComponent } from './authentication/logout-button/logout-button.component';
 import {LoggedInGuard} from './authentication/service/LoggedInGuard';
-import {FixedAppointmentViewComponent} from './survey/tabs/fixed-appointment-view/fixed-appointment-view.component';
 import {DetailViewComponent} from './survey/detail/detail-view/detail-view.component';
 import {SurveyTabViewComponent} from './survey/survey-tab-view/survey-tab-view.component';
 import {AccountService} from './api/services/account.service';
+import { AbstractSurveyTableComponent } from './survey/tabs/abstract-survey-table/abstract-survey-table.component';
 
 
 export function initApp(http: HttpClient, translate: TranslateService): () => Promise<boolean>{
@@ -79,7 +79,6 @@ export function initApp(http: HttpClient, translate: TranslateService): () => Pr
         AuthenticationDialogComponent,
         RegistrationDialogComponent,
         SurveyTabViewComponent,
-        FixedAppointmentViewComponent,
         DetailViewComponent,
         ResponseOverviewComponent,
         NewSurveyButtonComponent,
@@ -88,7 +87,8 @@ export function initApp(http: HttpClient, translate: TranslateService): () => Pr
         NotificationComponent,
         CreateSurveyDialogComponent,
         DeleteSurveyComponent,
-        LogoutButtonComponent
+        LogoutButtonComponent,
+        AbstractSurveyTableComponent
     ],
     imports: [
         BrowserModule,

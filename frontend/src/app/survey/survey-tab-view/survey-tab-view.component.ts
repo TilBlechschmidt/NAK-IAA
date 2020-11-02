@@ -1,4 +1,5 @@
 import { Component, OnInit } from '@angular/core';
+import {ActivatedRoute} from '@angular/router';
 
 @Component({
   selector: 'app-survey-tab-view',
@@ -7,9 +8,12 @@ import { Component, OnInit } from '@angular/core';
 })
 export class SurveyTabViewComponent implements OnInit {
 
-  constructor() { }
+  selectedIndex = 0;
+
+  constructor(private route: ActivatedRoute) { }
 
   ngOnInit(): void {
+      this.route.queryParams.subscribe((params: any) => this.selectedIndex = params.view);
   }
 
 }

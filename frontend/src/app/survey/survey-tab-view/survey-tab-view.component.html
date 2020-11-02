@@ -1,13 +1,19 @@
 <mat-card class="card">
-    <mat-tab-group>
+    <mat-tab-group [(selectedIndex)]="selectedIndex">
         <mat-tab label='{{ "survey.tabs.dashboard" | translate }}'>
             <app-dashboard></app-dashboard>
         </mat-tab>
         <mat-tab label='{{ "survey.tabs.fixed_appointments" | translate }}'>
-            <app-fixed-appointment-view></app-fixed-appointment-view>
+            <app-abstract-survey-table [filter]="{ isCompleted: true, didParticipateIn: true, isUpcoming: true }"></app-abstract-survey-table>
         </mat-tab>
-        <mat-tab label='{{ "survey.tabs.my_surveys" | translate }}'> Content 3</mat-tab>
-        <mat-tab label='{{ "survey.tabs.answered_surveys" | translate }}'> Content 4</mat-tab>
-        <mat-tab label='{{ "survey.tabs.open_surveys" | translate }}'> Content5</mat-tab>
+        <mat-tab label='{{ "survey.tabs.my_surveys" | translate }}'>
+            <app-abstract-survey-table [filter]="{ isOwnSurvey: true }"></app-abstract-survey-table>
+        </mat-tab>
+        <mat-tab label='{{ "survey.tabs.answered_surveys" | translate }}'>
+            <app-abstract-survey-table [filter]="{ didParticipateIn: true, isUpcoming: true }"></app-abstract-survey-table>
+        </mat-tab>
+        <mat-tab label='{{ "survey.tabs.open_surveys" | translate }}'>
+            <app-abstract-survey-table [filter]="{ isUpcoming: true }"></app-abstract-survey-table>
+        </mat-tab>
     </mat-tab-group>
 </mat-card>
