@@ -28,6 +28,10 @@ public class NoodleException extends RuntimeException {
         return new NoodleException(SERVICE_UNAVAILABLE, message);
     }
 
+    public static NoodleException notFound(String message) {
+        return new NoodleException(NOT_FOUND, message);
+    }
+
     public HttpStatus getStatus() {
         return status;
     }

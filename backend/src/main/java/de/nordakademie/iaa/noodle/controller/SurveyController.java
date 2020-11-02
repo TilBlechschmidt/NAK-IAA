@@ -2,11 +2,15 @@ package de.nordakademie.iaa.noodle.controller;
 
 import de.nordakademie.iaa.noodle.api.SurveysApi;
 import de.nordakademie.iaa.noodle.api.model.*;
-import de.nordakademie.iaa.noodle.model.User;
+import de.nordakademie.iaa.noodle.converter.SurveyConverter;
+import de.nordakademie.iaa.noodle.model.Survey;
+import de.nordakademie.iaa.noodle.services.SurveyService;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.server.ResponseStatusException;
 
-import java.util.ArrayList;
 import java.util.Optional;
 
 /**
@@ -15,6 +19,15 @@ import java.util.Optional;
  */
 @RestController
 public class SurveyController extends AuthenticatedController implements SurveysApi {
+    private final SurveyService surveyService;
+    private final SurveyConverter surveyConverter;
+
+    @Autowired
+    public SurveyController(SurveyService surveyService, SurveyConverter surveyConverter) {
+        this.surveyService = surveyService;
+        this.surveyConverter = surveyConverter;
+    }
+
     @Override
     public ResponseEntity<SurveyMetadataDTO> closeSurvey(Long id, CloseSurveyRequest closeSurveyRequest) {
         return null;
@@ -32,16 +45,13 @@ public class SurveyController extends AuthenticatedController implements Surveys
 
     @Override
     public ResponseEntity<SurveyDTO> querySurvey(Long id) {
-        User user = getCurrentUser();
+        Survey survey = surveyService.querySurvey(id);
 
-        SurveyDTO surveyDTO = new SurveyDTO();
-        surveyDTO.setTitle("This is the title for " + id + ".");
-        surveyDTO.setDescription("You are authenticated as " + user.getFullName());
+        if (survey == null) {
+            throw new ResponseStatusException(HttpStatus.NOT_FOUND, "notFound");
+        }
 
-        surveyDTO.setResponses(new ArrayList<>());
-        surveyDTO.setResponses(new ArrayList<>());
-
-        return ResponseEntity.ok(surveyDTO);
+        return ResponseEntity.ok(surveyConverter.convertSurveyToDTO(survey, getCurrentUser()));
     }
 
     @Override

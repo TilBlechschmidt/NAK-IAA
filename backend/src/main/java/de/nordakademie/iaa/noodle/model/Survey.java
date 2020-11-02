@@ -64,6 +64,10 @@ public class Survey {
         return description;
     }
 
+    public boolean getIsClosed() {
+        return getChosenTimeslot() != null;
+    }
+
     @Override
     public boolean equals(Object o) {
         if (this == o) return true;

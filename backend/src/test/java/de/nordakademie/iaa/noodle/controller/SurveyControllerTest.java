@@ -2,14 +2,17 @@ package de.nordakademie.iaa.noodle.controller;
 
 import de.nordakademie.iaa.noodle.TestUtil;
 import de.nordakademie.iaa.noodle.api.model.*;
+import de.nordakademie.iaa.noodle.converter.SurveyConverter;
+import de.nordakademie.iaa.noodle.model.Survey;
 import de.nordakademie.iaa.noodle.model.User;
+import de.nordakademie.iaa.noodle.services.SurveyService;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
+import org.springframework.web.server.ResponseStatusException;
 
-import java.util.Collections;
-
+import static de.nordakademie.iaa.noodle.TestUtil.assertExceptionEquals;
 import static java.util.Optional.empty;
 import static org.junit.jupiter.api.Assertions.*;
 import static org.mockito.Mockito.mock;
@@ -17,12 +20,16 @@ import static org.mockito.Mockito.when;
 
 public class SurveyControllerTest {
     private SurveyController surveyController;
+    private SurveyService surveyService;
+    private SurveyConverter surveyConverter;
     private User authenticatedUser;
 
     @BeforeEach
     public void setUp() {
         authenticatedUser = TestUtil.setupAuthentication();
-        surveyController = new SurveyController();
+        surveyService = mock(SurveyService.class);
+        surveyConverter = mock(SurveyConverter.class);
+        surveyController = new SurveyController(surveyService, surveyConverter);
 
         when(authenticatedUser.getFullName()).thenReturn("TESTUSER");
     }
@@ -47,18 +54,28 @@ public class SurveyControllerTest {
         assertNull(response);
     }
 
-
     @Test
     public void testQuerySurvey() {
+        Survey inputSurvey = mock(Survey.class);
+        SurveyDTO inputSurveyDTO = mock(SurveyDTO.class);
+        when(surveyService.querySurvey(42L)).thenReturn(inputSurvey);
+        when(surveyConverter.convertSurveyToDTO(inputSurvey, authenticatedUser)).thenReturn(inputSurveyDTO);
+
         ResponseEntity<SurveyDTO> response = surveyController.querySurvey(42L);
         SurveyDTO surveyDTO = response.getBody();
 
         assertEquals(HttpStatus.OK, response.getStatusCode());
-        assertNotNull(surveyDTO);
-        assertEquals("This is the title for 42.", surveyDTO.getTitle());
-        assertEquals("You are authenticated as TESTUSER", surveyDTO.getDescription());
-        assertArrayEquals(Collections.EMPTY_LIST.toArray(), surveyDTO.getResponses().toArray());
-        assertArrayEquals(Collections.EMPTY_LIST.toArray(), surveyDTO.getTimeslots().toArray());
+        assertEquals(inputSurveyDTO, surveyDTO);
+    }
+
+    @Test
+    public void testQuerySurveyNotFound() {
+        when(surveyService.querySurvey(42L)).thenReturn(null);
+
+        ResponseStatusException exception = assertThrows(ResponseStatusException.class, () ->
+            surveyController.querySurvey(42L));
+
+        assertExceptionEquals(HttpStatus.NOT_FOUND, "notFound", exception);
     }
 
     @Test

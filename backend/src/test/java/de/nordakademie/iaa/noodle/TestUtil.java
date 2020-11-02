@@ -2,8 +2,10 @@ package de.nordakademie.iaa.noodle;
 
 import de.nordakademie.iaa.noodle.model.User;
 import org.opentest4j.TestAbortedException;
+import org.springframework.http.HttpStatus;
 import org.springframework.security.core.Authentication;
 import org.springframework.security.core.context.SecurityContextHolder;
+import org.springframework.web.server.ResponseStatusException;
 
 import javax.persistence.EntityManager;
 import java.util.function.Function;
@@ -11,6 +13,7 @@ import java.util.function.Supplier;
 
 import static org.mockito.Mockito.mock;
 import static org.mockito.Mockito.when;
+import static org.junit.jupiter.api.Assertions.*;
 
 public class TestUtil {
     public static void skip() {
@@ -45,5 +48,10 @@ public class TestUtil {
         when(authentication.getDetails()).thenReturn(user);
         SecurityContextHolder.getContext().setAuthentication(authentication);
         return user;
+    }
+
+    public static void assertExceptionEquals(HttpStatus status, String reason, ResponseStatusException exception) {
+        assertEquals(status, exception.getStatus());
+        assertEquals(reason, exception.getReason());
     }
 }

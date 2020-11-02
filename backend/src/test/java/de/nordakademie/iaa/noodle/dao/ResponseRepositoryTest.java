@@ -47,5 +47,4 @@ class ResponseRepositoryTest {
         assertNotNull(entityManager.find(Response.class, id));
         assertEquals(response, entityManager.find(Response.class, id));
     }
-
 }
