@@ -15,6 +15,7 @@
         }
     ],
     "surveyID": 42,
+    "responseID": 42,
     "user": {
         "id": 42,
         "name": "Max Mustermann"

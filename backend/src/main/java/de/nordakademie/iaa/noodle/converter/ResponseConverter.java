@@ -34,6 +34,7 @@ public class ResponseConverter {
 
         responseDTO.setIsEditable(responseIsEditableByCurrentUser(survey, responseUser, currentUser));
         responseDTO.setSurveyID(survey.getId());
+        responseDTO.setResponseID(response.getId());
         responseDTO.setUser(userConverter.convertUserToDTO(responseUser));
         responseDTO.setResponses(convertResponseTimeslotsToDTO(response.getResponseTimeslots()));
 

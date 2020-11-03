@@ -53,6 +53,7 @@ public class ResponseConverterTest {
         when(participation.getParticipant()).thenReturn(currentUser);
         when(participation.getSurvey()).thenReturn(survey);
         when(survey.getId()).thenReturn(42L);
+        when(response.getId()).thenReturn(43L);
         when(survey.getIsClosed()).thenReturn(true);
         when(survey.getCreator()).thenReturn(currentUser);
         when(userConverter.convertUserToDTO(currentUser)).thenReturn(identifiableUserDTO);
@@ -60,6 +61,7 @@ public class ResponseConverterTest {
         ResponseDTO responseDTO = responseConverter.convertResponseToDTO(response, currentUser);
 
         assertEquals(42L, responseDTO.getSurveyID());
+        assertEquals(43L, responseDTO.getResponseID());
         assertEquals(false, responseDTO.getIsEditable());
         assertEquals(identifiableUserDTO, responseDTO.getUser());
         assertArrayEquals(emptyResponseValueDTOs, responseDTO.getResponses().toArray());
@@ -78,6 +80,7 @@ public class ResponseConverterTest {
         when(participation.getParticipant()).thenReturn(currentUser);
         when(participation.getSurvey()).thenReturn(survey);
         when(survey.getId()).thenReturn(42L);
+        when(response.getId()).thenReturn(43L);
         when(survey.getIsClosed()).thenReturn(false);
         when(survey.getCreator()).thenReturn(currentUser);
         when(userConverter.convertUserToDTO(currentUser)).thenReturn(identifiableUserDTO);
@@ -85,6 +88,7 @@ public class ResponseConverterTest {
         ResponseDTO responseDTO = responseConverter.convertResponseToDTO(response, currentUser);
 
         assertEquals(42L, responseDTO.getSurveyID());
+        assertEquals(43L, responseDTO.getResponseID());
         assertEquals(false, responseDTO.getIsEditable());
         assertEquals(identifiableUserDTO, responseDTO.getUser());
         assertArrayEquals(emptyResponseValueDTOs, responseDTO.getResponses().toArray());
@@ -104,6 +108,7 @@ public class ResponseConverterTest {
         when(participation.getParticipant()).thenReturn(currentUser);
         when(participation.getSurvey()).thenReturn(survey);
         when(survey.getId()).thenReturn(42L);
+        when(response.getId()).thenReturn(43L);
         when(survey.getIsClosed()).thenReturn(true);
         when(survey.getCreator()).thenReturn(creator);
         when(userConverter.convertUserToDTO(currentUser)).thenReturn(identifiableUserDTO);
@@ -111,6 +116,7 @@ public class ResponseConverterTest {
         ResponseDTO responseDTO = responseConverter.convertResponseToDTO(response, currentUser);
 
         assertEquals(42L, responseDTO.getSurveyID());
+        assertEquals(43L, responseDTO.getResponseID());
         assertEquals(false, responseDTO.getIsEditable());
         assertEquals(identifiableUserDTO, responseDTO.getUser());
         assertArrayEquals(emptyResponseValueDTOs, responseDTO.getResponses().toArray());
@@ -130,6 +136,7 @@ public class ResponseConverterTest {
         when(participation.getParticipant()).thenReturn(currentUser);
         when(participation.getSurvey()).thenReturn(survey);
         when(survey.getId()).thenReturn(42L);
+        when(response.getId()).thenReturn(43L);
         when(survey.getIsClosed()).thenReturn(false);
         when(survey.getCreator()).thenReturn(creator);
         when(userConverter.convertUserToDTO(currentUser)).thenReturn(identifiableUserDTO);
@@ -137,6 +144,7 @@ public class ResponseConverterTest {
         ResponseDTO responseDTO = responseConverter.convertResponseToDTO(response, currentUser);
 
         assertEquals(42L, responseDTO.getSurveyID());
+        assertEquals(43L, responseDTO.getResponseID());
         assertEquals(true, responseDTO.getIsEditable());
         assertEquals(identifiableUserDTO, responseDTO.getUser());
         assertArrayEquals(emptyResponseValueDTOs, responseDTO.getResponses().toArray());
@@ -156,6 +164,7 @@ public class ResponseConverterTest {
         when(participation.getParticipant()).thenReturn(participant);
         when(participation.getSurvey()).thenReturn(survey);
         when(survey.getId()).thenReturn(42L);
+        when(response.getId()).thenReturn(43L);
         when(survey.getIsClosed()).thenReturn(true);
         when(survey.getCreator()).thenReturn(currentUser);
         when(userConverter.convertUserToDTO(participant)).thenReturn(identifiableUserDTO);
@@ -163,6 +172,7 @@ public class ResponseConverterTest {
         ResponseDTO responseDTO = responseConverter.convertResponseToDTO(response, currentUser);
 
         assertEquals(42L, responseDTO.getSurveyID());
+        assertEquals(43L, responseDTO.getResponseID());
         assertEquals(false, responseDTO.getIsEditable());
         assertEquals(identifiableUserDTO, responseDTO.getUser());
         assertArrayEquals(emptyResponseValueDTOs, responseDTO.getResponses().toArray());
@@ -182,6 +192,7 @@ public class ResponseConverterTest {
         when(participation.getParticipant()).thenReturn(participant);
         when(participation.getSurvey()).thenReturn(survey);
         when(survey.getId()).thenReturn(42L);
+        when(response.getId()).thenReturn(43L);
         when(survey.getIsClosed()).thenReturn(false);
         when(survey.getCreator()).thenReturn(currentUser);
         when(userConverter.convertUserToDTO(participant)).thenReturn(identifiableUserDTO);
@@ -189,6 +200,7 @@ public class ResponseConverterTest {
         ResponseDTO responseDTO = responseConverter.convertResponseToDTO(response, currentUser);
 
         assertEquals(42L, responseDTO.getSurveyID());
+        assertEquals(43L, responseDTO.getResponseID());
         assertEquals(false, responseDTO.getIsEditable());
         assertEquals(identifiableUserDTO, responseDTO.getUser());
         assertArrayEquals(emptyResponseValueDTOs, responseDTO.getResponses().toArray());
@@ -209,6 +221,7 @@ public class ResponseConverterTest {
         when(participation.getParticipant()).thenReturn(participant);
         when(participation.getSurvey()).thenReturn(survey);
         when(survey.getId()).thenReturn(42L);
+        when(response.getId()).thenReturn(43L);
         when(survey.getIsClosed()).thenReturn(true);
         when(survey.getCreator()).thenReturn(creator);
         when(userConverter.convertUserToDTO(participant)).thenReturn(identifiableUserDTO);
@@ -216,6 +229,7 @@ public class ResponseConverterTest {
         ResponseDTO responseDTO = responseConverter.convertResponseToDTO(response, currentUser);
 
         assertEquals(42L, responseDTO.getSurveyID());
+        assertEquals(43L, responseDTO.getResponseID());
         assertEquals(false, responseDTO.getIsEditable());
         assertEquals(identifiableUserDTO, responseDTO.getUser());
         assertArrayEquals(emptyResponseValueDTOs, responseDTO.getResponses().toArray());
@@ -236,6 +250,7 @@ public class ResponseConverterTest {
         when(participation.getParticipant()).thenReturn(participant);
         when(participation.getSurvey()).thenReturn(survey);
         when(survey.getId()).thenReturn(42L);
+        when(response.getId()).thenReturn(43L);
         when(survey.getIsClosed()).thenReturn(false);
         when(survey.getCreator()).thenReturn(creator);
         when(userConverter.convertUserToDTO(participant)).thenReturn(identifiableUserDTO);
@@ -243,6 +258,7 @@ public class ResponseConverterTest {
         ResponseDTO responseDTO = responseConverter.convertResponseToDTO(response, currentUser);
 
         assertEquals(42L, responseDTO.getSurveyID());
+        assertEquals(43L, responseDTO.getResponseID());
         assertEquals(false, responseDTO.getIsEditable());
         assertEquals(identifiableUserDTO, responseDTO.getUser());
         assertArrayEquals(emptyResponseValueDTOs, responseDTO.getResponses().toArray());
@@ -263,22 +279,24 @@ public class ResponseConverterTest {
         when(participation.getParticipant()).thenReturn(currentUser);
         when(participation.getSurvey()).thenReturn(survey);
         when(survey.getId()).thenReturn(42L);
+        when(response.getId()).thenReturn(43L);
         when(survey.getIsClosed()).thenReturn(true);
         when(survey.getCreator()).thenReturn(currentUser);
         when(userConverter.convertUserToDTO(currentUser)).thenReturn(identifiableUserDTO);
         when(response.getResponseTimeslots()).thenReturn(Collections.singleton(responseTimeslot));
         when(responseTimeslot.getResponseType()).thenReturn(ResponseType.YES);
         when(responseTimeslot.getTimeslot()).thenReturn(timeslot);
-        when(timeslot.getId()).thenReturn(43L);
+        when(timeslot.getId()).thenReturn(44L);
 
         ResponseDTO responseDTO = responseConverter.convertResponseToDTO(response, currentUser);
 
         assertEquals(42L, responseDTO.getSurveyID());
+        assertEquals(43L, responseDTO.getResponseID());
         assertEquals(false, responseDTO.getIsEditable());
         assertEquals(identifiableUserDTO, responseDTO.getUser());
 
         ResponseValueDTO responseValueDTO = new ResponseValueDTO();
-        responseValueDTO.setTimeslotID(43L);
+        responseValueDTO.setTimeslotID(44L);
         responseValueDTO.setValue(true);
 
         ResponseValueDTO[] responseValueDTOs = { responseValueDTO };

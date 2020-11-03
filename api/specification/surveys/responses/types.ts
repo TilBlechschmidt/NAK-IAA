@@ -13,6 +13,8 @@ export interface ResponseDTO {
     user: IdentifiableUserDTO;
     /** Unique resource identifier for the survey to which this response belongs */
     surveyID: Identifier;
+    /** Unique resource identifier for the response */
+    responseID: Identifier;
     /**
      * List of responses
      * @type {Object.<Identifier, TimeslotDTO>}
