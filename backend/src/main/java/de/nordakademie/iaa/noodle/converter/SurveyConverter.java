@@ -37,6 +37,7 @@ public class SurveyConverter {
 
     public SurveyDTO convertSurveyToDTO(Survey survey, User currentUser) {
         SurveyDTO surveyDTO = new SurveyDTO();
+
         surveyDTO.setTitle(survey.getTitle());
         surveyDTO.setDescription(survey.getDescription());
         surveyDTO.setIsClosed(survey.getIsClosed());
@@ -46,21 +47,26 @@ public class SurveyConverter {
             surveyDTO.setSelectedTimeslot(convertTimeslotToDTO(survey.getChosenTimeslot()));
         }
 
-        List<TimeslotDTO> timeslots = survey.getTimeslots()
-            .stream()
-            .map(this::convertTimeslotToDTO)
-            .sorted(Comparator.comparing(TimeslotDTO::getStart))
-            .collect(Collectors.toList());
-        surveyDTO.setTimeslots(timeslots);
+        surveyDTO.setTimeslots(getTimeslotsAsDTOs(survey));
+        surveyDTO.setResponses(getResponsesAsDTOs(survey, currentUser));
 
-        List<ResponseDTO> responses = survey.getParticipations()
+        return surveyDTO;
+    }
+
+    private List<ResponseDTO> getResponsesAsDTOs(Survey survey, User currentUser) {
+        return survey.getParticipations()
             .stream()
             .map(Participation::getResponse)
             .filter(Objects::nonNull)
             .map(response -> responseConverter.convertResponseToDTO(response, currentUser))
             .collect(Collectors.toList());
-        surveyDTO.setResponses(responses);
+    }
 
-        return surveyDTO;
+    private List<TimeslotDTO> getTimeslotsAsDTOs(Survey survey) {
+        return survey.getTimeslots()
+            .stream()
+            .map(this::convertTimeslotToDTO)
+            .sorted(Comparator.comparing(TimeslotDTO::getStart))
+            .collect(Collectors.toList());
     }
 }
