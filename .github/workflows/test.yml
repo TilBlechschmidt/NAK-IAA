@@ -47,6 +47,9 @@ jobs:
             - name: Install frontend dependencies
               working-directory: ./frontend
               run: yarn --frozen-lockfile
+            - name: Lint frontend
+              working-directory: ./frontend
+              run: yarn lint
             - name: Build frontend
               working-directory: ./frontend
               run: yarn build
