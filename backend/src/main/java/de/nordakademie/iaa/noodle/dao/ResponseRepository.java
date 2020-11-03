@@ -15,7 +15,16 @@ import java.util.List;
 @Transactional(propagation = Propagation.REQUIRED)
 public interface ResponseRepository {
 
-    @Query("SELECT response FROM Response response WHERE response.id = ?1 AND response.participation.survey.id = ?2")
+
+
+    default Response findByIdAndSurveyId(Long id, Long surveyId) {
+        return findByIdAndParticipation_Survey_Id(id, surveyId);
+    }
+
+    /**
+     * @deprecated For extensibility Reasons, please use {@link #findBySurveyId(Long)}
+     * instead of this method.
+     */
     @EntityGraph(attributePaths = {
         "participation",
         "participation.survey",
@@ -23,7 +32,8 @@ public interface ResponseRepository {
         "participation.participant",
         "responseTimeslots"
     })
-    Response findByIdAndSurveyId(Long id, Long surveyId);
+    @Deprecated
+    Response findByIdAndParticipation_Survey_Id(Long id, Long surveyId);
 
     /**
      * @deprecated For extensibility Reasons, please use {@link #findBySurveyId(Long)}
