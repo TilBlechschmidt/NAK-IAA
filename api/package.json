@@ -16,7 +16,7 @@
     "ajv": "4.11.8",
     "core-js": "^3.1.4",
     "fs-extra": "^9.0.1",
-    "ng-openapi-mock-gen": "^0.13.3",
+    "ng-openapi-mock-gen": "^0.13.4",
     "react": ">=16.3.0",
     "react-dom": ">=16.3.0",
     "react-is": ">=16.8.0",
