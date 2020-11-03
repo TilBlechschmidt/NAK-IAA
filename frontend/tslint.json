@@ -46,6 +46,7 @@
     "no-any": true,
     "no-console": [
       true,
+      "log",
       "debug",
       "info",
       "time",
