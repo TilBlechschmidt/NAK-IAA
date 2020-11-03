@@ -6,6 +6,7 @@ import de.nordakademie.iaa.noodle.converter.SurveyConverter;
 import de.nordakademie.iaa.noodle.model.Survey;
 import de.nordakademie.iaa.noodle.model.User;
 import de.nordakademie.iaa.noodle.services.SurveyService;
+import de.nordakademie.iaa.noodle.services.exceptions.EntityNotFoundException;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 import org.springframework.http.HttpStatus;
@@ -55,7 +56,7 @@ public class SurveyControllerTest {
     }
 
     @Test
-    public void testQuerySurvey() {
+    public void testQuerySurvey() throws EntityNotFoundException {
         Survey inputSurvey = mock(Survey.class);
         SurveyDTO inputSurveyDTO = mock(SurveyDTO.class);
         when(surveyService.querySurvey(42L)).thenReturn(inputSurvey);
@@ -69,13 +70,13 @@ public class SurveyControllerTest {
     }
 
     @Test
-    public void testQuerySurveyNotFound() {
-        when(surveyService.querySurvey(42L)).thenReturn(null);
+    public void testQuerySurveyNotFound() throws EntityNotFoundException {
+        when(surveyService.querySurvey(42L)).thenThrow(new EntityNotFoundException("surveyNotFound"));
 
         ResponseStatusException exception = assertThrows(ResponseStatusException.class, () ->
             surveyController.querySurvey(42L));
 
-        assertExceptionEquals(HttpStatus.NOT_FOUND, "notFound", exception);
+        assertExceptionEquals(HttpStatus.NOT_FOUND, "surveyNotFound", exception);
     }
 
     @Test

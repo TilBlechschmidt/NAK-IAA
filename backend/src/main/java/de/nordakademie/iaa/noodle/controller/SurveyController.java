@@ -5,6 +5,7 @@ import de.nordakademie.iaa.noodle.api.model.*;
 import de.nordakademie.iaa.noodle.converter.SurveyConverter;
 import de.nordakademie.iaa.noodle.model.Survey;
 import de.nordakademie.iaa.noodle.services.SurveyService;
+import de.nordakademie.iaa.noodle.services.exceptions.EntityNotFoundException;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
@@ -45,13 +46,13 @@ public class SurveyController extends AuthenticatedController implements Surveys
 
     @Override
     public ResponseEntity<SurveyDTO> querySurvey(Long id) {
-        Survey survey = surveyService.querySurvey(id);
-
-        if (survey == null) {
-            throw new ResponseStatusException(HttpStatus.NOT_FOUND, "notFound");
+        try {
+            Survey survey = surveyService.querySurvey(id);
+            SurveyDTO surveyDTO = surveyConverter.convertSurveyToDTO(survey, getCurrentUser());
+            return ResponseEntity.ok(surveyDTO);
+        } catch (EntityNotFoundException e) {
+            throw new ResponseStatusException(HttpStatus.NOT_FOUND, e.getMessage(), e);
         }
-
-        return ResponseEntity.ok(surveyConverter.convertSurveyToDTO(survey, getCurrentUser()));
     }
 
     @Override
