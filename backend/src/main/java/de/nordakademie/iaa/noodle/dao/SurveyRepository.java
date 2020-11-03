@@ -27,7 +27,7 @@ public interface SurveyRepository {
 
 
     @Query("""
-                SELECT survey FROM Survey survey
+                SELECT DISTINCT survey FROM Survey survey
                     LEFT OUTER JOIN Participation participation ON participation.survey = survey
                     WHERE
                     (:participated IS NULL OR
@@ -50,15 +50,15 @@ public interface SurveyRepository {
                     AND
                     (:upcoming IS NULL OR
                         (:upcoming = true AND
-                            (survey.chosenTimeslot IS NOT NULL AND survey.chosenTimeslot.start >= CURRENT_TIMESTAMP) ) OR
+                            (survey.chosenTimeslot IS NOT NULL AND CURRENT_TIMESTAMP <= ALL (SELECT start FROM Timeslot WHERE id=survey.chosenTimeslot.id)) ) OR
                         (:upcoming = false AND NOT
-                            (survey.chosenTimeslot IS NOT NULL AND survey.chosenTimeslot.start >= CURRENT_TIMESTAMP) ))
+                            (survey.chosenTimeslot IS NOT NULL AND CURRENT_TIMESTAMP <= ALL (SELECT start FROM Timeslot WHERE id=survey.chosenTimeslot.id)) ))
                     AND
                      (:attentionRequired IS NULL OR
                         (:attentionRequired = true  AND
-                            (:userID = participation.participant.id AND participation.response IS NULL )) OR
+                            (:userID = participation.participant.id AND NOT EXISTS (SELECT r FROM Response r where r.participation=participation))) OR
                         (:attentionRequired = false AND NOT
-                            (:userID = participation.participant.id AND participation.response IS NULL )))
+                            (:userID = participation.participant.id AND NOT EXISTS (SELECT r FROM Response r where r.participation=participation))))
         """)
     List<Survey> querySurvey(@Param("userID") Long userID,
                              @Param("participated") Boolean didParticipateIn,
