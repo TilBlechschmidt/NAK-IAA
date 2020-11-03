@@ -25,43 +25,44 @@ public interface SurveyRepository {
             WHERE s.id = s1.id )""")
     List<Survey> findSurveysWhereUserHasNotParticipated(@Param("userID") Long userID);
 
-// Sadly, JPQL does not allow us to use "<boolean_expr> = flag", so we need to emulate it using boolean logic
+    // Sadly, JPQL does not allow us to use "<boolean_expr> = flag", so we need to emulate it using boolean logic
 // This leads to doubled logic
 // However, the alternatives would be either writing a lot of queries, introducing a second query approach for one
 // method, or filtering in the backend instead of the database, which are all not ideal either.
     @Query("""
-                SELECT DISTINCT survey FROM Survey survey
-                    LEFT OUTER JOIN Participation participation ON participation.survey = survey
-                    WHERE
-                    (:participated IS NULL OR
-                        (:participated= true  AND
-                            participation.participant.id = :userID) OR
-                        (:participated= false AND NOT
-                            participation.participant.id = :userID))
-                    AND
-                    (:completed IS NULL OR
-                        (:completed=true  AND NOT
-                            survey.chosenTimeslot IS NULL) OR
-                        (:completed=false AND
-                            survey.chosenTimeslot IS NULL))
-                    AND
-                    (:owned IS NULL OR
-                        (:owned = true  AND
-                            survey.creator.id = :userID) OR
-                        (:owned = false AND NOT
-                            survey.creator.id = :userID))
-                    AND
-                    (:upcoming IS NULL OR
-                        (:upcoming = true AND
-                            (survey.chosenTimeslot IS NOT NULL AND CURRENT_TIMESTAMP <= ALL (SELECT start FROM Timeslot WHERE id=survey.chosenTimeslot.id)) ) OR
-                        (:upcoming = false AND NOT
-                            (survey.chosenTimeslot IS NOT NULL AND CURRENT_TIMESTAMP <= ALL (SELECT start FROM Timeslot WHERE id=survey.chosenTimeslot.id)) ))
-                    AND
-                     (:attentionRequired IS NULL OR
-                        (:attentionRequired = true  AND
-                            (:userID = participation.participant.id AND NOT EXISTS (SELECT r FROM Response r where r.participation=participation))) OR
-                        (:attentionRequired = false AND NOT
-                            (:userID = participation.participant.id AND NOT EXISTS (SELECT r FROM Response r where r.participation=participation))))
+SELECT DISTINCT survey FROM Survey survey
+    LEFT OUTER JOIN Participation participation ON participation.survey = survey
+    WHERE
+    (:participated IS NULL OR
+        (:participated = true  AND
+            participation.participant.id = :userID) OR
+        (:participated = false AND
+            (NOT EXISTS (SELECT p FROM Participation p WHERE p.survey=survey AND p.participant.id = :userID))))
+    AND
+    (:completed IS NULL OR
+        (:completed=true  AND NOT
+            survey.chosenTimeslot IS NULL) OR
+        (:completed=false AND
+            survey.chosenTimeslot IS NULL))
+    AND
+    (:owned IS NULL OR
+        (:owned = true  AND
+            survey.creator.id = :userID) OR
+        (:owned = false AND NOT
+            survey.creator.id = :userID))
+    AND
+    (:upcoming IS NULL OR
+        (:upcoming = true AND
+            (survey.chosenTimeslot IS NOT NULL AND CURRENT_TIMESTAMP <= ALL (SELECT start FROM Timeslot WHERE id=survey.chosenTimeslot.id)) ) OR
+        (:upcoming = false AND NOT
+            (survey.chosenTimeslot IS NOT NULL AND CURRENT_TIMESTAMP <= ALL (SELECT start FROM Timeslot WHERE id=survey.chosenTimeslot.id)) ))
+    AND
+     (:attentionRequired IS NULL OR
+        (:attentionRequired = true  AND
+            (participation IS NOT NULL AND :userID = participation.participant.id AND NOT EXISTS (SELECT r FROM Response r where r.participation=participation))) OR
+        (:attentionRequired = false AND
+            (NOT EXISTS (SELECT p FROM Participation p WHERE p.survey=survey AND p.participant.id = :userID) OR
+            EXISTS (SELECT r FROM Response r where r.participation=participation))))
         """)
     List<Survey> querySurvey(@Param("userID") Long userID,
                              @Param("participated") Boolean didParticipateIn,
@@ -69,17 +70,6 @@ public interface SurveyRepository {
                              @Param("owned") Boolean isOwnSurvey,
                              @Param("upcoming") Boolean isUpcoming,
                              @Param("attentionRequired") Boolean requiresAttention);
-
-    /**
-     * @deprecated For extensibility Reasons, please use {@link #findSurveysThatNeedAttentionBy(Long)}}
-     * instead of this method.
-     */
-    @Deprecated
-    List<Survey> findAllByParticipations_participant_idAndParticipations_responseNull(Long id);
-
-    default List<Survey> findSurveysThatNeedAttentionBy(Long userID) {
-        return findAllByParticipations_participant_idAndParticipations_responseNull(userID);
-    }
 
     @EntityGraph(attributePaths = {
         "timeslots",
