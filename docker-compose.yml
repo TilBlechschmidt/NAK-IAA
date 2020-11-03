@@ -2,14 +2,14 @@ version: "3.8"
 
 services:
     proxy:
-        image: caddy:2.1.1-alpine
+        build:
+            context: reverse-proxy
+            dockerfile: Dockerfile
         ports:
             - "2020:2020"
         networks:
             - services
             - default
-        volumes:
-            - $PWD/Caddyfile:/etc/caddy/Caddyfile
     frontend:
         build:
             context: .
