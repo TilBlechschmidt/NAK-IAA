@@ -1,24 +1,20 @@
-import { Component, OnInit } from '@angular/core';
+import {Component, OnInit} from '@angular/core';
 
 @Component({
-  selector: 'app-fixed-appointment-view',
-  templateUrl: './fixed-appointment-view.component.html',
-  styleUrls: ['./fixed-appointment-view.component.sass']
+    selector: 'app-fixed-appointment-view',
+    templateUrl: './fixed-appointment-view.component.html',
+    styleUrls: ['./fixed-appointment-view.component.sass']
 })
 export class FixedAppointmentViewComponent implements OnInit {
 
-  constructor() { }
-
-  ngOnInit(): void {
-  }
-
-    log(msg: string): void {
-        console.log(msg)
+    constructor() {
     }
 
-
     displayedColumns: string[] = ['position', 'name', 'weight', 'symbol'];
-  dataSource = ELEMENT_DATA;
+    dataSource = ELEMENT_DATA;
+
+    ngOnInit(): void {
+    }
 }
 
 export interface PeriodicElement {

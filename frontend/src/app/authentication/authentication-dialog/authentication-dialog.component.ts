@@ -1,8 +1,8 @@
 import { Component, OnInit } from '@angular/core';
-import {AuthenticationService} from "../../api/services/authentication.service";
-import {EMail, Password} from "../../api/models";
-import {Router} from "@angular/router";
-import {TokenService} from "../service/token.service";
+import {AuthenticatedResponse, EMail, Password} from '../../api/models';
+import {Router} from '@angular/router';
+import {TokenService} from '../service/token.service';
+import {AccountService} from '../../api/services/account.service';
 
 
 @Component({
@@ -12,22 +12,22 @@ import {TokenService} from "../service/token.service";
 })
 export class AuthenticationDialogComponent implements OnInit {
 
-   email: EMail =  "";
-   password: Password = "";
-   authError: boolean = false;
+   email: EMail =  '';
+   password: Password = '';
+   authError = false;
 
-  constructor(private authenticationService: AuthenticationService, private authService: TokenService, private router: Router) { }
+  constructor(private accountService: AccountService, private authService: TokenService, private router: Router) { }
 
   ngOnInit(): void {
   }
 
-  signIn() {
-      this.authenticationService.authenticate({body: {email: this.email, password: this.password}}).subscribe(
-          next => {
+  signIn(): void {
+      this.accountService.authenticate({body: {email: this.email, password: this.password}}).subscribe(
+          (next: AuthenticatedResponse) => {
               this.authService.setToken(next.token);
-              this.router.navigateByUrl("survey");
-          }, error => this.authError = true
-      )
+              this.router.navigateByUrl('survey');
+          },  (err: AuthenticatedResponse) => this.authError = true
+      );
   }
 
 }

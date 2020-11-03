@@ -1,11 +1,10 @@
 import { ComponentFixture, TestBed } from '@angular/core/testing';
 
 import { AuthenticationDialogComponent } from './authentication-dialog.component';
-import {AuthenticationService} from "../../api/services";
-import {HttpClient} from "@angular/common/http";
-import {HttpClientTestingModule} from "@angular/common/http/testing";
-import {TranslateModule} from "@ngx-translate/core";
-import {RouterTestingModule} from "@angular/router/testing";
+import {HttpClientTestingModule} from '@angular/common/http/testing';
+import {TranslateModule} from '@ngx-translate/core';
+import {RouterTestingModule} from '@angular/router/testing';
+import {AccountService} from '../../api/services/account.service';
 
 describe('AuthenticationDialogComponent', () => {
   let component: AuthenticationDialogComponent;
@@ -15,7 +14,7 @@ describe('AuthenticationDialogComponent', () => {
     await TestBed.configureTestingModule({
       declarations: [ AuthenticationDialogComponent ],
         imports: [RouterTestingModule, HttpClientTestingModule, TranslateModule.forRoot()],
-        providers: [ AuthenticationService]
+        providers: [ AccountService ]
     })
     .compileComponents();
   });

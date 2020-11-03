@@ -1,6 +1,8 @@
 import {Component, OnInit} from '@angular/core';
-import {AuthenticationService} from "../../api/services";
-import {FormBuilder, FormControl, FormGroup, Validators} from "@angular/forms";
+import {FormBuilder, FormControl, FormGroup, Validators} from '@angular/forms';
+import {Router} from '@angular/router';
+import {AccountService} from '../../api/services/account.service';
+import {RequestRegistrationEmailResponse} from '../../api/models/request-registration-email-response';
 
 @Component({
     selector: 'app-registration-dialog',
@@ -11,7 +13,7 @@ export class RegistrationDialogComponent implements OnInit {
 
     public form: FormGroup;
 
-    constructor(public service: AuthenticationService, protected readonly formBuilder: FormBuilder) {
+    constructor(public service: AccountService, protected readonly formBuilder: FormBuilder, private router: Router) {
         this.form = this.formBuilder.group({
             name: new FormControl('', Validators.required),
             email: new FormControl('', [Validators.required, Validators.email]),
@@ -23,15 +25,14 @@ export class RegistrationDialogComponent implements OnInit {
     ngOnInit(): void {
     }
 
-    submit() {
+    submit(): void {
         if (this.isFormValid()) {
-            this.service.createUser({
+            this.service.requestRegistrationEmail({
                 body: {
                     name: this.form.get('name')?.value,
-                    email: this.form.get('email')?.value,
-                    password: this.form.get('password')?.value
+                    email: this.form.get('email')?.value
                 }
-            }).subscribe(next => console.log(next), error => console.log(error))
+            }).subscribe((next: RequestRegistrationEmailResponse) => this.router.navigateByUrl('/survey'));
         }
     }
 
@@ -39,15 +40,14 @@ export class RegistrationDialogComponent implements OnInit {
         return !this.form.get('name')?.invalid
             && !this.form.get('email')?.invalid
             && !this.form.get('password')?.invalid
-            && this.isConfirmationPasswordMatching()
+            && this.isConfirmationPasswordMatching();
     }
 
-    isError(form: FormGroup, name: string) {
-        return form.get(name)?.touched && form.get(name)?.invalid
+    isError(form: FormGroup, name: string): boolean | undefined {
+        return form.get(name)?.touched && form.get(name)?.invalid;
     }
 
-    isConfirmationPasswordMatching() : boolean {
-        console.log(this.form.get('password')?.value === this.form.get('passwordConfirmation')?.value);
+    isConfirmationPasswordMatching(): boolean {
         return this.form.get('password')?.value === this.form.get('passwordConfirmation')?.value;
     }
 

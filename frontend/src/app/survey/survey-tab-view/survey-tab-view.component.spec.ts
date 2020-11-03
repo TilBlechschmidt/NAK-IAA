@@ -1,11 +1,11 @@
 import { ComponentFixture, TestBed } from '@angular/core/testing';
 
 import { SurveyTabViewComponent } from './survey-tab-view.component';
-import {APP_INITIALIZER} from "@angular/core";
-import {HttpClient} from "@angular/common/http";
-import {TranslateModule, TranslateService} from "@ngx-translate/core";
-import {initApp} from "../../app.module";
-import {HttpClientTestingModule} from "@angular/common/http/testing";
+import {APP_INITIALIZER} from '@angular/core';
+import {HttpClient} from '@angular/common/http';
+import {TranslateModule, TranslateService} from '@ngx-translate/core';
+import {initApp} from '../../app.module';
+import {HttpClientTestingModule} from '@angular/common/http/testing';
 
 describe('SurveyTabViewComponent', () => {
   let component: SurveyTabViewComponent;

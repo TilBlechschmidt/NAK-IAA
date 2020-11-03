@@ -1,9 +1,10 @@
 import {Component, Inject, OnInit} from '@angular/core';
-import {MAT_DIALOG_DATA, MatDialogRef} from "@angular/material/dialog";
-import {DetailViewComponent} from "../detail-view/detail-view.component";
-import {SurveysService} from "../../../api/services/surveys.service";
-import {Identifier} from "../../../api/models";
-import {Router} from "@angular/router";
+import {MAT_DIALOG_DATA, MatDialogRef} from '@angular/material/dialog';
+import {DetailViewComponent} from '../detail-view/detail-view.component';
+import {SurveysService} from '../../../api/services/surveys.service';
+import {Identifier} from '../../../api/models';
+import {Router} from '@angular/router';
+import {TokenService} from '../../../authentication/service/token.service';
 
 @Component({
     selector: 'app-delete-survey',
@@ -12,11 +13,11 @@ import {Router} from "@angular/router";
 })
 export class DeleteSurveyComponent implements OnInit {
 
-    deleteError: boolean = false;
+    deleteError = false;
 
     constructor(public dialogRef: MatDialogRef<DetailViewComponent>,
                 @Inject(MAT_DIALOG_DATA) public data: DialogData,
-                public service: SurveysService, public router: Router) {
+                public service: SurveysService, public router: Router, private tokenService: TokenService) {
     }
 
     ngOnInit(): void {
@@ -26,16 +27,15 @@ export class DeleteSurveyComponent implements OnInit {
         this.dialogRef.close(this.data);
     }
 
-    delete() {
+    delete(): void {
         this.service.deleteSurvey({
-            id: this.data.id,
-            Authorization: localStorage.getItem("jwt")!
-        }).subscribe(next => this.router.navigateByUrl("survey"), error => this.deleteError = true)
+            id: this.data.id
+        }).subscribe(next => this.router.navigateByUrl('survey'), error => this.deleteError = true);
     }
 
 }
 
 interface DialogData {
-    id: Identifier,
-    title: string
+    id: Identifier;
+    title: string;
 }

@@ -1,11 +1,11 @@
 import {ComponentFixture, TestBed} from '@angular/core/testing';
 
 import {DetailViewComponent} from './detail-view.component';
-import {SurveysService} from "../../../api/services";
-import {HttpClientTestingModule} from "@angular/common/http/testing";
-import {TranslateModule} from "@ngx-translate/core";
-import {RouterTestingModule} from "@angular/router/testing";
-import {MatDialog} from "@angular/material/dialog";
+import {SurveysService} from '../../../api/services';
+import {HttpClientTestingModule} from '@angular/common/http/testing';
+import {TranslateModule} from '@ngx-translate/core';
+import {RouterTestingModule} from '@angular/router/testing';
+import {MatDialog} from '@angular/material/dialog';
 
 describe('DetailViewComponent', () => {
     let component: DetailViewComponent;

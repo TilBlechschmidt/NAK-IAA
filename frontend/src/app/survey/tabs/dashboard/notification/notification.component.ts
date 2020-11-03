@@ -9,8 +9,8 @@ export class NotificationComponent implements OnInit {
 
   constructor() { }
 
+  notifications = [];
+
   ngOnInit(): void {
   }
-
-  notifications = ["Hallo, Willkommen", "Irgendjemand ist blöd"]
 }

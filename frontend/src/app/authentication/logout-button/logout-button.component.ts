@@ -1,6 +1,6 @@
 import { Component, OnInit } from '@angular/core';
-import {Router} from "@angular/router";
-import {TokenService} from "../service/token.service";
+import {Router} from '@angular/router';
+import {TokenService} from '../service/token.service';
 
 @Component({
   selector: 'app-logout-button',
@@ -13,9 +13,9 @@ export class LogoutButtonComponent implements OnInit {
 
   ngOnInit(): void {}
 
-  logout() {
+  logout(): void {
       this.authService.deleteToken();
-      this.router.navigateByUrl("sign_in");
+      this.router.navigateByUrl('sign_in');
   }
 
 }

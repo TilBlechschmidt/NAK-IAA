@@ -1,11 +1,12 @@
 import { ComponentFixture, TestBed } from '@angular/core/testing';
 
 import { AuthenticationButtonComponent } from './authentication-button.component';
-import {APP_INITIALIZER} from "@angular/core";
-import {initApp} from "../../app.module";
-import {HttpClient} from "@angular/common/http";
-import {TranslateModule, TranslateService} from "@ngx-translate/core";
-import {HttpClientTestingModule} from "@angular/common/http/testing";
+import {APP_INITIALIZER} from '@angular/core';
+import {initApp} from '../../app.module';
+import {HttpClient} from '@angular/common/http';
+import {TranslateModule, TranslateService} from '@ngx-translate/core';
+import {HttpClientTestingModule} from '@angular/common/http/testing';
+import {RouterTestingModule} from '@angular/router/testing';
 
 describe('AuthenticationButtonComponent', () => {
   let component: AuthenticationButtonComponent;

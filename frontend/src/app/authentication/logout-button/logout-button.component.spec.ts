@@ -2,8 +2,8 @@ import { ComponentFixture, TestBed } from '@angular/core/testing';
 
 import { LogoutButtonComponent } from './logout-button.component';
 
-import {RouterTestingModule} from "@angular/router/testing";
-import {TranslateModule} from "@ngx-translate/core";
+import {RouterTestingModule} from '@angular/router/testing';
+import {TranslateModule} from '@ngx-translate/core';
 
 describe('LogoutButtonComponent', () => {
   let component: LogoutButtonComponent;

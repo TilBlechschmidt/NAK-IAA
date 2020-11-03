@@ -5,39 +5,40 @@ import { AppRoutingModule } from './app-routing.module';
 import { AppComponent } from './app.component';
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 import { AppbarComponent } from './appbar/appbar.component';
-import { MatToolbarModule } from "@angular/material/toolbar";
+import { MatToolbarModule } from '@angular/material/toolbar';
 import { AuthenticationButtonComponent } from './authentication/authentication-button/authentication-button.component';
 import { RegistrationButtonComponent } from './authentication/registration-button/registration-button.component';
-import { MatButtonModule } from "@angular/material/button";
+import { MatButtonModule } from '@angular/material/button';
 import { AuthenticationDialogComponent } from './authentication/authentication-dialog/authentication-dialog.component';
-import { MatCardModule } from "@angular/material/card";
-import { MatFormFieldModule } from "@angular/material/form-field";
-import { MatInputModule } from "@angular/material/input";
+import { MatCardModule } from '@angular/material/card';
+import { MatFormFieldModule } from '@angular/material/form-field';
+import { MatInputModule } from '@angular/material/input';
 import { RegistrationDialogComponent } from './authentication/registration-dialog/registration-dialog.component';
-import { SurveyTabViewComponent } from './survey/survey-tab-view/survey-tab-view.component';
-import { MatTabsModule } from "@angular/material/tabs";
-import { MatTableModule } from "@angular/material/table";
-import { DetailViewComponent } from './survey/detail/detail-view/detail-view.component';
+import { MatTabsModule } from '@angular/material/tabs';
+import { MatTableModule } from '@angular/material/table';
 import { ResponseOverviewComponent } from './survey/detail/response-overview/response-overview.component';
-import { MatIconModule } from "@angular/material/icon";
-import { NewSurveyButtonComponent } from "./survey/create/new-survey-button/new-survey-button.component";
-import { FixedAppointmentViewComponent } from "./survey/tabs/fixed-appointment-view/fixed-appointment-view.component";
+import { MatIconModule } from '@angular/material/icon';
+import { NewSurveyButtonComponent } from './survey/create/new-survey-button/new-survey-button.component';
 import { DashboardComponent } from './survey/tabs/dashboard/dashboard.component';
 import { NotificationComponent } from './survey/tabs/dashboard/notification/notification.component';
 import { CreateSurveyDialogComponent } from './survey/create/create-survey-dialog/create-survey-dialog.component';
-import { FormsModule, ReactiveFormsModule } from "@angular/forms";
-import { MatDialogModule } from "@angular/material/dialog";
-import { AuthenticationService } from "./api/services";
-import { HttpClient, HttpClientModule } from "@angular/common/http";
-import {TranslateModule, TranslateService, TranslateStore} from "@ngx-translate/core";
-import {forkJoin, of} from "rxjs";
-import { catchError } from "rxjs/operators";
-import {MatMenuModule} from "@angular/material/menu";
+import { FormsModule, ReactiveFormsModule } from '@angular/forms';
+import { MatDialogModule } from '@angular/material/dialog';
+import { HttpClient, HttpClientModule } from '@angular/common/http';
+import {TranslateModule, TranslateService, TranslateStore} from '@ngx-translate/core';
+import {forkJoin, of} from 'rxjs';
+import { catchError } from 'rxjs/operators';
+import {MatMenuModule} from '@angular/material/menu';
 import { DeleteSurveyComponent } from './survey/detail/delete-survey/delete-survey.component';
 import { LogoutButtonComponent } from './authentication/logout-button/logout-button.component';
-import {LoggedInGuard} from "./authentication/service/LoggedInGuard";
+import {LoggedInGuard} from './authentication/service/LoggedInGuard';
+import {FixedAppointmentViewComponent} from './survey/tabs/fixed-appointment-view/fixed-appointment-view.component';
+import {DetailViewComponent} from './survey/detail/detail-view/detail-view.component';
+import {SurveyTabViewComponent} from './survey/survey-tab-view/survey-tab-view.component';
+import {AccountService} from './api/services/account.service';
 
-export function initApp(http: HttpClient, translate: TranslateService) {
+
+export function initApp(http: HttpClient, translate: TranslateService): () => Promise<boolean>{
     return () => new Promise<boolean>((resolve: (res: boolean) => void) => {
 
         const defaultLocale = 'en';
@@ -53,7 +54,7 @@ export function initApp(http: HttpClient, translate: TranslateService) {
             http.get(`${translationsUrl}/${locale}${suffix}`).pipe(
                 catchError(() => of(null))
             )
-        ]).subscribe((response: any[]) => {
+        ]).subscribe((response) => {
             const devKeys = response[0];
             const translatedKeys = response[1];
 
@@ -83,7 +84,6 @@ export function initApp(http: HttpClient, translate: TranslateService) {
         ResponseOverviewComponent,
         NewSurveyButtonComponent,
         NewSurveyButtonComponent,
-        FixedAppointmentViewComponent,
         DashboardComponent,
         NotificationComponent,
         CreateSurveyDialogComponent,
@@ -111,7 +111,7 @@ export function initApp(http: HttpClient, translate: TranslateService) {
     ],
   providers: [
       LoggedInGuard,
-      AuthenticationService,
+      AccountService,
       {
           provide: APP_INITIALIZER,
           useFactory: initApp,

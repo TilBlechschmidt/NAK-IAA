@@ -1,6 +1,6 @@
 import { Component, OnInit } from '@angular/core';
-import {MatDialog} from "@angular/material/dialog";
-import {CreateSurveyDialogComponent} from "../create-survey-dialog/create-survey-dialog.component";
+import {MatDialog} from '@angular/material/dialog';
+import {CreateSurveyDialogComponent} from '../create-survey-dialog/create-survey-dialog.component';
 
 @Component({
   selector: 'app-new-survey-button',
@@ -9,8 +9,8 @@ import {CreateSurveyDialogComponent} from "../create-survey-dialog/create-survey
 })
 export class NewSurveyButtonComponent implements OnInit {
 
-  title = "";
-  description = "";
+  title = '';
+  description = '';
 
   constructor(public dialog: MatDialog) { }
 

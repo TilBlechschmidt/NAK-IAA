@@ -1,8 +1,8 @@
 import { ComponentFixture, TestBed } from '@angular/core/testing';
 
 import { CreateSurveyDialogComponent } from './create-survey-dialog.component';
-import {MAT_DIALOG_DATA, MatDialogRef} from "@angular/material/dialog";
-import {TranslateModule} from "@ngx-translate/core";
+import {MAT_DIALOG_DATA, MatDialogRef} from '@angular/material/dialog';
+import {TranslateModule} from '@ngx-translate/core';
 
 describe('CreateSurveyDialogComponent', () => {
   let component: CreateSurveyDialogComponent;
