@@ -1,6 +1,7 @@
 package de.nordakademie.iaa.noodle.services;
 
 import de.nordakademie.iaa.noodle.model.User;
+import de.nordakademie.iaa.noodle.services.exceptions.JWTException;
 import de.nordakademie.iaa.noodle.services.model.SpringAuthenticationDetails;
 import de.nordakademie.iaa.noodle.services.model.UserDetails;
 import io.jsonwebtoken.Claims;
@@ -9,7 +10,6 @@ import io.jsonwebtoken.Jwts;
 import io.jsonwebtoken.SignatureAlgorithm;
 import org.springframework.security.core.GrantedAuthority;
 import org.springframework.security.core.authority.AuthorityUtils;
-import org.springframework.stereotype.Component;
 import org.springframework.stereotype.Service;
 
 import java.util.Date;
@@ -57,51 +57,48 @@ public class JWTService {
             .compact();
     }
 
-    public Optional<UserDetails> userDetailsForToken(String token) {
-        return Optional.of(token)
-            .flatMap(this::extractClaimsFromToken)
-            .flatMap(this::extractUserDetailsFromClaims);
+    public UserDetails userDetailsForToken(String token) throws JWTException {
+        Claims claims = extractClaimsFromToken(token);
+        return extractUserDetailsFromClaims(claims);
     }
 
-    public Optional<SpringAuthenticationDetails> authenticationDetailsForToken(String token) {
-        return Optional.of(token)
-            .flatMap(this::extractClaimsFromToken)
-            .flatMap(this::extractSpringAuthenticationDetailsFromClaims);
+    public SpringAuthenticationDetails authenticationDetailsForToken(String token) throws JWTException {
+        Claims claims = extractClaimsFromToken(token);
+        return extractAuthenticationDetailsFromClaims(claims);
     }
 
 
-    private Optional<Claims> extractClaimsFromToken(String jwtToken) {
+    private Claims extractClaimsFromToken(String jwtToken) throws JWTException {
         try {
-            Claims claims = Jwts.parser()
+            return Jwts.parser()
                 .setSigningKey(SECRET.getBytes())
                 .parseClaimsJws(jwtToken)
                 .getBody();
-            return Optional.ofNullable(claims);
         } catch (Exception e) {
-            return Optional.empty();
+            throw new JWTException("invalidToken");
         }
     }
 
-    private Optional<SpringAuthenticationDetails> extractSpringAuthenticationDetailsFromClaims(Claims claims) {
+    private SpringAuthenticationDetails extractAuthenticationDetailsFromClaims(Claims claims) throws JWTException {
         @SuppressWarnings("unchecked")
         List<String> authorities = claims.get(CLAIM_AUTHORITIES, List.class);
         Long userID = claims.get(CLAIM_USER_ID, Long.class);
 
         if (authorities == null || userID == null) {
-            return Optional.empty();
+            throw new JWTException("missingClaims");
         }
 
-        return Optional.of(new SpringAuthenticationDetails(userID, authorities));
+        return new SpringAuthenticationDetails(userID, authorities);
     }
 
 
-    private Optional<UserDetails> extractUserDetailsFromClaims(Claims claims) {
+    private UserDetails extractUserDetailsFromClaims(Claims claims) throws JWTException {
         String email = claims.get(CLAIM_EMAIL, String.class);
         String fullName = claims.get(CLAIM_FULL_NAME, String.class);
 
         if (email == null || fullName == null) {
-            return Optional.empty();
+            throw new JWTException("missingClaims");
         }
-        return Optional.of(new UserDetails(email, fullName));
+        return new UserDetails(email, fullName);
     }
 }

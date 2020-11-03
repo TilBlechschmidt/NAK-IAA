@@ -1,16 +1,18 @@
 package de.nordakademie.iaa.noodle.services;
 
 import de.nordakademie.iaa.noodle.model.User;
+import de.nordakademie.iaa.noodle.services.exceptions.AuthenticationException;
+import de.nordakademie.iaa.noodle.services.exceptions.EntityNotFoundException;
+import de.nordakademie.iaa.noodle.services.exceptions.JWTException;
+import de.nordakademie.iaa.noodle.services.exceptions.PasswordException;
 import de.nordakademie.iaa.noodle.services.model.AuthenticatedUser;
 import de.nordakademie.iaa.noodle.services.model.SpringAuthenticationDetails;
 import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
 import org.springframework.security.core.Authentication;
 import org.springframework.security.core.authority.SimpleGrantedAuthority;
-import org.springframework.stereotype.Component;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
-import java.util.Optional;
 import java.util.stream.Collectors;
 
 import static de.nordakademie.iaa.noodle.config.SecurityConstants.TOKEN_PREFIX;
@@ -28,24 +30,30 @@ public class SignInService {
         this.jwtService = jwtService;
     }
 
-    public Optional<AuthenticatedUser> attemptAuthentication(String email, String password) {
-        return userService.getUserByEMail(email)
-            .filter(user -> passwordService.isPasswordCorrect(user, password))
-            .map(this::authenticateUser);
+    public AuthenticatedUser attemptAuthentication(String email, String password)
+            throws EntityNotFoundException, PasswordException {
+
+        User user = userService.getUserByEMail(email);
+        if (!passwordService.isPasswordCorrect(user, password)) {
+            throw new PasswordException("invalidPassword");
+        }
+        return authenticateUser(user);
     }
 
-    public Optional<Authentication> springAuthenticationForToken(String token) {
-        return Optional.of(token)
-            .filter(header -> header.startsWith(TOKEN_PREFIX))
-            .map(header -> header.replaceFirst(TOKEN_PREFIX, ""))
-            .flatMap(jwtService::authenticationDetailsForToken)
-            .flatMap(this::springAuthenticationFromDetails);
+    public Authentication springAuthenticationForHeader(String header)
+        throws JWTException, EntityNotFoundException, AuthenticationException {
+
+        if (!header.startsWith(TOKEN_PREFIX)) {
+            throw new AuthenticationException("invalidHeaderFormat");
+        }
+        String token = header.replaceFirst(TOKEN_PREFIX, "");
+        SpringAuthenticationDetails authenticationDetails = jwtService.authenticationDetailsForToken(token);
+        return springAuthenticationFromDetails(authenticationDetails);
     }
 
-    private Optional<Authentication> springAuthenticationFromDetails(SpringAuthenticationDetails details) {
-        return Optional.of(details.getUserID())
-            .flatMap(userService::getUserByUserID)
-            .map(user -> buildSpringAuthentication(user, details.getAuthorities()));
+    private Authentication springAuthenticationFromDetails(SpringAuthenticationDetails details) throws EntityNotFoundException {
+        User user = userService.getUserByUserID(details.getUserID());
+        return buildSpringAuthentication(user, details.getAuthorities());
     }
 
     private AuthenticatedUser authenticateUser(User user) {

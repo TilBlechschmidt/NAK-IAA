@@ -2,14 +2,16 @@ package de.nordakademie.iaa.noodle.controller;
 
 import de.nordakademie.iaa.noodle.api.AccountApi;
 import de.nordakademie.iaa.noodle.api.model.*;
-import de.nordakademie.iaa.noodle.filter.NoodleException;
 import de.nordakademie.iaa.noodle.model.User;
+import de.nordakademie.iaa.noodle.services.exceptions.*;
 import de.nordakademie.iaa.noodle.services.model.AuthenticatedUser;
 import de.nordakademie.iaa.noodle.services.SignInService;
 import de.nordakademie.iaa.noodle.services.SignUpService;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.server.ResponseStatusException;
 
 import static org.springframework.http.HttpStatus.CREATED;
 
@@ -26,46 +28,61 @@ public class AccountController implements AccountApi {
 
     @Override
     public ResponseEntity<ActivateUserResponse> activateUser(ActivateUserRequest activateUserRequest) {
-        String token = activateUserRequest.getToken();
-        String password = activateUserRequest.getPassword();
+        try {
+            String token = activateUserRequest.getToken();
+            String password = activateUserRequest.getPassword();
 
-        return signUpService.createAccount(token, password)
-            .map(this::responseForCreatedUser)
-            .orElseThrow(() -> NoodleException.badRequest("Invalid Token for account creation"));
+            User user = signUpService.createAccount(token, password);
+            ActivateUserResponse activateUserResponse = responseForCreatedUser(user);
+            return ResponseEntity.status(CREATED).body(activateUserResponse);
+        } catch (JWTException e) {
+            throw new ResponseStatusException(HttpStatus.UNAUTHORIZED, e.getMessage(), e);
+        } catch (ConflictException e) {
+            throw new ResponseStatusException(HttpStatus.CONFLICT, e.getMessage(), e);
+        }
     }
 
     @Override
     public ResponseEntity<AuthenticatedResponse> authenticate(AuthenticationRequest authenticationRequest) {
-        return signInService.attemptAuthentication(authenticationRequest.getEmail(), authenticationRequest.getPassword())
-            .map(this::responseForAuthenticatedUser)
-            .orElseThrow(() -> NoodleException.unauthorized("Username or password incorrect"));
+        try {
+            AuthenticatedUser user = signInService.attemptAuthentication(authenticationRequest.getEmail(),
+                authenticationRequest.getPassword());
+            AuthenticatedResponse authenticatedResponse = responseForAuthenticatedUser(user);
+            return ResponseEntity.ok(authenticatedResponse);
+        } catch (PasswordException | EntityNotFoundException e) {
+            throw new ResponseStatusException(HttpStatus.UNAUTHORIZED, "invalidAuthenticationData", e);
+        }
     }
 
     @Override
     public ResponseEntity<RequestRegistrationEmailResponse> requestRegistrationEmail(RequestRegistrationEmailRequest requestRegistrationEmailRequest) {
-        String email = requestRegistrationEmailRequest.getEmail();
-        String fullName = requestRegistrationEmailRequest.getName();
-        signUpService.mailSignupToken(email, fullName);
+        try {
+            String email = requestRegistrationEmailRequest.getEmail();
+            String fullName = requestRegistrationEmailRequest.getName();
+            signUpService.mailSignupToken(email, fullName);
 
-        RequestRegistrationEmailResponse requestRegistrationEmailResponse = new RequestRegistrationEmailResponse();
-        requestRegistrationEmailResponse.setEmail(email);
-        requestRegistrationEmailResponse.setName(fullName);
-        return ResponseEntity.ok(requestRegistrationEmailResponse);
+            RequestRegistrationEmailResponse requestRegistrationEmailResponse = new RequestRegistrationEmailResponse();
+            requestRegistrationEmailResponse.setEmail(email);
+            requestRegistrationEmailResponse.setName(fullName);
+            return ResponseEntity.ok(requestRegistrationEmailResponse);
+        } catch (MailClientException e) {
+            throw new ResponseStatusException(HttpStatus.SERVICE_UNAVAILABLE, e.getMessage(), e);
+        }
     }
 
-    private ResponseEntity<AuthenticatedResponse> responseForAuthenticatedUser(AuthenticatedUser user) {
+    private AuthenticatedResponse responseForAuthenticatedUser(AuthenticatedUser user) {
         AuthenticatedResponse authenticatedResponse = new AuthenticatedResponse();
         authenticatedResponse.setEmail(user.getUser().getEmail());
         authenticatedResponse.setName(user.getUser().getFullName());
         authenticatedResponse.setToken(user.getJwtToken());
-        return ResponseEntity.ok(authenticatedResponse);
+        return authenticatedResponse;
     }
 
-    private ResponseEntity<ActivateUserResponse> responseForCreatedUser(User user) {
+    private ActivateUserResponse responseForCreatedUser(User user) {
         ActivateUserResponse activateUserResponse = new ActivateUserResponse();
         activateUserResponse.setId(user.getId());
         activateUserResponse.setEmail(user.getEmail());
         activateUserResponse.setName(user.getFullName());
-        return ResponseEntity.status(CREATED).body(activateUserResponse);
+        return activateUserResponse;
     }
 }

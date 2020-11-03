@@ -1,10 +1,11 @@
 package de.nordakademie.iaa.noodle.services;
 
+import de.nordakademie.iaa.noodle.services.exceptions.MailClientException;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Value;
+import org.springframework.mail.MailException;
 import org.springframework.mail.SimpleMailMessage;
 import org.springframework.mail.javamail.JavaMailSender;
-import org.springframework.stereotype.Component;
 import org.springframework.stereotype.Service;
 
 @Service
@@ -31,23 +32,27 @@ public class MailService {
         return greeting(fullName) + body + regards();
     }
 
-    public void sendRegistrationMail(String token, String fullName, String email) {
+    public void sendRegistrationMail(String token, String fullName, String email) throws MailClientException {
         String body = "Below, you can find your registration token:\n\n" + token;
         sendMail(body, fullName, email);
     }
 
-    public void sendRegistrationMailDuplicateEmail(String fullName, String email) {
+    public void sendRegistrationMailDuplicateEmail(String fullName, String email) throws MailClientException {
         String body = "We have to inform you, that you already have an account with this email." +
             " Please try to sign in using this email.";
         sendMail(body, fullName, email);
     }
 
-    public void sendMail(String body, String fullName, String email) {
-        SimpleMailMessage message = new SimpleMailMessage();
-        message.setFrom(fromEmail);
-        message.setTo(email);
-        message.setSubject("Your registration");
-        message.setText(assembleContent(fullName, body));
-        emailSender.send(message);
+    public void sendMail(String body, String fullName, String email) throws MailClientException {
+        try {
+            SimpleMailMessage message = new SimpleMailMessage();
+            message.setFrom(fromEmail);
+            message.setTo(email);
+            message.setSubject("Your registration");
+            message.setText(assembleContent(fullName, body));
+            emailSender.send(message);
+        } catch (MailException e) {
+            throw new MailClientException("mailError");
+        }
     }
 }

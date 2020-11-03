@@ -2,6 +2,7 @@ package de.nordakademie.iaa.noodle.controller;
 
 import de.nordakademie.iaa.noodle.api.model.*;
 import de.nordakademie.iaa.noodle.model.User;
+import de.nordakademie.iaa.noodle.services.exceptions.*;
 import de.nordakademie.iaa.noodle.services.model.AuthenticatedUser;
 import de.nordakademie.iaa.noodle.services.SignInService;
 import de.nordakademie.iaa.noodle.services.SignUpService;
@@ -29,7 +30,7 @@ public class AccountControllerTest {
     }
 
     @Test
-    public void testAuthenticate() {
+    public void testAuthenticate() throws PasswordException, EntityNotFoundException {
         AuthenticationRequest authenticationRequest = mock(AuthenticationRequest.class);
         when(authenticationRequest.getEmail()).thenReturn("EMAIL");
         when(authenticationRequest.getPassword()).thenReturn("PASSWORD");
@@ -42,7 +43,7 @@ public class AccountControllerTest {
         when(authenticatedUser.getJwtToken()).thenReturn("TOKEN");
         when(authenticatedUser.getUser()).thenReturn(user);
 
-        when(signInService.attemptAuthentication("EMAIL", "PASSWORD")).thenReturn(Optional.of(authenticatedUser));
+        when(signInService.attemptAuthentication("EMAIL", "PASSWORD")).thenReturn(authenticatedUser);
 
         ResponseEntity<AuthenticatedResponse> response = accountController.authenticate(authenticationRequest);
         AuthenticatedResponse authenticatedResponse = response.getBody();
@@ -55,9 +56,9 @@ public class AccountControllerTest {
     }
 
     @Test
-    public void testCreateUser() {
+    public void testCreateUser() throws ConflictException, JWTException {
         User user = mock(User.class);
-        when(signUpService.createAccount("TOKEN", "PASSWORD")).thenReturn(Optional.of(user));
+        when(signUpService.createAccount("TOKEN", "PASSWORD")).thenReturn(user);
         when(user.getId()).thenReturn(42L);
         when(user.getFullName()).thenReturn("FULL_NAME");
         when(user.getEmail()).thenReturn("EMAIL");
@@ -77,7 +78,7 @@ public class AccountControllerTest {
     }
 
     @Test
-    public void testRequestRegistrationEmail() {
+    public void testRequestRegistrationEmail() throws MailClientException {
         RequestRegistrationEmailRequest requestRegistrationEmailRequest = mock(RequestRegistrationEmailRequest.class);
         when(requestRegistrationEmailRequest.getName()).thenReturn("FULL_NAME");
         when(requestRegistrationEmailRequest.getEmail()).thenReturn("EMAIL");

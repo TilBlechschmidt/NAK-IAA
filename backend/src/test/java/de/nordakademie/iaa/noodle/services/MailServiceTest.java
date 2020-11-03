@@ -1,5 +1,6 @@
 package de.nordakademie.iaa.noodle.services;
 
+import de.nordakademie.iaa.noodle.services.exceptions.MailClientException;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 import org.springframework.mail.SimpleMailMessage;
@@ -22,7 +23,7 @@ public class MailServiceTest {
     }
 
     @Test
-    public void sendRegistrationMail() {
+    public void sendRegistrationMail() throws MailClientException {
         mailService.sendRegistrationMail("TOKEN", "FULL_NAME", "EMAIL");
 
         verify(mailSender).send(argThat((SimpleMailMessage simpleMailMessage) -> {
@@ -45,7 +46,7 @@ public class MailServiceTest {
     }
 
     @Test
-    public void sendRegistrationMailDuplicateEmail() {
+    public void sendRegistrationMailDuplicateEmail() throws MailClientException {
         mailService.sendRegistrationMailDuplicateEmail("FULL_NAME", "EMAIL");
 
         verify(mailSender).send(argThat((SimpleMailMessage simpleMailMessage) -> {

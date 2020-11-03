@@ -1,11 +1,13 @@
 package de.nordakademie.iaa.noodle.services;
 
-import de.nordakademie.iaa.noodle.filter.NoodleException;
 import de.nordakademie.iaa.noodle.model.User;
+import de.nordakademie.iaa.noodle.services.exceptions.ConflictException;
+import de.nordakademie.iaa.noodle.services.exceptions.EntityNotFoundException;
+import de.nordakademie.iaa.noodle.services.exceptions.JWTException;
+import de.nordakademie.iaa.noodle.services.exceptions.MailClientException;
 import de.nordakademie.iaa.noodle.services.model.UserDetails;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.mail.MailException;
-import org.springframework.stereotype.Component;
 import org.springframework.stereotype.Service;
 
 import java.util.Optional;
@@ -25,27 +27,22 @@ public class SignUpService {
         this.mailService = mailService;
     }
 
-    public Optional<User> createAccount(String token, String password) {
+    public User createAccount(String token, String password) throws JWTException, ConflictException {
         // Token does not have the TOKEN_PREFIX, because it is not used for authentication
-        return Optional.of(token)
-            .flatMap(jwtService::userDetailsForToken)
-            .flatMap(userDetails -> this.createUser(password, userDetails));
+        UserDetails userDetails = jwtService.userDetailsForToken(token);
+        return createUser(password, userDetails);
     }
 
-    public void mailSignupToken(String email, String fullName) {
-        try {
-            userService.getUserByEMail(email).ifPresentOrElse(
-                user -> mailService.sendRegistrationMailDuplicateEmail(fullName, email),
-                () -> mailService.sendRegistrationMail(jwtService.buildEmailToken(email, fullName), fullName, email)
-            );
-        } catch (MailException e) {
-            throw NoodleException.serviceUnavailable("Failed to send email");
+    public void mailSignupToken(String email, String fullName) throws MailClientException {
+        if (userService.existsUserWithEMail(email)) {
+            mailService.sendRegistrationMailDuplicateEmail(fullName, email);
+        } else {
+            mailService.sendRegistrationMail(jwtService.buildEmailToken(email, fullName), fullName, email);
         }
     }
 
-    private Optional<User> createUser(String password, UserDetails userDetails) {
+    private User createUser(String password, UserDetails userDetails) throws ConflictException {
         String passwordHash = passwordService.hashPassword(password);
-        User user = userService.createNewUser(userDetails.getEmail(), userDetails.getFullName(), passwordHash);
-        return Optional.of(user);
+        return userService.createNewUser(userDetails.getEmail(), userDetails.getFullName(), passwordHash);
     }
 }
