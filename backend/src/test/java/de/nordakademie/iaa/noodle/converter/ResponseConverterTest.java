@@ -4,6 +4,7 @@ import de.nordakademie.iaa.noodle.api.model.IdentifiableUserDTO;
 import de.nordakademie.iaa.noodle.api.model.ResponseDTO;
 import de.nordakademie.iaa.noodle.api.model.ResponseValueDTO;
 import de.nordakademie.iaa.noodle.model.*;
+import de.nordakademie.iaa.noodle.services.ResponseService;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 
@@ -17,12 +18,14 @@ import static org.mockito.Mockito.when;
 public class ResponseConverterTest {
     private ResponseConverter responseConverter;
     private UserConverter userConverter;
+    private ResponseService responseService;
     private final ResponseValueDTO[] emptyResponseValueDTOs = {};
 
     @BeforeEach
     public void setUp() {
         userConverter = mock(UserConverter.class);
-        responseConverter = new ResponseConverter(userConverter);
+        responseService = mock(ResponseService.class);
+        responseConverter = new ResponseConverter(userConverter, responseService);
     }
 
     @Test
@@ -41,7 +44,7 @@ public class ResponseConverterTest {
     }
 
     @Test
-    public void testConvertResponseToDTOClosedSameAsParticipantAndCreator() {
+    public void testConvertResponseToDTO() {
         Response response = mock(Response.class);
         Survey survey = mock(Survey.class);
         Participation participation = mock(Participation.class);
@@ -54,91 +57,7 @@ public class ResponseConverterTest {
         when(participation.getSurvey()).thenReturn(survey);
         when(survey.getId()).thenReturn(42L);
         when(response.getId()).thenReturn(43L);
-        when(survey.getIsClosed()).thenReturn(true);
-        when(survey.getCreator()).thenReturn(currentUser);
-        when(userConverter.convertUserToDTO(currentUser)).thenReturn(identifiableUserDTO);
-
-        ResponseDTO responseDTO = responseConverter.convertResponseToDTO(response, currentUser);
-
-        assertEquals(42L, responseDTO.getSurveyID());
-        assertEquals(43L, responseDTO.getResponseID());
-        assertEquals(false, responseDTO.getIsEditable());
-        assertEquals(identifiableUserDTO, responseDTO.getUser());
-        assertArrayEquals(emptyResponseValueDTOs, responseDTO.getResponses().toArray());
-    }
-
-    @Test
-    public void testConvertResponseToDTONotClosedSameAsParticipantAndCreator() {
-        Response response = mock(Response.class);
-        Survey survey = mock(Survey.class);
-        Participation participation = mock(Participation.class);
-        User currentUser = mock(User.class);
-
-        IdentifiableUserDTO identifiableUserDTO = mock(IdentifiableUserDTO.class);
-
-        when(response.getParticipation()).thenReturn(participation);
-        when(participation.getParticipant()).thenReturn(currentUser);
-        when(participation.getSurvey()).thenReturn(survey);
-        when(survey.getId()).thenReturn(42L);
-        when(response.getId()).thenReturn(43L);
-        when(survey.getIsClosed()).thenReturn(false);
-        when(survey.getCreator()).thenReturn(currentUser);
-        when(userConverter.convertUserToDTO(currentUser)).thenReturn(identifiableUserDTO);
-
-        ResponseDTO responseDTO = responseConverter.convertResponseToDTO(response, currentUser);
-
-        assertEquals(42L, responseDTO.getSurveyID());
-        assertEquals(43L, responseDTO.getResponseID());
-        assertEquals(false, responseDTO.getIsEditable());
-        assertEquals(identifiableUserDTO, responseDTO.getUser());
-        assertArrayEquals(emptyResponseValueDTOs, responseDTO.getResponses().toArray());
-    }
-
-    @Test
-    public void testConvertResponseToDTOClosedSameAsParticipant() {
-        Response response = mock(Response.class);
-        Survey survey = mock(Survey.class);
-        Participation participation = mock(Participation.class);
-        User currentUser = mock(User.class);
-        User creator = mock(User.class);
-
-        IdentifiableUserDTO identifiableUserDTO = mock(IdentifiableUserDTO.class);
-
-        when(response.getParticipation()).thenReturn(participation);
-        when(participation.getParticipant()).thenReturn(currentUser);
-        when(participation.getSurvey()).thenReturn(survey);
-        when(survey.getId()).thenReturn(42L);
-        when(response.getId()).thenReturn(43L);
-        when(survey.getIsClosed()).thenReturn(true);
-        when(survey.getCreator()).thenReturn(creator);
-        when(userConverter.convertUserToDTO(currentUser)).thenReturn(identifiableUserDTO);
-
-        ResponseDTO responseDTO = responseConverter.convertResponseToDTO(response, currentUser);
-
-        assertEquals(42L, responseDTO.getSurveyID());
-        assertEquals(43L, responseDTO.getResponseID());
-        assertEquals(false, responseDTO.getIsEditable());
-        assertEquals(identifiableUserDTO, responseDTO.getUser());
-        assertArrayEquals(emptyResponseValueDTOs, responseDTO.getResponses().toArray());
-    }
-
-    @Test
-    public void testConvertResponseToDTONotClosedSameAsParticipant() {
-        Response response = mock(Response.class);
-        Survey survey = mock(Survey.class);
-        Participation participation = mock(Participation.class);
-        User currentUser = mock(User.class);
-        User creator = mock(User.class);
-
-        IdentifiableUserDTO identifiableUserDTO = mock(IdentifiableUserDTO.class);
-
-        when(response.getParticipation()).thenReturn(participation);
-        when(participation.getParticipant()).thenReturn(currentUser);
-        when(participation.getSurvey()).thenReturn(survey);
-        when(survey.getId()).thenReturn(42L);
-        when(response.getId()).thenReturn(43L);
-        when(survey.getIsClosed()).thenReturn(false);
-        when(survey.getCreator()).thenReturn(creator);
+        when(responseService.responseIsEditableByUser(response, currentUser)).thenReturn(true);
         when(userConverter.convertUserToDTO(currentUser)).thenReturn(identifiableUserDTO);
 
         ResponseDTO responseDTO = responseConverter.convertResponseToDTO(response, currentUser);
@@ -146,120 +65,6 @@ public class ResponseConverterTest {
         assertEquals(42L, responseDTO.getSurveyID());
         assertEquals(43L, responseDTO.getResponseID());
         assertEquals(true, responseDTO.getIsEditable());
-        assertEquals(identifiableUserDTO, responseDTO.getUser());
-        assertArrayEquals(emptyResponseValueDTOs, responseDTO.getResponses().toArray());
-    }
-
-    @Test
-    public void testConvertResponseToDTOClosedSameAsCreator() {
-        Response response = mock(Response.class);
-        Survey survey = mock(Survey.class);
-        Participation participation = mock(Participation.class);
-        User currentUser = mock(User.class);
-        User participant = mock(User.class);
-
-        IdentifiableUserDTO identifiableUserDTO = mock(IdentifiableUserDTO.class);
-
-        when(response.getParticipation()).thenReturn(participation);
-        when(participation.getParticipant()).thenReturn(participant);
-        when(participation.getSurvey()).thenReturn(survey);
-        when(survey.getId()).thenReturn(42L);
-        when(response.getId()).thenReturn(43L);
-        when(survey.getIsClosed()).thenReturn(true);
-        when(survey.getCreator()).thenReturn(currentUser);
-        when(userConverter.convertUserToDTO(participant)).thenReturn(identifiableUserDTO);
-
-        ResponseDTO responseDTO = responseConverter.convertResponseToDTO(response, currentUser);
-
-        assertEquals(42L, responseDTO.getSurveyID());
-        assertEquals(43L, responseDTO.getResponseID());
-        assertEquals(false, responseDTO.getIsEditable());
-        assertEquals(identifiableUserDTO, responseDTO.getUser());
-        assertArrayEquals(emptyResponseValueDTOs, responseDTO.getResponses().toArray());
-    }
-
-    @Test
-    public void testConvertResponseToDTONotClosedSameAsCreator() {
-        Response response = mock(Response.class);
-        Survey survey = mock(Survey.class);
-        Participation participation = mock(Participation.class);
-        User currentUser = mock(User.class);
-        User participant = mock(User.class);
-
-        IdentifiableUserDTO identifiableUserDTO = mock(IdentifiableUserDTO.class);
-
-        when(response.getParticipation()).thenReturn(participation);
-        when(participation.getParticipant()).thenReturn(participant);
-        when(participation.getSurvey()).thenReturn(survey);
-        when(survey.getId()).thenReturn(42L);
-        when(response.getId()).thenReturn(43L);
-        when(survey.getIsClosed()).thenReturn(false);
-        when(survey.getCreator()).thenReturn(currentUser);
-        when(userConverter.convertUserToDTO(participant)).thenReturn(identifiableUserDTO);
-
-        ResponseDTO responseDTO = responseConverter.convertResponseToDTO(response, currentUser);
-
-        assertEquals(42L, responseDTO.getSurveyID());
-        assertEquals(43L, responseDTO.getResponseID());
-        assertEquals(false, responseDTO.getIsEditable());
-        assertEquals(identifiableUserDTO, responseDTO.getUser());
-        assertArrayEquals(emptyResponseValueDTOs, responseDTO.getResponses().toArray());
-    }
-
-    @Test
-    public void testConvertResponseToDTOClosed() {
-        Response response = mock(Response.class);
-        Survey survey = mock(Survey.class);
-        Participation participation = mock(Participation.class);
-        User currentUser = mock(User.class);
-        User creator = mock(User.class);
-        User participant = mock(User.class);
-
-        IdentifiableUserDTO identifiableUserDTO = mock(IdentifiableUserDTO.class);
-
-        when(response.getParticipation()).thenReturn(participation);
-        when(participation.getParticipant()).thenReturn(participant);
-        when(participation.getSurvey()).thenReturn(survey);
-        when(survey.getId()).thenReturn(42L);
-        when(response.getId()).thenReturn(43L);
-        when(survey.getIsClosed()).thenReturn(true);
-        when(survey.getCreator()).thenReturn(creator);
-        when(userConverter.convertUserToDTO(participant)).thenReturn(identifiableUserDTO);
-
-        ResponseDTO responseDTO = responseConverter.convertResponseToDTO(response, currentUser);
-
-        assertEquals(42L, responseDTO.getSurveyID());
-        assertEquals(43L, responseDTO.getResponseID());
-        assertEquals(false, responseDTO.getIsEditable());
-        assertEquals(identifiableUserDTO, responseDTO.getUser());
-        assertArrayEquals(emptyResponseValueDTOs, responseDTO.getResponses().toArray());
-    }
-
-    @Test
-    public void testConvertResponseToDTONotClosed() {
-        Response response = mock(Response.class);
-        Survey survey = mock(Survey.class);
-        Participation participation = mock(Participation.class);
-        User currentUser = mock(User.class);
-        User creator = mock(User.class);
-        User participant = mock(User.class);
-
-        IdentifiableUserDTO identifiableUserDTO = mock(IdentifiableUserDTO.class);
-
-        when(response.getParticipation()).thenReturn(participation);
-        when(participation.getParticipant()).thenReturn(participant);
-        when(participation.getSurvey()).thenReturn(survey);
-        when(survey.getId()).thenReturn(42L);
-        when(response.getId()).thenReturn(43L);
-        when(survey.getIsClosed()).thenReturn(false);
-        when(survey.getCreator()).thenReturn(creator);
-        when(userConverter.convertUserToDTO(participant)).thenReturn(identifiableUserDTO);
-
-        ResponseDTO responseDTO = responseConverter.convertResponseToDTO(response, currentUser);
-
-        assertEquals(42L, responseDTO.getSurveyID());
-        assertEquals(43L, responseDTO.getResponseID());
-        assertEquals(false, responseDTO.getIsEditable());
         assertEquals(identifiableUserDTO, responseDTO.getUser());
         assertArrayEquals(emptyResponseValueDTOs, responseDTO.getResponses().toArray());
     }

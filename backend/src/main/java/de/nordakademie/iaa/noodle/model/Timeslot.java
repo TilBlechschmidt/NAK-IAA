@@ -17,7 +17,6 @@ public class Timeslot {
     @Column(nullable = false)
     private Date start;
 
-
     @Temporal(TemporalType.TIMESTAMP)
     @Column(nullable = true)
     private Date end;
