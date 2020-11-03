@@ -31,23 +31,34 @@ public interface SurveyRepository {
                     LEFT OUTER JOIN Participation participation ON participation.survey = survey
                     WHERE
                     (:participated IS NULL OR
-                        (participation.participant.id = :userID))
+                        (:participated= true  AND
+                            participation.participant.id = :userID) OR
+                        (:participated= false AND NOT
+                            participation.participant.id = :userID))
                     AND
                     (:completed IS NULL OR
-                        (survey.chosenTimeslot IS NOT NULL))
+                        (:completed=true  AND NOT
+                            survey.chosenTimeslot IS NULL) OR
+                        (:completed=false AND
+                            survey.chosenTimeslot IS NULL))
                     AND
                     (:owned IS NULL OR
-                        survey.creator.id = :userID)
+                        (:owned = true  AND
+                            survey.creator.id = :userID) OR
+                        (:owned = false AND NOT
+                            survey.creator.id = :userID))
                     AND
                     (:upcoming IS NULL OR
-                        (survey.chosenTimeslot IS NOT NULL AND survey.chosenTimeslot.start >= CURRENT_TIMESTAMP ))
+                        (:upcoming = true AND
+                            (survey.chosenTimeslot IS NOT NULL AND survey.chosenTimeslot.start >= CURRENT_TIMESTAMP) ) OR
+                        (:upcoming = false AND NOT
+                            (survey.chosenTimeslot IS NOT NULL AND survey.chosenTimeslot.start >= CURRENT_TIMESTAMP) ))
                     AND
                      (:attentionRequired IS NULL OR
-                        (:userID NOT IN
-                            (SELECT p.participant
-                            FROM Survey s
-                            LEFT OUTER JOIN Participation p ON p.survey = s
-                            WHERE s.id = survey.id )))
+                        (:attentionRequired = true  AND
+                            (:userID = participation.participant.id AND participation.response IS NULL )) OR
+                        (:attentionRequired = false AND NOT
+                            (:userID = participation.participant.id AND participation.response IS NULL )))
         """)
     List<Survey> querySurvey(@Param("userID") Long userID,
                              @Param("participated") Boolean didParticipateIn,
