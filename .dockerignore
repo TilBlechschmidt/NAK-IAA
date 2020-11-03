@@ -1,10 +1,12 @@
 api/node_modules
 api/target
 
+backend/src/main/java/de/nordakademie/iaa/noodle/api
 backend/build
 backend/.gradle
 backend/Dockerfile
 
+frontend/src/app/api
 frontend/dist
 frontend/node_modules
 frontend/Dockerfile
