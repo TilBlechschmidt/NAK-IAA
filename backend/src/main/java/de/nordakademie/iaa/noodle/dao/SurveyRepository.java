@@ -25,7 +25,10 @@ public interface SurveyRepository {
             WHERE s.id = s1.id )""")
     List<Survey> findSurveysWhereUserHasNotParticipated(@Param("userID") Long userID);
 
-
+// Sadly, JPQL does not allow us to use "<boolean_expr> = flag", so we need to emulate it using boolean logic
+// This leads to doubled logic
+// However, the alternatives would be either writing a lot of queries, introducing a second query approach for one
+// method, or filtering in the backend instead of the database, which are all not ideal either.
     @Query("""
                 SELECT DISTINCT survey FROM Survey survey
                     LEFT OUTER JOIN Participation participation ON participation.survey = survey
