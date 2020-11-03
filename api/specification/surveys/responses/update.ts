@@ -1,12 +1,13 @@
 import {body, endpoint, request, response, pathParams} from "@airtasker/spot";
 import {
+    ConflictErrorResponseTemplate, ForbiddenErrorResponseTemplate,
     Identifier,
     MalformedRequestErrorResponse,
-    NotFoundErrorResponse,
-    UnauthorizedErrorResponse
+    NotFoundErrorResponseTemplate,
+    UnauthorizedErrorResponse, UnprocessableEntityErrorResponseTemplate
 } from "../../types";
 import {ResponseDTO} from "./types";
-import {CreateResponseErrorResponse, CreateResponseRequest} from "./create";
+import {CreateResponseRequest} from "./create";
 
 /** Updates an existing response */
 @endpoint({
@@ -22,15 +23,19 @@ class UpdateResponse {
     @response({ status: 201 })
     successfulResponse(@body body: ResponseDTO) {}
 
+    /** Not Found */
+    @response({ status: 404 })
+    notFoundResponse(@body body: UpdateResponseNotFoundErrorResponse) {}
+
+    /** Not Editable */
+    @response({ status: 403 })
+    forbiddenResponse(@body body: UpdateResponseForbiddenErrorResponse) {}
+
     /** Invalid semantics */
     @response({ status: 422 })
-    semanticErrorResponse(@body body: CreateResponseErrorResponse) {}
+    semanticErrorResponse(@body body: UpdateResponseUnprocessableEntityErrorResponse) {}
 
     // MARK: - Generic response
-
-    /** Resource not found */
-    @response({ status: 404 })
-    notFoundResponse(@body body: NotFoundErrorResponse) {}
 
     /** Malformed request */
     @response({ status: 400 })
@@ -46,4 +51,16 @@ interface UpdateResponsePathParams {
     surveyID: Identifier;
     /** Unique resource identifier for the response */
     responseID: Identifier;
+}
+
+interface UpdateResponseUnprocessableEntityErrorResponse extends UnprocessableEntityErrorResponseTemplate {
+    message: "noTimeslotsSelected"
+}
+
+interface UpdateResponseNotFoundErrorResponse extends NotFoundErrorResponseTemplate {
+    message: "responseNotFound" | "timeslotNotFound"
+}
+
+interface UpdateResponseForbiddenErrorResponse extends ForbiddenErrorResponseTemplate {
+    message: "notEditable"
 }

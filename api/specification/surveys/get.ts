@@ -1,8 +1,7 @@
 import {body, endpoint, pathParams, request, response} from "@airtasker/spot";
 import {
     Identifier,
-    MalformedRequestErrorResponse,
-    NotFoundErrorResponse,
+    MalformedRequestErrorResponse, NotFoundErrorResponseTemplate,
     UnauthorizedErrorResponse
 } from "../types";
 import {SurveyDTO} from "./types";
@@ -25,7 +24,7 @@ class QuerySurvey {
 
     /** Resource not found */
     @response({ status: 404 })
-    notFoundResponse(@body body: NotFoundErrorResponse) {}
+    notFoundResponse(@body body: QuerySurveyNotFoundErrorResponse) {}
 
     /** Malformed request */
     @response({ status: 400 })
@@ -38,4 +37,8 @@ class QuerySurvey {
 
 interface QuerySurveyRequest {
     id: Identifier;
+}
+
+interface QuerySurveyNotFoundErrorResponse extends NotFoundErrorResponseTemplate {
+    message: "surveyNotFound"
 }

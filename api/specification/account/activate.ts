@@ -1,6 +1,6 @@
 import {body, endpoint, request, response, String} from "@airtasker/spot";
 import {Password} from "./types";
-import {Identifier} from "../types";
+import {ConflictErrorResponseTemplate, Identifier, UnauthorizedErrorResponseTemplate} from "../types";
 import {RegistrationUserDTO} from "./request";
 
 /** Registers a new user account */
@@ -16,6 +16,14 @@ class ActivateUser {
     /** User created */
     @response({ status: 201 })
     successfulResponse(@body body: ActivateUserResponse) {}
+
+    /** Duplicate response */
+    @response({ status: 409 })
+    duplicateResponse(@body body: ActivateUserConflictErrorResponse) {}
+
+    /** Missing or invalid authentication */
+    @response({ status: 401 })
+    unauthorizedResponse(@body body: ActivateUserUnauthorizedErrorResponse) {}
 }
 
 interface ActivateUserRequest {
@@ -25,4 +33,12 @@ interface ActivateUserRequest {
 
 interface ActivateUserResponse extends RegistrationUserDTO {
     id: Identifier;
+}
+
+interface ActivateUserUnauthorizedErrorResponse extends UnauthorizedErrorResponseTemplate {
+    message: "invalidToken" | "missingClaims"
+}
+
+interface ActivateUserConflictErrorResponse extends ConflictErrorResponseTemplate {
+    message: "emailDuplicate"
 }

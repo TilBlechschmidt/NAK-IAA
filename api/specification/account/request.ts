@@ -1,5 +1,6 @@
 import {body, endpoint, request, response, String} from "@airtasker/spot";
 import {EMail} from "./types";
+import {ServiceUnavailableErrorResponseTemplate} from "../types";
 
 /** Requests a token to create an account */
 @endpoint({
@@ -14,6 +15,10 @@ class RequestRegistrationEmail {
     /** Email will be send */
     @response({ status: 202 })
     successfulResponse(@body body: RequestRegistrationEmailResponse) {}
+
+    /** Email cannot be send */
+    @response({ status: 503 })
+    serviceUnavailableResponse(@body body: RequestRegistrationEmailServiceUnavailableErrorResponse) {}
 }
 
 export interface RegistrationUserDTO {
@@ -25,3 +30,7 @@ export interface RegistrationUserDTO {
 interface RequestRegistrationEmailRequest extends RegistrationUserDTO {}
 
 interface RequestRegistrationEmailResponse extends RegistrationUserDTO {}
+
+interface RequestRegistrationEmailServiceUnavailableErrorResponse extends  ServiceUnavailableErrorResponseTemplate {
+    message: "mailError"
+}

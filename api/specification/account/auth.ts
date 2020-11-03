@@ -1,5 +1,5 @@
 import {endpoint, request, body, response} from "@airtasker/spot";
-import {JWT, MalformedRequestErrorResponse, UnauthorizedErrorResponse} from "../types";
+import {JWT, MalformedRequestErrorResponse, UnauthorizedErrorResponseTemplate} from "../types";
 import {EMail, Password, UserDTO} from "./types";
 
 /** Generates credentials to make authenticated requests with a limited lifetime */
@@ -16,9 +16,9 @@ class Authenticate {
     @response({ status: 200 })
     successfulResponse(@body body: AuthenticatedResponse) {}
 
-    /** Invalid credentials */
-    @response({ status: 403 })
-    unauthorizedResponse(@body body: UnauthorizedErrorResponse) {}
+    /** Missing or invalid authentication */
+    @response({ status: 401 })
+    unauthorizedResponse(@body body: AuthenticateUnauthorizedErrorResponse) {}
 
     // MARK: - Generic response
 
@@ -34,4 +34,8 @@ interface AuthenticationRequest {
 
 interface AuthenticatedResponse extends UserDTO {
     token: JWT;
+}
+
+interface AuthenticateUnauthorizedErrorResponse extends UnauthorizedErrorResponseTemplate {
+    message: "invalidAuthenticationData"
 }

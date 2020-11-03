@@ -1,5 +1,11 @@
 import {body, endpoint, request, response, pathParams} from "@airtasker/spot";
-import {Identifier, MalformedRequestErrorResponse, UnauthorizedErrorResponse} from "../../types";
+import {
+    ConflictErrorResponseTemplate,
+    Identifier,
+    MalformedRequestErrorResponse, NotFoundErrorResponseTemplate,
+    UnauthorizedErrorResponse,
+    UnprocessableEntityErrorResponseTemplate
+} from "../../types";
 import {ResponseDTO, ResponseValueDTO} from "./types";
 
 /** Responds to an existing survey as the user associated with the provided credentials */
@@ -16,13 +22,17 @@ class CreateResponse {
     @response({ status: 201 })
     successfulResponse(@body body: ResponseDTO) {}
 
-    /** Invalid semantics */
-    @response({ status: 422 })
-    semanticErrorResponse(@body body: CreateResponseErrorResponse) {}
+    /** Not Found */
+    @response({ status: 404 })
+    notFoundResponse(@body body: CreateResponseNotFoundErrorResponse) {}
 
     /** Duplicate response */
     @response({ status: 409 })
-    duplicateResponse(@body body: CreateResponseDuplicateErrorResponse) {}
+    duplicateResponse(@body body: CreateResponseConflictErrorResponse) {}
+
+    /** Invalid semantics */
+    @response({ status: 422 })
+    semanticErrorResponse(@body body: CreateResponseUnprocessableEntityErrorResponse) {}
 
     // MARK: - Generic response
 
@@ -45,12 +55,14 @@ export interface CreateResponseRequest {
     values: ResponseValueDTO[];
 }
 
-export interface CreateResponseErrorResponse {
-    code: "invalidEnumValuesProvided" | "valueCountMismatch";
+interface CreateResponseUnprocessableEntityErrorResponse extends UnprocessableEntityErrorResponseTemplate {
+    message: "noTimeslotsSelected"
 }
 
-interface CreateResponseDuplicateErrorResponse {
-    /** Indicates that the response has already been submitted and a `PUT` request should be used on the existing resource indicated by the `id` field */
-    code: "responseAlreadySubmitted";
-    id: Identifier;
+interface CreateResponseNotFoundErrorResponse extends NotFoundErrorResponseTemplate {
+    message: "timeslotNotFound" | "surveyNotFound"
+}
+
+interface CreateResponseConflictErrorResponse extends ConflictErrorResponseTemplate {
+    message: "responseExists"
 }
