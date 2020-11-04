@@ -30,8 +30,7 @@ export class AbstractSurveyTableComponent implements OnInit {
             isUpcoming: this.filter.isUpcoming,
             didParticipateIn: this.filter.didParticipateIn,
             isOwnSurvey: this.filter.isOwnSurvey,
-            requiresAttention: this.filter.requiresAttention,
-            Authorization: this.tokenService.getToken()
+            requiresAttention: this.filter.requiresAttention
         }).subscribe(next => next.surveys, error => {
             this.fetchError = true;
             this.data = this.mockData;

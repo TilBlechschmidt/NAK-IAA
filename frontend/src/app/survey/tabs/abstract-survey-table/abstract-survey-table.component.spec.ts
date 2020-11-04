@@ -1,6 +1,7 @@
 import { ComponentFixture, TestBed } from '@angular/core/testing';
 
 import { AbstractSurveyTableComponent } from './abstract-survey-table.component';
+import {HttpClientTestingModule} from "@angular/common/http/testing";
 
 describe('AbstractSurveyTableComponent', () => {
   let component: AbstractSurveyTableComponent;
@@ -8,7 +9,8 @@ describe('AbstractSurveyTableComponent', () => {
 
   beforeEach(async () => {
     await TestBed.configureTestingModule({
-      declarations: [ AbstractSurveyTableComponent ]
+      declarations: [ AbstractSurveyTableComponent ],
+      imports: [ HttpClientTestingModule ]
     })
     .compileComponents();
   });

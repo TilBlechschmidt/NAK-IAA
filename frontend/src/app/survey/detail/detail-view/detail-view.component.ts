@@ -29,7 +29,7 @@ export class DetailViewComponent implements OnInit {
     }
 
     ngOnInit(): void {
-        this.service.querySurvey({id: this.id!, Authorization: this.tokenService.getToken()}).subscribe(next => {
+        this.service.querySurvey({id: this.id! }).subscribe(next => {
             this.title = next.title;
             this.description = next.description;
         }, error => this.fetchError = true);
@@ -61,14 +61,10 @@ export class DetailViewComponent implements OnInit {
     updateSurvey() {
         this.service.updateSurvey({
             id: this.id!,
-            Authorization: this.tokenService.getToken(),
             body: {
-                creator: {id: 0, name: ''},
                 title: this.title,
                 description: this.description,
-                timeslots: [],
-                selectedTimeslot: undefined,
-                isClosed: false
+                timeslots: []
             }
         }).subscribe(next => this.router.navigateByUrl('/survey'),
             error => this.saveError = true);

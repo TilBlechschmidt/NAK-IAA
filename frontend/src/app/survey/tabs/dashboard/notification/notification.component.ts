@@ -2,7 +2,7 @@ import {Component, OnInit} from '@angular/core';
 import {SurveysService} from '../../../../api/services/surveys.service';
 import {TokenService} from '../../../../authentication/service/token.service';
 import {Router} from '@angular/router';
-import {QuerySurveysResult, Survey} from '../../../../api/models';
+import {QuerySurveysResult} from '../../../../api/models';
 
 @Component({
     selector: 'app-notification',
@@ -18,8 +18,7 @@ export class NotificationComponent implements OnInit {
 
     ngOnInit(): void {
         this.surveysService.querySurveys({
-            requiresAttention: true,
-            Authorization: this.tokenService.getToken()
+            requiresAttention: true
         }).subscribe(next => this.notifications = next.surveys, error => this.notifications = []);
     }
 

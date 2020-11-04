@@ -28,8 +28,11 @@ export class CreateSurveyDialogComponent implements OnInit {
 
     submit() {
         this.surveysService.createSurvey({
-            Authorization: this.tokenService.getToken(),
-            body: {title: this.title, description: this.description, isClosed: false, timeslots: []}
+            body: {
+                title: this.title,
+                description: this.description,
+                timeslots: []
+            }
         }).subscribe(next => this.onNoClick(), err  => this.saveError = true);
     }
 }
