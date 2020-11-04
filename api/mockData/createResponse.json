@@ -1,1 +1,22 @@
-common/response.json
+{
+    "isEditable": true,
+    "responses": [
+        {
+            "timeslotID": 0,
+            "value": false
+        },
+        {
+            "timeslotID": 1,
+            "value": true
+        },
+        {
+            "timeslotID": 1,
+            "value": true
+        }
+    ],
+    "surveyID": 42,
+    "user": {
+        "id": 42,
+        "name": "Max Mustermann"
+    }
+}
