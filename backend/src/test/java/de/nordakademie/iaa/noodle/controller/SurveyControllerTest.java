@@ -43,8 +43,8 @@ public class SurveyControllerTest {
 
     @Test
     public void testCreateSurvey() {
-        CreateSurveyRequest createSurveyRequest = mock(CreateSurveyRequest.class);
-        ResponseEntity<CreateSurveyResponse> response = surveyController.createSurvey(createSurveyRequest);
+        SurveyCreationMetadataDTO surveyCreationMetadataDTO = mock(SurveyCreationMetadataDTO.class);
+        ResponseEntity<SurveyMetadataDTO> response = surveyController.createSurvey(surveyCreationMetadataDTO);
         assertNull(response);
     }
 
@@ -86,8 +86,8 @@ public class SurveyControllerTest {
 
     @Test
     public void testUpdateSurvey() {
-        SurveyMetadataDTO surveyMetadata = mock(SurveyMetadataDTO.class);
-        ResponseEntity<SurveyMetadataDTO> response = surveyController.updateSurvey(42L, surveyMetadata);
+        SurveyCreationMetadataDTO surveyCreationMetadataDTO = mock(SurveyCreationMetadataDTO.class);
+        ResponseEntity<SurveyMetadataDTO> response = surveyController.updateSurvey(42L, surveyCreationMetadataDTO);
         assertNull(response);
     }
 }

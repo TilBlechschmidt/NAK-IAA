@@ -34,7 +34,7 @@ public class SurveyController extends AuthenticatedController implements Surveys
     }
 
     @Override
-    public ResponseEntity<CreateSurveyResponse> createSurvey(CreateSurveyRequest createSurveyRequest) {
+    public ResponseEntity<SurveyMetadataDTO> createSurvey(SurveyCreationMetadataDTO surveyCreationMetadataDTO) {
         return null;
     }
 
@@ -62,7 +62,7 @@ public class SurveyController extends AuthenticatedController implements Surveys
     }
 
     @Override
-    public ResponseEntity<SurveyMetadataDTO> updateSurvey(Long id, SurveyMetadataDTO surveyMetadata) {
+    public ResponseEntity<SurveyMetadataDTO> updateSurvey(Long id, SurveyCreationMetadataDTO surveyCreationMetadataDTO) {
         return null;
     }
 }

@@ -6,19 +6,31 @@ import {IdentifiableUserDTO} from "../account/types";
 /** Short title to be displayed in survey list (max. 64 characters) */
 export type SurveyTitle = String;
 
-export interface TimeslotDTO {
-    id: Identifier;
+export interface TimeslotCreationDTO {
     /** Beginning of the timeslot */
     start: DateTime;
     /** End of the timeslot */
     end: DateTime;
 }
 
-export interface SurveyMetadataDTO {
+export interface TimeslotDTO extends TimeslotCreationDTO {
+    id: Identifier;
+}
+
+export interface SurveyGeneralMetadataDTO {
     title: SurveyTitle;
 
     /** Text describing what this survey is about (max. 1024 characters) */
     description: String;
+}
+
+export interface SurveyCreationMetadataDTO extends SurveyGeneralMetadataDTO {
+    /** List of available timeslots for the survey */
+    timeslots: TimeslotCreationDTO[];
+}
+
+export interface SurveyMetadataDTO extends SurveyGeneralMetadataDTO{
+    id: Identifier;
 
     /** The user who created the survey. */
     creator: IdentifiableUserDTO;

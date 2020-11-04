@@ -1,6 +1,6 @@
 import {body, endpoint, request, response} from "@airtasker/spot";
 import {Identifier, MalformedRequestErrorResponse, UnauthorizedErrorResponse} from "../types";
-import {SurveyMetadataDTO} from "./types";
+import {SurveyCreationMetadataDTO, SurveyMetadataDTO} from "./types";
 
 /** Creates a new survey for other users to participate */
 @endpoint({
@@ -10,11 +10,11 @@ import {SurveyMetadataDTO} from "./types";
 })
 class CreateSurvey {
     @request
-    request(@body body: CreateSurveyRequest) {}
+    request(@body body: SurveyCreationMetadataDTO) {}
 
     /** Survey created */
     @response({ status: 201 })
-    successfulResponse(@body body: CreateSurveyResponse) {}
+    successfulResponse(@body body: SurveyMetadataDTO) {}
 
     /** Invalid semantics */
     @response({ status: 422 })
@@ -29,12 +29,6 @@ class CreateSurvey {
     /** Missing or invalid authentication */
     @response({ status: 401 })
     unauthorizedResponse(@body body: UnauthorizedErrorResponse) {}
-}
-
-interface CreateSurveyRequest extends SurveyMetadataDTO {}
-
-interface CreateSurveyResponse extends SurveyMetadataDTO {
-    id: Identifier;
 }
 
 export interface CreateSurveyErrorResponse {

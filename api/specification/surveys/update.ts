@@ -5,7 +5,7 @@ import {
     NotFoundErrorResponse,
     UnauthorizedErrorResponse
 } from "../types";
-import {SurveyMetadataDTO} from "./types";
+import {SurveyCreationMetadataDTO, SurveyMetadataDTO} from "./types";
 import {CreateSurveyErrorResponse} from "./create";
 
 /** Updates metadata of survey <strong>and deletes all responses</strong> */
@@ -16,7 +16,7 @@ import {CreateSurveyErrorResponse} from "./create";
 })
 class UpdateSurvey {
     @request
-    request(@pathParams pathParams: { id: Identifier }, @body body: SurveyMetadataDTO) {}
+    request(@pathParams pathParams: { id: Identifier }, @body body: SurveyCreationMetadataDTO) {}
 
     /** Survey updated */
     @response({ status: 200 })
@@ -40,3 +40,4 @@ class UpdateSurvey {
     @response({ status: 401 })
     unauthorizedResponse(@body body: UnauthorizedErrorResponse) {}
 }
+
