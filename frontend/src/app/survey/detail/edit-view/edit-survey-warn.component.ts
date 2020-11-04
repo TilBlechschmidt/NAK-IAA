@@ -24,7 +24,7 @@ export class EditSurveyWarnComponent implements OnInit {
         this.dialogRef.close(false);
     }
 
-    edit() {
+    edit(): void {
         this.dialogRef.close(true);
     }
 }

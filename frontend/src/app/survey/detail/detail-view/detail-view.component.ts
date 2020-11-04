@@ -4,7 +4,6 @@ import {ActivatedRoute, Router} from '@angular/router';
 import {MatDialog} from '@angular/material/dialog';
 import {DeleteSurveyComponent} from '../delete-survey/delete-survey.component';
 import {Identifier} from '../../../api/models';
-import {TokenService} from '../../../authentication/service/token.service';
 import {EditSurveyWarnComponent} from '../edit-view/edit-survey-warn.component';
 
 @Component({
@@ -22,17 +21,23 @@ export class DetailViewComponent implements OnInit {
     description = '';
     saveError = false;
     fetchError = false;
+    routerError = false;
     id?: Identifier;
 
-    constructor(private service: SurveysService, private router: Router, private deleteDialog: MatDialog, private editDialog: MatDialog, private route: ActivatedRoute, private tokenService: TokenService) {
+    constructor(private service: SurveysService, private router: Router, private deleteDialog: MatDialog,
+                private editDialog: MatDialog, private route: ActivatedRoute) {
         this.route.params.subscribe(next => this.id = next.id);
     }
 
     ngOnInit(): void {
-        this.service.querySurvey({id: this.id! }).subscribe(next => {
-            this.title = next.title;
-            this.description = next.description;
-        }, error => this.fetchError = true);
+        if (this.id === undefined) {
+            this.routerError = true;
+        } else {
+            this.service.querySurvey({id: this.id}).subscribe(next => {
+                this.title = next.title;
+                this.description = next.description;
+            }, error => this.fetchError = true);
+        }
     }
 
     toggleEdit(): void {
@@ -58,20 +63,23 @@ export class DetailViewComponent implements OnInit {
         }
     }
 
-    updateSurvey() {
-        this.service.updateSurvey({
-            id: this.id!,
-            body: {
-                title: this.title,
-                description: this.description,
-                timeslots: []
-            }
-        }).subscribe(next => this.router.navigateByUrl('/survey'),
-            error => this.saveError = true);
+    updateSurvey(): void {
+        if (this.id === undefined) {
+            this.routerError = true;
+        } else {
+            this.service.updateSurvey({
+                id: this.id,
+                body: {
+                    title: this.title,
+                    description: this.description,
+                    timeslots: []
+                }
+            }).subscribe(next => this.router.navigateByUrl('/survey'),
+                error => this.saveError = true);
+        }
     }
 
-
-    delete() {
+    delete(): void {
         const dialogRef = this.deleteDialog.open(DeleteSurveyComponent, {
             width: '400px',
             data: {title: this.title, description: this.description}

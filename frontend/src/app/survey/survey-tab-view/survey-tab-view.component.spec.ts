@@ -6,7 +6,7 @@ import {HttpClient} from '@angular/common/http';
 import {TranslateModule, TranslateService} from '@ngx-translate/core';
 import {initApp} from '../../app.module';
 import {HttpClientTestingModule} from '@angular/common/http/testing';
-import {RouterModule} from "@angular/router";
+import {RouterModule} from '@angular/router';
 
 describe('SurveyTabViewComponent', () => {
   let component: SurveyTabViewComponent;

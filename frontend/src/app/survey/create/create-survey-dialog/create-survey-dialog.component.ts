@@ -26,7 +26,7 @@ export class CreateSurveyDialogComponent implements OnInit {
     ngOnInit(): void {
     }
 
-    submit() {
+    submit(): void {
         this.surveysService.createSurvey({
             body: {
                 title: this.title,
