@@ -1,0 +1,25 @@
+<mat-card class="response" [class.new]="isNew">
+    <div *ngIf="!isEdit">
+        <h3>17.11.2020</h3>
+        <p>16:30 - 17:00</p>
+        <div class="button-container">
+            <button mat-icon-button class="accept"><mat-icon>done</mat-icon></button>
+            <button mat-icon-button class="reject"><mat-icon>clear</mat-icon></button>
+        </div>
+    </div>
+    <div *ngIf="isEdit">
+        <mat-form-field floatLabel="never" class="date-input">
+            <input matInput placeholder="17.11.2020" type="date" />
+        </mat-form-field>
+        <p>
+            <mat-form-field class="time-input" floatLabel="never">
+                <input matInput placeholder="14:00" type="time" />
+            </mat-form-field>
+            -
+            <mat-form-field class="time-input" floatLabel="never">
+                <input matInput placeholder="16:30" type="time"/>
+            </mat-form-field>
+        </p>
+    </div>
+    <button mat-icon-button disableRipple color="warn" *ngIf="isEdit" class="delete-button"><mat-icon>clear</mat-icon></button>
+</mat-card>

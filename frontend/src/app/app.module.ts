@@ -38,6 +38,8 @@ import { AbstractSurveyTableComponent } from './survey/tabs/abstract-survey-tabl
 import { EditSurveyWarnComponent } from './survey/detail/edit-view/edit-survey-warn.component';
 import {ApiModule} from './api/api.module';
 import {environment} from '../environments/environment';
+import { ResponseComponent } from './survey/detail/response/response.component';
+import {MatRippleModule} from '@angular/material/core';
 
 
 export function initApp(http: HttpClient, translate: TranslateService): () => Promise<boolean>{
@@ -92,7 +94,8 @@ const SelectedApiModule = environment.api.mocked ? ApiModule.mocked() : ApiModul
         DeleteSurveyComponent,
         LogoutButtonComponent,
         AbstractSurveyTableComponent,
-        EditSurveyWarnComponent
+        EditSurveyWarnComponent,
+        ResponseComponent
     ],
     imports: [
         BrowserModule,
@@ -113,6 +116,7 @@ const SelectedApiModule = environment.api.mocked ? ApiModule.mocked() : ApiModul
         TranslateModule.forRoot(),
         SelectedApiModule,
         MatMenuModule,
+        MatRippleModule,
     ],
   providers: [
       LoggedInGuard,
