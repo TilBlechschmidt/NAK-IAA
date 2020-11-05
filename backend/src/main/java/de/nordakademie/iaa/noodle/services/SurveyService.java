@@ -16,9 +16,10 @@ import org.springframework.transaction.annotation.Transactional;
 
 import java.util.HashSet;
 import java.util.List;
+import java.util.Optional;
 
 @Service
-@Transactional(propagation = Propagation.REQUIRED, rollbackFor = { ServiceException.class })
+@Transactional(propagation = Propagation.REQUIRED, rollbackFor = {ServiceException.class})
 public class SurveyService {
     private final SurveyRepository surveyRepository;
     private final TimeslotService timeslotService;
@@ -75,7 +76,9 @@ public class SurveyService {
         checkSurveyCreationData(title, description, timeslotCreationDataList);
 
         Survey survey = querySurvey(surveyID);
-        if (!isSurveyEditableByUser(survey, currentUser)) { throw new ForbiddenOperationException("forbidden"); }
+        if (!isSurveyEditableByUser(survey, currentUser)) {
+            throw new ForbiddenOperationException("forbidden");
+        }
 
         deleteSurveyResponses(survey);
 
@@ -88,7 +91,7 @@ public class SurveyService {
     }
 
     private void deleteSurveyResponses(Survey survey) {
-        for (Participation participation: survey.getParticipations()) {
+        for (Participation participation : survey.getParticipations()) {
             Response response = participation.getResponse();
             if (response != null) {
                 responseRepository.delete(response);
@@ -108,7 +111,9 @@ public class SurveyService {
         throws EntityNotFoundException, ForbiddenOperationException {
 
         Survey survey = querySurvey(surveyID);
-        if (!isSurveyClosableByUser(survey, currentUser)) { throw new ForbiddenOperationException("forbidden"); }
+        if (!isSurveyClosableByUser(survey, currentUser)) {
+            throw new ForbiddenOperationException("forbidden");
+        }
 
         Timeslot timeslot = timeslotService.findTimeslot(survey, timeslotID);
         survey.setChosenTimeslot(timeslot);
@@ -119,16 +124,26 @@ public class SurveyService {
 
     public Survey deleteSurvey(Long surveyID, User currentUser) throws EntityNotFoundException, ForbiddenOperationException {
         Survey survey = querySurvey(surveyID);
-        if (!isSurveyDeletableByUser(survey, currentUser)) { throw new ForbiddenOperationException("forbidden"); }
+        if (!isSurveyDeletableByUser(survey, currentUser)) {
+            throw new ForbiddenOperationException("forbidden");
+        }
         surveyRepository.delete(survey);
         return survey;
     }
 
     public void checkSurveyCreationData(String title, String description, List<TimeslotCreationData> timeslotCreationDataList) throws SemanticallyInvalidInputException {
-        if (timeslotCreationDataList.isEmpty()) { throw new SemanticallyInvalidInputException("noTimeslots"); }
-        if (title.isBlank()) { throw new SemanticallyInvalidInputException("emptyTitle"); }
-        if (title.length() > 2048) { throw new SemanticallyInvalidInputException("titleTooLong"); }
-        if (description.length() > 2048) { throw new SemanticallyInvalidInputException("descriptionTooLong"); }
+        if (timeslotCreationDataList.size() == 0) {
+            throw new SemanticallyInvalidInputException("noTimeslots");
+        }
+        if (title.isBlank()) {
+            throw new SemanticallyInvalidInputException("emptyTitle");
+        }
+        if (title.length() > 2048) {
+            throw new SemanticallyInvalidInputException("titleTooLong");
+        }
+        if (description.length() > 2048) {
+            throw new SemanticallyInvalidInputException("descriptionTooLong");
+        }
     }
 
     public boolean isTimeslotCreationDataValid(TimeslotCreationData timeslotCreationData) {
@@ -138,9 +153,12 @@ public class SurveyService {
 
     public Survey querySurvey(Long id) throws EntityNotFoundException {
         Survey survey = surveyRepository.findById(id);
-        if (survey == null) { throw new EntityNotFoundException("surveyNotFound"); }
+        if (survey == null) {
+            throw new EntityNotFoundException("surveyNotFound");
+        }
         return survey;
     }
+
 
     public boolean canUserRespondToSurvey(Survey survey, User user) {
         boolean surveyAcceptsResponses = !survey.getIsClosed();
@@ -158,5 +176,14 @@ public class SurveyService {
 
     public boolean isSurveyDeletableByUser(Survey survey, User user) {
         return survey.getCreator().equals(user);
+    }
+
+    public List<Survey> querySurvey(User currentUser, Optional<Boolean> didParticipateIn,
+                                    Optional<Boolean> isCompleted, Optional<Boolean> isOwnSurvey,
+                                    Optional<Boolean> isUpcoming, Optional<Boolean> requiresAttention) {
+
+        return surveyRepository.querySurvey(currentUser.getId(),
+            didParticipateIn.orElse(null), isCompleted.orElse(null), isOwnSurvey.orElse(null),
+            isUpcoming.orElse(null), requiresAttention.orElse(null));
     }
 }

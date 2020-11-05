@@ -44,8 +44,8 @@ public class SurveyController extends AuthenticatedController implements Surveys
         try {
             if (closeSurveyRequest.getOperation() == CloseSurveyRequest.OperationEnum.CLOSE) {
                 Survey survey = surveyService.closeSurvey(id,
-                                                          closeSurveyRequest.getSelectedTimeslot(),
-                                                          getCurrentUser());
+                    closeSurveyRequest.getSelectedTimeslot(),
+                    getCurrentUser());
                 SurveyMetadataDTO surveyMetadataDTO = surveyMapper.surveyToMetadataDTO(survey, getCurrentUser());
                 return ResponseEntity.ok(surveyMetadataDTO);
             } else {
@@ -65,9 +65,9 @@ public class SurveyController extends AuthenticatedController implements Surveys
             List<TimeslotCreationData> timeslotCreationDataList = timeslotMapper.timeslotCreationDTOsToData(surveyCreationMetadataDTO.getTimeslots());
 
             Survey survey = surveyService.createSurvey(surveyCreationMetadataDTO.getTitle(),
-                                                       surveyCreationMetadataDTO.getDescription(),
-                                                       timeslotCreationDataList,
-                                                       currentUser);
+                surveyCreationMetadataDTO.getDescription(),
+                timeslotCreationDataList,
+                currentUser);
 
             SurveyMetadataDTO surveyMetadataDTO = surveyMapper.surveyToMetadataDTO(survey, currentUser);
             return ResponseEntity.status(CREATED).body(surveyMetadataDTO);
@@ -104,7 +104,14 @@ public class SurveyController extends AuthenticatedController implements Surveys
     public ResponseEntity<QuerySurveysResponse> querySurveys(
         Optional<Boolean> didParticipateIn, Optional<Boolean> isCompleted,
         Optional<Boolean> isOwnSurvey, Optional<Boolean> isUpcoming, Optional<Boolean> requiresAttention) {
-        return null;
+
+        return ResponseEntity.ok(surveyMapper.surveysToSurveysDTO(
+            surveyService.querySurvey(getCurrentUser(),
+                didParticipateIn,
+                isCompleted,
+                isOwnSurvey,
+                isUpcoming,
+                requiresAttention)));
     }
 
     @Override
@@ -114,10 +121,10 @@ public class SurveyController extends AuthenticatedController implements Surveys
             List<TimeslotCreationData> timeslotCreationDataList = timeslotMapper.timeslotCreationDTOsToData(surveyCreationMetadataDTO.getTimeslots());
 
             Survey survey = surveyService.updateSurvey(id,
-                                                       surveyCreationMetadataDTO.getTitle(),
-                                                       surveyCreationMetadataDTO.getDescription(),
-                                                       timeslotCreationDataList,
-                                                       currentUser);
+                surveyCreationMetadataDTO.getTitle(),
+                surveyCreationMetadataDTO.getDescription(),
+                timeslotCreationDataList,
+                currentUser);
 
             SurveyMetadataDTO surveyMetadataDTO = surveyMapper.surveyToMetadataDTO(survey, currentUser);
             return ResponseEntity.ok(surveyMetadataDTO);
