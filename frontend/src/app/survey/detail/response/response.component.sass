@@ -1,0 +1,67 @@
+@import '~@angular/material/theming'
+
+button.delete-button
+    background-color: mat-color($mat-red, 100)
+    transform: scale(0.5)
+    position: absolute
+    top: -25px
+    right: -25px
+
+.response
+    text-align: center
+    min-width: 120px
+    border-style: solid
+    border-width: 5px
+    border-color: transparent
+    transition: background-color 0.25s ease-in-out
+
+    &.accept
+        border-color: mat-color($mat-green, 50)
+
+    &.reject
+        border-color: mat-color($mat-red, 50)
+
+    &.new
+        &:not(:focus-within):not(:hover)
+            background-color: #FFFFFF70
+
+        .delete-button
+            display: none
+
+.time-input
+    width: 50px
+    margin: 8px
+
+.date-input
+    text-align: center
+    font-size: 1.25rem
+
+.button-container
+    display: flex
+    flex-wrap: wrap
+    justify-content: space-around
+
+button:not(.delete-button)
+    border-style: solid
+    border-width: 2px
+    border-radius: 3px
+    transform: translateY(0)
+    transition: all 0.1s ease-in-out
+
+    &:hover
+        transform: translateY(-1px)
+
+    &.accept
+        color: mat-color($mat-green, 700)
+        border-color: mat-color($mat-green, 300)
+        background-color: mat-color($mat-green, 100)
+
+    &.reject
+        color: mat-color($mat-red, 700)
+        border-color: mat-color($mat-red, 300)
+        background-color: mat-color($mat-red, 100)
+
+    &.other-choice
+        color: mat-color($mat-gray, 700)
+        border-color: mat-color($mat-gray, 300)
+        background-color: mat-color($mat-gray, 100)
