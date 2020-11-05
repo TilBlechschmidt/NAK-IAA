@@ -13,5 +13,4 @@ import org.springframework.transaction.annotation.Transactional;
 public interface TimeslotRepository {
     Timeslot findById(Long timeslotID);
     void deleteAllBySurvey(Survey survey);
-    void save(Timeslot timeslot);
 }

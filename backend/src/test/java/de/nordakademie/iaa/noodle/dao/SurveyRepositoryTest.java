@@ -53,7 +53,7 @@ class SurveyRepositoryTest {
     void deleteByIdTest() {
         survey = entityManager.find(Survey.class, 4L);
         assertNotNull(survey);
-        surveyRepository.deleteById(4L);
+        surveyRepository.delete(survey);
         assertNull(entityManager.find(Survey.class, 4L));
         entityManager.persist(survey);
     }

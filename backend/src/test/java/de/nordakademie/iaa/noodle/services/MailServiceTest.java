@@ -3,12 +3,12 @@ package de.nordakademie.iaa.noodle.services;
 import de.nordakademie.iaa.noodle.services.exceptions.MailClientException;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
+import org.springframework.mail.MailException;
 import org.springframework.mail.SimpleMailMessage;
 import org.springframework.mail.javamail.JavaMailSender;
 import org.springframework.test.util.ReflectionTestUtils;
 
-import static org.junit.jupiter.api.Assertions.assertArrayEquals;
-import static org.junit.jupiter.api.Assertions.assertEquals;
+import static org.junit.jupiter.api.Assertions.*;
 import static org.mockito.Mockito.*;
 
 public class MailServiceTest {
@@ -23,7 +23,7 @@ public class MailServiceTest {
     }
 
     @Test
-    public void sendRegistrationMail() throws MailClientException {
+    public void sendRegistrationMailTest() throws MailClientException {
         mailService.sendRegistrationMail("TOKEN", "FULL_NAME", "EMAIL");
 
         verify(mailSender).send(argThat((SimpleMailMessage simpleMailMessage) -> {
@@ -46,7 +46,7 @@ public class MailServiceTest {
     }
 
     @Test
-    public void sendRegistrationMailDuplicateEmail() throws MailClientException {
+    public void sendRegistrationMailDuplicateEmailTest() throws MailClientException {
         mailService.sendRegistrationMailDuplicateEmail("FULL_NAME", "EMAIL");
 
         verify(mailSender).send(argThat((SimpleMailMessage simpleMailMessage) -> {
@@ -64,5 +64,38 @@ public class MailServiceTest {
                 simpleMailMessage.getText());
             return true;
         }));
+    }
+
+    @Test
+    public void sendMailTest() throws MailClientException {
+        mailService.sendMail("BODY", "FULL_NAME", "EMAIL");
+
+        verify(mailSender).send(argThat((SimpleMailMessage simpleMailMessage) -> {
+            String[] toArray = { "EMAIL" };
+
+            assertEquals("FROM_EMAIL", simpleMailMessage.getFrom());
+            assertArrayEquals(toArray, simpleMailMessage.getTo());
+            assertEquals("Your registration", simpleMailMessage.getSubject());
+            assertEquals("""
+                Hello FULL_NAME!
+                Thank you for your registration. BODY
+
+                Best regards
+                Your team @Noodle""",
+                simpleMailMessage.getText());
+            return true;
+        }));
+    }
+
+    @Test
+    public void sendMailFailedTest() {
+        doThrow(mock(MailException.class))
+            .when(mailSender)
+            .send(any(SimpleMailMessage.class));
+
+        MailClientException exception = assertThrows(MailClientException.class,
+            () -> mailService.sendMail("BODY", "FULL_NAME", "EMAIL"));
+
+        assertEquals("mailError", exception.getMessage());
     }
 }

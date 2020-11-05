@@ -2,7 +2,7 @@ package de.nordakademie.iaa.noodle.controller;
 
 import de.nordakademie.iaa.noodle.TestUtil;
 import de.nordakademie.iaa.noodle.api.model.ResponseDTO;
-import de.nordakademie.iaa.noodle.mapper.ResponseConverter;
+import de.nordakademie.iaa.noodle.mapper.ResponseMapper;
 import de.nordakademie.iaa.noodle.model.Response;
 import de.nordakademie.iaa.noodle.model.User;
 import de.nordakademie.iaa.noodle.services.ResponseService;
@@ -20,15 +20,15 @@ import static org.mockito.Mockito.when;
 public class ResponseControllerTest {
     private ResponseController responseController;
     private ResponseService responseService;
-    private ResponseConverter responseConverter;
+    private ResponseMapper responseMapper;
     private User authenticatedUser;
 
     @BeforeEach
     public void setUp() {
         authenticatedUser = TestUtil.setupAuthentication();
         responseService = mock(ResponseService.class);
-        responseConverter = mock(ResponseConverter.class);
-        responseController = new ResponseController(responseService, responseConverter, responseMapper);
+        responseMapper = mock(ResponseMapper.class);
+        responseController = new ResponseController(responseService, responseMapper);
     }
 
     @Test
@@ -44,7 +44,7 @@ public class ResponseControllerTest {
         Response inputResponse = mock(Response.class);
         ResponseDTO inputResponseDTO = mock(ResponseDTO.class);
         when(responseService.queryResponse(42L, 43L)).thenReturn(inputResponse);
-        when(responseConverter.convertResponseToDTO(inputResponse, authenticatedUser)).thenReturn(inputResponseDTO);
+        when(responseMapper.responseToDTO(inputResponse, authenticatedUser)).thenReturn(inputResponseDTO);
 
         ResponseEntity<ResponseDTO> response = responseController.queryResponse(42L, 43L);
         ResponseDTO responseDTO = response.getBody();

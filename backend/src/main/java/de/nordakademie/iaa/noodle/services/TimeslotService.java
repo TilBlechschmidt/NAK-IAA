@@ -27,8 +27,4 @@ public class TimeslotService {
     public void deleteTimeslotsOfSurvey(Survey survey) {
         timeslotRepository.deleteAllBySurvey(survey);
     }
-
-    public void save(Timeslot timeslot) {
-        timeslotRepository.save(timeslot);
-    }
 }

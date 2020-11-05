@@ -1,5 +1,7 @@
 package de.nordakademie.iaa.noodle.services;
 
+import de.nordakademie.iaa.noodle.dao.ParticipationRepository;
+import de.nordakademie.iaa.noodle.dao.ResponseRepository;
 import de.nordakademie.iaa.noodle.dao.SurveyRepository;
 import de.nordakademie.iaa.noodle.model.Survey;
 import de.nordakademie.iaa.noodle.services.exceptions.EntityNotFoundException;
@@ -13,10 +15,16 @@ import static org.mockito.Mockito.when;
 public class SurveyServiceTest {
     private SurveyService surveyService;
     private SurveyRepository surveyRepository;
+    private TimeslotService timeslotRepository;
+    private ResponseRepository responseService;
+    private ParticipationRepository participationRepository;
 
     @BeforeEach
     public void setUp() {
         surveyRepository = mock(SurveyRepository.class);
+        timeslotRepository = mock(TimeslotService.class);
+        responseService = mock(ResponseRepository.class);
+        participationRepository = mock(ParticipationRepository.class);
         surveyService = new SurveyService(surveyRepository, timeslotRepository, responseService, participationRepository);
     }
 

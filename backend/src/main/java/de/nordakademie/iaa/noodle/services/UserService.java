@@ -12,7 +12,6 @@ import org.springframework.transaction.annotation.Propagation;
 import org.springframework.transaction.annotation.Transactional;
 
 import java.util.HashSet;
-import java.util.Optional;
 
 @Service
 @Transactional(propagation = Propagation.REQUIRED, rollbackFor = { ServiceException.class })
