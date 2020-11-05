@@ -71,7 +71,7 @@ public class ResponseService {
     public Response createResponse(Long surveyID, Map<Long, ResponseType> responseTimeslotDataMap, User currentUser)
         throws EntityNotFoundException, ConflictException, SemanticallyInvalidInputException {
 
-        if (responseTimeslotDataMap.isEmpty()) {  throw new SemanticallyInvalidInputException("noTimeslotsSelected"); }
+        if (responseTimeslotDataMap.isEmpty()) { throw new SemanticallyInvalidInputException("noTimeslotsSelected"); }
 
         Participation participation = participationService.getOrCreateParticipation(currentUser, surveyID);
 

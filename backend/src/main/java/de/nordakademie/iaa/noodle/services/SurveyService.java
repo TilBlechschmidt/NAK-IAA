@@ -43,16 +43,20 @@ public class SurveyService {
         participation.setResponse(response);
 
         for (TimeslotCreationData timeslotCreationData: timeslotCreationDataList) {
-            if (!isTimeslotCreationDataValid(timeslotCreationData)) {
-                throw new SemanticallyInvalidInputException("invalidTimeslot");
-            }
-
-            Timeslot timeslot = new Timeslot(survey, timeslotCreationData.getStart(), timeslotCreationData.getEnd());
-            survey.getTimeslots().add(timeslot);
-
-            ResponseTimeslot responseTimeslot = new ResponseTimeslot(response, timeslot, ResponseType.YES);
-            response.getResponseTimeslots().add(responseTimeslot);
+            addResponseTimeslotForCreator(survey, response, timeslotCreationData);
         }
+    }
+
+    private void addResponseTimeslotForCreator(Survey survey, Response response, TimeslotCreationData timeslotCreationData) throws SemanticallyInvalidInputException {
+        if (!isTimeslotCreationDataValid(timeslotCreationData)) {
+            throw new SemanticallyInvalidInputException("invalidTimeslot");
+        }
+
+        Timeslot timeslot = new Timeslot(survey, timeslotCreationData.getStart(), timeslotCreationData.getEnd());
+        survey.getTimeslots().add(timeslot);
+
+        ResponseTimeslot responseTimeslot = new ResponseTimeslot(response, timeslot, ResponseType.YES);
+        response.getResponseTimeslots().add(responseTimeslot);
     }
 
     public Survey createSurvey(String title, String description, List<TimeslotCreationData> timeslotCreationDataList, User creator) throws SemanticallyInvalidInputException {
@@ -73,6 +77,17 @@ public class SurveyService {
         Survey survey = querySurvey(surveyID);
         if (!isSurveyEditableByUser(survey, currentUser)) { throw new ForbiddenOperationException("forbidden"); }
 
+        deleteSurveyResponses(survey);
+
+        survey.setTitle(title);
+        survey.setDescription(description);
+        addParticipationForCreator(survey, timeslotCreationDataList);
+        surveyRepository.save(survey);
+
+        return survey;
+    }
+
+    private void deleteSurveyResponses(Survey survey) {
         for (Participation participation: survey.getParticipations()) {
             Response response = participation.getResponse();
             if (response != null) {
@@ -87,20 +102,13 @@ public class SurveyService {
 
         timeslotService.deleteTimeslotsOfSurvey(survey);
         survey.getTimeslots().clear();
-
-        survey.setTitle(title);
-        survey.setDescription(description);
-        addParticipationForCreator(survey, timeslotCreationDataList);
-        surveyRepository.save(survey);
-
-        return survey;
     }
 
     public Survey closeSurvey(Long surveyID, Long timeslotID, User currentUser)
         throws EntityNotFoundException, ForbiddenOperationException {
 
         Survey survey = querySurvey(surveyID);
-        if (!isSurveyClosableByUser(survey, currentUser)) {  throw new ForbiddenOperationException("forbidden"); }
+        if (!isSurveyClosableByUser(survey, currentUser)) { throw new ForbiddenOperationException("forbidden"); }
 
         Timeslot timeslot = timeslotService.findTimeslot(survey, timeslotID);
         survey.setChosenTimeslot(timeslot);
@@ -111,7 +119,7 @@ public class SurveyService {
 
     public Survey deleteSurvey(Long surveyID, User currentUser) throws EntityNotFoundException, ForbiddenOperationException {
         Survey survey = querySurvey(surveyID);
-        if (!isSurveyDeletableByUser(survey, currentUser)) {  throw new ForbiddenOperationException("forbidden"); }
+        if (!isSurveyDeletableByUser(survey, currentUser)) { throw new ForbiddenOperationException("forbidden"); }
         surveyRepository.delete(survey);
         return survey;
     }
