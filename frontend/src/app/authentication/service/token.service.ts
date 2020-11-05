@@ -1,5 +1,5 @@
 import {Injectable} from '@angular/core';
-import {JWT} from '../../../../../api/specification/types';
+import {Jwt} from '../../api/models/jwt';
 
 @Injectable({
     providedIn: 'root'
@@ -9,7 +9,7 @@ export class TokenService {
     constructor() {
     }
 
-    getToken(): JWT {
+    getToken(): Jwt {
         const token = localStorage.getItem('jwt');
         if (token === null) {
             return '';
@@ -26,7 +26,7 @@ export class TokenService {
         localStorage.removeItem('jwt');
     }
 
-    setToken(token: JWT): void {
+    setToken(token: Jwt): void {
         localStorage.setItem('jwt', token);
     }
 }
