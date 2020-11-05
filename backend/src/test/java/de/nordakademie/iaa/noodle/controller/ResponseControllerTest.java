@@ -1,12 +1,9 @@
 package de.nordakademie.iaa.noodle.controller;
 
 import de.nordakademie.iaa.noodle.TestUtil;
-import de.nordakademie.iaa.noodle.api.model.CreateResponseRequest;
 import de.nordakademie.iaa.noodle.api.model.ResponseDTO;
-import de.nordakademie.iaa.noodle.api.model.SurveyDTO;
-import de.nordakademie.iaa.noodle.converter.ResponseConverter;
+import de.nordakademie.iaa.noodle.mapper.ResponseConverter;
 import de.nordakademie.iaa.noodle.model.Response;
-import de.nordakademie.iaa.noodle.model.Survey;
 import de.nordakademie.iaa.noodle.model.User;
 import de.nordakademie.iaa.noodle.services.ResponseService;
 import de.nordakademie.iaa.noodle.services.exceptions.EntityNotFoundException;
@@ -31,7 +28,7 @@ public class ResponseControllerTest {
         authenticatedUser = TestUtil.setupAuthentication();
         responseService = mock(ResponseService.class);
         responseConverter = mock(ResponseConverter.class);
-        responseController = new ResponseController(responseService, responseConverter);
+        responseController = new ResponseController(responseService, responseConverter, responseMapper);
     }
 
     @Test

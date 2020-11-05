@@ -17,7 +17,7 @@ public class SurveyServiceTest {
     @BeforeEach
     public void setUp() {
         surveyRepository = mock(SurveyRepository.class);
-        surveyService = new SurveyService(surveyRepository);
+        surveyService = new SurveyService(surveyRepository, timeslotRepository, responseService, participationRepository);
     }
 
     @Test

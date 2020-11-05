@@ -27,4 +27,5 @@ public interface ParticipationRepository {
     }
 
     void save(Participation participation);
+    void delete(Participation participation);
 }

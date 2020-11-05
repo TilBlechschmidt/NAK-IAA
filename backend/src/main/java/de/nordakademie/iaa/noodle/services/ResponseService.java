@@ -17,7 +17,7 @@ import java.util.Map;
 @Transactional(propagation = Propagation.REQUIRED, rollbackFor = { ServiceException.class })
 public class ResponseService {
     private final ResponseRepository responseRepository;
-    private final TimeslotRepository timeslotRepository;
+    private final TimeslotService timeslotService;
     private final ResponseTimeslotRepository responseTimeslotRepository;
     private final ParticipationService participationService;
     private final SurveyService surveyService;
@@ -25,12 +25,12 @@ public class ResponseService {
     @Autowired
     public ResponseService(ResponseRepository responseRepository,
                            ResponseTimeslotRepository responseTimeslotRepository,
-                           TimeslotRepository timeslotRepository,
+                           TimeslotService timeslotService,
                            ParticipationService participationService,
                            SurveyService surveyService) {
         this.responseRepository = responseRepository;
         this.responseTimeslotRepository = responseTimeslotRepository;
-        this.timeslotRepository = timeslotRepository;
+        this.timeslotService = timeslotService;
         this.participationService = participationService;
         this.surveyService = surveyService;
     }
@@ -44,14 +44,12 @@ public class ResponseService {
     private void addTimeslotsToResponse(Response response, Map<Long, ResponseType> responseTimeslotDataMap)
         throws EntityNotFoundException {
         for (Map.Entry<Long, ResponseType> responseTimeslotData: responseTimeslotDataMap.entrySet()) {
-            Timeslot timeslot = timeslotRepository.findById(responseTimeslotData.getKey());
-
-            if (timeslot == null || !timeslot.getSurvey().equals(response.getParticipation().getSurvey())) {
-                throw new EntityNotFoundException("timeslotNotFound");
-            }
-
+            Timeslot timeslot = timeslotService.findTimeslot(response.getParticipation().getSurvey(),
+                                                             responseTimeslotData.getKey());
             ResponseTimeslot responseTimeslot = new ResponseTimeslot(response, timeslot, responseTimeslotData.getValue());
+            // TODO: Fix null ids
             response.getResponseTimeslots().add(responseTimeslot);
+            responseRepository.save(response);
         }
     }
 
@@ -59,7 +57,7 @@ public class ResponseService {
                                    Map<Long, ResponseType> responseTimeslotDataMap, User currentUser)
         throws EntityNotFoundException, SemanticallyInvalidInputException, ForbiddenOperationException {
 
-        if (responseTimeslotDataMap.size() == 0) {  throw new SemanticallyInvalidInputException("noTimeslotsSelected"); }
+        if (responseTimeslotDataMap.size() == 0) { throw new SemanticallyInvalidInputException("noTimeslotsSelected"); }
 
         Response response = queryResponse(responseID, surveyID);
 

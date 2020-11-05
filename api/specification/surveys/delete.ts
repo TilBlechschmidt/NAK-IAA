@@ -3,7 +3,7 @@ import {
     Identifier,
     MalformedRequestErrorResponse,
     GenericNotFoundErrorResponse,
-    UnauthorizedErrorResponse
+    UnauthorizedErrorResponse, NotFoundErrorResponseTemplate, ForbiddenErrorResponseTemplate
 } from "../types";
 import {SurveyMetadataDTO} from "./types";
 
@@ -18,14 +18,18 @@ class DeleteSurvey {
     request(@pathParams pathParams: DeleteSurveyRequest) {}
 
     /** Survey deleted */
-    @response({ status: 204 })
+    @response({ status: 200 })
     successfulResponse(@body body: SurveyMetadataDTO) {}
+
+    /** Not Editable */
+    @response({ status: 403 })
+    forbiddenResponse(@body body: DeleteSurveyNotFoundErrorResponse) {}
 
     // MARK: - Generic response
 
     /** Resource not found */
     @response({ status: 404 })
-    notFoundResponse(@body body: GenericNotFoundErrorResponse) {}
+    notFoundResponse(@body body: DeleteSurveyForbiddenErrorResponse) {}
 
     /** Malformed request */
     @response({ status: 400 })
@@ -39,3 +43,12 @@ class DeleteSurvey {
 interface DeleteSurveyRequest {
     id: Identifier;
 }
+
+interface DeleteSurveyNotFoundErrorResponse extends NotFoundErrorResponseTemplate {
+    message: "surveyNotFound"
+}
+
+interface DeleteSurveyForbiddenErrorResponse extends ForbiddenErrorResponseTemplate {
+    message: "forbidden"
+}
+

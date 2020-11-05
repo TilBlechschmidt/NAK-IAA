@@ -19,7 +19,7 @@ public class Survey {
     private User creator;
     @OneToMany(cascade = CascadeType.ALL, orphanRemoval = true, mappedBy = "survey", fetch = FetchType.LAZY)
     private Set<Participation> participations;
-    @Column(nullable = false)
+    @Column(nullable = false, length = 2048)
     private String title;
     @Column(nullable = false, length = 2048)
     private String description;
@@ -66,6 +66,18 @@ public class Survey {
 
     public boolean getIsClosed() {
         return getChosenTimeslot() != null;
+    }
+
+    public void setTitle(String title) {
+        this.title = title;
+    }
+
+    public void setDescription(String description) {
+        this.description = description;
+    }
+
+    public void setChosenTimeslot(Timeslot chosenTimeslot) {
+        this.chosenTimeslot = chosenTimeslot;
     }
 
     @Override

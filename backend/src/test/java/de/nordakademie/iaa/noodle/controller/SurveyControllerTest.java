@@ -2,7 +2,8 @@ package de.nordakademie.iaa.noodle.controller;
 
 import de.nordakademie.iaa.noodle.TestUtil;
 import de.nordakademie.iaa.noodle.api.model.*;
-import de.nordakademie.iaa.noodle.converter.SurveyConverter;
+import de.nordakademie.iaa.noodle.mapper.SurveyConverter;
+import de.nordakademie.iaa.noodle.mapper.SurveyMapper;
 import de.nordakademie.iaa.noodle.model.Survey;
 import de.nordakademie.iaa.noodle.model.User;
 import de.nordakademie.iaa.noodle.services.SurveyService;
@@ -22,15 +23,15 @@ import static org.mockito.Mockito.when;
 public class SurveyControllerTest {
     private SurveyController surveyController;
     private SurveyService surveyService;
-    private SurveyConverter surveyConverter;
+    private SurveyMapper surveyMapper;
     private User authenticatedUser;
 
     @BeforeEach
     public void setUp() {
         authenticatedUser = TestUtil.setupAuthentication();
         surveyService = mock(SurveyService.class);
-        surveyConverter = mock(SurveyConverter.class);
-        surveyController = new SurveyController(surveyService, surveyConverter);
+        surveyMapper = mock(SurveyMapper.class);
+        surveyController = new SurveyController(surveyService, surveyMapper);
 
         when(authenticatedUser.getFullName()).thenReturn("TESTUSER");
     }
@@ -60,7 +61,7 @@ public class SurveyControllerTest {
         Survey inputSurvey = mock(Survey.class);
         SurveyDTO inputSurveyDTO = mock(SurveyDTO.class);
         when(surveyService.querySurvey(42L)).thenReturn(inputSurvey);
-        when(surveyConverter.convertSurveyToDTO(inputSurvey, authenticatedUser)).thenReturn(inputSurveyDTO);
+        when(surveyMapper.surveyToDTO(inputSurvey, authenticatedUser)).thenReturn(inputSurveyDTO);
 
         ResponseEntity<SurveyDTO> response = surveyController.querySurvey(42L);
         SurveyDTO surveyDTO = response.getBody();

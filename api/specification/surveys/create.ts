@@ -1,5 +1,10 @@
 import {body, endpoint, request, response} from "@airtasker/spot";
-import {Identifier, MalformedRequestErrorResponse, UnauthorizedErrorResponse} from "../types";
+import {
+    Identifier,
+    MalformedRequestErrorResponse,
+    UnauthorizedErrorResponse,
+    UnprocessableEntityErrorResponseTemplate
+} from "../types";
 import {SurveyCreationMetadataDTO, SurveyMetadataDTO} from "./types";
 
 /** Creates a new survey for other users to participate */
@@ -18,7 +23,7 @@ class CreateSurvey {
 
     /** Invalid semantics */
     @response({ status: 422 })
-    semanticErrorResponse(@body body: CreateSurveyErrorResponse) {}
+    semanticErrorResponse(@body body: CreateSurveyUnprocessableEntityErrorResponse) {}
 
     // MARK: - Generic response
 
@@ -31,6 +36,6 @@ class CreateSurvey {
     unauthorizedResponse(@body body: UnauthorizedErrorResponse) {}
 }
 
-export interface CreateSurveyErrorResponse {
-    code: "invalidTimeslot" | "missingTitle" | "titleTooLong" | "descriptionTooLong" | "atLeastOneTimeslotRequired";
+interface CreateSurveyUnprocessableEntityErrorResponse extends UnprocessableEntityErrorResponseTemplate {
+    message: "noTimeslots" | "emptyTitle" | "titleTooLong" | "descriptionTooLong" | "invalidTimeslot"
 }

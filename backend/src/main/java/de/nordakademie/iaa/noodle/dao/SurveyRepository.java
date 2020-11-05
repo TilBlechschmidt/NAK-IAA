@@ -82,5 +82,5 @@ SELECT DISTINCT survey FROM Survey survey
 
     Survey save(Survey toSave);
 
-    void deleteById(Long id);
+    void delete(Survey survey);
 }

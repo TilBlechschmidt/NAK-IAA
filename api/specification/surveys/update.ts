@@ -2,11 +2,11 @@ import {body, endpoint, pathParams, request, response} from "@airtasker/spot";
 import {
     Identifier,
     MalformedRequestErrorResponse,
-    GenericNotFoundErrorResponse,
-    UnauthorizedErrorResponse
+    UnauthorizedErrorResponse,
+    UnprocessableEntityErrorResponseTemplate,
+    NotFoundErrorResponseTemplate, ForbiddenErrorResponseTemplate
 } from "../types";
 import {SurveyCreationMetadataDTO, SurveyMetadataDTO} from "./types";
-import {CreateSurveyErrorResponse} from "./create";
 
 /** Updates metadata of survey <strong>and deletes all responses</strong> */
 @endpoint({
@@ -24,13 +24,17 @@ class UpdateSurvey {
 
     /** Invalid semantics */
     @response({ status: 422 })
-    semanticErrorResponse(@body body: CreateSurveyErrorResponse) {}
+    semanticErrorResponse(@body body: UpdateSurveyUnprocessableEntityErrorResponse) {}
+
+    /** Not Editable */
+    @response({ status: 403 })
+    forbiddenResponse(@body body: UpdateSurveyForbiddenErrorResponse) {}
 
     // MARK: - Generic response
 
     /** Resource not found */
     @response({ status: 404 })
-    notFoundResponse(@body body: GenericNotFoundErrorResponse) {}
+    notFoundResponse(@body body: UpdateSurveyNotFoundErrorResponse) {}
 
     /** Malformed request */
     @response({ status: 400 })
@@ -41,3 +45,14 @@ class UpdateSurvey {
     unauthorizedResponse(@body body: UnauthorizedErrorResponse) {}
 }
 
+interface UpdateSurveyNotFoundErrorResponse extends NotFoundErrorResponseTemplate {
+    message: "responseNotFound" | "timeslotNotFound"
+}
+
+interface UpdateSurveyUnprocessableEntityErrorResponse extends UnprocessableEntityErrorResponseTemplate {
+    message: "noTimeslots" | "emptyTitle" | "titleTooLong" | "descriptionTooLong" | "invalidTimeslot"
+}
+
+interface UpdateSurveyForbiddenErrorResponse extends ForbiddenErrorResponseTemplate {
+    message: "forbidden"
+}

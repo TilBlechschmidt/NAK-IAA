@@ -2,8 +2,10 @@ import {body, endpoint, pathParams, request, response} from "@airtasker/spot";
 import {
     Identifier,
     MalformedRequestErrorResponse,
-    GenericNotFoundErrorResponse,
-    UnauthorizedErrorResponse
+    UnauthorizedErrorResponse,
+    NotFoundErrorResponseTemplate,
+    ForbiddenErrorResponseTemplate,
+    BadRequestErrorResponseTemplate
 } from "../types";
 import {SurveyMetadataDTO} from "./types";
 
@@ -21,15 +23,19 @@ class CloseSurvey {
     @response({ status: 200 })
     successfulResponse(@body body: SurveyMetadataDTO) {}
 
+    /** Not Closable */
+    @response({ status: 403 })
+    forbiddenResponse(@body body: CloseSurveyForbiddenErrorResponse) {}
+
     // MARK: - Generic response
 
     /** Resource not found */
     @response({ status: 404 })
-    notFoundResponse(@body body: GenericNotFoundErrorResponse) {}
+    notFoundResponse(@body body: CloseSurveyNotFoundErrorResponse) {}
 
     /** Malformed request */
     @response({ status: 400 })
-    malformedRequestResponse(@body body: MalformedRequestErrorResponse) {}
+    malformedRequestResponse(@body body: CloseSurveyMalformedRequestErrorResponse) {}
 
     /** Missing or invalid authentication */
     @response({ status: 401 })
@@ -40,4 +46,16 @@ interface CloseSurveyRequest {
     operation: "close";
     /** Unique resource identifier for the timeslot that is going to take effect */
     selectedTimeslot: Identifier;
+}
+
+interface CloseSurveyNotFoundErrorResponse extends NotFoundErrorResponseTemplate {
+    message: "timeslotNotFound" | "surveyNotFound"
+}
+
+interface CloseSurveyForbiddenErrorResponse extends ForbiddenErrorResponseTemplate {
+    message: "forbidden"
+}
+
+interface CloseSurveyMalformedRequestErrorResponse extends BadRequestErrorResponseTemplate {
+    message: "malformedRequest" | "unsupportedOperation"
 }

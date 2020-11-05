@@ -47,4 +47,6 @@ public interface ResponseRepository {
     }
 
     void save(Response toSave);
+
+    void delete(Response response);
 }
