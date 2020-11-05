@@ -36,8 +36,8 @@ import {DetailViewComponent} from './survey/detail/detail-view/detail-view.compo
 import {SurveyTabViewComponent} from './survey/survey-tab-view/survey-tab-view.component';
 import { AbstractSurveyTableComponent } from './survey/tabs/abstract-survey-table/abstract-survey-table.component';
 import { EditSurveyWarnComponent } from './survey/detail/edit-view/edit-survey-warn.component';
-import {ApiModule} from "./api/api.module";
-import {environment} from "../environments/environment";
+import {ApiModule} from './api/api.module';
+import {environment} from '../environments/environment';
 
 
 export function initApp(http: HttpClient, translate: TranslateService): () => Promise<boolean>{
