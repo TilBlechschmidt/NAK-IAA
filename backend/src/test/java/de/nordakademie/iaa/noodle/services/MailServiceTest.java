@@ -18,8 +18,7 @@ public class MailServiceTest {
     @BeforeEach
     public void setUp() {
         mailSender = mock(JavaMailSender.class);
-        mailService = new MailService(mailSender);
-        ReflectionTestUtils.setField(mailService, "fromEmail", "FROM_EMAIL");
+        mailService = new MailService(mailSender, "FROM_EMAIL");
     }
 
     @Test

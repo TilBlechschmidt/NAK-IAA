@@ -15,10 +15,9 @@ import org.springframework.stereotype.Service;
 import java.util.List;
 import java.util.stream.Collectors;
 
-import static de.nordakademie.iaa.noodle.config.SecurityConstants.TOKEN_PREFIX;
-
 @Service
 public class SignInService {
+    private static final String TOKEN_PREFIX = "Bearer ";
 
     private final PasswordService passwordService;
     private final UserService userService;
@@ -57,7 +56,8 @@ public class SignInService {
     }
 
     private AuthenticatedUser authenticateUser(User user) {
-        return new AuthenticatedUser(user, jwtService.buildSpringAuthenticationToken(user));
+        String headerToken = TOKEN_PREFIX + jwtService.buildSpringAuthenticationToken(user);
+        return new AuthenticatedUser(user, headerToken);
     }
 
     private Authentication buildSpringAuthentication(User user, List<String> authorities) {

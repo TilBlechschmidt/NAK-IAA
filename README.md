@@ -114,7 +114,7 @@ To write the database to a file add the following:
 spring.datasource.url=jdbc:h2:file:/path/to/database
 ```
 
-#### Mail Settings
+#### Mail Settings (required)
 
 To allow sending mails (which is required for user registration) add the following:
 
@@ -130,4 +130,13 @@ Optionally, a debug-flag can be added to get more details about the SMTP connect
 
 ```properties
 spring.mail.properties.mail.debug=true
+```
+
+The following security settings must be set. Make sure to set the hashPepper to `pepper` for the `data.sql` example data.
+
+#### Security Settings (required)
+```properties
+spring.noodle.security.expirationTime=<expiration time>
+spring.noodle.security.secret=<secret>
+spring.noodle.security.hashPepper=<pepper>
 ```

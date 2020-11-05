@@ -66,7 +66,7 @@ class SignInServiceTest {
 
         AuthenticatedUser authenticatedUser = signInService.attemptAuthentication("EMAIL", "PASSWORD");
         assertEquals(user, authenticatedUser.getUser());
-        assertEquals("TOKEN", authenticatedUser.getJwtToken());
+        assertEquals("Bearer TOKEN", authenticatedUser.getJwtToken());
     }
 
     @Test

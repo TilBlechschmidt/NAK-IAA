@@ -11,13 +11,13 @@ import org.springframework.stereotype.Service;
 @Service
 public class MailService {
     private final JavaMailSender emailSender;
-
-    @Value("${spring.noodle.mail.from:mail@example.com}")
-    private String fromEmail;
+    private final String fromEmail;
 
     @Autowired
-    public MailService(JavaMailSender emailSender) {
+    public MailService(JavaMailSender emailSender,
+                       @Value("${spring.noodle.mail.from}") String fromEmail) {
         this.emailSender = emailSender;
+        this.fromEmail = fromEmail;
     }
 
     private static String greeting(String fullName) {

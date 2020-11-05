@@ -16,10 +16,10 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import java.io.IOException;
 
-import static de.nordakademie.iaa.noodle.config.SecurityConstants.HEADER_STRING;
-
 @Component
 public class JWTAuthorizationFilter extends OncePerRequestFilter {
+    private static final String HEADER_STRING = "Authorization";
+
     private final SignInService signInService;
 
     @Autowired

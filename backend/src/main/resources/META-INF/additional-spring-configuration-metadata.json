@@ -1,8 +1,23 @@
 {
-  "properties": [
-    {
-      "name": "spring.noodle.mail.from",
-      "type": "java.lang.String",
-      "description": "E-Mail address used for outgoing emails."
-  }
-] }
+    "properties": [
+        {
+            "name": "spring.noodle.mail.from",
+            "type": "java.lang.String",
+            "description": "E-Mail address used for outgoing emails."
+        },
+        {
+            "name": "spring.noodle.security.expirationTime",
+            "type": "java.lang.Long",
+            "description": "Expiration time used for JWT tokens."
+        },
+        {
+            "name": "spring.noodle.security.secret",
+            "type": "java.lang.String",
+            "description": "Secret used for JWT tokens."
+        },
+        {
+            "name": "spring.noodle.security.hashPepper",
+            "type": "java.lang.String",
+            "description": "Pepper used for password hashing."
+        }
+    ] }

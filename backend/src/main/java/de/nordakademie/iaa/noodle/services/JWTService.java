@@ -8,16 +8,15 @@ import io.jsonwebtoken.Claims;
 import io.jsonwebtoken.JwtBuilder;
 import io.jsonwebtoken.Jwts;
 import io.jsonwebtoken.SignatureAlgorithm;
+import org.springframework.beans.factory.annotation.Value;
 import org.springframework.security.core.GrantedAuthority;
 import org.springframework.security.core.authority.AuthorityUtils;
 import org.springframework.stereotype.Service;
 
 import java.util.Date;
 import java.util.List;
-import java.util.Optional;
 import java.util.stream.Collectors;
 
-import static de.nordakademie.iaa.noodle.config.SecurityConstants.*;
 import static java.nio.charset.StandardCharsets.UTF_8;
 
 @Service
@@ -27,18 +26,27 @@ public class JWTService {
     private final static String CLAIM_EMAIL = "email";
     private final static String CLAIM_FULL_NAME = "fullName";
 
-    private static JwtBuilder baseTokenBuilder(String email) {
+
+    private final String secret;
+    private final long expirationTime;
+
+    public JWTService(@Value("${spring.noodle.security.secret}") String secret,
+                      @Value("${spring.noodle.security.expirationTime}") long expirationTime) {
+        this.secret = secret;
+        this.expirationTime = expirationTime;
+    }
+
+    private JwtBuilder baseTokenBuilder(String email) {
         long currentTimestamp = System.currentTimeMillis();
 
         return Jwts.builder()
             .setSubject(email)
             .setIssuedAt(new Date(currentTimestamp))
-            .setExpiration(new Date(currentTimestamp + EXPIRATION_TIME))
-            .signWith(SignatureAlgorithm.HS256, SECRET.getBytes(UTF_8));
+            .setExpiration(new Date(currentTimestamp + expirationTime))
+            .signWith(SignatureAlgorithm.HS256, secret.getBytes(UTF_8));
     }
 
     public String buildEmailToken(String email, String fullName) {
-        // Token does not get the TOKEN_PREFIX, because it is not used for authentication
         return baseTokenBuilder(email)
             .claim(CLAIM_EMAIL, email)
             .claim(CLAIM_FULL_NAME, fullName)
@@ -48,7 +56,7 @@ public class JWTService {
     public String buildSpringAuthenticationToken(User user) {
         List<GrantedAuthority> grantedAuthorities = AuthorityUtils.commaSeparatedStringToAuthorityList("ROLE_USER");
 
-        return TOKEN_PREFIX + baseTokenBuilder(user.getEmail())
+        return baseTokenBuilder(user.getEmail())
             .claim(CLAIM_USER_ID, user.getId())
             .claim(CLAIM_AUTHORITIES,
                 grantedAuthorities.stream()
@@ -71,7 +79,7 @@ public class JWTService {
     private Claims extractClaimsFromToken(String jwtToken) throws JWTException {
         try {
             return Jwts.parser()
-                .setSigningKey(SECRET.getBytes())
+                .setSigningKey(secret.getBytes())
                 .parseClaimsJws(jwtToken)
                 .getBody();
         } catch (Exception e) {
