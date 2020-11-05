@@ -4,9 +4,13 @@ import de.nordakademie.iaa.noodle.dao.TimeslotRepository;
 import de.nordakademie.iaa.noodle.model.Survey;
 import de.nordakademie.iaa.noodle.model.Timeslot;
 import de.nordakademie.iaa.noodle.services.exceptions.EntityNotFoundException;
+import de.nordakademie.iaa.noodle.services.exceptions.ServiceException;
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Propagation;
+import org.springframework.transaction.annotation.Transactional;
 
 @Service
+@Transactional(propagation = Propagation.REQUIRED, rollbackFor = { ServiceException.class })
 public class TimeslotService {
     private final TimeslotRepository timeslotRepository;
 
