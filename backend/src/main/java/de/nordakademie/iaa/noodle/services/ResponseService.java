@@ -46,7 +46,6 @@ public class ResponseService {
             Timeslot timeslot = timeslotService.findTimeslot(response.getParticipation().getSurvey(),
                                                              responseTimeslotData.getKey());
             ResponseTimeslot responseTimeslot = new ResponseTimeslot(response, timeslot, responseTimeslotData.getValue());
-            // TODO: Fix null ids
             response.getResponseTimeslots().add(responseTimeslot);
         }
     }

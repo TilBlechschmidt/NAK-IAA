@@ -36,8 +36,7 @@ public class SurveyService {
 
     private void addParticipationForCreator(Survey survey, List<TimeslotCreationData> timeslotCreationDataList) throws SemanticallyInvalidInputException {
         Participation participation = new Participation(survey.getCreator(), survey, null);
-        // Don't add the participation to the creator
-        // TODO: Fix null ids
+        // Don't add the participation to the creator because the user is detached
         survey.getParticipations().add(participation);
 
         Response response = new Response(participation, new HashSet<>());
@@ -49,11 +48,9 @@ public class SurveyService {
             }
 
             Timeslot timeslot = new Timeslot(survey, timeslotCreationData.getStart(), timeslotCreationData.getEnd());
-            // TODO: Fix null ids
             survey.getTimeslots().add(timeslot);
 
             ResponseTimeslot responseTimeslot = new ResponseTimeslot(response, timeslot, ResponseType.YES);
-            // TODO: Fix null ids
             response.getResponseTimeslots().add(responseTimeslot);
         }
     }
@@ -62,7 +59,7 @@ public class SurveyService {
         checkSurveyCreationData(title, description, timeslotCreationDataList);
 
         Survey survey = new Survey(new HashSet<>(), null, creator, new HashSet<>(), title, description);
-        // Don't add the survey to the creator
+        // Don't add the survey to the creator because the user is detached
 
         addParticipationForCreator(survey, timeslotCreationDataList);
 
