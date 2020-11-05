@@ -55,7 +55,7 @@ public class ResponseService {
                                    Map<Long, ResponseType> responseTimeslotDataMap, User currentUser)
         throws EntityNotFoundException, SemanticallyInvalidInputException, ForbiddenOperationException {
 
-        if (responseTimeslotDataMap.size() == 0) { throw new SemanticallyInvalidInputException("noTimeslotsSelected"); }
+        if (responseTimeslotDataMap.isEmpty()) { throw new SemanticallyInvalidInputException("noTimeslotsSelected"); }
 
         Response response = queryResponse(responseID, surveyID);
 
@@ -72,7 +72,7 @@ public class ResponseService {
     public Response createResponse(Long surveyID, Map<Long, ResponseType> responseTimeslotDataMap, User currentUser)
         throws EntityNotFoundException, ConflictException, SemanticallyInvalidInputException {
 
-        if (responseTimeslotDataMap.size() == 0) {  throw new SemanticallyInvalidInputException("noTimeslotsSelected"); }
+        if (responseTimeslotDataMap.isEmpty()) {  throw new SemanticallyInvalidInputException("noTimeslotsSelected"); }
 
         Participation participation = participationService.getOrCreateParticipation(currentUser, surveyID);
 

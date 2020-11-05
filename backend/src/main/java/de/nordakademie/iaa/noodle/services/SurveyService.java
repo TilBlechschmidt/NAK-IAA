@@ -120,7 +120,7 @@ public class SurveyService {
     }
 
     public void checkSurveyCreationData(String title, String description, List<TimeslotCreationData> timeslotCreationDataList) throws SemanticallyInvalidInputException {
-        if (timeslotCreationDataList.size() == 0) { throw new SemanticallyInvalidInputException("noTimeslots"); }
+        if (timeslotCreationDataList.isEmpty()) { throw new SemanticallyInvalidInputException("noTimeslots"); }
         if (title.isBlank()) { throw new SemanticallyInvalidInputException("emptyTitle"); }
         if (title.length() > 2048) { throw new SemanticallyInvalidInputException("titleTooLong"); }
         if (description.length() > 2048) { throw new SemanticallyInvalidInputException("descriptionTooLong"); }
