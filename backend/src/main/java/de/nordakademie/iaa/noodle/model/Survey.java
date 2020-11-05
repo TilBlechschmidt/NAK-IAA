@@ -3,12 +3,16 @@ package de.nordakademie.iaa.noodle.model;
 import javax.persistence.*;
 import java.util.Objects;
 import java.util.Set;
+import java.util.UUID;
 
 @Entity
 public class Survey {
     @Id
     @GeneratedValue
     private Long id;
+
+    @Transient
+    transient private UUID transientID;
 
     @OneToMany(mappedBy = "survey", cascade = CascadeType.ALL, orphanRemoval = true, fetch = FetchType.LAZY)
     private Set<Timeslot> timeslots;
@@ -34,6 +38,7 @@ public class Survey {
         this.participations = participations;
         this.title = title;
         this.description = description;
+        this.transientID = UUID.randomUUID();
     }
 
     public Timeslot getChosenTimeslot() {
@@ -85,11 +90,20 @@ public class Survey {
         if (this == o) return true;
         if (!(o instanceof Survey)) return false;
         Survey survey = (Survey) o;
-        return Objects.equals(getId(), survey.getId());
+
+        if (getId() == null) {
+            return Objects.equals(transientID, survey.transientID);
+        } else {
+            return Objects.equals(getId(), survey.getId());
+        }
     }
 
     @Override
     public int hashCode() {
-        return Objects.hash(getId());
+        if (transientID != null) {
+            return Objects.hash(transientID);
+        } else {
+            return Objects.hash(getId());
+        }
     }
 }

@@ -2,6 +2,7 @@ package de.nordakademie.iaa.noodle.model;
 
 import javax.persistence.*;
 import java.util.Objects;
+import java.util.UUID;
 
 @Entity
 public class ResponseTimeslot {
@@ -9,6 +10,9 @@ public class ResponseTimeslot {
     @Id
     @GeneratedValue
     private Long id;
+
+    @Transient
+    transient private UUID transientID;
 
     @ManyToOne(optional = false, fetch = FetchType.LAZY)
     private Response response;
@@ -26,6 +30,7 @@ public class ResponseTimeslot {
         this.response = response;
         this.timeslot = timeslot;
         this.responseType = responseType;
+        this.transientID = UUID.randomUUID();
     }
 
     public Long getId() {
@@ -49,11 +54,20 @@ public class ResponseTimeslot {
         if (this == o) return true;
         if (!(o instanceof ResponseTimeslot)) return false;
         ResponseTimeslot that = (ResponseTimeslot) o;
-        return Objects.equals(getId(), that.getId());
+
+        if (getId() == null) {
+            return Objects.equals(transientID, that.transientID);
+        } else {
+            return Objects.equals(getId(), that.getId());
+        }
     }
 
     @Override
     public int hashCode() {
-        return Objects.hash(getId());
+        if (transientID != null) {
+            return Objects.hash(transientID);
+        } else {
+            return Objects.hash(getId());
+        }
     }
 }

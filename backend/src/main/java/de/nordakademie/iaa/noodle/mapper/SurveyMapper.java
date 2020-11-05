@@ -2,7 +2,6 @@ package de.nordakademie.iaa.noodle.mapper;
 
 import de.nordakademie.iaa.noodle.api.model.SurveyDTO;
 import de.nordakademie.iaa.noodle.api.model.SurveyMetadataDTO;
-import de.nordakademie.iaa.noodle.model.Response;
 import de.nordakademie.iaa.noodle.model.Survey;
 import de.nordakademie.iaa.noodle.model.User;
 import de.nordakademie.iaa.noodle.services.SurveyService;

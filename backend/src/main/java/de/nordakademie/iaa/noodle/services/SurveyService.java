@@ -39,11 +39,9 @@ public class SurveyService {
         // Don't add the participation to the creator
         // TODO: Fix null ids
         survey.getParticipations().add(participation);
-        participationRepository.save(participation);
 
         Response response = new Response(participation, new HashSet<>());
         participation.setResponse(response);
-        responseRepository.save(response);
 
         for (TimeslotCreationData timeslotCreationData: timeslotCreationDataList) {
             if (!isTimeslotCreationDataValid(timeslotCreationData)) {
@@ -53,13 +51,10 @@ public class SurveyService {
             Timeslot timeslot = new Timeslot(survey, timeslotCreationData.getStart(), timeslotCreationData.getEnd());
             // TODO: Fix null ids
             survey.getTimeslots().add(timeslot);
-            timeslotService.save(timeslot);
 
             ResponseTimeslot responseTimeslot = new ResponseTimeslot(response, timeslot, ResponseType.YES);
             // TODO: Fix null ids
             response.getResponseTimeslots().add(responseTimeslot);
-            surveyRepository.save(survey);
-            responseRepository.save(response);
         }
     }
 

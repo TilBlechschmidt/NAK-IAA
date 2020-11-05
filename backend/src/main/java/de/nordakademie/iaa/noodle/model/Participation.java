@@ -2,6 +2,7 @@ package de.nordakademie.iaa.noodle.model;
 
 import javax.persistence.*;
 import java.util.Objects;
+import java.util.UUID;
 
 @Entity
 public class Participation {
@@ -9,6 +10,8 @@ public class Participation {
     @Id
     @GeneratedValue
     private Long id;
+    @Transient
+    transient private UUID transientID;
     @ManyToOne(optional = false, fetch = FetchType.LAZY)
     private User participant;
     @ManyToOne(optional = false, fetch = FetchType.LAZY)
@@ -23,6 +26,7 @@ public class Participation {
         this.participant = participant;
         this.survey = survey;
         this.response = response;
+        this.transientID = UUID.randomUUID();
     }
 
     public Long getId() {
@@ -50,11 +54,20 @@ public class Participation {
         if (this == o) return true;
         if (!(o instanceof Participation)) return false;
         Participation that = (Participation) o;
-        return Objects.equals(getId(), that.getId());
+
+        if (getId() == null) {
+            return Objects.equals(transientID, that.transientID);
+        } else {
+            return Objects.equals(getId(), that.getId());
+        }
     }
 
     @Override
     public int hashCode() {
-        return Objects.hash(getId());
+        if (transientID != null) {
+            return Objects.hash(transientID);
+        } else {
+            return Objects.hash(getId());
+        }
     }
 }

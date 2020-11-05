@@ -3,12 +3,16 @@ package de.nordakademie.iaa.noodle.model;
 import javax.persistence.*;
 import java.util.Date;
 import java.util.Objects;
+import java.util.UUID;
 
 @Entity
 public class Timeslot {
     @Id
     @GeneratedValue
     private Long id;
+
+    @Transient
+    transient private UUID transientID;
 
     @ManyToOne(optional = false, fetch = FetchType.LAZY)
     private Survey survey;
@@ -29,6 +33,7 @@ public class Timeslot {
         this.survey = survey;
         this.start = start;
         this.end = end;
+        this.transientID = UUID.randomUUID();
     }
 
     public Long getId() {
@@ -52,11 +57,20 @@ public class Timeslot {
         if (this == o) return true;
         if (!(o instanceof Timeslot)) return false;
         Timeslot timeslot = (Timeslot) o;
-        return Objects.equals(getId(), timeslot.getId());
+
+        if (getId() == null) {
+            return Objects.equals(transientID, timeslot.transientID);
+        } else {
+            return Objects.equals(getId(), timeslot.getId());
+        }
     }
 
     @Override
     public int hashCode() {
-        return Objects.hash(getId());
+        if (transientID != null) {
+            return Objects.hash(transientID);
+        } else {
+            return Objects.hash(getId());
+        }
     }
 }

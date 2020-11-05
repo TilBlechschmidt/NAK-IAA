@@ -48,7 +48,6 @@ public class ResponseService {
             ResponseTimeslot responseTimeslot = new ResponseTimeslot(response, timeslot, responseTimeslotData.getValue());
             // TODO: Fix null ids
             response.getResponseTimeslots().add(responseTimeslot);
-            responseRepository.save(response);
         }
     }
 
