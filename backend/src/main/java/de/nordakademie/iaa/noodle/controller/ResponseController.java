@@ -38,7 +38,7 @@ public class ResponseController extends AuthenticatedController implements Respo
         try {
             User currentUser = getCurrentUser();
             Map<Long, ResponseType> responseTimeslotDataMap = responseMapper
-                .convertResponseValueDTOsToMap(createResponseRequest.getValues());
+                .responseValueDTOsToMap(createResponseRequest.getValues());
             Response response = responseService.createResponse(surveyID, responseTimeslotDataMap, currentUser);
             ResponseDTO responseDTO = responseMapper.responseToDTO(response, currentUser);
             return ResponseEntity.status(CREATED).body(responseDTO);
@@ -68,7 +68,7 @@ public class ResponseController extends AuthenticatedController implements Respo
         try {
             User currentUser = getCurrentUser();
             Map<Long, ResponseType> responseTimeslotDataMap = responseMapper
-                .convertResponseValueDTOsToMap(createResponseRequest.getValues());
+                .responseValueDTOsToMap(createResponseRequest.getValues());
             Response response = responseService.updateResponse(responseID,
                                                                surveyID,
                                                                responseTimeslotDataMap,

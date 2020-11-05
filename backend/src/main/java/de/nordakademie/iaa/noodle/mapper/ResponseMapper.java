@@ -56,15 +56,15 @@ public abstract class ResponseMapper {
         return responseType == ResponseType.YES;
     }
 
-    public ResponseType convertResponseValueDTOToResponseType(ResponseValueDTO responseValueDTO) {
+    public ResponseType responseValueDTOToResponseType(ResponseValueDTO responseValueDTO) {
         return responseValueDTO.getValue() ? ResponseType.YES : ResponseType.NO;
     }
 
-    public Map<Long, ResponseType> convertResponseValueDTOsToMap(List<ResponseValueDTO> responseValueDTOs) {
+    public Map<Long, ResponseType> responseValueDTOsToMap(List<ResponseValueDTO> responseValueDTOs) {
         return responseValueDTOs
             .stream()
             .collect(Collectors.toMap(
                 ResponseValueDTO::getTimeslotID,
-                this::convertResponseValueDTOToResponseType));
+                this::responseValueDTOToResponseType));
     }
 }
