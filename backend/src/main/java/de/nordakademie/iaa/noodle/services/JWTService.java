@@ -75,7 +75,6 @@ public class JWTService {
         return extractAuthenticationDetailsFromClaims(claims);
     }
 
-
     private Claims extractClaimsFromToken(String jwtToken) throws JWTException {
         try {
             return Jwts.parser()
