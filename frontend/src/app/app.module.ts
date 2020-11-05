@@ -34,9 +34,10 @@ import { LogoutButtonComponent } from './authentication/logout-button/logout-but
 import {LoggedInGuard} from './authentication/service/LoggedInGuard';
 import {DetailViewComponent} from './survey/detail/detail-view/detail-view.component';
 import {SurveyTabViewComponent} from './survey/survey-tab-view/survey-tab-view.component';
-import {AccountService} from './api/services/account.service';
 import { AbstractSurveyTableComponent } from './survey/tabs/abstract-survey-table/abstract-survey-table.component';
 import { EditSurveyWarnComponent } from './survey/detail/edit-view/edit-survey-warn.component';
+import {ApiModule} from "./api/api.module";
+import {environment} from "../environments/environment";
 
 
 export function initApp(http: HttpClient, translate: TranslateService): () => Promise<boolean>{
@@ -70,6 +71,7 @@ export function initApp(http: HttpClient, translate: TranslateService): () => Pr
     });
 }
 
+const SelectedApiModule = environment.api.mocked ? ApiModule.mocked() : ApiModule.forRoot({ rootUrl: environment.api.rootUrl });
 
 @NgModule({
     declarations: [
@@ -109,11 +111,11 @@ export function initApp(http: HttpClient, translate: TranslateService): () => Pr
         HttpClientModule,
         ReactiveFormsModule,
         TranslateModule.forRoot(),
+        SelectedApiModule,
         MatMenuModule,
     ],
   providers: [
       LoggedInGuard,
-      AccountService,
       {
           provide: APP_INITIALIZER,
           useFactory: initApp,
@@ -123,5 +125,4 @@ export function initApp(http: HttpClient, translate: TranslateService): () => Pr
   ],
   bootstrap: [AppComponent]
 })
-
 export class AppModule { }
