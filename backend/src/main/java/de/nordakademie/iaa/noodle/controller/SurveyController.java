@@ -46,7 +46,7 @@ public class SurveyController extends AuthenticatedController implements Surveys
                 Survey survey = surveyService.closeSurvey(id,
                                                           closeSurveyRequest.getSelectedTimeslot(),
                                                           getCurrentUser());
-                SurveyMetadataDTO surveyMetadataDTO = surveyMapper.surveyToMetadataDTO(survey);
+                SurveyMetadataDTO surveyMetadataDTO = surveyMapper.surveyToMetadataDTO(survey, getCurrentUser());
                 return ResponseEntity.ok(surveyMetadataDTO);
             } else {
                 throw new ResponseStatusException(HttpStatus.BAD_REQUEST, "unsupportedOperation");
@@ -69,7 +69,7 @@ public class SurveyController extends AuthenticatedController implements Surveys
                                                        timeslotCreationDataList,
                                                        currentUser);
 
-            SurveyMetadataDTO surveyMetadataDTO = surveyMapper.surveyToMetadataDTO(survey);
+            SurveyMetadataDTO surveyMetadataDTO = surveyMapper.surveyToMetadataDTO(survey, currentUser);
             return ResponseEntity.status(CREATED).body(surveyMetadataDTO);
         } catch (SemanticallyInvalidInputException e) {
             throw new ResponseStatusException(HttpStatus.UNPROCESSABLE_ENTITY, e.getMessage(), e);
@@ -80,7 +80,7 @@ public class SurveyController extends AuthenticatedController implements Surveys
     public ResponseEntity<SurveyMetadataDTO> deleteSurvey(Long id) {
         try {
             Survey survey = surveyService.deleteSurvey(id, getCurrentUser());
-            SurveyMetadataDTO surveyMetadataDTO = surveyMapper.surveyToMetadataDTO(survey);
+            SurveyMetadataDTO surveyMetadataDTO = surveyMapper.surveyToMetadataDTO(survey, getCurrentUser());
             return ResponseEntity.ok(surveyMetadataDTO);
         } catch (EntityNotFoundException e) {
             throw new ResponseStatusException(HttpStatus.NOT_FOUND, e.getMessage(), e);
@@ -119,7 +119,7 @@ public class SurveyController extends AuthenticatedController implements Surveys
                                                        timeslotCreationDataList,
                                                        currentUser);
 
-            SurveyMetadataDTO surveyMetadataDTO = surveyMapper.surveyToMetadataDTO(survey);
+            SurveyMetadataDTO surveyMetadataDTO = surveyMapper.surveyToMetadataDTO(survey, currentUser);
             return ResponseEntity.ok(surveyMetadataDTO);
         } catch (SemanticallyInvalidInputException e) {
             throw new ResponseStatusException(HttpStatus.UNPROCESSABLE_ENTITY, e.getMessage(), e);

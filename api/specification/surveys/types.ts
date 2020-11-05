@@ -43,6 +43,15 @@ export interface SurveyMetadataDTO extends SurveyGeneralMetadataDTO{
 
     /** Whether the survey has been closed */
     isClosed: boolean;
+
+    /** The current user can delete the survey */
+    isDeletable: boolean;
+
+    /** The current user can close the survey */
+    isClosable: boolean;
+
+    /** The current user can edit the survey */
+    isEditable: boolean;
 }
 
 export interface SurveyDTO extends SurveyMetadataDTO {

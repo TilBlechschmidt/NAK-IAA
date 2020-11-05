@@ -2,7 +2,6 @@ package de.nordakademie.iaa.noodle.services;
 
 import de.nordakademie.iaa.noodle.dao.ResponseRepository;
 import de.nordakademie.iaa.noodle.dao.ResponseTimeslotRepository;
-import de.nordakademie.iaa.noodle.dao.TimeslotRepository;
 import de.nordakademie.iaa.noodle.model.*;
 import de.nordakademie.iaa.noodle.services.exceptions.*;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -61,7 +60,7 @@ public class ResponseService {
 
         Response response = queryResponse(responseID, surveyID);
 
-        boolean isEditable = responseIsEditableByUser(response, currentUser);
+        boolean isEditable = isResponseEditableByUser(response, currentUser);
         if (!isEditable) { throw new ForbiddenOperationException("notEditable"); }
 
         responseTimeslotRepository.deleteAllByResponse(response);
@@ -90,7 +89,7 @@ public class ResponseService {
         return response;
     }
 
-    public boolean responseIsEditableByUser(Response response, User user) {
+    public boolean isResponseEditableByUser(Response response, User user) {
         Survey survey = response.getParticipation().getSurvey();
         User responseUser = response.getParticipation().getParticipant();
 

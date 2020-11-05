@@ -79,7 +79,7 @@ public class SurveyService {
         checkSurveyCreationData(title, description, timeslotCreationDataList);
 
         Survey survey = querySurvey(surveyID);
-        if (!canUserEditSurvey(survey, currentUser)) { throw new ForbiddenOperationException("forbidden"); }
+        if (!isSurveyEditableByUser(survey, currentUser)) { throw new ForbiddenOperationException("forbidden"); }
 
         for (Participation participation: survey.getParticipations()) {
             Response response = participation.getResponse();
@@ -108,7 +108,7 @@ public class SurveyService {
         throws EntityNotFoundException, ForbiddenOperationException {
 
         Survey survey = querySurvey(surveyID);
-        if (!canUserEditSurvey(survey, currentUser)) {  throw new ForbiddenOperationException("forbidden"); }
+        if (!isSurveyClosableByUser(survey, currentUser)) {  throw new ForbiddenOperationException("forbidden"); }
 
         Timeslot timeslot = timeslotService.findTimeslot(survey, timeslotID);
         survey.setChosenTimeslot(timeslot);
@@ -119,7 +119,7 @@ public class SurveyService {
 
     public Survey deleteSurvey(Long surveyID, User currentUser) throws EntityNotFoundException, ForbiddenOperationException {
         Survey survey = querySurvey(surveyID);
-        if (!canUserDeleteSurvey(survey, currentUser)) {  throw new ForbiddenOperationException("forbidden"); }
+        if (!isSurveyDeletableByUser(survey, currentUser)) {  throw new ForbiddenOperationException("forbidden"); }
         surveyRepository.delete(survey);
         return survey;
     }
@@ -148,11 +148,15 @@ public class SurveyService {
         return surveyAcceptsResponses && !isSurveyCreator;
     }
 
-    public boolean canUserEditSurvey(Survey survey, User user) {
+    public boolean isSurveyEditableByUser(Survey survey, User user) {
         return survey.getCreator().equals(user) && !survey.getIsClosed();
     }
 
-    public boolean canUserDeleteSurvey(Survey survey, User user) {
+    public boolean isSurveyClosableByUser(Survey survey, User user) {
+        return isSurveyEditableByUser(survey, user);
+    }
+
+    public boolean isSurveyDeletableByUser(Survey survey, User user) {
         return survey.getCreator().equals(user);
     }
 }

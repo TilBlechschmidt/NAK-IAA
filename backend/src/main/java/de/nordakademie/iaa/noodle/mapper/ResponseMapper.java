@@ -37,7 +37,7 @@ public abstract class ResponseMapper {
 
     @Named("responseIsEditable")
     public boolean responseIsEditable(Response response, @Context User currentUser) {
-        return responseService.responseIsEditableByUser(response, currentUser);
+        return responseService.isResponseEditableByUser(response, currentUser);
     }
 
     @Named("responseTimeslotsToDTOs")
