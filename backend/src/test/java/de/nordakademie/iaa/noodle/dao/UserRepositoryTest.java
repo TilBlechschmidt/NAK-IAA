@@ -23,15 +23,14 @@ class UserRepositoryTest {
 
     @Test
     public void findByEmailTest() {
-        user = userRepository.findByEmail("Name-1@examle.com");
-        assertEquals(-1, user.getId());
+        user = userRepository.findByEmail("Name1@example.com");
+        assertEquals(1, user.getId());
     }
 
     @Test
     public void findByIdTest() {
         user = userRepository.findById(0L);
-        assertEquals("Name-0", user.getFullName());
-
+        assertEquals("Name0", user.getFullName());
     }
 
     @Test

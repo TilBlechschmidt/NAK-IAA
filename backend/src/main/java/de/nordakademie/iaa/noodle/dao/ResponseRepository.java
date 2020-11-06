@@ -22,7 +22,7 @@ public interface ResponseRepository {
     }
 
     /**
-     * @deprecated For extensibility Reasons, please use {@link #findBySurveyId(Long)}
+     * @deprecated For extensibility Reasons, please use {@link #findByIdAndSurveyId(Long, Long)}
      * instead of this method.
      */
     @EntityGraph(attributePaths = {
@@ -34,17 +34,6 @@ public interface ResponseRepository {
     })
     @Deprecated
     Response findByIdAndParticipation_Survey_Id(Long id, Long surveyId);
-
-    /**
-     * @deprecated For extensibility Reasons, please use {@link #findBySurveyId(Long)}
-     * instead of this method.
-     */
-    @Deprecated
-    List<Response> findByParticipation_Survey_Id(Long surveyID);
-
-    default List<Response> findBySurveyId(Long surveyID) {
-        return findByParticipation_Survey_Id(surveyID);
-    }
 
     void save(Response toSave);
 

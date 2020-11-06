@@ -16,17 +16,7 @@ import java.util.List;
 @RepositoryDefinition(idClass = Long.class, domainClass = Survey.class)
 @Transactional(propagation = Propagation.REQUIRED)
 public interface SurveyRepository {
-
-    List<Survey> findAllByCreator_id(Long creatorId);
-
-    @Query("""
-        SELECT s1 FROM Survey s1 WHERE :userID NOT IN
-            (SELECT p.participant
-            FROM Survey s LEFT OUTER JOIN Participation p ON p.survey=s
-            WHERE s.id = s1.id )""")
-    List<Survey> findSurveysWhereUserHasNotParticipated(@Param("userID") Long userID);
-
-    // Sadly, JPQL does not allow us to use "<boolean_expr> = flag", so we need to emulate it using boolean logic
+// Sadly, JPQL does not allow us to use "<boolean_expr> = flag", so we need to emulate it using boolean logic
 // This leads to doubled logic
 // However, the alternatives would be either writing a lot of queries, introducing a second query approach for one
 // method, or filtering in the backend instead of the database, which are all not ideal either.
@@ -68,7 +58,7 @@ AND
         (participation IS NOT NULL AND :userID = participation.participant.id AND NOT EXISTS (SELECT r FROM Response r where r.participation=participation))) OR
     (:attentionRequired = false AND
         (NOT EXISTS (SELECT p FROM Participation p WHERE p.survey=survey AND p.participant.id = :userID) OR
-        EXISTS (SELECT r FROM Response r where r.participation=participation))))
+        EXISTS (SELECT r FROM Response r WHERE r.participation=participation AND participation.participant.id=:userID))))
     """)
     List<QuerySurveyItem> querySurvey(@Param("userID")            Long userID,
                                       @Param("participated")      Boolean didParticipateIn,

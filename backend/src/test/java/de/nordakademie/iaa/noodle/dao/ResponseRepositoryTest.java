@@ -25,22 +25,14 @@ class ResponseRepositoryTest {
 
     @Test
     public void findByIdAndSurveyIdTest() {
-        response = responseRepository.findByIdAndSurveyId(15L, 5L);
-        assertEquals(12, response.getParticipation().getId());
+        response = responseRepository.findByIdAndSurveyId(50L, 10L);
+        assertEquals(20L, response.getParticipation().getId());
     }
 
     @Test
     public void findByIdAndSurveyIdMismatchedSurveyIDTest() {
-        response = responseRepository.findByIdAndSurveyId(15L, 6L);
+        response = responseRepository.findByIdAndSurveyId(50L, 50L);
         assertNull(response);
-    }
-
-    @Test
-    public void findBySurveyIdTest() {
-        responses = responseRepository.findBySurveyId(5L);
-        assertEquals(2, responses.size());
-        assertTrue(responses.stream().anyMatch(r -> r.getId() == 14));
-        assertTrue(responses.stream().anyMatch(r -> r.getId() == 15));
     }
 
     @Test
