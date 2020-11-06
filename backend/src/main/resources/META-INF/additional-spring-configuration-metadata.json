@@ -19,5 +19,10 @@
             "name": "spring.noodle.security.hashPepper",
             "type": "java.lang.String",
             "description": "Pepper used for password hashing."
+        },
+        {
+            "name": "spring.noodle.baseurl",
+            "type": "java.lang.String",
+            "description": "URL to the root page of noodle."
         }
     ] }

@@ -33,6 +33,7 @@ services:
             - "NOODLE_SECURITY_EXPIRATION_TIME=${NOODLE_SECURITY_EXPIRATION_TIME}"
             - "NOODLE_SECURITY_SECRET=${NOODLE_SECURITY_SECRET}"
             - "NOODLE_SECURITY_PEPPER=${NOODLE_SECURITY_PEPPER:-pepper}"
+            - "NOODLE_BASE_URL=${NOODLE_BASE_URL}"
         networks:
             - services
         volumes:

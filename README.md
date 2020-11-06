@@ -44,6 +44,7 @@ NOODLE_MAIL_PASSWORD=<smtp password>
 NOODLE_SECURITY_EXPIRATION_TIME=<jwt token expiration>
 NOODLE_SECURITY_SECRET=<jwt secret>
 NOODLE_SECURITY_PEPPER=<pepper for passwords>
+NOODLE_BASE_URL=<baseurl of noodle>
 ```
 
 When a database created by the demo profile is used, the pepper must be set to `pepper`.
@@ -62,6 +63,7 @@ NOODLE_MAIL_FROM=<smtp from email>
 NOODLE_MAIL_PASSWORD=<smtp password>
 NOODLE_SECURITY_EXPIRATION_TIME=<jwt token expiration>
 NOODLE_SECURITY_SECRET=<jwt secret>
+NOODLE_BASE_URL=<baseurl of noodle>
 ```
 
 ## Development setup
@@ -154,10 +156,19 @@ spring.mail.properties.mail.debug=true
 The following security settings must be set. Make sure to set the hashPepper to `pepper` for the `data.sql` example data.
 
 #### Security Settings (required)
+Settings to make the application secure. Some of those must not be published.
+
 ```properties
 spring.noodle.security.expirationTime=<expiration time>
 spring.noodle.security.secret=<secret>
 spring.noodle.security.hashPepper=<pepper>
+```
+
+#### BaseURL (required)
+The baseurl used to access noodle. In local dev builds this is probably `http://localhost:8080` or `http://<ip>:8080`.
+
+```properties
+spring.noodle.baseurl=<baseurl of noodle>
 ```
 
 #### Hibernate Debugging
