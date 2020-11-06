@@ -1,5 +1,7 @@
 package de.nordakademie.iaa.noodle.services;
 
+import de.nordakademie.iaa.noodle.model.Survey;
+import de.nordakademie.iaa.noodle.model.User;
 import de.nordakademie.iaa.noodle.services.exceptions.MailClientException;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
@@ -63,6 +65,37 @@ public class MailServiceTest {
         verify(mimeMessage, times(1)).setFrom("FROM_EMAIL");
         verify(mimeMessage, times(1)).setRecipients(Message.RecipientType.TO, "EMAIL");
         verify(mimeMessage, times(1)).setSubject("Registration failed");
+        verify(mimeMessage, times(1)).setText(body, null, "html");
+    }
+
+    @Test
+    public void sendNeedsAttentionMailTest() throws MailClientException, MessagingException {
+        Survey survey = mock(Survey.class);
+        User participant = mock(User.class);
+        User creator = mock(User.class);
+
+        when(survey.getCreator()).thenReturn(creator);
+        when(survey.getTitle()).thenReturn("TITLE");
+        when(survey.getId()).thenReturn(42L);
+        when(creator.getFullName()).thenReturn("CREATOR_FULL_NAME");
+        when(participant.getFullName()).thenReturn("PARTICIPANT_FULL_NAME");
+        when(participant.getEmail()).thenReturn("EMAIL");
+
+        mailService.sendNeedsAttentionMail(survey, participant);
+
+        String body = """
+            Hello PARTICIPANT_FULL_NAME!<br/>
+            CREATOR_FULL_NAME modified the survey
+            <a href=BASEURL/surveys/42>TITLE</a>.
+            Please create a new response.
+            <br/><br/>
+            Best regards<br/>
+            Your team @Noodle
+            """;
+
+        verify(mimeMessage, times(1)).setFrom("FROM_EMAIL");
+        verify(mimeMessage, times(1)).setRecipients(Message.RecipientType.TO, "EMAIL");
+        verify(mimeMessage, times(1)).setSubject("Survey update");
         verify(mimeMessage, times(1)).setText(body, null, "html");
     }
 

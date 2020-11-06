@@ -18,6 +18,7 @@ import org.springframework.transaction.annotation.Transactional;
 import java.util.HashSet;
 import java.util.List;
 import java.util.Optional;
+import java.util.stream.Collectors;
 
 @Service
 @Transactional(propagation = Propagation.REQUIRED, rollbackFor = {ServiceException.class})
@@ -26,14 +27,17 @@ public class SurveyService {
     private final TimeslotService timeslotService;
     private final ResponseRepository responseRepository;
     private final ParticipationRepository participationRepository;
+    private final MailService mailService;
 
     @Autowired
     public SurveyService(SurveyRepository surveyRepository, TimeslotService timeslotService,
-                         ResponseRepository responseRepository, ParticipationRepository participationRepository) {
+                         ResponseRepository responseRepository, ParticipationRepository participationRepository,
+                         MailService mailService) {
         this.surveyRepository = surveyRepository;
         this.timeslotService = timeslotService;
         this.responseRepository = responseRepository;
         this.participationRepository = participationRepository;
+        this.mailService = mailService;
     }
 
     private void addParticipationForCreator(Survey survey, List<TimeslotCreationData> timeslotCreationDataList) throws SemanticallyInvalidInputException {
@@ -44,7 +48,7 @@ public class SurveyService {
         Response response = new Response(participation, new HashSet<>());
         participation.setResponse(response);
 
-        for (TimeslotCreationData timeslotCreationData: timeslotCreationDataList) {
+        for (TimeslotCreationData timeslotCreationData : timeslotCreationDataList) {
             addResponseTimeslotForCreator(survey, response, timeslotCreationData);
         }
     }
@@ -81,12 +85,15 @@ public class SurveyService {
             throw new ForbiddenOperationException("forbidden");
         }
 
+        List<User> usersWithOutdatedResponses = usersWithOutdatedParticipationsAfterUpdate(survey);
         deleteSurveyResponses(survey);
 
         survey.setTitle(title);
         survey.setDescription(description);
         addParticipationForCreator(survey, timeslotCreationDataList);
         surveyRepository.save(survey);
+
+        mailService.sendNeedsAttentionMailsAsync(survey, usersWithOutdatedResponses);
 
         return survey;
     }
@@ -106,6 +113,16 @@ public class SurveyService {
 
         timeslotService.deleteTimeslotsOfSurvey(survey);
         survey.getTimeslots().clear();
+    }
+
+    private List<User> usersWithOutdatedParticipationsAfterUpdate(Survey survey) {
+        User creator = survey.getCreator();
+        return survey.getParticipations()
+            .stream()
+            .filter(participation -> participation.getResponse() != null)
+            .map(Participation::getParticipant)
+            .filter(user -> !creator.equals(user))
+            .collect(Collectors.toList());
     }
 
     public Survey closeSurvey(Long surveyID, Long timeslotID, User currentUser)

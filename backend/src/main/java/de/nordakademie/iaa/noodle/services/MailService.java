@@ -1,5 +1,7 @@
 package de.nordakademie.iaa.noodle.services;
 
+import de.nordakademie.iaa.noodle.model.Survey;
+import de.nordakademie.iaa.noodle.model.User;
 import de.nordakademie.iaa.noodle.services.exceptions.MailClientException;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Value;
@@ -10,6 +12,7 @@ import org.springframework.stereotype.Service;
 import javax.mail.Message;
 import javax.mail.MessagingException;
 import javax.mail.internet.MimeMessage;
+import java.util.List;
 import java.util.Map;
 
 import static java.util.Map.entry;
@@ -34,6 +37,13 @@ public class MailService {
         Hello ${name}!<br/>
         We have to inform you, that you already have an account with this email.
         Please try to sign in using this email.
+        """;
+
+    private static final String NEEDS_ATTENTION_TEMPLATE = """
+        Hello ${participant_name}!<br/>
+        ${creator_name} modified the survey
+        <a href=${baseurl}/surveys/${survey_id}>${survey_title}</a>.
+        Please create a new response.
         """;
 
     private final JavaMailSender emailSender;
@@ -76,6 +86,29 @@ public class MailService {
         } catch (MailException | MessagingException e) {
             throw new MailClientException("mailError");
         }
+    }
+
+    public void sendNeedsAttentionMailsAsync(Survey survey, List<User> participants) {
+        new Thread(() -> {
+            participants.forEach(user -> {
+                try {
+                    sendNeedsAttentionMail(survey, user);
+                } catch (MailClientException e) {
+                    System.err.println("Failed to send needs attention mail for " + user.getEmail());
+                }
+            });
+        }).start();
+    }
+
+    public void sendNeedsAttentionMail(Survey survey, User participant) throws MailClientException {
+        String body = fillTemplate(NEEDS_ATTENTION_TEMPLATE, Map.ofEntries(
+            entry("participant_name", participant.getFullName()),
+            entry("creator_name", survey.getCreator().getFullName()),
+            entry("survey_id", survey.getId().toString()),
+            entry("survey_title", survey.getTitle()),
+            entry("baseurl", baseURL)
+        ));
+        sendMail("Survey update", body, participant.getEmail());
     }
 
     private String fillTemplate(String template, Map<String, String> parameter) {

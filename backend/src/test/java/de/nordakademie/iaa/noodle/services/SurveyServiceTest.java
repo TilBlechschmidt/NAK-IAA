@@ -18,6 +18,7 @@ public class SurveyServiceTest {
     private TimeslotService timeslotRepository;
     private ResponseRepository responseService;
     private ParticipationRepository participationRepository;
+    private MailService mailService;
 
     @BeforeEach
     public void setUp() {
@@ -25,7 +26,10 @@ public class SurveyServiceTest {
         timeslotRepository = mock(TimeslotService.class);
         responseService = mock(ResponseRepository.class);
         participationRepository = mock(ParticipationRepository.class);
-        surveyService = new SurveyService(surveyRepository, timeslotRepository, responseService, participationRepository);
+        mailService = mock(MailService.class);
+        surveyService = new SurveyService(
+            surveyRepository, timeslotRepository,
+            responseService, participationRepository, mailService);
     }
 
     @Test
