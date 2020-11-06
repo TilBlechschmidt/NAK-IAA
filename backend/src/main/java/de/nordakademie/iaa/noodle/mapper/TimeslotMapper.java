@@ -19,10 +19,16 @@ import java.util.stream.Collectors;
 public interface TimeslotMapper {
 
     default OffsetDateTime dateToOffsetDateTime(Date date) {
+        if (date == null) {
+            return null;
+        }
         return date.toInstant().atOffset(ZoneOffset.UTC);
     }
 
     default Date offsetDateTimeToDate(OffsetDateTime offsetDateTime) {
+        if (offsetDateTime == null) {
+            return null;
+        }
         return Date.from(offsetDateTime.toInstant());
     }
 
