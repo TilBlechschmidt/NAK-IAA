@@ -16,10 +16,8 @@ export class RegistrationDialogComponent implements OnInit {
     constructor(public service: AccountService, protected readonly formBuilder: FormBuilder, private router: Router) {
         this.form = this.formBuilder.group({
             name: new FormControl('', Validators.required),
-            email: new FormControl('', [Validators.required, Validators.email]),
-            password: new FormControl('', [Validators.required, Validators.minLength(16), Validators.maxLength(64)]),
-            passwordConfirmation: new FormControl('', [Validators.required])
-        }, );
+            email: new FormControl('', [Validators.required, Validators.email])
+        });
     }
 
     ngOnInit(): void {
@@ -38,18 +36,13 @@ export class RegistrationDialogComponent implements OnInit {
 
     isFormValid(): boolean {
         return !this.form.get('name')?.invalid
-            && !this.form.get('email')?.invalid
-            && !this.form.get('password')?.invalid
-            && this.isConfirmationPasswordMatching();
+            && !this.form.get('email')?.invalid;
     }
 
     isError(form: FormGroup, name: string): boolean | undefined {
         return form.get(name)?.touched && form.get(name)?.invalid;
     }
 
-    isConfirmationPasswordMatching(): boolean {
-        return this.form.get('password')?.value === this.form.get('passwordConfirmation')?.value;
-    }
 
 }
 

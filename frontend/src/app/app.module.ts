@@ -25,21 +25,22 @@ import { CreateSurveyDialogComponent } from './survey/create/create-survey-dialo
 import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 import { MatDialogModule } from '@angular/material/dialog';
 import { HttpClient, HttpClientModule } from '@angular/common/http';
-import {TranslateModule, TranslateService} from '@ngx-translate/core';
-import {forkJoin, of} from 'rxjs';
+import { TranslateModule, TranslateService } from '@ngx-translate/core';
+import { forkJoin, of } from 'rxjs';
 import { catchError } from 'rxjs/operators';
 import { MatMenuModule} from '@angular/material/menu';
 import { DeleteSurveyComponent } from './survey/detail/delete-survey/delete-survey.component';
 import { LogoutButtonComponent } from './authentication/logout-button/logout-button.component';
-import {LoggedInGuard} from './authentication/service/LoggedInGuard';
-import {DetailViewComponent} from './survey/detail/detail-view/detail-view.component';
-import {SurveyTabViewComponent} from './survey/survey-tab-view/survey-tab-view.component';
+import { LoggedInGuard } from './authentication/service/LoggedInGuard';
+import { DetailViewComponent } from './survey/detail/detail-view/detail-view.component';
+import { SurveyTabViewComponent} from './survey/survey-tab-view/survey-tab-view.component';
 import { AbstractSurveyTableComponent } from './survey/tabs/abstract-survey-table/abstract-survey-table.component';
 import { EditSurveyWarnComponent } from './survey/detail/edit-view/edit-survey-warn.component';
-import {ApiModule} from './api/api.module';
-import {environment} from '../environments/environment';
 import { ResponseComponent } from './survey/detail/response/response.component';
-import {MatRippleModule} from '@angular/material/core';
+import { MatRippleModule } from '@angular/material/core';
+import { ApiModule } from './api/api.module';
+import { environment } from '../environments/environment';
+import { PasswordConfirmationDialogComponent } from './authentication/password-confirmation-dialog/password-confirmation-dialog.component';
 
 
 export function initApp(http: HttpClient, translate: TranslateService): () => Promise<boolean>{
@@ -95,7 +96,8 @@ const SelectedApiModule = environment.api.mocked ? ApiModule.mocked() : ApiModul
         LogoutButtonComponent,
         AbstractSurveyTableComponent,
         EditSurveyWarnComponent,
-        ResponseComponent
+        ResponseComponent,
+        PasswordConfirmationDialogComponent
     ],
     imports: [
         BrowserModule,

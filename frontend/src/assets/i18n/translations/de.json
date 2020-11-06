@@ -28,7 +28,8 @@
                 "password_length": "Das Passwort muss zwischen 16 und 64 Zeichen besitzen",
                 "password_confirmation": "Passwörter stimmen nicht überein"
             }
-        }
+        },
+        "auth.activate.error": "Fehler beim Versenden"
     },
     "survey": {
         "title": "Titel",
