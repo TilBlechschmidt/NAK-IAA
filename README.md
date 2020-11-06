@@ -73,9 +73,9 @@ You will need a Java15-JDK like
 [this one](https://adoptopenjdk.net/?variant=openjdk15&jvmVariant=hotspot).
 
 To make sure everything works right, follow the instructions in [Setting up the API](#setting-up-the-api) first.
+Additionally, a development profile must be created and activated as described in [Development Profile](#development-profile).
 
-Then, to set up and start the backend, clone the repository,
-open a terminal in its root directory and use the following command:
+Then, to set up and start the backend, open a terminal in its root directory and use the following command:
 
 ```shell script
 ./gradlew bootRun
@@ -94,25 +94,7 @@ Properties locally without conflicting with the checked in
 In the following sections, some useful application properties are listed.
 Those can be added to `application.properties` or `application-dev.properties`.
 If they are added to the `application.properties`, those changes must not be committed.
-
-#### Hibernate Debugging
-
-With the following, you can see Hibernate's SQL-Queries for debugging.
-
-```properties
-spring.jpa.show-sql=true
-spring.jpa.properties.hibernate.format_sql=true
-logging.level.org.hibernate.SQL=DEBUG
-logging.level.org.hibernate.type.descriptor.sql.BasicBinder=TRACE
-```
-
-#### Persistent Database
-
-To write the database to a file add the following:
-
-```properties
-spring.datasource.url=jdbc:h2:file:/path/to/database
-```
+Some of the cofiguration options are required.
 
 #### Mail Settings (required)
 
@@ -139,4 +121,39 @@ The following security settings must be set. Make sure to set the hashPepper to 
 spring.noodle.security.expirationTime=<expiration time>
 spring.noodle.security.secret=<secret>
 spring.noodle.security.hashPepper=<pepper>
+```
+
+#### Hibernate Debugging
+
+With the following, you can see Hibernate's SQL-Queries for debugging.
+
+```properties
+spring.jpa.show-sql=true
+spring.jpa.properties.hibernate.format_sql=true
+logging.level.org.hibernate.SQL=DEBUG
+logging.level.org.hibernate.type.descriptor.sql.BasicBinder=TRACE
+```
+
+#### Persistent Database
+
+To write the database to a file add the following:
+
+```properties
+spring.datasource.url=jdbc:h2:file:/path/to/database
+```
+
+When a persistent database is enabled, the demo data config must be added as well.
+This is described in the next section.
+
+#### Demo Data Config
+
+When importing the demo data (default behavior), the following should be
+added so that the database is cleared before inserting the demo data.
+```properties
+spring.jpa.hibernate.ddl-auto=create
+```
+
+Alternatively, it is possible to disable the demo data:
+```properties
+spring.datasource.initialization-mode=never
 ```
