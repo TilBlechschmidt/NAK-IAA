@@ -32,17 +32,14 @@ public class SurveyControllerTest {
     private SurveyController surveyController;
     private SurveyService surveyService;
     private SurveyMapper surveyMapper;
-    private User authenticatedUser;
 
     @BeforeEach
     public void setUp() {
-        authenticatedUser = TestUtil.setupAuthentication();
+        TestUtil.setupAuthentication();
         surveyService = mock(SurveyService.class);
         surveyMapper = mock(SurveyMapper.class);
         TimeslotMapper timeslotMapper = mock(TimeslotMapper.class);
         surveyController = new SurveyController(surveyService, surveyMapper, timeslotMapper);
-
-        when(authenticatedUser.getFullName()).thenReturn("TESTUSER");
     }
 
     @Test
@@ -129,7 +126,7 @@ public class SurveyControllerTest {
         Survey survey = mock(Survey.class);
         SurveyDTO expectedDTO = mock(SurveyDTO.class);
         when(surveyService.querySurvey(42L)).thenReturn(survey);
-        when(surveyMapper.surveyToDTO(survey, authenticatedUser)).thenReturn(expectedDTO);
+        when(surveyMapper.surveyToDTO(same(survey), any())).thenReturn(expectedDTO);
 
         ResponseEntity<SurveyDTO> response = surveyController.querySurvey(42L);
         assertEqualsResponseEntity(HttpStatus.OK, expectedDTO, response);
