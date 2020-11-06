@@ -35,6 +35,11 @@ services:
             - "NOODLE_SECURITY_PEPPER=${NOODLE_SECURITY_PEPPER:-pepper}"
         networks:
             - services
+        volumes:
+            - db-data:/var/lib/noodle/data
+
+volumes:
+    db-data:
 
 networks:
     services:
