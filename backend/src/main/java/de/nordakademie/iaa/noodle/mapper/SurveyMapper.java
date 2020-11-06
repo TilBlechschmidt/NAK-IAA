@@ -4,7 +4,7 @@ import de.nordakademie.iaa.noodle.api.model.QuerySurveysResponse;
 import de.nordakademie.iaa.noodle.api.model.QuerySurveysResult;
 import de.nordakademie.iaa.noodle.api.model.SurveyDTO;
 import de.nordakademie.iaa.noodle.api.model.SurveyMetadataDTO;
-import de.nordakademie.iaa.noodle.dao.model.QuerySurveyItem;
+import de.nordakademie.iaa.noodle.dao.model.QuerySurveysItem;
 import de.nordakademie.iaa.noodle.model.Survey;
 import de.nordakademie.iaa.noodle.model.User;
 import de.nordakademie.iaa.noodle.services.SurveyService;
@@ -39,7 +39,7 @@ public abstract class SurveyMapper {
     public abstract SurveyMetadataDTO surveyToMetadataDTO(Survey survey, @Context User currentUser);
 
 
-    public QuerySurveysResponse surveysToSurveysDTO(List<QuerySurveyItem> surveys) {
+    public QuerySurveysResponse surveysToSurveysDTO(List<QuerySurveysItem> surveys) {
         QuerySurveysResponse response = new QuerySurveysResponse();
         response.setSurveys(surveys.stream().map(this::surveyToSurveyDTO).collect(Collectors.toList()));
         return response;
@@ -48,7 +48,7 @@ public abstract class SurveyMapper {
     @Named("surveyToSurveyDTO")
     @Mapping(target = "id",source = "ID")
     @Mapping(target = "participantCount", source = "responseCount")
-    public abstract QuerySurveysResult surveyToSurveyDTO(QuerySurveyItem survey);
+    public abstract QuerySurveysResult surveyToSurveyDTO(QuerySurveysItem survey);
 
     @Named("surveyIsEditable")
     public boolean surveyIsEditable(Survey survey, @Context User currentUser) {

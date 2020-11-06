@@ -1,6 +1,6 @@
 package de.nordakademie.iaa.noodle.dao;
 
-import de.nordakademie.iaa.noodle.dao.model.QuerySurveyItem;
+import de.nordakademie.iaa.noodle.dao.model.QuerySurveysItem;
 import de.nordakademie.iaa.noodle.model.Survey;
 import de.nordakademie.iaa.noodle.model.SurveyTest;
 import org.junit.jupiter.api.Test;
@@ -20,8 +20,8 @@ class SurveyRepositoryTest {
     private SurveyRepository surveyRepository;
     @Autowired
     private EntityManager entityManager;
-    private QuerySurveyItem survey;
-    private List<QuerySurveyItem> surveys;
+    private QuerySurveysItem survey;
+    private List<QuerySurveysItem> surveys;
     // CHECK data.sql for the TestData referenced here.
 
     @Test
@@ -123,11 +123,11 @@ class SurveyRepositoryTest {
     }
 
     private void printSurveys() {
-        surveys.stream().map(QuerySurveyItem::getID).forEach(System.out::println);
+        surveys.stream().map(QuerySurveysItem::getID).forEach(System.out::println);
     }
 
     private void assertSurveysContainsAllWithoutID(Long id) {
-        surveys.stream().map(QuerySurveyItem::getID).forEach(System.out::println);
+        surveys.stream().map(QuerySurveysItem::getID).forEach(System.out::println);
         assertEquals(NUMBER_OF_SURVEYS - 1, surveys.size());
         assertFalse(surveys.stream().anyMatch(s -> s.getID().equals(id)));
     }

@@ -1,7 +1,7 @@
 package de.nordakademie.iaa.noodle.services;
 
 import de.nordakademie.iaa.noodle.dao.ParticipationRepository;
-import de.nordakademie.iaa.noodle.dao.model.QuerySurveyItem;
+import de.nordakademie.iaa.noodle.dao.model.QuerySurveysItem;
 import de.nordakademie.iaa.noodle.dao.ResponseRepository;
 import de.nordakademie.iaa.noodle.dao.SurveyRepository;
 import de.nordakademie.iaa.noodle.model.*;
@@ -179,9 +179,9 @@ public class SurveyService {
         return survey.getCreator().equals(user);
     }
 
-    public List<QuerySurveyItem> querySurvey(User currentUser, Optional<Boolean> didParticipateIn,
-                                             Optional<Boolean> isCompleted, Optional<Boolean> isOwnSurvey,
-                                             Optional<Boolean> isUpcoming, Optional<Boolean> requiresAttention) {
+    public List<QuerySurveysItem> querySurveys(User currentUser, Optional<Boolean> didParticipateIn,
+                                               Optional<Boolean> isCompleted, Optional<Boolean> isOwnSurvey,
+                                               Optional<Boolean> isUpcoming, Optional<Boolean> requiresAttention) {
 
         return surveyRepository.querySurvey(currentUser.getId(),
             didParticipateIn.orElse(null), isCompleted.orElse(null), isOwnSurvey.orElse(null),

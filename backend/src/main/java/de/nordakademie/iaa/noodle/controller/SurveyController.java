@@ -106,7 +106,7 @@ public class SurveyController extends AuthenticatedController implements Surveys
         Optional<Boolean> isOwnSurvey, Optional<Boolean> isUpcoming, Optional<Boolean> requiresAttention) {
 
         return ResponseEntity.ok(surveyMapper.surveysToSurveysDTO(
-            surveyService.querySurvey(getCurrentUser(),
+            surveyService.querySurveys(getCurrentUser(),
                 didParticipateIn,
                 isCompleted,
                 isOwnSurvey,

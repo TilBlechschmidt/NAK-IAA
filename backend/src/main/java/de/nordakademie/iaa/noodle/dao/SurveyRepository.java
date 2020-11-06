@@ -1,6 +1,6 @@
 package de.nordakademie.iaa.noodle.dao;
 
-import de.nordakademie.iaa.noodle.dao.model.QuerySurveyItem;
+import de.nordakademie.iaa.noodle.dao.model.QuerySurveysItem;
 import de.nordakademie.iaa.noodle.model.Survey;
 import org.springframework.data.jpa.repository.EntityGraph;
 import org.springframework.data.jpa.repository.Query;
@@ -60,12 +60,12 @@ AND
         (NOT EXISTS (SELECT p FROM Participation p WHERE p.survey=survey AND p.participant.id = :userID) OR
         EXISTS (SELECT r FROM Response r WHERE r.participation=participation AND participation.participant.id=:userID))))
     """)
-    List<QuerySurveyItem> querySurvey(@Param("userID")            Long userID,
-                                      @Param("participated")      Boolean didParticipateIn,
-                                      @Param("completed")         Boolean isCompleted,
-                                      @Param("owned")             Boolean isOwnSurvey,
-                                      @Param("upcoming")          Boolean isUpcoming,
-                                      @Param("attentionRequired") Boolean requiresAttention);
+    List<QuerySurveysItem> querySurvey(@Param("userID")            Long userID,
+                                       @Param("participated")      Boolean didParticipateIn,
+                                       @Param("completed")         Boolean isCompleted,
+                                       @Param("owned")             Boolean isOwnSurvey,
+                                       @Param("upcoming")          Boolean isUpcoming,
+                                       @Param("attentionRequired") Boolean requiresAttention);
 
     @EntityGraph(attributePaths = {
         "timeslots",
