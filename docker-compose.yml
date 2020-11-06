@@ -24,7 +24,7 @@ services:
             dockerfile: backend/Dockerfile
         environment:
             - "SERVER_SERVLET_CONTEXT_PATH=/api"
-            - "SPRING_PROFILES_ACTIVE=prod"
+            - "SPRING_PROFILES_ACTIVE=${NOODLE_PROFILE:-prod}"
             - "NOODLE_MAIL_HOST=${NOODLE_MAIL_HOST}"
             - "NOODLE_MAIL_PORT=${NOODLE_MAIL_PORT}"
             - "NOODLE_MAIL_USER=${NOODLE_MAIL_USER}"
@@ -32,7 +32,7 @@ services:
             - "NOODLE_MAIL_PASSWORD=${NOODLE_MAIL_PASSWORD}"
             - "NOODLE_SECURITY_EXPIRATION_TIME=${NOODLE_SECURITY_EXPIRATION_TIME}"
             - "NOODLE_SECURITY_SECRET=${NOODLE_SECURITY_SECRET}"
-            - "NOODLE_SECURITY_PEPPER=${NOODLE_SECURITY_PEPPER}"
+            - "NOODLE_SECURITY_PEPPER=${NOODLE_SECURITY_PEPPER:-pepper}"
         networks:
             - services
 
