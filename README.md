@@ -17,8 +17,11 @@ Installation Instructions for developing can be found
 
 ## Quick Start
 
-To quickly build and run all components you can use Docker. Make sure you have [Docker installed](https://www.docker.com/products/docker-desktop),
-then execute the following instructions inside the project directory:
+To quickly build and run all components you can use Docker. Make sure you have [Docker installed](https://www.docker.com/products/docker-desktop).
+Then you have to choose one of the profiles from below and set the required environment values.
+For example, this can be done by adding them in front of the start command or by adding them to the current
+shell using `export KEY=VALUE`.
+Then execute the following instructions inside the project directory:
 
 ```shell script
 docker-compose up
@@ -26,6 +29,40 @@ docker-compose up
 
 On the first run the Docker images are build from the sources. This might take a while depending on your internet connection and processor speed.
 Once everything has started you can visit the application on [localhost:2020](http://localhost:2020).
+
+### Prod profile
+
+The production profile will setup the database if it is missing. Otherwise, it will use the existing database. 
+The following environment values are required:
+
+```shell script
+NOODLE_MAIL_HOST=<smtp host>
+NOODLE_MAIL_PORT=<smtp port>
+NOODLE_MAIL_USER=<smtp user>
+NOODLE_MAIL_FROM=<smtp from email>
+NOODLE_MAIL_PASSWORD=<smtp password>
+NOODLE_SECURITY_EXPIRATION_TIME=<jwt token expiration>
+NOODLE_SECURITY_SECRET=<jwt secret>
+NOODLE_SECURITY_PEPPER=<pepper for passwords>
+```
+
+When a database created by the demo profile is used, the pepper must be set to `pepper`.
+
+### Demo profile
+
+The demo profile will delete an existing database and create a new one with demo data.
+The following environment values are required:
+
+```shell script
+NOODLE_PROFILE=demo
+NOODLE_MAIL_HOST=<smtp host>
+NOODLE_MAIL_PORT=<smtp port>
+NOODLE_MAIL_USER=<smtp user>
+NOODLE_MAIL_FROM=<smtp from email>
+NOODLE_MAIL_PASSWORD=<smtp password>
+NOODLE_SECURITY_EXPIRATION_TIME=<jwt token expiration>
+NOODLE_SECURITY_SECRET=<jwt secret>
+```
 
 ## Development setup
 
