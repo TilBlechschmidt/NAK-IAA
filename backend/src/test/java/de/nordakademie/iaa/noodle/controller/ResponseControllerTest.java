@@ -15,7 +15,7 @@ import org.junit.jupiter.api.Test;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 
-import static de.nordakademie.iaa.noodle.TestUtil.assertEqualsResponseEntity;
+import static de.nordakademie.iaa.noodle.TestUtil.assertSameResponseEntity;
 import static de.nordakademie.iaa.noodle.TestUtil.assertThrowsResponseStatusException;
 import static org.mockito.ArgumentMatchers.any;
 import static org.mockito.ArgumentMatchers.same;
@@ -66,7 +66,7 @@ public class ResponseControllerTest {
 
         CreateResponseRequest inputDTO = mock(CreateResponseRequest.class);
         ResponseEntity<ResponseDTO> response = responseController.createResponse(42L, inputDTO);
-        assertEqualsResponseEntity(HttpStatus.CREATED, expectedDTO, response);
+        assertSameResponseEntity(HttpStatus.CREATED, expectedDTO, response);
     }
 
     @Test
@@ -82,7 +82,7 @@ public class ResponseControllerTest {
         when(responseService.queryResponse(42L, 43L)).thenReturn(inputResponse);
         when(responseMapper.responseToDTO(same(inputResponse), any())).thenReturn(expectedDTO);
         ResponseEntity<ResponseDTO> response = responseController.queryResponse(42L, 43L);
-        assertEqualsResponseEntity(HttpStatus.OK, expectedDTO, response);
+        assertSameResponseEntity(HttpStatus.OK, expectedDTO, response);
     }
 
     @Test
@@ -116,6 +116,6 @@ public class ResponseControllerTest {
 
         CreateResponseRequest inputDTO = mock(CreateResponseRequest.class);
         ResponseEntity<ResponseDTO> response = responseController.updateResponse(42L, 42L, inputDTO);
-        assertEqualsResponseEntity(HttpStatus.CREATED, expectedDTO, response);
+        assertSameResponseEntity(HttpStatus.CREATED, expectedDTO, response);
     }
 }

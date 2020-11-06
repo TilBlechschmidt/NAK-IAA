@@ -13,8 +13,7 @@ import javax.persistence.EntityManager;
 import java.util.function.Function;
 import java.util.function.Supplier;
 
-import static org.junit.jupiter.api.Assertions.assertEquals;
-import static org.junit.jupiter.api.Assertions.assertThrows;
+import static org.junit.jupiter.api.Assertions.*;
 import static org.mockito.Mockito.mock;
 import static org.mockito.Mockito.when;
 
@@ -63,8 +62,8 @@ public class TestUtil {
         assertExceptionEquals(expectedStatus, expectedReason, exc);
     }
 
-    public static <T> void assertEqualsResponseEntity(HttpStatus expectedStatus, T expectedBody, ResponseEntity<T> responseEntity) {
-        assertEquals(expectedStatus, responseEntity.getStatusCode());
-        assertEquals(expectedBody, responseEntity.getBody());
+    public static <T> void assertSameResponseEntity(HttpStatus expectedStatus, T expectedBody, ResponseEntity<T> responseEntity) {
+        assertSame(expectedStatus, responseEntity.getStatusCode());
+        assertSame(expectedBody, responseEntity.getBody());
     }
 }

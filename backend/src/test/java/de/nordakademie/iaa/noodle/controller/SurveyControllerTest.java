@@ -6,7 +6,6 @@ import de.nordakademie.iaa.noodle.dao.model.QuerySurveysItem;
 import de.nordakademie.iaa.noodle.mapper.SurveyMapper;
 import de.nordakademie.iaa.noodle.mapper.TimeslotMapper;
 import de.nordakademie.iaa.noodle.model.Survey;
-import de.nordakademie.iaa.noodle.model.User;
 import de.nordakademie.iaa.noodle.services.SurveyService;
 import de.nordakademie.iaa.noodle.services.exceptions.EntityNotFoundException;
 import de.nordakademie.iaa.noodle.services.exceptions.ForbiddenOperationException;
@@ -19,10 +18,9 @@ import org.springframework.http.ResponseEntity;
 import java.util.ArrayList;
 import java.util.List;
 
-import static de.nordakademie.iaa.noodle.TestUtil.assertEqualsResponseEntity;
+import static de.nordakademie.iaa.noodle.TestUtil.assertSameResponseEntity;
 import static de.nordakademie.iaa.noodle.TestUtil.assertThrowsResponseStatusException;
 import static java.util.Optional.empty;
-import static org.junit.jupiter.api.Assertions.*;
 import static org.mockito.ArgumentMatchers.any;
 import static org.mockito.ArgumentMatchers.same;
 import static org.mockito.Mockito.mock;
@@ -75,7 +73,7 @@ public class SurveyControllerTest {
         when(surveyService.closeSurvey(any(), any(), any())).thenReturn(survey);
 
         ResponseEntity<SurveyMetadataDTO> response = surveyController.closeSurvey(42L, closeSurveyRequest);
-        assertEqualsResponseEntity(HttpStatus.OK, expectedDTO, response);
+        assertSameResponseEntity(HttpStatus.OK, expectedDTO, response);
     }
 
     @Test
@@ -94,7 +92,7 @@ public class SurveyControllerTest {
         when(surveyMapper.surveyToMetadataDTO(same(survey), any())).thenReturn(expectedDTO);
 
         ResponseEntity<SurveyMetadataDTO> response = surveyController.createSurvey(inputDTO);
-        assertEqualsResponseEntity(HttpStatus.CREATED, expectedDTO, response);
+        assertSameResponseEntity(HttpStatus.CREATED, expectedDTO, response);
     }
 
     @Test
@@ -118,7 +116,7 @@ public class SurveyControllerTest {
         when(surveyMapper.surveyToMetadataDTO(same(survey), any())).thenReturn(expectedDTO);
 
         ResponseEntity<SurveyMetadataDTO> response = surveyController.deleteSurvey(42L);
-        assertEqualsResponseEntity(HttpStatus.OK, expectedDTO, response);
+        assertSameResponseEntity(HttpStatus.OK, expectedDTO, response);
     }
 
     @Test
@@ -129,7 +127,7 @@ public class SurveyControllerTest {
         when(surveyMapper.surveyToDTO(same(survey), any())).thenReturn(expectedDTO);
 
         ResponseEntity<SurveyDTO> response = surveyController.querySurvey(42L);
-        assertEqualsResponseEntity(HttpStatus.OK, expectedDTO, response);
+        assertSameResponseEntity(HttpStatus.OK, expectedDTO, response);
     }
 
     @Test
@@ -147,7 +145,7 @@ public class SurveyControllerTest {
         QuerySurveysResponse expectedDTO = mock(QuerySurveysResponse.class);
         when(surveyMapper.surveysToSurveysDTO(expectedSurveys)).thenReturn(expectedDTO);
         ResponseEntity<QuerySurveysResponse> response = surveyController.querySurveys(empty(), empty(), empty(), empty(), empty());
-        assertEqualsResponseEntity(HttpStatus.OK, expectedDTO, response);
+        assertSameResponseEntity(HttpStatus.OK, expectedDTO, response);
     }
 
 
@@ -184,6 +182,6 @@ public class SurveyControllerTest {
 
         SurveyCreationMetadataDTO surveyCreationMetadataDTO = mock(SurveyCreationMetadataDTO.class);
         ResponseEntity<SurveyMetadataDTO> response = surveyController.updateSurvey(42L, surveyCreationMetadataDTO);
-        assertEqualsResponseEntity(HttpStatus.OK, expectedDTO, response);
+        assertSameResponseEntity(HttpStatus.OK, expectedDTO, response);
     }
 }
