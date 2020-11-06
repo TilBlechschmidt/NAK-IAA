@@ -5,7 +5,6 @@ import de.nordakademie.iaa.noodle.api.model.CreateResponseRequest;
 import de.nordakademie.iaa.noodle.api.model.ResponseDTO;
 import de.nordakademie.iaa.noodle.mapper.ResponseMapper;
 import de.nordakademie.iaa.noodle.model.Response;
-import de.nordakademie.iaa.noodle.model.User;
 import de.nordakademie.iaa.noodle.services.ResponseService;
 import de.nordakademie.iaa.noodle.services.exceptions.ConflictException;
 import de.nordakademie.iaa.noodle.services.exceptions.EntityNotFoundException;
@@ -27,11 +26,10 @@ public class ResponseControllerTest {
     private ResponseController responseController;
     private ResponseService responseService;
     private ResponseMapper responseMapper;
-    private User authenticatedUser;
 
     @BeforeEach
     public void setUp() {
-        authenticatedUser = TestUtil.setupAuthentication();
+        TestUtil.setupAuthentication();
         responseService = mock(ResponseService.class);
         responseMapper = mock(ResponseMapper.class);
         responseController = new ResponseController(responseService, responseMapper);
@@ -82,8 +80,7 @@ public class ResponseControllerTest {
         Response inputResponse = mock(Response.class);
         ResponseDTO expectedDTO = mock(ResponseDTO.class);
         when(responseService.queryResponse(42L, 43L)).thenReturn(inputResponse);
-        when(responseMapper.responseToDTO(inputResponse, authenticatedUser)).thenReturn(expectedDTO);
-
+        when(responseMapper.responseToDTO(same(inputResponse), any())).thenReturn(expectedDTO);
         ResponseEntity<ResponseDTO> response = responseController.queryResponse(42L, 43L);
         assertEqualsResponseEntity(HttpStatus.OK, expectedDTO, response);
     }
