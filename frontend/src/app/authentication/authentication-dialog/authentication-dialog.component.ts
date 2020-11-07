@@ -1,33 +1,45 @@
-import { Component, OnInit } from '@angular/core';
-import {AuthenticatedResponse, EMail, Password} from '../../api/models';
+import {Component, OnInit} from '@angular/core';
+import {AuthenticatedResponse} from '../../api/models';
 import {Router} from '@angular/router';
 import {TokenService} from '../service/token.service';
 import {AccountService} from '../../api/services/account.service';
+import {FormBuilder, FormControl, FormGroup, Validators} from '@angular/forms';
 
 
 @Component({
-  selector: 'app-authentication-dialog',
-  templateUrl: './authentication-dialog.component.html',
-  styleUrls: ['./authentication-dialog.component.sass']
+    selector: 'app-authentication-dialog',
+    templateUrl: './authentication-dialog.component.html',
+    styleUrls: ['./authentication-dialog.component.sass']
 })
 export class AuthenticationDialogComponent implements OnInit {
 
-   email: EMail =  '';
-   password: Password = '';
-   authError = false;
+    public form: FormGroup;
 
-  constructor(private accountService: AccountService, private authService: TokenService, private router: Router) { }
+    authError = false;
 
-  ngOnInit(): void {
-  }
+    constructor(private accountService: AccountService, private authService: TokenService,
+                private router: Router, private formBuilder: FormBuilder) {
+        this.form = this.formBuilder.group({
+            email: new FormControl('', [Validators.required]),
+            password: new FormControl('', [Validators.required]),
+        });
+    }
 
-  signIn(): void {
-      this.accountService.authenticate({body: {email: this.email, password: this.password}}).subscribe(
-          (next: AuthenticatedResponse) => {
-              this.authService.setToken(next.token);
-              this.router.navigateByUrl('survey');
-          },  (err: AuthenticatedResponse) => this.authError = true
-      );
-  }
+    ngOnInit(): void {
+    }
+
+    signIn(): void {
+        this.accountService.authenticate({
+            body: {
+                email: this.form.get('email')?.value,
+                password: this.form.get('password')?.value
+            }
+        }).subscribe(
+            (next: AuthenticatedResponse) => {
+                this.authService.setToken(next.token);
+                this.router.navigateByUrl('survey');
+            }, (err: AuthenticatedResponse) => this.authError = true
+        );
+    }
 
 }

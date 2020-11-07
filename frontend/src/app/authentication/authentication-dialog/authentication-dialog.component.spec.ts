@@ -5,6 +5,7 @@ import {HttpClientTestingModule} from '@angular/common/http/testing';
 import {TranslateModule} from '@ngx-translate/core';
 import {RouterTestingModule} from '@angular/router/testing';
 import {AccountService} from '../../api/services/account.service';
+import {FormBuilder} from '@angular/forms';
 
 describe('AuthenticationDialogComponent', () => {
   let component: AuthenticationDialogComponent;
@@ -14,7 +15,7 @@ describe('AuthenticationDialogComponent', () => {
     await TestBed.configureTestingModule({
       declarations: [ AuthenticationDialogComponent ],
         imports: [RouterTestingModule, HttpClientTestingModule, TranslateModule.forRoot()],
-        providers: [ AccountService ]
+        providers: [ AccountService, FormBuilder ]
     })
     .compileComponents();
   });

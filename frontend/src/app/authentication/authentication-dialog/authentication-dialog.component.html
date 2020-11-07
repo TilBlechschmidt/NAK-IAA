@@ -1,13 +1,13 @@
 <mat-card class="card">
     <h1 class="greeting">{{ "auth.sign_in.welcome" | translate }}</h1>
-    <form class="auth-form">
+    <form class="auth-form" [formGroup]="form" >
         <mat-form-field class="auth-full-width">
             <mat-label>{{ "auth.email" | translate }}</mat-label>
-            <input matInput type="email" placeholder='{{ "auth.email" | translate }}'>
+            <input matInput type="email" formControlName="email" placeholder='{{ "auth.email" | translate }}'>
         </mat-form-field>
         <mat-form-field class="auth-full-width">
             <mat-label>{{ "auth.password" | translate }}</mat-label>
-            <input matInput type="password" placeholder='{{ "auth.password" | translate }}'>
+            <input matInput type="password" formControlName="password" placeholder='{{ "auth.password" | translate }}'>
         </mat-form-field>
     </form>
     <mat-error *ngIf="authError">{{ "auth.sign_in.error" | translate }}</mat-error>
