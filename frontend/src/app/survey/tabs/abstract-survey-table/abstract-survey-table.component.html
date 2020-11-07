@@ -1,4 +1,4 @@
-<table mat-table [dataSource]="mockData" class="table">
+<table mat-table [dataSource]="data" class="table">
     <!-- Position Column -->
     <ng-container matColumnDef="title">
         <th mat-header-cell *matHeaderCellDef> {{ "survey.title" | translate }} </th>
@@ -12,5 +12,5 @@
     </ng-container>
 
     <tr mat-header-row *matHeaderRowDef="displayedColumns"></tr>
-    <tr mat-row class="row" *matRowDef="let row; columns: displayedColumns;" [routerLink]="'detail/' + row.position"></tr>
+    <tr mat-row class="row" *matRowDef="let row; columns: displayedColumns;" [routerLink]="'detail/' + row.id"></tr>
 </table>

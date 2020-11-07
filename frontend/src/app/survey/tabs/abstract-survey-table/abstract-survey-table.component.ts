@@ -16,11 +16,6 @@ export class AbstractSurveyTableComponent implements OnInit {
     data: QuerySurveysResult[] = [];
     fetchError = false;
 
-    mockData: QuerySurveysResult[] =
-        [{id: 1, title: 'Fest', participantCount: 4},
-         {id: 2, title: 'Fest2', participantCount: 6},
-         {id: 3, title: 'Fest3', participantCount: 8}];
-
     constructor(protected surveysService: SurveysService) {}
 
     ngOnInit(): void {
@@ -30,9 +25,8 @@ export class AbstractSurveyTableComponent implements OnInit {
             didParticipateIn: this.filter.didParticipateIn,
             isOwnSurvey: this.filter.isOwnSurvey,
             requiresAttention: this.filter.requiresAttention
-        }).subscribe(next => next.surveys, error => {
+        }).subscribe(next => this.data = next.surveys, error => {
             this.fetchError = true;
-            this.data = this.mockData;
         });
     }
 }
