@@ -1,5 +1,5 @@
-import { BrowserModule } from '@angular/platform-browser';
-import { APP_INITIALIZER, NgModule } from '@angular/core';
+import {BrowserModule} from '@angular/platform-browser';
+import {APP_INITIALIZER, forwardRef, NgModule, Provider} from '@angular/core';
 
 import { AppRoutingModule } from './app-routing.module';
 import { AppComponent } from './app.component';
@@ -24,7 +24,7 @@ import { NotificationComponent } from './survey/tabs/dashboard/notification/noti
 import { CreateSurveyDialogComponent } from './survey/create/create-survey-dialog/create-survey-dialog.component';
 import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 import { MatDialogModule } from '@angular/material/dialog';
-import { HttpClient, HttpClientModule } from '@angular/common/http';
+import {HTTP_INTERCEPTORS, HttpClient, HttpClientModule} from '@angular/common/http';
 import { TranslateModule, TranslateService } from '@ngx-translate/core';
 import { forkJoin, of } from 'rxjs';
 import { catchError } from 'rxjs/operators';
@@ -41,9 +41,16 @@ import { MatRippleModule } from '@angular/material/core';
 import { ApiModule } from './api/api.module';
 import { environment } from '../environments/environment';
 import { PasswordConfirmationDialogComponent } from './authentication/password-confirmation-dialog/password-confirmation-dialog.component';
+import {ApiInterceptorService} from './authentication/service/api-interceptor.service';
 
 
-export function initApp(http: HttpClient, translate: TranslateService): () => Promise<boolean>{
+export const API_INTERCEPTOR_PROVIDER: Provider = {
+    provide: HTTP_INTERCEPTORS,
+    useExisting: forwardRef(() => ApiInterceptorService),
+    multi: true
+};
+
+export function initApp(http: HttpClient, translate: TranslateService): () => Promise<boolean> {
     return () => new Promise<boolean>((resolve: (res: boolean) => void) => {
 
         const defaultLocale = 'en';
@@ -74,7 +81,7 @@ export function initApp(http: HttpClient, translate: TranslateService): () => Pr
     });
 }
 
-const SelectedApiModule = environment.api.mocked ? ApiModule.mocked() : ApiModule.forRoot({ rootUrl: environment.api.rootUrl });
+const SelectedApiModule = environment.api.mocked ? ApiModule.mocked() : ApiModule.forRoot({rootUrl: environment.api.rootUrl});
 
 @NgModule({
     declarations: [
@@ -120,15 +127,18 @@ const SelectedApiModule = environment.api.mocked ? ApiModule.mocked() : ApiModul
         MatMenuModule,
         MatRippleModule,
     ],
-  providers: [
-      LoggedInGuard,
-      {
-          provide: APP_INITIALIZER,
-          useFactory: initApp,
-          deps: [HttpClient, TranslateService],
-          multi: true
-      }
-  ],
-  bootstrap: [AppComponent]
+    providers: [
+        LoggedInGuard,
+        {
+            provide: APP_INITIALIZER,
+            useFactory: initApp,
+            deps: [HttpClient, TranslateService],
+            multi: true
+        },
+        ApiInterceptorService,
+        API_INTERCEPTOR_PROVIDER
+    ],
+    bootstrap: [AppComponent]
 })
-export class AppModule { }
+export class AppModule {
+}

@@ -1,6 +1,5 @@
 import {Component, OnInit} from '@angular/core';
 import {SurveysService} from '../../../../api/services/surveys.service';
-import {TokenService} from '../../../../authentication/service/token.service';
 import {Router} from '@angular/router';
 import {QuerySurveysResult} from '../../../../api/models';
 
@@ -13,7 +12,7 @@ export class NotificationComponent implements OnInit {
 
     notifications: QuerySurveysResult[] = [];
 
-    constructor(private surveysService: SurveysService, private tokenService: TokenService, private router: Router) {
+    constructor(private surveysService: SurveysService, private router: Router) {
     }
 
     ngOnInit(): void {

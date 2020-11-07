@@ -1,7 +1,6 @@
 import {Component, Input, OnInit} from '@angular/core';
 import {QuerySurveysResult} from '../../../api/models/query-surveys-result';
 import {SurveysService} from '../../../api/services/surveys.service';
-import {TokenService} from '../../../authentication/service/token.service';
 
 @Component({
     selector: 'app-abstract-survey-table',
@@ -22,7 +21,7 @@ export class AbstractSurveyTableComponent implements OnInit {
          {id: 2, title: 'Fest2', participantCount: 6},
          {id: 3, title: 'Fest3', participantCount: 8}];
 
-    constructor(protected surveysService: SurveysService, protected tokenService: TokenService) {}
+    constructor(protected surveysService: SurveysService) {}
 
     ngOnInit(): void {
         this.surveysService.querySurveys({

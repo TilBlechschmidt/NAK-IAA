@@ -1,7 +1,6 @@
-import {Component, Inject, OnInit} from '@angular/core';
-import {MAT_DIALOG_DATA, MatDialogRef} from '@angular/material/dialog';
+import {Component, OnInit} from '@angular/core';
+import {MatDialogRef} from '@angular/material/dialog';
 import {SurveysService} from '../../../api/services/surveys.service';
-import {TokenService} from '../../../authentication/service/token.service';
 
 @Component({
     selector: 'app-create-survey-dialog',
@@ -16,7 +15,7 @@ export class CreateSurveyDialogComponent implements OnInit {
 
     constructor(
         public dialogRef: MatDialogRef<CreateSurveyDialogComponent>,
-        private surveysService: SurveysService, private tokenService: TokenService) {
+        private surveysService: SurveysService) {
     }
 
     onNoClick(): void {
