@@ -56,4 +56,5 @@ export interface SurveyMetadataDTO extends SurveyGeneralMetadataDTO{
 
 export interface SurveyDTO extends SurveyMetadataDTO {
     responses: ResponseDTO[]
+    myResponse?: ResponseDTO
 }

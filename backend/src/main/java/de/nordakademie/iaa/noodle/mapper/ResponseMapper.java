@@ -13,7 +13,7 @@ import java.util.Objects;
 import java.util.Set;
 import java.util.stream.Collectors;
 
-@Mapper(unmappedTargetPolicy = ReportingPolicy.WARN, componentModel = "spring", uses = { UserMapper.class })
+@Mapper(unmappedTargetPolicy = ReportingPolicy.WARN, componentModel = "spring", uses = {UserMapper.class})
 public abstract class ResponseMapper {
 
     @Autowired
@@ -26,6 +26,17 @@ public abstract class ResponseMapper {
             .filter(Objects::nonNull)
             .map(response -> this.responseToDTO(response, currentUser))
             .collect(Collectors.toList());
+    }
+
+    @Named("participationsToMyResponseDTO")
+    public ResponseDTO participationsToMyResponseDTO(Set<Participation> participations, @Context User currentUser) {
+        for (Participation participation : participations) {
+            if (participation.getParticipant().equals(currentUser)) {
+                return responseToDTO(participation.getResponse(), currentUser);
+            }
+        }
+
+        return null;
     }
 
     @Mapping(target = "surveyID", source = "participation.survey.id")

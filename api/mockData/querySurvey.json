@@ -97,5 +97,28 @@
                 }
             ]
         }
-    ]
+    ],
+    "myResponse": {
+        "isEditable": true,
+        "surveyID": 42,
+        "responseID": 42,
+        "user": {
+            "id": 44,
+            "name": "Peter Schlosser"
+        },
+        "responses": [
+            {
+                "timeslotID": 0,
+                "value": true
+            },
+            {
+                "timeslotID": 1,
+                "value": true
+            },
+            {
+                "timeslotID": 2,
+                "value": true
+            }
+        ]
+    }
 }

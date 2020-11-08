@@ -28,6 +28,7 @@ public abstract class SurveyMapper {
     @Mapping(target = "isClosable", source = ".", qualifiedByName = "surveyIsClosable")
     @Mapping(target = "isDeletable", source = ".", qualifiedByName = "surveyIsDeletable")
     @Mapping(target = "responses", source = "participations", qualifiedByName = "participationsToDTOs")
+    @Mapping(target = "myResponse", source = "participations", qualifiedByName = "participationsToMyResponseDTO")
     public abstract SurveyDTO surveyToDTO(Survey survey, @Context User currentUser);
 
     @Named("surveyToMetadataDTO")
@@ -46,7 +47,7 @@ public abstract class SurveyMapper {
     }
 
     @Named("surveyToSurveyDTO")
-    @Mapping(target = "id",source = "ID")
+    @Mapping(target = "id", source = "ID")
     @Mapping(target = "participantCount", source = "responseCount")
     public abstract QuerySurveysResult surveyToSurveyDTO(QuerySurveysItem survey);
 
