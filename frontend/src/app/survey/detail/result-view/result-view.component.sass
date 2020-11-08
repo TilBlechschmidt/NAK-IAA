@@ -1,0 +1,26 @@
+@import '~@angular/material/theming'
+
+table
+    width: 100%
+
+.timeslot-header
+    text-align: center
+
+.date
+    color: black
+
+.cell
+    padding: 16px
+    text-align: center
+
+    &.timeslot
+        &.accept
+            color: mat-color($mat-green, 700)
+            background-color: mat-color($mat-green, 100)
+
+        &.reject
+            color: mat-color($mat-red, 700)
+            background-color: mat-color($mat-red, 100)
+
+        &.unknown
+            background-color: mat-color($mat-gray, 300)

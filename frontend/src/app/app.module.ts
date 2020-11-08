@@ -40,6 +40,7 @@ import {ApiModule} from './api/api.module';
 import {environment} from '../environments/environment';
 import { ResponseComponent } from './survey/detail/response/response.component';
 import {MatRippleModule} from '@angular/material/core';
+import { ResultViewComponent } from './survey/detail/result-view/result-view.component';
 
 
 export function initApp(http: HttpClient, translate: TranslateService): () => Promise<boolean>{
@@ -95,7 +96,8 @@ const SelectedApiModule = environment.api.mocked ? ApiModule.mocked() : ApiModul
         LogoutButtonComponent,
         AbstractSurveyTableComponent,
         EditSurveyWarnComponent,
-        ResponseComponent
+        ResponseComponent,
+        ResultViewComponent
     ],
     imports: [
         BrowserModule,

@@ -6,7 +6,7 @@ import { Component, OnInit } from '@angular/core';
   styleUrls: ['./response.component.sass']
 })
 export class ResponseComponent implements OnInit {
-    isEdit = true;
+    isEdit = false;
     isNew = false;
 
     constructor() { }

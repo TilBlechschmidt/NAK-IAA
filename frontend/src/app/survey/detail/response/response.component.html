@@ -3,8 +3,14 @@
         <h3>17.11.2020</h3>
         <p>16:30 - 17:00</p>
         <div class="button-container">
-            <button mat-icon-button class="accept"><mat-icon>done</mat-icon></button>
-            <button mat-icon-button class="reject"><mat-icon>clear</mat-icon></button>
+            <div>
+                <button mat-icon-button class="accept"><mat-icon>done</mat-icon></button>
+                <div class="mat-caption response-count">10</div>
+            </div>
+            <div>
+                <button mat-icon-button class="reject"><mat-icon>clear</mat-icon></button>
+                <div class="mat-caption response-count">3</div>
+            </div>
         </div>
     </div>
     <div *ngIf="isEdit">
