@@ -51,28 +51,28 @@
 //        Survey survey = mock(Survey.class);
 //        User currentUser = mock(User.class);
 //        User creator = mock(User.class);
-//        Timeslot chosenTimeslot = mock(Timeslot.class);
+//        Timeslot selectedTimeslot = mock(Timeslot.class);
 //        IdentifiableUserDTO creatorDTO = mock(IdentifiableUserDTO.class);
 //
-//        Date chosenTimeslotStartDate = new Date(0);
-//        Date chosenTimeslotEndDate = new Date(1);
+//        Date selectedTimeslotStartDate = new Date(0);
+//        Date selectedTimeslotEndDate = new Date(1);
 //
-//        when(chosenTimeslot.getId()).thenReturn(42L);
-//        when(chosenTimeslot.getStart()).thenReturn(chosenTimeslotStartDate);
-//        when(chosenTimeslot.getEnd()).thenReturn(chosenTimeslotEndDate);
+//        when(selectedTimeslot.getId()).thenReturn(42L);
+//        when(selectedTimeslot.getStart()).thenReturn(selectedTimeslotStartDate);
+//        when(selectedTimeslot.getEnd()).thenReturn(selectedTimeslotEndDate);
 //
-//        TimeslotDTO chosenTimeslotDTO = new TimeslotDTO();
-//        chosenTimeslotDTO.setId(42L);
-//        chosenTimeslotDTO.setStart(chosenTimeslotStartDate.toInstant().atOffset(UTC));
-//        chosenTimeslotDTO.setEnd(chosenTimeslotEndDate.toInstant().atOffset(UTC));
-//        TimeslotDTO[] timeslotDTOs = { chosenTimeslotDTO };
+//        TimeslotDTO selectedTimeslotDTO = new TimeslotDTO();
+//        selectedTimeslotDTO.setId(42L);
+//        selectedTimeslotDTO.setStart(selectedTimeslotStartDate.toInstant().atOffset(UTC));
+//        selectedTimeslotDTO.setEnd(selectedTimeslotEndDate.toInstant().atOffset(UTC));
+//        TimeslotDTO[] timeslotDTOs = { selectedTimeslotDTO };
 //
 //        when(survey.getTitle()).thenReturn("TITLE");
 //        when(survey.getDescription()).thenReturn("DESCRIPTION");
 //        when(survey.getIsClosed()).thenReturn(true);
-//        when(survey.getChosenTimeslot()).thenReturn(chosenTimeslot);
+//        when(survey.getSelectedTimeslot()).thenReturn(selectedTimeslot);
 //        when(survey.getCreator()).thenReturn(creator);
-//        when(survey.getTimeslots()).thenReturn(Collections.singleton(chosenTimeslot));
+//        when(survey.getTimeslots()).thenReturn(Collections.singleton(selectedTimeslot));
 //        when(survey.getParticipations()).thenReturn(Collections.emptySet());
 //        when(userConverter.convertUserToDTO(creator)).thenReturn(creatorDTO);
 //
@@ -81,7 +81,7 @@
 //        assertEquals("TITLE", surveyDTO.getTitle());
 //        assertEquals("DESCRIPTION", surveyDTO.getDescription());
 //        assertEquals(true, surveyDTO.getIsClosed());
-//        assertEquals(chosenTimeslotDTO, surveyDTO.getSelectedTimeslot());
+//        assertEquals(selectedTimeslotDTO, surveyDTO.getSelectedTimeslot());
 //        assertEquals(creatorDTO, surveyDTO.getCreator());
 //        assertArrayEquals(emptyResponseDTOs, surveyDTO.getResponses().toArray());
 //        assertArrayEquals(timeslotDTOs, surveyDTO.getTimeslots().toArray());
@@ -111,7 +111,7 @@
 //        when(survey.getTitle()).thenReturn("TITLE");
 //        when(survey.getDescription()).thenReturn("DESCRIPTION");
 //        when(survey.getIsClosed()).thenReturn(false);
-//        when(survey.getChosenTimeslot()).thenReturn(null);
+//        when(survey.getSelectedTimeslot()).thenReturn(null);
 //        when(survey.getCreator()).thenReturn(creator);
 //        when(survey.getTimeslots()).thenReturn(Collections.singleton(timeslot));
 //        when(survey.getParticipations()).thenReturn(Collections.emptySet());
@@ -139,7 +139,7 @@
 //        when(survey.getTitle()).thenReturn("TITLE");
 //        when(survey.getDescription()).thenReturn("DESCRIPTION");
 //        when(survey.getIsClosed()).thenReturn(false);
-//        when(survey.getChosenTimeslot()).thenReturn(null);
+//        when(survey.getSelectedTimeslot()).thenReturn(null);
 //        when(survey.getCreator()).thenReturn(creator);
 //        when(survey.getTimeslots()).thenReturn(Collections.emptySet());
 //        when(survey.getParticipations()).thenReturn(Collections.singleton(staleParticipation));
@@ -174,7 +174,7 @@
 //        when(survey.getTitle()).thenReturn("TITLE");
 //        when(survey.getDescription()).thenReturn("DESCRIPTION");
 //        when(survey.getIsClosed()).thenReturn(false);
-//        when(survey.getChosenTimeslot()).thenReturn(null);
+//        when(survey.getSelectedTimeslot()).thenReturn(null);
 //        when(survey.getCreator()).thenReturn(creator);
 //        when(survey.getTimeslots()).thenReturn(Collections.emptySet());
 //        when(survey.getParticipations()).thenReturn(participations);

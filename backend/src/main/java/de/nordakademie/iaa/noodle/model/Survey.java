@@ -20,8 +20,8 @@ public class Survey {
     private Set<Timeslot> timeslots;
 
     @OneToOne(cascade = CascadeType.ALL, optional = true, fetch = FetchType.LAZY)
-    @JoinColumn(name = "chosen_timeslot_id")
-    private Timeslot chosenTimeslot;
+    @JoinColumn(name = "selected_timeslot_id")
+    private Timeslot selectedTimeslot;
 
     @ManyToOne(optional = false, fetch = FetchType.LAZY)
     @JoinColumn(name = "creator_id")
@@ -38,9 +38,9 @@ public class Survey {
     public Survey() {
     }
 
-    public Survey(Set<Timeslot> timeslots, Timeslot chosenTimeslot, User creator, Set<Participation> participations, String title, String description) {
+    public Survey(Set<Timeslot> timeslots, Timeslot selectedTimeslot, User creator, Set<Participation> participations, String title, String description) {
         this.timeslots = timeslots;
-        this.chosenTimeslot = chosenTimeslot;
+        this.selectedTimeslot = selectedTimeslot;
         this.creator = creator;
         this.participations = participations;
         this.title = title;
@@ -48,12 +48,12 @@ public class Survey {
         this.transientID = UUID.randomUUID();
     }
 
-    public Timeslot getChosenTimeslot() {
-        return chosenTimeslot;
+    public Timeslot getSelectedTimeslot() {
+        return selectedTimeslot;
     }
 
-    public void setChosenTimeslot(Timeslot chosenTimeslot) {
-        this.chosenTimeslot = chosenTimeslot;
+    public void setSelectedTimeslot(Timeslot selectedTimeslot) {
+        this.selectedTimeslot = selectedTimeslot;
     }
 
     public Long getId() {
@@ -89,7 +89,7 @@ public class Survey {
     }
 
     public boolean getIsClosed() {
-        return getChosenTimeslot() != null;
+        return getSelectedTimeslot() != null;
     }
 
     @Override

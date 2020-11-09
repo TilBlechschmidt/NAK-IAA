@@ -134,7 +134,7 @@ public class SurveyService {
         }
 
         Timeslot timeslot = timeslotService.findTimeslot(survey, timeslotID);
-        survey.setChosenTimeslot(timeslot);
+        survey.setSelectedTimeslot(timeslot);
         surveyRepository.save(survey);
 
         return survey;

@@ -37,9 +37,9 @@ WHERE
 AND
 (:completed IS NULL OR
     (:completed=true  AND NOT
-        survey.chosenTimeslot IS NULL) OR
+        survey.selectedTimeslot IS NULL) OR
     (:completed=false AND
-        survey.chosenTimeslot IS NULL))
+        survey.selectedTimeslot IS NULL))
 AND
 (:owned IS NULL OR
     (:owned = true  AND
@@ -49,9 +49,9 @@ AND
 AND
 (:upcoming IS NULL OR
     (:upcoming = true AND
-        (survey.chosenTimeslot IS NOT NULL AND CURRENT_TIMESTAMP <= ALL (SELECT start FROM Timeslot WHERE id=survey.chosenTimeslot.id)) ) OR
+        (survey.selectedTimeslot IS NOT NULL AND CURRENT_TIMESTAMP <= ALL (SELECT start FROM Timeslot WHERE id=survey.selectedTimeslot.id)) ) OR
     (:upcoming = false AND NOT
-        (survey.chosenTimeslot IS NOT NULL AND CURRENT_TIMESTAMP <= ALL (SELECT start FROM Timeslot WHERE id=survey.chosenTimeslot.id)) ))
+        (survey.selectedTimeslot IS NOT NULL AND CURRENT_TIMESTAMP <= ALL (SELECT start FROM Timeslot WHERE id=survey.selectedTimeslot.id)) ))
 AND
  (:attentionRequired IS NULL OR
     (:attentionRequired = true  AND

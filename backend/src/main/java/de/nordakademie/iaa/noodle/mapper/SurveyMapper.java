@@ -22,7 +22,6 @@ public abstract class SurveyMapper {
     @Autowired
     private SurveyService surveyService;
 
-    @Mapping(target = "selectedTimeslot", source = "chosenTimeslot")
     @Mapping(target = "creator", qualifiedByName = "userToIdentifiableUserDTO")
     @Mapping(target = "isEditable", source = ".", qualifiedByName = "surveyIsEditable")
     @Mapping(target = "isClosable", source = ".", qualifiedByName = "surveyIsClosable")
@@ -32,7 +31,6 @@ public abstract class SurveyMapper {
     public abstract SurveyDTO surveyToDTO(Survey survey, @Context User currentUser);
 
     @Named("surveyToMetadataDTO")
-    @Mapping(target = "selectedTimeslot", source = "chosenTimeslot")
     @Mapping(target = "creator", qualifiedByName = "userToIdentifiableUserDTO")
     @Mapping(target = "isEditable", source = ".", qualifiedByName = "surveyIsEditable")
     @Mapping(target = "isClosable", source = ".", qualifiedByName = "surveyIsClosable")
