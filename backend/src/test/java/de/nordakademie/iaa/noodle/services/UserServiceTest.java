@@ -23,7 +23,7 @@ class UserServiceTest {
     }
 
     @Test
-    void getUserByEMailNotFoundTest() {
+    void testGetUserByEMailNotFound() {
         when(userRepository.findByEmail("EMAIL")).thenReturn(null);
 
         EntityNotFoundException exception = assertThrows(EntityNotFoundException.class,
@@ -33,7 +33,7 @@ class UserServiceTest {
     }
 
     @Test
-    void getUserByEMailTest() throws EntityNotFoundException {
+    void testGetUserByEMail() throws EntityNotFoundException {
         User user = mock(User.class);
         when(userRepository.findByEmail("EMAIL")).thenReturn(user);
 
@@ -42,14 +42,14 @@ class UserServiceTest {
     }
 
     @Test
-    void existsUserWithEMailNotFoundTest() {
+    void testExistsUserWithEMailNotFound() {
         when(userRepository.findByEmail("EMAIL")).thenReturn(null);
         boolean exists = userService.existsUserWithEMail("EMAIL");
         assertFalse(exists);
     }
 
     @Test
-    void existsUserWithEMailFoundTest() {
+    void testExistsUserWithEMailFound() {
         User user = mock(User.class);
         when(userRepository.findByEmail("EMAIL")).thenReturn(user);
         boolean exists = userService.existsUserWithEMail("EMAIL");
@@ -57,7 +57,7 @@ class UserServiceTest {
     }
 
     @Test
-    void getUserByUserIDNotFoundTest() {
+    void testGetUserByUserIDNotFound() {
         when(userRepository.findById(42L)).thenReturn(null);
 
         EntityNotFoundException exception = assertThrows(EntityNotFoundException.class,
@@ -67,7 +67,7 @@ class UserServiceTest {
     }
 
     @Test
-    void getUserByUserIDTest() throws EntityNotFoundException {
+    void testGetUserByUserID() throws EntityNotFoundException {
         User user = mock(User.class);
         when(userRepository.findById(42L)).thenReturn(user);
 
@@ -76,7 +76,7 @@ class UserServiceTest {
     }
 
     @Test
-    void createNewUserDuplicateEmailTest() {
+    void testCreateNewUserDuplicateEmail() {
         when(userRepository.save(any())).thenThrow(mock(DataIntegrityViolationException.class));
 
         ConflictException exception = assertThrows(ConflictException.class,
@@ -86,7 +86,7 @@ class UserServiceTest {
     }
 
     @Test
-    void createNewUserTest() throws ConflictException {
+    void testCreateNewUser() throws ConflictException {
         User user = userService.createNewUser("EMAIL", "FULL_NAME", "PASSWORD_HASH");
 
         verify(userRepository).save(argThat(savedUser -> {

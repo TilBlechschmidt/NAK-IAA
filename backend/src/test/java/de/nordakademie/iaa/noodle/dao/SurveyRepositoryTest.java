@@ -25,7 +25,7 @@ class SurveyRepositoryTest {
     // CHECK data.sql for the TestData referenced here.
 
     @Test
-    void saveTest() {
+    void testSave() {
         Survey survey = SurveyTest.testSurvey(entityManager);
         assertNull(survey.getId());
         surveyRepository.save(survey);
@@ -35,7 +35,7 @@ class SurveyRepositoryTest {
     }
 
     @Test
-    void deleteByIdTest() {
+    void testDeleteById() {
         Survey survey = entityManager.find(Survey.class, 10L);
         assertNotNull(survey);
         surveyRepository.delete(survey);
@@ -44,13 +44,13 @@ class SurveyRepositoryTest {
     }
 
     @Test
-    void queryAll() {
+    void testQueryAll() {
         surveys = surveyRepository.querySurvey(null, null, null, null, null, null);
         assertEquals(NUMBER_OF_SURVEYS, surveys.size());
     }
 
     @Test
-    void querySurveysThatNeedAttentionByTest() {
+    void testQuerySurveysThatNeedAttentionBy() {
         surveys = surveyRepository.querySurvey(2L, null, null, null, null, true);
         assertEquals(1L, surveys.size());
         assertEquals(12L, surveys.get(0).getId());
@@ -59,7 +59,7 @@ class SurveyRepositoryTest {
     }
 
     @Test
-    void queryUpcomingSurveysTest() {
+    void testQueryUpcomingSurveys() {
         surveys = surveyRepository.querySurvey(null, null, null, null, true, null);
         assertEquals(1, surveys.size());
         assertEquals(13L, surveys.get(0).getId());
@@ -68,7 +68,7 @@ class SurveyRepositoryTest {
     }
 
     @Test
-    void querySurveysByParticipantTest() {
+    void testQuerySurveysByParticipant() {
         surveys = surveyRepository.querySurvey(3L, true, null, null, null, null);
         assertEquals(2,surveys.size());
         assertContainsSurveyWithId(11L);
@@ -80,7 +80,7 @@ class SurveyRepositoryTest {
     }
 
     @Test
-    void querySurveysByCompletionTest() {
+    void testQuerySurveysByCompletion() {
         surveys = surveyRepository.querySurvey(null, null, true, null, null, null);
         assertEquals(1,surveys.size());
         assertContainsSurveyWithId(13L);
@@ -89,7 +89,7 @@ class SurveyRepositoryTest {
     }
 
     @Test
-    void querySurveysByCreator() {
+    void testQuerySurveysByCreator() {
         surveys = surveyRepository.querySurvey(0L, null, null, true, null, null);
         assertEquals(1,surveys.size());
         assertContainsSurveyWithId(10L);
@@ -98,7 +98,7 @@ class SurveyRepositoryTest {
     }
 
     @Test
-    void queryCombinationsTest() {
+    void testQueryCombinations() {
         surveys = surveyRepository.querySurvey(2L, true, null, null, null, true);
         assertEquals(1L, surveys.size());
         assertEquals(12L, surveys.get(0).getId());
@@ -116,7 +116,7 @@ class SurveyRepositoryTest {
     }
 
     @Test
-    void findByIdTest() {
+    void testFindById() {
         Survey survey = surveyRepository.findById(10L);
         assertNotNull(survey);
         assertEquals(entityManager.find(Survey.class, 10L), survey);

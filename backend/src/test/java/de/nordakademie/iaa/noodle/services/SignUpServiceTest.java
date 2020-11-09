@@ -29,7 +29,7 @@ class SignUpServiceTest {
     }
 
     @Test
-    void createAccountTest() throws JWTException, ConflictException, PasswordException {
+    void testCreateAccount() throws JWTException, ConflictException, PasswordException {
         UserDetails userDetails = mock(UserDetails.class);
         User user = mock(User.class);
         when(jwtService.userDetailsForToken("TOKEN")).thenReturn(userDetails);
@@ -43,7 +43,7 @@ class SignUpServiceTest {
     }
 
     @Test
-    void mailSignupTokenDuplicateTest() throws MailClientException {
+    void testMailSignupTokenDuplicate() throws MailClientException {
         when(userService.existsUserWithEMail("EMAIL")).thenReturn(true);
         signUpService.mailSignupToken("EMAIL", "FULL_NAME");
 
@@ -52,7 +52,7 @@ class SignUpServiceTest {
     }
 
     @Test
-    void mailSignupTokenTest() throws MailClientException {
+    void testMailSignupToken() throws MailClientException {
         when(userService.existsUserWithEMail("EMAIL")).thenReturn(false);
         when(jwtService.buildEmailToken("EMAIL", "FULL_NAME")).thenReturn("TOKEN");
         signUpService.mailSignupToken("EMAIL", "FULL_NAME");

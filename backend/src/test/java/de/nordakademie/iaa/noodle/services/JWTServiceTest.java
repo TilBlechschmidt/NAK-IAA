@@ -27,7 +27,7 @@ class JWTServiceTest {
     }
 
     @Test
-    void buildEmailTokenTest() {
+    void testBuildEmailToken() {
         String token = jwtService.buildEmailToken("EMAIL", "FULL_NAME");
 
         Claims claims = Jwts.parser()
@@ -44,7 +44,7 @@ class JWTServiceTest {
     }
 
     @Test
-    void buildSpringAuthenticationTokenTest() {
+    void testBuildSpringAuthenticationToken() {
         User user = mock(User.class);
         when(user.getId()).thenReturn(42L);
         when(user.getEmail()).thenReturn("EMAIL");
@@ -65,7 +65,7 @@ class JWTServiceTest {
     }
 
     @Test
-    void userDetailsForTokenInvalidTokenTest() {
+    void testUserDetailsForTokenInvalidToken() {
         JWTException exception = assertThrows(JWTException.class,
             () -> jwtService.userDetailsForToken("Invalid token"));
 
@@ -73,7 +73,7 @@ class JWTServiceTest {
     }
 
     @Test
-    void userDetailsForTokenTest() throws JWTException {
+    void testUserDetailsForToken() throws JWTException {
         String token = jwtService.buildEmailToken("EMAIL", "FULL_NAME");
         UserDetails userDetails = jwtService.userDetailsForToken(token);
 
@@ -82,7 +82,7 @@ class JWTServiceTest {
     }
 
     @Test
-    void authenticationDetailsForTokenInvalidTokenTest() {
+    void testAuthenticationDetailsForTokenInvalidToken() {
         JWTException exception = assertThrows(JWTException.class,
             () -> jwtService.authenticationDetailsForToken("Invalid token"));
 
@@ -90,7 +90,7 @@ class JWTServiceTest {
     }
 
     @Test
-    void authenticationDetailsForTokenTest() throws JWTException {
+    void testAuthenticationDetailsForToken() throws JWTException {
         User user = mock(User.class);
         when(user.getId()).thenReturn(42L);
         when(user.getEmail()).thenReturn("EMAIL");

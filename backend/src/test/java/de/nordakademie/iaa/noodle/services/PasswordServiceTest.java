@@ -27,7 +27,7 @@ public class PasswordServiceTest {
     }
 
     @Test
-    public void hashPassword() throws PasswordException {
+    public void testHashPassword() throws PasswordException {
         PasswordEncoder passwordEncoder = mock(PasswordEncoder.class);
         when(passwordEncoder.encode("password1pepper")).thenReturn("hash_password1");
 
@@ -51,13 +51,13 @@ public class PasswordServiceTest {
     }
 
     @Test
-    public void isPasswordCorrect() {
+    public void testIsPasswordCorrect() {
         boolean isCorrect = passwordService.isPasswordCorrect(user, "password1");
         assertTrue(isCorrect);
     }
 
     @Test
-    public void isPasswordCorrectWrongPassword() {
+    public void testIsPasswordCorrectWrongPassword() {
         boolean isCorrect = passwordService.isPasswordCorrect(user, "password2");
         assertFalse(isCorrect);
     }

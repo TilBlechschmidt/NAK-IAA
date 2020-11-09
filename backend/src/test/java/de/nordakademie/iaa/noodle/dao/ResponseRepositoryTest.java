@@ -24,19 +24,19 @@ class ResponseRepositoryTest {
     // CHECK data.sql for the TestData referenced here.
 
     @Test
-    public void findByIdAndSurveyIdTest() {
+    public void testFindByIdAndSurveyId() {
         response = responseRepository.findByIdAndSurveyId(50L, 10L);
         assertEquals(20L, response.getParticipation().getId());
     }
 
     @Test
-    public void findByIdAndSurveyIdMismatchedSurveyIDTest() {
+    public void testFindByIdAndSurveyIdMismatchedSurveyID() {
         response = responseRepository.findByIdAndSurveyId(50L, 50L);
         assertNull(response);
     }
 
     @Test
-    public void saveTest() {
+    public void testSave() {
         response = ResponseTest.testResponse(entityManager);
         assertNull(response.getId());
         responseRepository.save(response);

@@ -33,7 +33,7 @@ class SignInServiceTest {
     }
 
     @Test
-    void attemptAuthenticationUserNotFoundTest() throws EntityNotFoundException {
+    void testAttemptAuthenticationUserNotFound() throws EntityNotFoundException {
         when(userService.getUserByEMail("EMAIL")).thenThrow(new EntityNotFoundException("userNotFound"));
 
         EntityNotFoundException exception = assertThrows(EntityNotFoundException.class, () -> {
@@ -44,7 +44,7 @@ class SignInServiceTest {
     }
 
     @Test
-    void attemptAuthenticationInvalidPasswordTest() throws EntityNotFoundException {
+    void testAttemptAuthenticationInvalidPassword() throws EntityNotFoundException {
         User user = mock(User.class);
 
         when(userService.getUserByEMail("EMAIL")).thenReturn(user);
@@ -57,7 +57,7 @@ class SignInServiceTest {
     }
 
     @Test
-    void attemptAuthenticationSuccessTest() throws EntityNotFoundException, PasswordException {
+    void testAttemptAuthenticationSuccess() throws EntityNotFoundException, PasswordException {
         User user = mock(User.class);
 
         when(userService.getUserByEMail("EMAIL")).thenReturn(user);
@@ -70,7 +70,7 @@ class SignInServiceTest {
     }
 
     @Test
-    void springAuthenticationForHeaderInvalidHeaderTest() {
+    void testSpringAuthenticationForHeaderInvalidHeader() {
         AuthenticationException exception = assertThrows(AuthenticationException.class,
             () -> signInService.springAuthenticationForHeader("BAD_TOKEN"));
 
@@ -78,7 +78,7 @@ class SignInServiceTest {
     }
 
     @Test
-    void springAuthenticationForHeaderTest() throws JWTException, AuthenticationException, EntityNotFoundException {
+    void testSpringAuthenticationForHeader() throws JWTException, AuthenticationException, EntityNotFoundException {
         SpringAuthenticationDetails authenticationDetails = mock(SpringAuthenticationDetails.class);
         User user = mock(User.class);
 
