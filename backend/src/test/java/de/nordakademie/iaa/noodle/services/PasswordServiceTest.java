@@ -64,4 +64,10 @@ public class PasswordServiceTest {
         boolean isCorrect = passwordService.isPasswordCorrect(user, "password2");
         assertFalse(isCorrect);
     }
+
+    @Test
+    void testIsPasswordCorrectPasswordTooShort() {
+        boolean isCorrect = passwordService.isPasswordCorrect(user, "a");
+        assertFalse(isCorrect);
+    }
 }
