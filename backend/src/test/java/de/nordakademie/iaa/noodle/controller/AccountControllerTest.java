@@ -11,6 +11,7 @@ import org.junit.jupiter.api.Test;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 
+import static de.nordakademie.iaa.noodle.TestUtil.assertThrowsResponseStatusException;
 import static org.junit.jupiter.api.Assertions.assertEquals;
 import static org.junit.jupiter.api.Assertions.assertNotNull;
 import static org.mockito.Mockito.*;
@@ -25,6 +26,21 @@ public class AccountControllerTest {
         signInService = mock(SignInService.class);
         signUpService = mock(SignUpService.class);
         accountController = new AccountController(signUpService, signInService);
+    }
+
+    @Test
+    public void testAuthenticateWrongPassword() throws PasswordException, EntityNotFoundException {
+        when(signInService.attemptAuthentication(any(), any())).thenThrow(new PasswordException("testAuthenticatePassword"));
+        AuthenticationRequest inputDTO = mock(AuthenticationRequest.class);
+        assertThrowsResponseStatusException(HttpStatus.UNAUTHORIZED, "invalidAuthenticationData", () -> accountController.authenticate(inputDTO));
+
+    }
+
+    @Test
+    public void testAuthenticateNotFound() throws PasswordException, EntityNotFoundException {
+        when(signInService.attemptAuthentication(any(), any())).thenThrow(new EntityNotFoundException("testAuthenticateNotFound"));
+        AuthenticationRequest inputDTO = mock(AuthenticationRequest.class);
+        assertThrowsResponseStatusException(HttpStatus.UNAUTHORIZED, "invalidAuthenticationData", () -> accountController.authenticate(inputDTO));
     }
 
     @Test
@@ -54,6 +70,22 @@ public class AccountControllerTest {
     }
 
     @Test
+    public void testCreateUserJWTError() throws ConflictException, JWTException {
+        when(signUpService.createAccount(any(), any())).thenThrow(new JWTException("testCreateUserJWT"));
+        ActivateUserRequest activateUserRequest = mock(ActivateUserRequest.class);
+        assertThrowsResponseStatusException(HttpStatus.UNAUTHORIZED, "testCreateUserJWT",
+            () -> accountController.activateUser(activateUserRequest));
+    }
+
+    @Test
+    public void testCreateUserConflict() throws ConflictException, JWTException {
+        when(signUpService.createAccount(any(), any())).thenThrow(new ConflictException("testCreateUserConflict"));
+        ActivateUserRequest activateUserRequest = mock(ActivateUserRequest.class);
+        assertThrowsResponseStatusException(HttpStatus.CONFLICT, "testCreateUserConflict",
+            () -> accountController.activateUser(activateUserRequest));
+    }
+
+    @Test
     public void testCreateUser() throws ConflictException, JWTException {
         User user = mock(User.class);
         when(signUpService.createAccount("TOKEN", "PASSWORD")).thenReturn(user);
@@ -73,6 +105,15 @@ public class AccountControllerTest {
         assertEquals(42, activateUserResponse.getId());
         assertEquals("FULL_NAME", activateUserResponse.getName());
         assertEquals("EMAIL", activateUserResponse.getEmail());
+    }
+
+    @Test
+    public void testRequestRegistrationMailError() throws MailClientException {
+        doThrow(new MailClientException("testMailError")).when(signUpService).mailSignupToken(any(), any());
+        RequestRegistrationEmailRequest requestRegistrationEmailRequest = mock(RequestRegistrationEmailRequest.class);
+
+        assertThrowsResponseStatusException(HttpStatus.SERVICE_UNAVAILABLE, "testMailError",
+            () -> accountController.requestRegistrationEmail(requestRegistrationEmailRequest));
     }
 
     @Test
