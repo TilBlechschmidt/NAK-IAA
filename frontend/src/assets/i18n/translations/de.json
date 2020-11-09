@@ -41,6 +41,7 @@
         "delete": "Löschen",
         "save": "Speichern",
         "edit": "Bearbeiten",
+        "close": "Terminumfrage beenden",
         "edit_warning": "Möchtest du die Terminumfrage wirklich bearbeiten? Alle Teilnehmer müssen sie dann nochmals ausfüllen",
         "edited": "Die Terminumfrage \"{{ title }}\" wurde bearbeitet. Du musst sie nochmals beantworten",
         "tabs": {

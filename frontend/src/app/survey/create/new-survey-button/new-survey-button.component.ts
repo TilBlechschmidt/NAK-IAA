@@ -14,14 +14,12 @@ export class NewSurveyButtonComponent implements OnInit {
 
   constructor(public dialog: MatDialog) { }
 
-  ngOnInit(): void {
-  }
+  ngOnInit(): void { }
 
   openDialog(): void {
       this.dialog.open(CreateSurveyDialogComponent, {
           width: '600px'
       });
-
   }
 
 }

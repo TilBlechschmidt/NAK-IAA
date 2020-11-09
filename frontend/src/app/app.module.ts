@@ -41,6 +41,9 @@ import {MatRippleModule} from '@angular/material/core';
 import {ApiInterceptorService} from './authentication/service/api-interceptor.service';
 import {PasswordConfirmationDialogComponent} from './authentication/password-confirmation-dialog/password-confirmation-dialog.component';
 import { ResultOverviewComponent } from './survey/detail/result-overview/result-overview.component';
+import { CloseSurveyComponent } from './survey/close-survey/close-survey.component';
+import { CloseSurveyButtonComponent } from './survey/close-survey/close-survey-button/close-survey-button.component';
+
 
 export const API_INTERCEPTOR_PROVIDER: Provider = {
     provide: HTTP_INTERCEPTORS,
@@ -103,7 +106,9 @@ const SelectedApiModule = environment.api.mocked ? ApiModule.mocked() : ApiModul
         EditSurveyWarnComponent,
         ResponseComponent,
         PasswordConfirmationDialogComponent,
-        ResultOverviewComponent
+        ResultOverviewComponent,
+        CloseSurveyComponent,
+        CloseSurveyButtonComponent
     ],
     imports: [
         BrowserModule,

@@ -41,6 +41,7 @@
         "delete": "Delete",
         "save": "Save",
         "edit": "Edit",
+        "close": "Close Survey",
         "edit_warning": "Do you really want to edit this survey? All participants have to answer them again!",
         "edited": "The survey \"{{ title }}\" was edited. You have answer the again",
         "tabs": {
