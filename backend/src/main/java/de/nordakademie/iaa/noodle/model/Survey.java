@@ -58,7 +58,6 @@ public class Survey {
      */
     public Survey(User creator, String title, String description) {
         this.timeslots = new HashSet<>();
-        this.selectedTimeslot = null;
         this.creator = creator;
         this.participations = new HashSet<>();
         this.title = title;

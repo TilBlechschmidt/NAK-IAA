@@ -37,12 +37,5 @@ public interface UserRepository {
      *
      * @param user The user to save.
      */
-    User save(User user);
-
-    /**
-     * Deletes a user.
-     *
-     * @param user The user to delete.
-     */
-    void delete(User user);
+    void save(User user);
 }

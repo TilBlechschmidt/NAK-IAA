@@ -47,13 +47,4 @@ class UserRepositoryTest {
         assertNotNull(id);
         assertEquals(entityManager.find(User.class, id), user);
     }
-
-    @Test
-    void testDelete() {
-        user = entityManager.find(User.class, 1L);
-        assertNotNull(user);
-        userRepository.delete(user);
-        assertNull(entityManager.find(User.class, 1L));
-        entityManager.persist(user);
-    }
 }

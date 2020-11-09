@@ -81,7 +81,9 @@ class UserServiceTest {
 
     @Test
     void testCreateNewUserDuplicateEmail() {
-        when(userRepository.save(any())).thenThrow(mock(DataIntegrityViolationException.class));
+        doThrow(mock(DataIntegrityViolationException.class))
+            .when(userRepository)
+            .save(any());
 
         ConflictException exception = assertThrows(ConflictException.class,
             () -> userService.createNewUser("EMAIL", "FULL_NAME", "PASSWORD_HASH"));

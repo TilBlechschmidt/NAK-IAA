@@ -49,7 +49,6 @@ public class Participation {
     public Participation(User participant, Survey survey) {
         this.participant = participant;
         this.survey = survey;
-        this.response = null;
         this.transientID = UUID.randomUUID();
     }
 

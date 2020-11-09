@@ -109,7 +109,7 @@ public interface SurveyRepository {
      *
      * @param survey The survey to save.
      */
-    Survey save(Survey survey);
+    void save(Survey survey);
 
     /**
      * Deletes a survey.
