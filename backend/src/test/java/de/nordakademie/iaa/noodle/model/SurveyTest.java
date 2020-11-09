@@ -31,7 +31,7 @@ class SurveyTest {
     }
 
     @Test
-    public void testCreate() {
+    void testCreate() {
         survey = testSurvey(entityManager);
 
         entityManager.persist(survey);
@@ -39,7 +39,7 @@ class SurveyTest {
     }
 
     @Test
-    public void testRead() {
+    void testRead() {
         assumeThatCode(this::testCreate).doesNotThrowAnyException();
 
         survey = null;
@@ -54,7 +54,7 @@ class SurveyTest {
     }
 
     @Test
-    public void testUpdate() {
+    void testUpdate() {
 //        We have decided not to make entities updatable before it is necessary
 //        This test will be used but skipped until that decision is made final.
         TestUtil.skip();
@@ -63,7 +63,7 @@ class SurveyTest {
     }
 
     @Test
-    public void testDelete() {
+    void testDelete() {
         assumeThatCode(this::testCreate).doesNotThrowAnyException();
 
         assertNotNull(entityManager.find(Survey.class, id));

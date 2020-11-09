@@ -36,28 +36,28 @@ public class ResponseControllerTest {
     }
 
     @Test
-    public void testCreateResponseDuplicate() throws EntityNotFoundException, ConflictException, SemanticallyInvalidInputException {
+    void testCreateResponseDuplicate() throws EntityNotFoundException, ConflictException, SemanticallyInvalidInputException {
         when(responseService.createResponse(any(), any(), any())).thenThrow(new ConflictException("testCreateResponse"));
         CreateResponseRequest inputDTO = mock(CreateResponseRequest.class);
         assertThrowsResponseStatusException(HttpStatus.CONFLICT, "testCreateResponse", () -> responseController.createResponse(42L, inputDTO));
     }
 
     @Test
-    public void testCreateResponseInvalidSemantics() throws EntityNotFoundException, ConflictException, SemanticallyInvalidInputException {
+    void testCreateResponseInvalidSemantics() throws EntityNotFoundException, ConflictException, SemanticallyInvalidInputException {
         when(responseService.createResponse(any(), any(), any())).thenThrow(new SemanticallyInvalidInputException("testCreateResponse"));
         CreateResponseRequest inputDTO = mock(CreateResponseRequest.class);
         assertThrowsResponseStatusException(HttpStatus.UNPROCESSABLE_ENTITY, "testCreateResponse", () -> responseController.createResponse(42L, inputDTO));
     }
 
     @Test
-    public void testCreateResponseNotFound() throws EntityNotFoundException, ConflictException, SemanticallyInvalidInputException {
+    void testCreateResponseNotFound() throws EntityNotFoundException, ConflictException, SemanticallyInvalidInputException {
         when(responseService.createResponse(any(), any(), any())).thenThrow(new EntityNotFoundException("testCreateResponse"));
         CreateResponseRequest inputDTO = mock(CreateResponseRequest.class);
         assertThrowsResponseStatusException(HttpStatus.NOT_FOUND, "testCreateResponse", () -> responseController.createResponse(42L, inputDTO));
     }
 
     @Test
-    public void testCreateResponse() throws EntityNotFoundException, SemanticallyInvalidInputException, ConflictException {
+    void testCreateResponse() throws EntityNotFoundException, SemanticallyInvalidInputException, ConflictException {
         Response expectedResponse = mock(Response.class);
         when(responseService.createResponse(any(), any(), any())).thenReturn(expectedResponse);
 
@@ -70,13 +70,13 @@ public class ResponseControllerTest {
     }
 
     @Test
-    public void testQueryResponseNotFound() throws EntityNotFoundException {
+    void testQueryResponseNotFound() throws EntityNotFoundException {
         when(responseService.queryResponse(any(), any())).thenThrow(new EntityNotFoundException("testQueryResponse"));
         assertThrowsResponseStatusException(HttpStatus.NOT_FOUND, "testQueryResponse", () -> responseController.queryResponse(42L, 42L));
     }
 
     @Test
-    public void testQueryResponse() throws EntityNotFoundException {
+    void testQueryResponse() throws EntityNotFoundException {
         Response inputResponse = mock(Response.class);
         ResponseDTO expectedDTO = mock(ResponseDTO.class);
         when(responseService.queryResponse(42L, 43L)).thenReturn(inputResponse);
@@ -86,28 +86,28 @@ public class ResponseControllerTest {
     }
 
     @Test
-    public void testUpdateResponseInvalidSemantics() throws EntityNotFoundException, SemanticallyInvalidInputException, ForbiddenOperationException {
+    void testUpdateResponseInvalidSemantics() throws EntityNotFoundException, SemanticallyInvalidInputException, ForbiddenOperationException {
         when(responseService.updateResponse(any(), any(), any(), any())).thenThrow(new SemanticallyInvalidInputException("testCreateResponse"));
         CreateResponseRequest inputDTO = mock(CreateResponseRequest.class);
         assertThrowsResponseStatusException(HttpStatus.UNPROCESSABLE_ENTITY, "testCreateResponse", () -> responseController.updateResponse(42L, 42L, inputDTO));
     }
 
     @Test
-    public void testUpdateResponseForbidden() throws EntityNotFoundException, SemanticallyInvalidInputException, ForbiddenOperationException {
+    void testUpdateResponseForbidden() throws EntityNotFoundException, SemanticallyInvalidInputException, ForbiddenOperationException {
         when(responseService.updateResponse(any(), any(), any(), any())).thenThrow(new ForbiddenOperationException("testCreateResponse"));
         CreateResponseRequest inputDTO = mock(CreateResponseRequest.class);
         assertThrowsResponseStatusException(HttpStatus.FORBIDDEN, "testCreateResponse", () -> responseController.updateResponse(42L, 42L, inputDTO));
     }
 
     @Test
-    public void testUpdateResponseNotFound() throws EntityNotFoundException, SemanticallyInvalidInputException, ForbiddenOperationException {
+    void testUpdateResponseNotFound() throws EntityNotFoundException, SemanticallyInvalidInputException, ForbiddenOperationException {
         when(responseService.updateResponse(any(), any(), any(), any())).thenThrow(new EntityNotFoundException("testCreateResponse"));
         CreateResponseRequest inputDTO = mock(CreateResponseRequest.class);
         assertThrowsResponseStatusException(HttpStatus.NOT_FOUND, "testCreateResponse", () -> responseController.updateResponse(42L, 42L, inputDTO));
     }
 
     @Test
-    public void testUpdateResponse() throws EntityNotFoundException, ForbiddenOperationException, SemanticallyInvalidInputException {
+    void testUpdateResponse() throws EntityNotFoundException, ForbiddenOperationException, SemanticallyInvalidInputException {
         Response expectedResponse = mock(Response.class);
         when(responseService.updateResponse(any(), any(), any(), any())).thenReturn(expectedResponse);
 

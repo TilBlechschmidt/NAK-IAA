@@ -18,7 +18,7 @@
 //    }
 //
 //    @Test
-//    public void testConvertUserToDTO() {
+//    void testConvertUserToDTO() {
 //        User user = mock(User.class);
 //
 //        when(user.getId()).thenReturn(42L);

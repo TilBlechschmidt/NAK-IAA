@@ -29,7 +29,7 @@
 //    }
 //
 //    @Test
-//    public void testConvertResponseTimeslotToDTO() {
+//    void testConvertResponseTimeslotToDTO() {
 //        ResponseTimeslot responseTimeslot = mock(ResponseTimeslot.class);
 //        Timeslot timeslot = mock(Timeslot.class);
 //
@@ -44,7 +44,7 @@
 //    }
 //
 //    @Test
-//    public void testConvertResponseToDTO() {
+//    void testConvertResponseToDTO() {
 //        Response response = mock(Response.class);
 //        Survey survey = mock(Survey.class);
 //        Participation participation = mock(Participation.class);
@@ -70,7 +70,7 @@
 //    }
 //
 //    @Test
-//    public void testConvertResponseToDTOOneResponse() {
+//    void testConvertResponseToDTOOneResponse() {
 //        Response response = mock(Response.class);
 //        Survey survey = mock(Survey.class);
 //        Participation participation = mock(Participation.class);

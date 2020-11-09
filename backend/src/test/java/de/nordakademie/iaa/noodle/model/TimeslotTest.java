@@ -35,14 +35,14 @@ class TimeslotTest {
     }
 
     @Test
-    public void testCreate() {
+    void testCreate() {
         timeslot = testTimeslot(entityManager);
         entityManager.persist(timeslot);
         assertNotNull(id = timeslot.getId());
     }
 
     @Test
-    public void testRead() {
+    void testRead() {
         assumeThatCode(this::testCreate).doesNotThrowAnyException();
 
         timeslot = null;
@@ -55,7 +55,7 @@ class TimeslotTest {
     }
 
     @Test
-    public void testUpdate() {
+    void testUpdate() {
 //        We have decided not to make entities updatable before it is necessary
 //        This test will be used but skipped until that decision is made final.
         TestUtil.skip();
@@ -64,7 +64,7 @@ class TimeslotTest {
     }
 
     @Test
-    public void testDelete() {
+    void testDelete() {
         assumeThatCode(this::testCreate).doesNotThrowAnyException();
 
         assertNotNull(entityManager.find(Timeslot.class,id));

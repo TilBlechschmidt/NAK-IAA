@@ -33,7 +33,7 @@ public class SurveyServiceTest {
     }
 
     @Test
-    public void testQuerySurvey() throws EntityNotFoundException {
+    void testQuerySurvey() throws EntityNotFoundException {
         Survey survey = mock(Survey.class);
         when(surveyRepository.findById(42L)).thenReturn(survey);
 

@@ -32,14 +32,14 @@ class UserTest {
     }
 
     @Test
-    public void testCreate() {
+    void testCreate() {
         user = testUser();
         entityManager.persist(user);
         assertNotNull(id = user.getId());
     }
 
     @Test
-    public void testRead() {
+    void testRead() {
         assumeThatCode(this::testCreate).doesNotThrowAnyException();
 
         user = null;
@@ -53,7 +53,7 @@ class UserTest {
     }
 
     @Test
-    public void testUpdate() {
+    void testUpdate() {
 //        We have decided not to make entities updatable before it is necessary
 //        This test will be used but skipped until that decision is made final.
         TestUtil.skip();
@@ -62,7 +62,7 @@ class UserTest {
     }
 
     @Test
-    public void testDelete() {
+    void testDelete() {
         assumeThatCode(this::testCreate).doesNotThrowAnyException();
 
         assertNotNull(entityManager.find(User.class, id));

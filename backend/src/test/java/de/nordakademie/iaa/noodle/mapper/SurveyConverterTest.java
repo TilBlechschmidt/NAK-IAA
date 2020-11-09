@@ -29,7 +29,7 @@
 //    }
 //
 //    @Test
-//    public void testConvertTimeslotToAPI() {
+//    void testConvertTimeslotToAPI() {
 //        Timeslot timeslot = mock(Timeslot.class);
 //
 //        Date startDate = new Date(0);
@@ -47,7 +47,7 @@
 //    }
 //
 //    @Test
-//    public void testConvertSurveyToDTOClosed() {
+//    void testConvertSurveyToDTOClosed() {
 //        Survey survey = mock(Survey.class);
 //        User currentUser = mock(User.class);
 //        User creator = mock(User.class);
@@ -88,7 +88,7 @@
 //    }
 //
 //    @Test
-//    public void testConvertSurveyToDTONotClosed() {
+//    void testConvertSurveyToDTONotClosed() {
 //        Survey survey = mock(Survey.class);
 //        User currentUser = mock(User.class);
 //        User creator = mock(User.class);
@@ -129,7 +129,7 @@
 //    }
 //
 //    @Test
-//    public void testConvertSurveyToDTOOneStaleParticipation() {
+//    void testConvertSurveyToDTOOneStaleParticipation() {
 //        Survey survey = mock(Survey.class);
 //        User currentUser = mock(User.class);
 //        User creator = mock(User.class);
@@ -158,7 +158,7 @@
 //    }
 //
 //    @Test
-//    public void testConvertSurveyToDTOOneStaleParticipationAndOneResponse() {
+//    void testConvertSurveyToDTOOneStaleParticipationAndOneResponse() {
 //        Survey survey = mock(Survey.class);
 //        User currentUser = mock(User.class);
 //        User creator = mock(User.class);

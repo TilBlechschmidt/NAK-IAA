@@ -22,19 +22,19 @@ class UserRepositoryTest {
     // CHECK data.sql for the TestData referenced here.
 
     @Test
-    public void testFindByEmail() {
+    void testFindByEmail() {
         user = userRepository.findByEmail("Name1@example.com");
         assertEquals(1, user.getId());
     }
 
     @Test
-    public void testFindById() {
+    void testFindById() {
         user = userRepository.findById(0L);
         assertEquals("Name0", user.getFullName());
     }
 
     @Test
-    public void testSave() {
+    void testSave() {
         user = UserTest.testUser();
         assertNull(user.getId());
         userRepository.save(user);
@@ -44,7 +44,7 @@ class UserRepositoryTest {
     }
 
     @Test
-    public void testDelete() {
+    void testDelete() {
         user = entityManager.find(User.class,1L);
         assertNotNull(user);
         userRepository.delete(user);

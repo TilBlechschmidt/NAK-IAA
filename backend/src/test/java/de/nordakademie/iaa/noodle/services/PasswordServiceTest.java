@@ -27,7 +27,7 @@ public class PasswordServiceTest {
     }
 
     @Test
-    public void testHashPassword() throws PasswordException {
+    void testHashPassword() throws PasswordException {
         PasswordEncoder passwordEncoder = mock(PasswordEncoder.class);
         when(passwordEncoder.encode("password1pepper")).thenReturn("hash_password1");
 
@@ -37,27 +37,27 @@ public class PasswordServiceTest {
     }
 
     @Test
-    public void testHashPasswordTooShort() {
+    void testHashPasswordTooShort() {
         PasswordException exception = assertThrows(PasswordException.class,
             () -> passwordService.hashPassword("a"));
         assertEquals("passwordDoesNotMatchRules", exception.getMessage());
     }
 
     @Test
-    public void testHashPasswordTooLong() {
+    void testHashPasswordTooLong() {
         PasswordException exception = assertThrows(PasswordException.class,
             () -> passwordService.hashPassword("aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa"));
         assertEquals("passwordDoesNotMatchRules", exception.getMessage());
     }
 
     @Test
-    public void testIsPasswordCorrect() {
+    void testIsPasswordCorrect() {
         boolean isCorrect = passwordService.isPasswordCorrect(user, "password1");
         assertTrue(isCorrect);
     }
 
     @Test
-    public void testIsPasswordCorrectWrongPassword() {
+    void testIsPasswordCorrectWrongPassword() {
         boolean isCorrect = passwordService.isPasswordCorrect(user, "password2");
         assertFalse(isCorrect);
     }

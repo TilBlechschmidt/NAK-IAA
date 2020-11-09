@@ -30,7 +30,7 @@ public class MailServiceTest {
     }
 
     @Test
-    public void testSendRegistrationMail() throws MailClientException, MessagingException {
+    void testSendRegistrationMail() throws MailClientException, MessagingException {
         mailService.sendRegistrationMail("TOKEN", "FULL_NAME", "EMAIL");
 
         String body = """
@@ -50,7 +50,7 @@ public class MailServiceTest {
     }
 
     @Test
-    public void testSendRegistrationMailDuplicateEmail() throws MailClientException, MessagingException {
+    void testSendRegistrationMailDuplicateEmail() throws MailClientException, MessagingException {
         mailService.sendRegistrationMailDuplicateEmail("FULL_NAME", "EMAIL");
 
         String body = """
@@ -69,7 +69,7 @@ public class MailServiceTest {
     }
 
     @Test
-    public void testSendNeedsAttentionMail() throws MailClientException, MessagingException {
+    void testSendNeedsAttentionMail() throws MailClientException, MessagingException {
         Survey survey = mock(Survey.class);
         User participant = mock(User.class);
         User creator = mock(User.class);
@@ -100,7 +100,7 @@ public class MailServiceTest {
     }
 
     @Test
-    public void testSendMail() throws MailClientException, MessagingException {
+    void testSendMail() throws MailClientException, MessagingException {
         mailService.sendMail("SUBJECT", "BODY", "EMAIL");
 
         verify(mimeMessage, times(1)).setFrom("FROM_EMAIL");
@@ -110,7 +110,7 @@ public class MailServiceTest {
     }
 
     @Test
-    public void testSendMailFailed() {
+    void testSendMailFailed() {
         doThrow(mock(MailException.class))
             .when(mailSender)
             .send(any(MimeMessage.class));

@@ -37,7 +37,7 @@ class ResponseTimeslotTest {
     }
 
     @Test
-    public void testCreate() {
+    void testCreate() {
         responseTimeslot = testResponseTimeslot(entityManager);
         entityManager.persist(responseTimeslot);
         assertNotNull(id = responseTimeslot.getId());
@@ -57,7 +57,7 @@ class ResponseTimeslotTest {
     }
 
     @Test
-    public void testUpdate() {
+    void testUpdate() {
 //        We have decided not to make entities updatable before it is necessary
 //        This test will be used but skipped until that decision is made final.
         TestUtil.skip();
@@ -66,7 +66,7 @@ class ResponseTimeslotTest {
     }
 
     @Test
-    public void testDelete() {
+    void testDelete() {
         assumeThatCode(this::testCreate).doesNotThrowAnyException();
 
         assertNotNull(entityManager.find(ResponseTimeslot.class, id));

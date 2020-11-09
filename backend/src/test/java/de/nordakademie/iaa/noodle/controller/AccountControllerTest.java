@@ -29,7 +29,7 @@ public class AccountControllerTest {
     }
 
     @Test
-    public void testAuthenticateWrongPassword() throws PasswordException, EntityNotFoundException {
+    void testAuthenticateWrongPassword() throws PasswordException, EntityNotFoundException {
         when(signInService.attemptAuthentication(any(), any())).thenThrow(new PasswordException("testAuthenticatePassword"));
         AuthenticationRequest inputDTO = mock(AuthenticationRequest.class);
         assertThrowsResponseStatusException(HttpStatus.UNAUTHORIZED, "invalidAuthenticationData", () -> accountController.authenticate(inputDTO));
@@ -37,14 +37,14 @@ public class AccountControllerTest {
     }
 
     @Test
-    public void testAuthenticateNotFound() throws PasswordException, EntityNotFoundException {
+    void testAuthenticateNotFound() throws PasswordException, EntityNotFoundException {
         when(signInService.attemptAuthentication(any(), any())).thenThrow(new EntityNotFoundException("testAuthenticateNotFound"));
         AuthenticationRequest inputDTO = mock(AuthenticationRequest.class);
         assertThrowsResponseStatusException(HttpStatus.UNAUTHORIZED, "invalidAuthenticationData", () -> accountController.authenticate(inputDTO));
     }
 
     @Test
-    public void testAuthenticate() throws PasswordException, EntityNotFoundException {
+    void testAuthenticate() throws PasswordException, EntityNotFoundException {
         AuthenticationRequest authenticationRequest = mock(AuthenticationRequest.class);
         when(authenticationRequest.getEmail()).thenReturn("EMAIL");
         when(authenticationRequest.getPassword()).thenReturn("PASSWORD");
@@ -70,7 +70,7 @@ public class AccountControllerTest {
     }
 
     @Test
-    public void testCreateUserJWTError() throws ConflictException, JWTException, PasswordException {
+    void testCreateUserJWTError() throws ConflictException, JWTException, PasswordException {
         when(signUpService.createAccount(any(), any())).thenThrow(new JWTException("testCreateUserJWT"));
         ActivateUserRequest activateUserRequest = mock(ActivateUserRequest.class);
         assertThrowsResponseStatusException(HttpStatus.UNAUTHORIZED, "testCreateUserJWT",
@@ -78,7 +78,7 @@ public class AccountControllerTest {
     }
 
     @Test
-    public void testCreateUserConflict() throws ConflictException, JWTException, PasswordException {
+    void testCreateUserConflict() throws ConflictException, JWTException, PasswordException {
         when(signUpService.createAccount(any(), any())).thenThrow(new ConflictException("testCreateUserConflict"));
         ActivateUserRequest activateUserRequest = mock(ActivateUserRequest.class);
         assertThrowsResponseStatusException(HttpStatus.CONFLICT, "testCreateUserConflict",
@@ -86,7 +86,7 @@ public class AccountControllerTest {
     }
 
     @Test
-    public void testCreateUserUnprocessableEntity() throws ConflictException, JWTException, PasswordException {
+    void testCreateUserUnprocessableEntity() throws ConflictException, JWTException, PasswordException {
         when(signUpService.createAccount(any(), any())).thenThrow(new PasswordException("testCreateUserUnprocessableEntity"));
         ActivateUserRequest activateUserRequest = mock(ActivateUserRequest.class);
         assertThrowsResponseStatusException(HttpStatus.UNPROCESSABLE_ENTITY, "testCreateUserUnprocessableEntity",
@@ -94,7 +94,7 @@ public class AccountControllerTest {
     }
 
     @Test
-    public void testCreateUser() throws ConflictException, JWTException, PasswordException {
+    void testCreateUser() throws ConflictException, JWTException, PasswordException {
         User user = mock(User.class);
         when(signUpService.createAccount("TOKEN", "PASSWORD")).thenReturn(user);
         when(user.getId()).thenReturn(42L);
@@ -116,7 +116,7 @@ public class AccountControllerTest {
     }
 
     @Test
-    public void testRequestRegistrationMailError() throws MailClientException {
+    void testRequestRegistrationMailError() throws MailClientException {
         doThrow(new MailClientException("testMailError")).when(signUpService).mailSignupToken(any(), any());
         RequestRegistrationEmailRequest requestRegistrationEmailRequest = mock(RequestRegistrationEmailRequest.class);
 
@@ -125,7 +125,7 @@ public class AccountControllerTest {
     }
 
     @Test
-    public void testRequestRegistrationEmail() throws MailClientException {
+    void testRequestRegistrationEmail() throws MailClientException {
         RequestRegistrationEmailRequest requestRegistrationEmailRequest = mock(RequestRegistrationEmailRequest.class);
         when(requestRegistrationEmailRequest.getName()).thenReturn("FULL_NAME");
         when(requestRegistrationEmailRequest.getEmail()).thenReturn("EMAIL");
