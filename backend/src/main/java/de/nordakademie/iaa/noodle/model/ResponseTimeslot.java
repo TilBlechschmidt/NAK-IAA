@@ -5,7 +5,8 @@ import java.util.Objects;
 import java.util.UUID;
 
 @Entity
-@Table(name = "response_timeslot")
+@Table(name = "response_timeslot",
+    uniqueConstraints = {@UniqueConstraint(columnNames = {"response_id", "timeslot_id"})})
 public class ResponseTimeslot {
 
     @Id

@@ -5,7 +5,8 @@ import java.util.Objects;
 import java.util.UUID;
 
 @Entity
-@Table(name = "participation")
+@Table(name = "participation",
+    uniqueConstraints = {@UniqueConstraint(columnNames = {"participant_id", "survey_id"})})
 public class Participation {
 
     @Id
