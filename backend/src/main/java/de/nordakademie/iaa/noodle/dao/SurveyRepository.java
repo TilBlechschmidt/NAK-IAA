@@ -22,7 +22,7 @@ public interface SurveyRepository {
 // method, or filtering in the backend instead of the database, which are all not ideal either.
     @Query("""
 SELECT DISTINCT
-    survey.id AS ID,
+    survey.id AS id,
     survey.title AS title,
         (SELECT COUNT(response) FROM Response response WHERE response.participation.survey = survey)
         AS responseCount

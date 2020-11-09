@@ -45,7 +45,6 @@ public abstract class SurveyMapper {
     }
 
     @Named("surveyToSurveyDTO")
-    @Mapping(target = "id", source = "ID")
     @Mapping(target = "participantCount", source = "responseCount")
     public abstract QuerySurveysResult surveyToSurveyDTO(QuerySurveysItem survey);
 

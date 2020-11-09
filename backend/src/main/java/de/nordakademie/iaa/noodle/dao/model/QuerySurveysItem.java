@@ -1,7 +1,7 @@
 package de.nordakademie.iaa.noodle.dao.model;
 
 public interface QuerySurveysItem {
-    Long getID();
+    Long getId();
 
     String getTitle();
 

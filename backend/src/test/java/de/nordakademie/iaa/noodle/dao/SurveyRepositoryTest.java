@@ -53,7 +53,7 @@ class SurveyRepositoryTest {
     void querySurveysThatNeedAttentionByTest() {
         surveys = surveyRepository.querySurvey(2L, null, null, null, null, true);
         assertEquals(1L, surveys.size());
-        assertEquals(12L, surveys.get(0).getID());
+        assertEquals(12L, surveys.get(0).getId());
         surveys = surveyRepository.querySurvey(2L, null, null, null, null, false);
         assertSurveysContainsAllWithoutID(12L);
     }
@@ -62,7 +62,7 @@ class SurveyRepositoryTest {
     void queryUpcomingSurveysTest() {
         surveys = surveyRepository.querySurvey(null, null, null, null, true, null);
         assertEquals(1, surveys.size());
-        assertEquals(13L, surveys.get(0).getID());
+        assertEquals(13L, surveys.get(0).getId());
         surveys = surveyRepository.querySurvey(null, null, null, null, false, null);
         assertSurveysContainsAllWithoutID(13L);
     }
@@ -101,15 +101,15 @@ class SurveyRepositoryTest {
     void queryCombinationsTest() {
         surveys = surveyRepository.querySurvey(2L, true, null, null, null, true);
         assertEquals(1L, surveys.size());
-        assertEquals(12L, surveys.get(0).getID());
+        assertEquals(12L, surveys.get(0).getId());
         surveys = surveyRepository.querySurvey(2L, true, null, null, null, false);
         assertEquals(2L, surveys.size());
-        assertEquals(11L, surveys.get(0).getID());
-        assertEquals(13L, surveys.get(1).getID());
+        assertEquals(11L, surveys.get(0).getId());
+        assertEquals(13L, surveys.get(1).getId());
 
         surveys = surveyRepository.querySurvey(2L, null, true, true, true, null);
         assertEquals(1L,surveys.size());
-        assertEquals(13L, surveys.get(0).getID());
+        assertEquals(13L, surveys.get(0).getId());
 
         surveys = surveyRepository.querySurvey(2L, null, false, true, null, null);
         assertEquals(0L,surveys.size());
@@ -123,17 +123,17 @@ class SurveyRepositoryTest {
     }
 
     private void printSurveys() {
-        surveys.stream().map(QuerySurveysItem::getID).forEach(System.out::println);
+        surveys.stream().map(QuerySurveysItem::getId).forEach(System.out::println);
     }
 
     private void assertSurveysContainsAllWithoutID(Long id) {
-        surveys.stream().map(QuerySurveysItem::getID).forEach(System.out::println);
+        surveys.stream().map(QuerySurveysItem::getId).forEach(System.out::println);
         assertEquals(NUMBER_OF_SURVEYS - 1, surveys.size());
-        assertFalse(surveys.stream().anyMatch(s -> s.getID().equals(id)));
+        assertFalse(surveys.stream().anyMatch(s -> s.getId().equals(id)));
     }
 
     private void assertContainsSurveyWithId(Long id) {
-        assertTrue(surveys.stream().anyMatch(survey -> survey.getID().equals(id)));
+        assertTrue(surveys.stream().anyMatch(survey -> survey.getId().equals(id)));
 
     }
 }
