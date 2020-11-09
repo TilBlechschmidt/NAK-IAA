@@ -5,22 +5,27 @@ import java.util.Objects;
 import java.util.UUID;
 
 @Entity
+@Table(name = "response_timeslot")
 public class ResponseTimeslot {
 
     @Id
     @GeneratedValue
+    @Column(name = "id")
     private Long id;
 
     @Transient
     transient private UUID transientID;
 
     @ManyToOne(optional = false, fetch = FetchType.LAZY)
+    @JoinColumn(name = "response_id")
     private Response response;
 
     @ManyToOne(optional = false, fetch = FetchType.LAZY)
+    @JoinColumn(name = "timeslot_id")
     private Timeslot timeslot;
 
     @Enumerated(EnumType.STRING)
+    @Column(name = "response_type")
     private ResponseType responseType;
 
     public ResponseTimeslot() {

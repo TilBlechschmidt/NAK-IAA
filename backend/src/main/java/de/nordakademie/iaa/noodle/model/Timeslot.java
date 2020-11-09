@@ -6,23 +6,26 @@ import java.util.Objects;
 import java.util.UUID;
 
 @Entity
+@Table(name = "timeslot")
 public class Timeslot {
     @Id
     @GeneratedValue
+    @Column(name = "id")
     private Long id;
 
     @Transient
     transient private UUID transientID;
 
     @ManyToOne(optional = false, fetch = FetchType.LAZY)
+    @JoinColumn(name = "survey_id")
     private Survey survey;
 
     @Temporal(TemporalType.TIMESTAMP)
-    @Column(nullable = false)
+    @Column(name = "start",nullable = false)
     private Date start;
 
     @Temporal(TemporalType.TIMESTAMP)
-    @Column(nullable = true)
+    @Column(name = "end",nullable = true)
     private Date end;
 
 

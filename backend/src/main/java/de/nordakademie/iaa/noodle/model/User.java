@@ -5,20 +5,26 @@ import java.util.Objects;
 import java.util.Set;
 
 @Entity
+@Table(name = "user")
 public class User {
     @Id
     @GeneratedValue
+    @Column(name = "id")
     private Long id;
+
     @OneToMany(mappedBy = "creator", fetch = FetchType.LAZY)
     private Set<Survey> createdSurveys;
+
     @OneToMany(mappedBy = "participant", orphanRemoval = true, cascade = CascadeType.ALL, fetch = FetchType.LAZY)
     private Set<Participation> participations;
-    @Column(nullable = false, unique = true)
+
+    @Column(name = "email", nullable = false, unique = true)
     private String email;
-    @Column(nullable = false)
+    @Column(name = "full_name", nullable = false)
     private String fullName;
-    @Column(nullable = false, length = 2048)
+    @Column(name = "password_hash", nullable = false, length = 2048)
     private String passwordHash;
+
     public User() {
     }
 

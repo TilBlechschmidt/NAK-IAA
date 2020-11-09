@@ -5,12 +5,15 @@ import java.util.Objects;
 import java.util.Set;
 
 @Entity
+@Table(name = "response")
 public class Response {
     @Id
     @GeneratedValue
+    @Column(name = "id")
     private Long id;
 
     @OneToOne(optional = false, fetch = FetchType.LAZY)
+    @JoinColumn(name = "participation_id")
     private Participation participation;
 
     @OneToMany(cascade = CascadeType.ALL, orphanRemoval = true, mappedBy = "response", fetch = FetchType.LAZY)

@@ -5,17 +5,24 @@ import java.util.Objects;
 import java.util.UUID;
 
 @Entity
+@Table(name = "participation")
 public class Participation {
 
     @Id
     @GeneratedValue
+    @Column(name = "id")
     private Long id;
+
     @Transient
     transient private UUID transientID;
     @ManyToOne(optional = false, fetch = FetchType.LAZY)
+    @JoinColumn(name = "participant_id")
     private User participant;
+
     @ManyToOne(optional = false, fetch = FetchType.LAZY)
+    @JoinColumn(name = "survey_id")
     private Survey survey;
+
     @OneToOne(optional = true, cascade = CascadeType.ALL, mappedBy = "participation", fetch = FetchType.LAZY)
     private Response response;
 

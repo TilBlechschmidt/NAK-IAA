@@ -6,9 +6,11 @@ import java.util.Set;
 import java.util.UUID;
 
 @Entity
+@Table(name = "survey")
 public class Survey {
     @Id
     @GeneratedValue
+    @Column(name = "id")
     private Long id;
 
     @Transient
@@ -18,14 +20,19 @@ public class Survey {
     private Set<Timeslot> timeslots;
 
     @OneToOne(cascade = CascadeType.ALL, optional = true, fetch = FetchType.LAZY)
+    @JoinColumn(name = "chosen_timeslot_id")
     private Timeslot chosenTimeslot;
+
     @ManyToOne(optional = false, fetch = FetchType.LAZY)
+    @JoinColumn(name = "creator_id")
     private User creator;
+
     @OneToMany(cascade = CascadeType.ALL, orphanRemoval = true, mappedBy = "survey", fetch = FetchType.LAZY)
     private Set<Participation> participations;
-    @Column(nullable = false, length = 2048)
+
+    @Column(name = "title", nullable = false, length = 2048)
     private String title;
-    @Column(nullable = false, length = 2048)
+    @Column(name = "description", nullable = false, length = 2048)
     private String description;
 
     public Survey() {
@@ -43,6 +50,10 @@ public class Survey {
 
     public Timeslot getChosenTimeslot() {
         return chosenTimeslot;
+    }
+
+    public void setChosenTimeslot(Timeslot chosenTimeslot) {
+        this.chosenTimeslot = chosenTimeslot;
     }
 
     public Long getId() {
@@ -65,24 +76,20 @@ public class Survey {
         return title;
     }
 
-    public String getDescription() {
-        return description;
-    }
-
-    public boolean getIsClosed() {
-        return getChosenTimeslot() != null;
-    }
-
     public void setTitle(String title) {
         this.title = title;
+    }
+
+    public String getDescription() {
+        return description;
     }
 
     public void setDescription(String description) {
         this.description = description;
     }
 
-    public void setChosenTimeslot(Timeslot chosenTimeslot) {
-        this.chosenTimeslot = chosenTimeslot;
+    public boolean getIsClosed() {
+        return getChosenTimeslot() != null;
     }
 
     @Override
