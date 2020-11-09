@@ -4,6 +4,7 @@ import de.nordakademie.iaa.noodle.model.User;
 import de.nordakademie.iaa.noodle.services.exceptions.ConflictException;
 import de.nordakademie.iaa.noodle.services.exceptions.JWTException;
 import de.nordakademie.iaa.noodle.services.exceptions.MailClientException;
+import de.nordakademie.iaa.noodle.services.exceptions.PasswordException;
 import de.nordakademie.iaa.noodle.services.model.UserDetails;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
@@ -28,7 +29,7 @@ class SignUpServiceTest {
     }
 
     @Test
-    void createAccountTest() throws JWTException, ConflictException {
+    void createAccountTest() throws JWTException, ConflictException, PasswordException {
         UserDetails userDetails = mock(UserDetails.class);
         User user = mock(User.class);
         when(jwtService.userDetailsForToken("TOKEN")).thenReturn(userDetails);

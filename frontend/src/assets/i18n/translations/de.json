@@ -25,7 +25,7 @@
             "errors": {
                 "name_required": "Kein Name angegeben",
                 "invalid_mail": "Invalide Mailadresse",
-                "password_length": "Das Passwort muss zwischen 16 und 64 Zeichen besitzen",
+                "password_length": "Das Passwort muss zwischen 8 und 64 Zeichen besitzen",
                 "password_confirmation": "Passwörter stimmen nicht überein"
             }
         },

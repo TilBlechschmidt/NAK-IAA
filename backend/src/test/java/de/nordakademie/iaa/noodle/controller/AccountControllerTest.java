@@ -70,7 +70,7 @@ public class AccountControllerTest {
     }
 
     @Test
-    public void testCreateUserJWTError() throws ConflictException, JWTException {
+    public void testCreateUserJWTError() throws ConflictException, JWTException, PasswordException {
         when(signUpService.createAccount(any(), any())).thenThrow(new JWTException("testCreateUserJWT"));
         ActivateUserRequest activateUserRequest = mock(ActivateUserRequest.class);
         assertThrowsResponseStatusException(HttpStatus.UNAUTHORIZED, "testCreateUserJWT",
@@ -78,7 +78,7 @@ public class AccountControllerTest {
     }
 
     @Test
-    public void testCreateUserConflict() throws ConflictException, JWTException {
+    public void testCreateUserConflict() throws ConflictException, JWTException, PasswordException {
         when(signUpService.createAccount(any(), any())).thenThrow(new ConflictException("testCreateUserConflict"));
         ActivateUserRequest activateUserRequest = mock(ActivateUserRequest.class);
         assertThrowsResponseStatusException(HttpStatus.CONFLICT, "testCreateUserConflict",
@@ -86,7 +86,15 @@ public class AccountControllerTest {
     }
 
     @Test
-    public void testCreateUser() throws ConflictException, JWTException {
+    public void testCreateUserUnprocessableEntity() throws ConflictException, JWTException, PasswordException {
+        when(signUpService.createAccount(any(), any())).thenThrow(new PasswordException("testCreateUserUnprocessableEntity"));
+        ActivateUserRequest activateUserRequest = mock(ActivateUserRequest.class);
+        assertThrowsResponseStatusException(HttpStatus.UNPROCESSABLE_ENTITY, "testCreateUserUnprocessableEntity",
+            () -> accountController.activateUser(activateUserRequest));
+    }
+
+    @Test
+    public void testCreateUser() throws ConflictException, JWTException, PasswordException {
         User user = mock(User.class);
         when(signUpService.createAccount("TOKEN", "PASSWORD")).thenReturn(user);
         when(user.getId()).thenReturn(42L);

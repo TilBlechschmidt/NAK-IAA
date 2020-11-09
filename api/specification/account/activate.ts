@@ -1,6 +1,11 @@
 import {body, endpoint, request, response, String} from "@airtasker/spot";
 import {Password} from "./types";
-import {ConflictErrorResponseTemplate, Identifier, UnauthorizedErrorResponseTemplate} from "../types";
+import {
+    ConflictErrorResponseTemplate,
+    Identifier,
+    UnauthorizedErrorResponseTemplate,
+    UnprocessableEntityErrorResponseTemplate
+} from '../types';
 import {RegistrationUserDTO} from "./request";
 
 /** Registers a new user account */
@@ -16,6 +21,10 @@ class ActivateUser {
     /** User created */
     @response({ status: 201 })
     successfulResponse(@body body: ActivateUserResponse) {}
+
+    /** Password Invalid */
+    @response({ status: 422 })
+    passwordInvalidResponse(@body body: ActivateUserUnprocessableEntityError) {}
 
     /** Duplicate response */
     @response({ status: 409 })
@@ -41,4 +50,8 @@ interface ActivateUserUnauthorizedErrorResponse extends UnauthorizedErrorRespons
 
 interface ActivateUserConflictErrorResponse extends ConflictErrorResponseTemplate {
     message: "emailDuplicate"
+}
+
+interface ActivateUserUnprocessableEntityError extends UnprocessableEntityErrorResponseTemplate {
+    message: "passwordDoesNotMatchRules"
 }

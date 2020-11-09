@@ -19,7 +19,7 @@ export class PasswordConfirmationDialogComponent implements OnInit {
     constructor(private formBuilder: FormBuilder, private route: ActivatedRoute, private accountService: AccountService,
                 private router: Router) {
         this.form = this.formBuilder.group({
-            password: new FormControl('', [Validators.required, Validators.minLength(16), Validators.maxLength(64)]),
+            password: new FormControl('', [Validators.required, Validators.minLength(8), Validators.maxLength(64)]),
             passwordConfirmation: new FormControl('', [Validators.required])
         });
         this.route.queryParams.subscribe((params: Params) => this.token = params.token);

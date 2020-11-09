@@ -25,7 +25,7 @@
             "errors": {
                 "name_required": "Name required",
                 "invalid_mail": "Invalid email",
-                "password_length": "Password requires between 16 to 64 characters",
+                "password_length": "Password requires between 8 to 64 characters",
                 "password_confirmation": "Passwords don't match"
             },
             "auth.activate.error": "Error while sending password data"

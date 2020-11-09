@@ -1,10 +1,7 @@
 package de.nordakademie.iaa.noodle.services;
 
 import de.nordakademie.iaa.noodle.model.User;
-import de.nordakademie.iaa.noodle.services.exceptions.ConflictException;
-import de.nordakademie.iaa.noodle.services.exceptions.EntityNotFoundException;
-import de.nordakademie.iaa.noodle.services.exceptions.JWTException;
-import de.nordakademie.iaa.noodle.services.exceptions.MailClientException;
+import de.nordakademie.iaa.noodle.services.exceptions.*;
 import de.nordakademie.iaa.noodle.services.model.UserDetails;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.mail.MailException;
@@ -27,7 +24,7 @@ public class SignUpService {
         this.mailService = mailService;
     }
 
-    public User createAccount(String token, String password) throws JWTException, ConflictException {
+    public User createAccount(String token, String password) throws JWTException, ConflictException, PasswordException {
         // Token does not have the TOKEN_PREFIX, because it is not used for authentication
         UserDetails userDetails = jwtService.userDetailsForToken(token);
         return createUser(password, userDetails);
@@ -41,7 +38,7 @@ public class SignUpService {
         }
     }
 
-    private User createUser(String password, UserDetails userDetails) throws ConflictException {
+    private User createUser(String password, UserDetails userDetails) throws ConflictException, PasswordException {
         String passwordHash = passwordService.hashPassword(password);
         return userService.createNewUser(userDetails.getEmail(), userDetails.getFullName(), passwordHash);
     }
