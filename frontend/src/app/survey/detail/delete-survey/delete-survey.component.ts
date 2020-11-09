@@ -29,7 +29,7 @@ export class DeleteSurveyComponent implements OnInit {
     delete(): void {
         this.service.deleteSurvey({
             id: this.data.id
-        }).subscribe(next => this.router.navigateByUrl('survey'), error => this.deleteError = true);
+        }).subscribe(next => {this.router.navigateByUrl('survey'); this.dialogRef.close(); }, error => this.deleteError = true);
     }
 }
 

@@ -1,6 +1,7 @@
 import {Component, OnInit} from '@angular/core';
 import {MatDialogRef} from '@angular/material/dialog';
 import {SurveysService} from '../../../api/services/surveys.service';
+import {TimeslotCreationDto} from '../../../api/models/timeslot-creation-dto';
 
 @Component({
     selector: 'app-create-survey-dialog',
@@ -11,6 +12,7 @@ export class CreateSurveyDialogComponent implements OnInit {
 
     title = '';
     description = '';
+    timeSlots: TimeslotCreationDto[] = [];
     saveError = false;
 
     constructor(
@@ -30,8 +32,16 @@ export class CreateSurveyDialogComponent implements OnInit {
             body: {
                 title: this.title,
                 description: this.description,
-                timeslots: []
+                timeslots: this.timeSlots
             }
-        }).subscribe(next => this.onNoClick(), err  => this.saveError = true);
+        }).subscribe(next => {this.onNoClick(), window.location.reload(); }, err  => this.saveError = true);
+    }
+
+    createTimeSlot(timeSlot: TimeslotCreationDto): void {
+        this.timeSlots.push(timeSlot);
+    }
+
+    onDelete(index: number): void {
+        this.timeSlots.splice(index, 1);
     }
 }

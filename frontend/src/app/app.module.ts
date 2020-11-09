@@ -34,7 +34,7 @@ import {LoggedInGuard} from './authentication/service/LoggedInGuard';
 import {DetailViewComponent} from './survey/detail/detail-view/detail-view.component';
 import {SurveyTabViewComponent} from './survey/survey-tab-view/survey-tab-view.component';
 import {AbstractSurveyTableComponent} from './survey/tabs/abstract-survey-table/abstract-survey-table.component';
-import {EditSurveyWarnComponent} from './survey/detail/edit-view/edit-survey-warn.component';
+import {EditSurveyWarnComponent} from './survey/detail/edit-view-warn/edit-survey-warn.component';
 import {ApiModule} from './api/api.module';
 import {environment} from '../environments/environment';
 import { ResponseComponent } from './survey/detail/response/response.component';
@@ -124,7 +124,7 @@ const SelectedApiModule = environment.api.mocked ? ApiModule.mocked() : ApiModul
         TranslateModule.forRoot(),
         SelectedApiModule,
         MatMenuModule,
-        MatRippleModule,
+        MatRippleModule
     ],
     providers: [
         LoggedInGuard,

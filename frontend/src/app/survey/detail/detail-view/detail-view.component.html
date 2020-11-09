@@ -1,33 +1,41 @@
 <mat-card class="container">
     <div class="info">
-        <div class="title" *ngIf="!isEdit">
-            <h2>{{ title }}</h2>
-            <span>{{ description }}</span>
-        </div>
-        <div class="title" *ngIf="isEdit">
-            <mat-form-field class="form-field">
-                <mat-label>{{ "survey.title" | translate }}</mat-label>
-                <input matInput [(ngModel)]="title" name="title">
-            </mat-form-field>
-            <mat-form-field class="form-field">
-                <mat-label>{{ "survey.description" | translate }}</mat-label>
-                <textarea matInput [(ngModel)]="description" name="description"></textarea>
-            </mat-form-field>
+        <div>
+            <div class="title" *ngIf="!isEdit">
+                <h2>{{ title }}</h2>
+                <span>{{ description }}</span>
+            </div>
+            <div class="title" *ngIf="isEdit">
+                <mat-form-field class="form-field">
+                    <mat-label>{{ "survey.title" | translate }}</mat-label>
+                    <input matInput [(ngModel)]="title" name="title">
+                </mat-form-field>
+                <mat-form-field class="form-field">
+                    <mat-label>{{ "survey.description" | translate }}</mat-label>
+                    <textarea matInput [(ngModel)]="description" name="description"></textarea>
+                </mat-form-field>
+            </div>
         </div>
         <div class="edit">
-            <button mat-mini-fab color="primary" aria-label="Edit" (click)="toggleEdit()">
+            <button *ngIf="isEditable" mat-mini-fab color="primary" aria-label="Edit" (click)="toggleEdit()">
                 <mat-icon *ngIf="!isEdit">edit</mat-icon>
                 <mat-icon *ngIf="isEdit">visibility</mat-icon>
             </button>
         </div>
     </div>
-    <app-response-overview style="width: 100%"></app-response-overview>
+    <div class="responses">
+        <div class="response" *ngFor="let timeslot of timeSlots; let itemIndex = index">
+            <app-response [mode]="getMode()" [timeSlot]="timeslot" (deleted)="onDelete(itemIndex)"
+                          (responseEdited)="updateTimeSlot(itemIndex, $event)"
+                          (responded)="responded($event)"></app-response>
+        </div>
+    </div>
     <div class="buttonWithErrorMsg">
         <mat-error *ngIf="saveError">{{ "survey.errors.saveError" | translate }}</mat-error>
         <div class="buttons">
             <button mat-raised-button class="button"
                     [routerLink]="'/survey'">{{ "back" | translate }}</button>
-            <button mat-raised-button color="warn" class="button"
+            <button *ngIf="isDeletable" mat-raised-button color="warn" class="button"
                     (click)="delete()">{{ "survey.delete" | translate }}</button>
             <button mat-raised-button color="primary" class="button"
                     (click)="submit()">{{ "survey.save" | translate }}</button>

@@ -34,6 +34,8 @@
     "survey": {
         "title": "Title",
         "description": "Description",
+        "begin": "Begin: ",
+        "end": "End: ",
         "participantCount": "participants",
         "create": "Create New Survey",
         "delete": "Delete",

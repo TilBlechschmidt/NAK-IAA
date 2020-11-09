@@ -34,6 +34,8 @@
     "survey": {
         "title": "Titel",
         "description": "Beschreibung",
+        "begin": "Beginn: ",
+        "end": "Ende: ",
         "participantCount": "Teilnehmer",
         "create": "Neue Terminumfrage erstellen",
         "delete": "Löschen",

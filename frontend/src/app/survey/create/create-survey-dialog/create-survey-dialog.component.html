@@ -2,15 +2,20 @@
     <div class="title">
         <mat-form-field class="form-field">
             <mat-label>{{ "survey.title" | translate }}</mat-label>
-            <input matInput class="input" [(ngModel)]="title" name="title">
+            <input matInput  [(ngModel)]="title" name="title">
         </mat-form-field>
         <mat-form-field class="form-field">
             <mat-label>{{ "survey.description" | translate }}</mat-label>
-            <textarea matInput class="input" [(ngModel)]="description" name="description"></textarea>
+            <textarea matInput [(ngModel)]="description" name="description"></textarea>
         </mat-form-field>
     </div>
 </div>
-<app-response-overview></app-response-overview>
+<div class="responses">
+    <app-response class="response" [mode]="'create'" (timeslotCreated)="createTimeSlot($event)"></app-response>
+    <div class="container" *ngFor="let timeslot of timeSlots; let itemIndex = index">
+        <app-response class="response" [mode]="'create-view'" [timeSlotCreate]="timeslot" (deleted)="onDelete(itemIndex)"></app-response>
+    </div>
+</div>
 <div class="buttonWithErrorMsg">
     <mat-error *ngIf="saveError">{{ "survey.errors.saveError" | translate }}</mat-error>
     <div class="buttons">
