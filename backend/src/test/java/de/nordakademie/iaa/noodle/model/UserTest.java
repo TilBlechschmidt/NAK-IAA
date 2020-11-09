@@ -27,7 +27,7 @@ class UserTest {
     private EntityManager entityManager;
 
     public static User testUser() {
-        return new User(new HashSet<>(), new HashSet<>(), "email" + (emailCounter++), "testName", "testHash");
+        return new User("email" + (emailCounter++), "testName", "testHash");
     }
 
     @AfterEach

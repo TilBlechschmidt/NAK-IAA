@@ -31,7 +31,7 @@ public class ParticipationTest {
         userId = user.getId();
         Survey survey = TestUtil.requireEntity(SurveyTest::testSurvey, entityManager);
         surveyId = survey.getId();
-        return new Participation(user, survey, null);
+        return new Participation(user, survey);
     }
 
     @AfterEach

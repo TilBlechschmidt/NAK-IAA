@@ -45,12 +45,11 @@ public class Participation {
      *
      * @param participant The user who created the participation.
      * @param survey      The survey the participation is for.
-     * @param response    The optional response.
      */
-    public Participation(User participant, Survey survey, Response response) {
+    public Participation(User participant, Survey survey) {
         this.participant = participant;
         this.survey = survey;
-        this.response = response;
+        this.response = null;
         this.transientID = UUID.randomUUID();
     }
 

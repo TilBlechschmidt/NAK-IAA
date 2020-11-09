@@ -1,6 +1,7 @@
 package de.nordakademie.iaa.noodle.model;
 
 import javax.persistence.*;
+import java.util.HashSet;
 import java.util.Objects;
 import java.util.Set;
 
@@ -34,12 +35,11 @@ public class Response {
     /**
      * Creates a new response with initial values.
      *
-     * @param participation     The participation the response is for.
-     * @param responseTimeslots The answers to the timeslots.
+     * @param participation The participation the response is for.
      */
-    public Response(Participation participation, Set<ResponseTimeslot> responseTimeslots) {
+    public Response(Participation participation) {
         this.participation = participation;
-        this.responseTimeslots = responseTimeslots;
+        this.responseTimeslots = new HashSet<>();
     }
 
     public Long getId() {

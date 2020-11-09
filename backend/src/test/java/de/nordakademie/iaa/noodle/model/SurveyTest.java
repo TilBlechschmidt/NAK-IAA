@@ -32,7 +32,7 @@ class SurveyTest {
         User testUser = TestUtil.requireEntity(UserTest::testUser, entityManager);
         userId = testUser.getId();
 
-        return new Survey(new HashSet<>(), null, testUser, new HashSet<>(), "title", "description");
+        return new Survey(testUser, "title", "description");
     }
 
     @Test

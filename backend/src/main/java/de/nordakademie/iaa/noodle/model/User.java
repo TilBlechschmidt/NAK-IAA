@@ -1,6 +1,7 @@
 package de.nordakademie.iaa.noodle.model;
 
 import javax.persistence.*;
+import java.util.HashSet;
 import java.util.Objects;
 import java.util.Set;
 
@@ -41,16 +42,13 @@ public class User {
     /**
      * Creates a new user with initial values.
      *
-     * @param createdSurveys The surveys the user created.
-     * @param participations The participations of the user
-     * @param email          The email of the user.
-     * @param fullName       The full name of the user.
-     * @param passwordHash   The password hash of the user (includes salt).
+     * @param email        The email of the user.
+     * @param fullName     The full name of the user.
+     * @param passwordHash The password hash of the user (includes salt).
      */
-    public User(Set<Survey> createdSurveys, Set<Participation> participations, String email, String fullName,
-                String passwordHash) {
-        this.createdSurveys = createdSurveys;
-        this.participations = participations;
+    public User(String email, String fullName, String passwordHash) {
+        this.createdSurveys = new HashSet<>();
+        this.participations = new HashSet<>();
         this.email = email;
         this.fullName = fullName;
         this.passwordHash = passwordHash;

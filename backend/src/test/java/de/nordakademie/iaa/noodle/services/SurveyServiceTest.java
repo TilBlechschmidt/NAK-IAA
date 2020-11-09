@@ -166,12 +166,13 @@ public class SurveyServiceTest {
         when(otherParticipation2.getParticipant()).thenReturn(otherUser2);
 
         Survey survey = new Survey(
-            new HashSet<>(),
-            null,
             creator,
-            new HashSet<>(Arrays.asList(creatorsParticipation, otherParticipation1, otherParticipation2)),
             "OLD_TTLE",
             "OLD_DESCRIPTION");
+
+        survey.getParticipations().addAll(Arrays.asList(
+            creatorsParticipation, otherParticipation1, otherParticipation2));
+
         List<TimeslotCreationData> timeslotCreationData = Arrays.asList(
             new TimeslotCreationData(Date.from(Instant.ofEpochMilli(0L)), null),
             new TimeslotCreationData(Date.from(Instant.ofEpochMilli(1L)), Date.from(Instant.ofEpochMilli(2L)))

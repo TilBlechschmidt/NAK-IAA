@@ -16,7 +16,6 @@ import org.springframework.transaction.annotation.Propagation;
 import org.springframework.transaction.annotation.Transactional;
 
 import java.util.ArrayList;
-import java.util.HashSet;
 import java.util.List;
 import java.util.Optional;
 import java.util.stream.Collectors;
@@ -50,11 +49,11 @@ public class SurveyService {
 
     private void addParticipationForCreator(Survey survey, List<TimeslotCreationData> timeslotCreationDataList)
         throws SemanticallyInvalidInputException {
-        Participation participation = new Participation(survey.getCreator(), survey, null);
+        Participation participation = new Participation(survey.getCreator(), survey);
         // Don't add the participation to the creator because the user is detached
         survey.getParticipations().add(participation);
 
-        Response response = new Response(participation, new HashSet<>());
+        Response response = new Response(participation);
         participation.setResponse(response);
 
         for (TimeslotCreationData timeslotCreationData : timeslotCreationDataList) {
@@ -91,7 +90,7 @@ public class SurveyService {
                                User creator) throws SemanticallyInvalidInputException {
         checkSurveyCreationData(title, description, timeslotCreationDataList);
 
-        Survey survey = new Survey(new HashSet<>(), null, creator, new HashSet<>(), title, description);
+        Survey survey = new Survey(creator, title, description);
         // Don't add the survey to the creator because the user is detached
 
         addParticipationForCreator(survey, timeslotCreationDataList);

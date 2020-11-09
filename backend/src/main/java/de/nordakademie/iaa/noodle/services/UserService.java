@@ -11,8 +11,6 @@ import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Propagation;
 import org.springframework.transaction.annotation.Transactional;
 
-import java.util.HashSet;
-
 /**
  * Service to manage {@link User}s.
  *
@@ -79,7 +77,7 @@ public class UserService {
      */
     public User createNewUser(String email, String fullName, String passwordHash) throws ConflictException {
         try {
-            User user = new User(new HashSet<>(), new HashSet<>(), email, fullName, passwordHash);
+            User user = new User(email, fullName, passwordHash);
             userRepository.save(user);
             return user;
         } catch (DataIntegrityViolationException e) {

@@ -9,7 +9,6 @@ import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Propagation;
 import org.springframework.transaction.annotation.Transactional;
 
-import java.util.HashSet;
 import java.util.Map;
 
 /**
@@ -138,7 +137,7 @@ public class ResponseService {
             throw new ConflictException("responseExists");
         }
 
-        Response response = new Response(participation, new HashSet<>());
+        Response response = new Response(participation);
         participation.setResponse(response);
 
         addTimeslotsToResponse(response, responseTimeslotDataMap);

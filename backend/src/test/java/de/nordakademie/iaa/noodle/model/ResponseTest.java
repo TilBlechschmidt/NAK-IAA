@@ -29,7 +29,7 @@ public class ResponseTest {
     public static Response testResponse(EntityManager entityManager) {
         Participation participation = TestUtil.requireEntity(ParticipationTest::testParticipation, entityManager);
         participationId = participation.getId();
-        return new Response(participation, new HashSet<>());
+        return new Response(participation);
     }
 
     @AfterEach
