@@ -22,17 +22,28 @@ import java.util.Map;
 
 import static org.springframework.http.HttpStatus.CREATED;
 
+/**
+ * Rest controller for all routes regarding responses.
+ */
 @RestController
 public class ResponseController extends AuthenticatedController implements ResponsesApi {
     private final ResponseService responseService;
     private final ResponseMapper responseMapper;
 
+    /**
+     * Creates a new ResponseController.
+     * @param responseService Services used for operations on responses.
+     * @param responseMapper Service used to map responses to ResponseDTOs.
+     */
     @Autowired
     public ResponseController(ResponseService responseService, ResponseMapper responseMapper) {
         this.responseService = responseService;
         this.responseMapper = responseMapper;
     }
 
+    /**
+     * {@inheritDoc}
+     */
     @Override
     public ResponseEntity<ResponseDTO> createResponse(Long surveyID, CreateResponseRequest createResponseRequest) {
         try {
@@ -51,6 +62,9 @@ public class ResponseController extends AuthenticatedController implements Respo
         }
     }
 
+    /**
+     * {@inheritDoc}
+     */
     @Override
     public ResponseEntity<ResponseDTO> queryResponse(Long responseID, Long surveyID) {
         try {
@@ -62,6 +76,9 @@ public class ResponseController extends AuthenticatedController implements Respo
         }
     }
 
+    /**
+     * {@inheritDoc}
+     */
     @Override
     public ResponseEntity<ResponseDTO> updateResponse(Long responseID, Long surveyID,
                                                       CreateResponseRequest createResponseRequest) {

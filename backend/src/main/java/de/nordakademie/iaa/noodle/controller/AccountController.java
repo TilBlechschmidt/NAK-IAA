@@ -15,17 +15,28 @@ import org.springframework.web.server.ResponseStatusException;
 
 import static org.springframework.http.HttpStatus.CREATED;
 
+/**
+ * Rest controller for all routes regarding authentication.
+ */
 @RestController
 public class AccountController implements AccountApi {
     private final SignUpService signUpService;
     private final SignInService signInService;
 
+    /**
+     * Creates a new AccountController
+     * @param signUpService Service used for creating new accounts.
+     * @param signInService Service used to authenticate users.
+     */
     @Autowired
     public AccountController(SignUpService signUpService, SignInService signInService) {
         this.signUpService = signUpService;
         this.signInService = signInService;
     }
 
+    /**
+     * {@inheritDoc}
+     */
     @Override
     public ResponseEntity<ActivateUserResponse> activateUser(ActivateUserRequest activateUserRequest) {
         try {
@@ -44,6 +55,9 @@ public class AccountController implements AccountApi {
         }
     }
 
+    /**
+     * {@inheritDoc}
+     */
     @Override
     public ResponseEntity<AuthenticatedResponse> authenticate(AuthenticationRequest authenticationRequest) {
         try {
@@ -56,6 +70,9 @@ public class AccountController implements AccountApi {
         }
     }
 
+    /**
+     * {@inheritDoc}
+     */
     @Override
     public ResponseEntity<RequestRegistrationEmailResponse> requestRegistrationEmail(RequestRegistrationEmailRequest requestRegistrationEmailRequest) {
         try {

@@ -23,8 +23,7 @@ import java.util.Optional;
 import static org.springframework.http.HttpStatus.CREATED;
 
 /**
- * FIXME: Implement this
- * This is mostly a stub to show the structure of future controllers.
+ * Rest controller for all routes regarding surveys.
  */
 @RestController
 public class SurveyController extends AuthenticatedController implements SurveysApi {
@@ -32,6 +31,12 @@ public class SurveyController extends AuthenticatedController implements Surveys
     private final SurveyMapper surveyMapper;
     private final TimeslotMapper timeslotMapper;
 
+    /**
+     * Creates a new SurveyController.
+     * @param surveyService Services used for operations on surveys.
+     * @param surveyMapper Service used to map surveys to SurveyDTOs.
+     * @param timeslotMapper Service used to map timeslotDTOs to timeslot data.
+     */
     @Autowired
     public SurveyController(SurveyService surveyService, SurveyMapper surveyMapper, TimeslotMapper timeslotMapper) {
         this.surveyService = surveyService;
@@ -39,6 +44,9 @@ public class SurveyController extends AuthenticatedController implements Surveys
         this.timeslotMapper = timeslotMapper;
     }
 
+    /**
+     * {@inheritDoc}
+     */
     @Override
     public ResponseEntity<SurveyMetadataDTO> closeSurvey(Long id, CloseSurveyRequest closeSurveyRequest) {
         try {
@@ -58,6 +66,9 @@ public class SurveyController extends AuthenticatedController implements Surveys
         }
     }
 
+    /**
+     * {@inheritDoc}
+     */
     @Override
     public ResponseEntity<SurveyMetadataDTO> createSurvey(SurveyCreationMetadataDTO surveyCreationMetadataDTO) {
         try {
@@ -76,6 +87,9 @@ public class SurveyController extends AuthenticatedController implements Surveys
         }
     }
 
+    /**
+     * {@inheritDoc}
+     */
     @Override
     public ResponseEntity<SurveyMetadataDTO> deleteSurvey(Long id) {
         try {
@@ -89,6 +103,9 @@ public class SurveyController extends AuthenticatedController implements Surveys
         }
     }
 
+    /**
+     * {@inheritDoc}
+     */
     @Override
     public ResponseEntity<SurveyDTO> querySurvey(Long id) {
         try {
@@ -100,6 +117,9 @@ public class SurveyController extends AuthenticatedController implements Surveys
         }
     }
 
+    /**
+     * {@inheritDoc}
+     */
     @Override
     public ResponseEntity<QuerySurveysResponse> querySurveys(
         Optional<Boolean> didParticipateIn, Optional<Boolean> isCompleted,
@@ -114,6 +134,9 @@ public class SurveyController extends AuthenticatedController implements Surveys
                 requiresAttention)));
     }
 
+    /**
+     * {@inheritDoc}
+     */
     @Override
     public ResponseEntity<SurveyMetadataDTO> updateSurvey(Long id, SurveyCreationMetadataDTO surveyCreationMetadataDTO) {
         try {

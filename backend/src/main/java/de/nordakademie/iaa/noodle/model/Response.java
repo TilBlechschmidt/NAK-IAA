@@ -4,6 +4,9 @@ import javax.persistence.*;
 import java.util.Objects;
 import java.util.Set;
 
+/**
+ * A response for a survey which contains the answers to the timeslots.
+ */
 @Entity
 @Table(name = "response")
 public class Response {
@@ -19,9 +22,17 @@ public class Response {
     @OneToMany(cascade = CascadeType.ALL, orphanRemoval = true, mappedBy = "response", fetch = FetchType.LAZY)
     private Set<ResponseTimeslot> responseTimeslots;
 
+    /**
+     * Creates a new response without initial values.
+     */
     public Response() {
     }
 
+    /**
+     * Creates a new response with initial values.
+     * @param participation The participation the response is for.
+     * @param responseTimeslots The answers to the timeslots.
+     */
     public Response(Participation participation, Set<ResponseTimeslot> responseTimeslots) {
         this.participation = participation;
         this.responseTimeslots = responseTimeslots;

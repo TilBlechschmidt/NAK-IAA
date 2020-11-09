@@ -21,6 +21,10 @@ public class ApiDocsController {
         return "redirect:swagger-ui/index.html";
     }
 
+    /**
+     * Creates swagger api information.
+     * @return Swagger API Information.
+     */
     private ApiInfo apiInfo() {
         return new ApiInfoBuilder()
             .title("Noodle")
@@ -32,6 +36,10 @@ public class ApiDocsController {
             .build();
     }
 
+    /**
+     * Creates the Swagger bean.
+     * @return Swagger Bean.
+     */
     @Bean
     public Docket productApi() {
         return new Docket(DocumentationType.SWAGGER_2)

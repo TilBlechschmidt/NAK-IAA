@@ -16,17 +16,28 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import java.io.IOException;
 
+/**
+ * Filter to read the Authorization header and execute the authentication routine.
+ */
 @Component
 public class JWTAuthorizationFilter extends OncePerRequestFilter {
     private static final String HEADER_STRING = "Authorization";
 
     private final SignInService signInService;
 
+    /**
+     * Creates a new JWTAuthorizationFilter.
+     * @param signInService The service used to authenticate a user.
+     */
     @Autowired
     public JWTAuthorizationFilter(SignInService signInService) {
         this.signInService = signInService;
     }
 
+    /**
+     * Extracts the Authorization header and updates the security context.
+     * {@inheritDoc}
+     */
     @Override
     protected void doFilterInternal(HttpServletRequest request, HttpServletResponse response, FilterChain chain) throws ServletException, IOException {
         try {

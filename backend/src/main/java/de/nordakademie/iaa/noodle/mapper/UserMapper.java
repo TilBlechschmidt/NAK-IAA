@@ -7,9 +7,17 @@ import org.mapstruct.Mapping;
 import org.mapstruct.Named;
 import org.mapstruct.ReportingPolicy;
 
+/**
+ * Mapper for Users.
+ */
 @Mapper(unmappedTargetPolicy = ReportingPolicy.WARN, componentModel = "spring")
 public interface UserMapper {
 
+    /**
+     * Maps a User to a IdentifiableUserDTO.
+     * @param user The user to map.
+     * @return The mapped IdentifiableUserDTO.
+     */
     @Named("userToIdentifiableUserDTO")
     @Mapping(target = "name", source = "fullName")
     IdentifiableUserDTO userToIdentifiableUserDTO(User user);

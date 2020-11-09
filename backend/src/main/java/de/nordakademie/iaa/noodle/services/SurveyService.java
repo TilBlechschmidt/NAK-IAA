@@ -20,6 +20,9 @@ import java.util.List;
 import java.util.Optional;
 import java.util.stream.Collectors;
 
+/**
+ * Service to manage surveys.
+ */
 @Service
 @Transactional(propagation = Propagation.REQUIRED, rollbackFor = {ServiceException.class})
 public class SurveyService {
@@ -40,7 +43,8 @@ public class SurveyService {
         this.mailService = mailService;
     }
 
-    private void addParticipationForCreator(Survey survey, List<TimeslotCreationData> timeslotCreationDataList) throws SemanticallyInvalidInputException {
+    private void addParticipationForCreator(Survey survey, List<TimeslotCreationData> timeslotCreationDataList)
+        throws SemanticallyInvalidInputException {
         Participation participation = new Participation(survey.getCreator(), survey, null);
         // Don't add the participation to the creator because the user is detached
         survey.getParticipations().add(participation);
@@ -53,7 +57,10 @@ public class SurveyService {
         }
     }
 
-    private void addResponseTimeslotForCreator(Survey survey, Response response, TimeslotCreationData timeslotCreationData) throws SemanticallyInvalidInputException {
+    private void addResponseTimeslotForCreator(Survey survey, Response response,
+                                               TimeslotCreationData timeslotCreationData)
+        throws SemanticallyInvalidInputException {
+
         if (!isTimeslotCreationDataValid(timeslotCreationData)) {
             throw new SemanticallyInvalidInputException("invalidTimeslot");
         }
@@ -65,7 +72,17 @@ public class SurveyService {
         response.getResponseTimeslots().add(responseTimeslot);
     }
 
-    public Survey createSurvey(String title, String description, List<TimeslotCreationData> timeslotCreationDataList, User creator) throws SemanticallyInvalidInputException {
+    /**
+     * Creates a new survey.
+     * @param title The title of the survey.
+     * @param description The description of the survey.
+     * @param timeslotCreationDataList The timeslots for the new survey.
+     * @param creator The creator of the survey.
+     * @return The new survey.
+     * @throws SemanticallyInvalidInputException Thrown, when the timeslots are invalid.
+     */
+    public Survey createSurvey(String title, String description, List<TimeslotCreationData> timeslotCreationDataList,
+                               User creator) throws SemanticallyInvalidInputException {
         checkSurveyCreationData(title, description, timeslotCreationDataList);
 
         Survey survey = new Survey(new HashSet<>(), null, creator, new HashSet<>(), title, description);
@@ -77,7 +94,22 @@ public class SurveyService {
         return survey;
     }
 
-    public Survey updateSurvey(Long surveyID, String title, String description, List<TimeslotCreationData> timeslotCreationDataList, User currentUser) throws EntityNotFoundException, SemanticallyInvalidInputException, ForbiddenOperationException {
+    /**
+     * Updates a survey.
+     * @param surveyID The id of the survey.
+     * @param title The new title of the survey.
+     * @param description The new description of the survey.
+     * @param timeslotCreationDataList The new timeslots for the new survey.
+     * @param currentUser THe current user.
+     * @return The updated survey.
+     * @throws EntityNotFoundException Thrown, when the survey does not exit.
+     * @throws SemanticallyInvalidInputException Thrown, when the timeslots are invalid.
+     * @throws ForbiddenOperationException Thrown, when the current used is not allowed to update the survey.
+     */
+    public Survey updateSurvey(Long surveyID, String title, String description,
+                               List<TimeslotCreationData> timeslotCreationDataList, User currentUser)
+        throws EntityNotFoundException, SemanticallyInvalidInputException, ForbiddenOperationException {
+
         checkSurveyCreationData(title, description, timeslotCreationDataList);
 
         Survey survey = querySurvey(surveyID);
@@ -125,6 +157,15 @@ public class SurveyService {
             .collect(Collectors.toList());
     }
 
+    /**
+     * Closes a survey.
+     * @param surveyID The survey id.
+     * @param timeslotID The timeslot if of the selected timeslot.
+     * @param currentUser The current user.
+     * @return The updated survey.
+     * @throws EntityNotFoundException Thrown, when the survey or the timeslot does not exist.
+     * @throws ForbiddenOperationException Thrown, when the current used is not allowed to close the survey.
+     */
     public Survey closeSurvey(Long surveyID, Long timeslotID, User currentUser)
         throws EntityNotFoundException, ForbiddenOperationException {
 
@@ -140,7 +181,16 @@ public class SurveyService {
         return survey;
     }
 
-    public Survey deleteSurvey(Long surveyID, User currentUser) throws EntityNotFoundException, ForbiddenOperationException {
+    /**
+     * Deletes a survey.
+     * @param surveyID The id of the survey to delete.
+     * @param currentUser The current user.
+     * @return The deleted survey.
+     * @throws EntityNotFoundException Thrown, when the survey does not exist.
+     * @throws ForbiddenOperationException Thrown, when the current used is not allowed to delete the survey.
+     */
+    public Survey deleteSurvey(Long surveyID, User currentUser)
+        throws EntityNotFoundException, ForbiddenOperationException {
         Survey survey = querySurvey(surveyID);
         if (!isSurveyDeletableByUser(survey, currentUser)) {
             throw new ForbiddenOperationException("forbidden");
@@ -149,7 +199,9 @@ public class SurveyService {
         return survey;
     }
 
-    public void checkSurveyCreationData(String title, String description, List<TimeslotCreationData> timeslotCreationDataList) throws SemanticallyInvalidInputException {
+    private void checkSurveyCreationData(String title, String description,
+                                        List<TimeslotCreationData> timeslotCreationDataList)
+        throws SemanticallyInvalidInputException {
         if (timeslotCreationDataList.size() == 0) {
             throw new SemanticallyInvalidInputException("noTimeslots");
         }
@@ -164,11 +216,17 @@ public class SurveyService {
         }
     }
 
-    public boolean isTimeslotCreationDataValid(TimeslotCreationData timeslotCreationData) {
+    private boolean isTimeslotCreationDataValid(TimeslotCreationData timeslotCreationData) {
         return timeslotCreationData.getEnd() == null ||
             timeslotCreationData.getStart().before(timeslotCreationData.getEnd());
     }
 
+    /**
+     * Queries a single survey.
+     * @param id The id of the survey.
+     * @return The requested survey.
+     * @throws EntityNotFoundException Thrown, when the survey does not exist.
+     */
     public Survey querySurvey(Long id) throws EntityNotFoundException {
         Survey survey = surveyRepository.findById(id);
         if (survey == null) {
@@ -177,25 +235,58 @@ public class SurveyService {
         return survey;
     }
 
-
+    /**
+     * Checks if a user can respond to a survey.
+     * @param survey The survey.
+     * @param user The user.
+     * @return True, if the user can respond to the survey. False otherwise.
+     */
     public boolean canUserRespondToSurvey(Survey survey, User user) {
         boolean surveyAcceptsResponses = !survey.getIsClosed();
         boolean isSurveyCreator = survey.getCreator().equals(user);
         return surveyAcceptsResponses && !isSurveyCreator;
     }
 
+    /**
+     * Checks if a user can edit a survey.
+     * @param survey The survey.
+     * @param user The user.
+     * @return True, if the user can edit the survey. False otherwise.
+     */
     public boolean isSurveyEditableByUser(Survey survey, User user) {
         return survey.getCreator().equals(user) && !survey.getIsClosed();
     }
 
+    /**
+     * Checks if a user can close a survey.
+     * @param survey The survey.
+     * @param user The user.
+     * @return True, if the user can close the survey. False otherwise.
+     */
     public boolean isSurveyClosableByUser(Survey survey, User user) {
         return isSurveyEditableByUser(survey, user);
     }
 
+    /**
+     * Checks if a user can delete a survey.
+     * @param survey The survey.
+     * @param user The user.
+     * @return True, if the user can delete the survey. False otherwise.
+     */
     public boolean isSurveyDeletableByUser(Survey survey, User user) {
         return survey.getCreator().equals(user);
     }
 
+    /**
+     * Query the QuerySurveysItem of multiple surveys which fulfill the given criteria.
+     * @param currentUser The user the other criteria refer to.
+     * @param didParticipateIn The user must habe participated in the survey.
+     * @param isCompleted The survey is completed.
+     * @param isOwnSurvey The survey was created by the user.
+     * @param isUpcoming The selected timeslot is in the future.
+     * @param requiresAttention THe user's response was discarded due to an update of the survey.
+     * @return List of QuerySurveysItems which fulfill the given criteria.
+     */
     public List<QuerySurveysItem> querySurveys(User currentUser, Optional<Boolean> didParticipateIn,
                                                Optional<Boolean> isCompleted, Optional<Boolean> isOwnSurvey,
                                                Optional<Boolean> isUpcoming, Optional<Boolean> requiresAttention) {

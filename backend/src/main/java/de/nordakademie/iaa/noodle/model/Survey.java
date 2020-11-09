@@ -5,6 +5,9 @@ import java.util.Objects;
 import java.util.Set;
 import java.util.UUID;
 
+/**
+ * A survey has multiple timeslots users can respond to.
+ */
 @Entity
 @Table(name = "survey")
 public class Survey {
@@ -35,9 +38,21 @@ public class Survey {
     @Column(name = "description", nullable = false, length = 2048)
     private String description;
 
+    /**
+     * Creates a new survey without initial values.
+     */
     public Survey() {
     }
 
+    /**
+     * Creates a new survey with initial values.
+     * @param timeslots The timeslots of this survey.
+     * @param selectedTimeslot The timeslot which was chosen as the result.
+     * @param creator The user who created the survey.
+     * @param participations The list of participations.
+     * @param title The title of the survey.
+     * @param description The description of the survey.
+     */
     public Survey(Set<Timeslot> timeslots, Timeslot selectedTimeslot, User creator, Set<Participation> participations, String title, String description) {
         this.timeslots = timeslots;
         this.selectedTimeslot = selectedTimeslot;

@@ -4,6 +4,9 @@ import javax.persistence.*;
 import java.util.Objects;
 import java.util.Set;
 
+/**
+ * Represents a user of the system.
+ */
 @Entity
 @Table(name = "user")
 public class User {
@@ -20,14 +23,27 @@ public class User {
 
     @Column(name = "email", nullable = false, unique = true)
     private String email;
+
     @Column(name = "full_name", nullable = false)
     private String fullName;
+
     @Column(name = "password_hash", nullable = false, length = 2048)
     private String passwordHash;
 
+    /**
+     * Creates a new user without initial values.
+     */
     public User() {
     }
 
+    /**
+     * Creates a new user with initial values.
+     * @param createdSurveys The surveys the user created.
+     * @param participations The participations of the user
+     * @param email The email of the user.
+     * @param fullName The full name of the user.
+     * @param passwordHash The password hash of the user (includes salt).
+     */
     public User(Set<Survey> createdSurveys, Set<Participation> participations, String email, String fullName, String passwordHash) {
         this.createdSurveys = createdSurveys;
         this.participations = participations;

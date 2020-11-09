@@ -2,25 +2,18 @@ package de.nordakademie.iaa.noodle.dao;
 
 import de.nordakademie.iaa.noodle.model.Response;
 import org.springframework.data.jpa.repository.EntityGraph;
-import org.springframework.data.jpa.repository.Query;
 import org.springframework.data.repository.RepositoryDefinition;
 import org.springframework.stereotype.Repository;
 import org.springframework.transaction.annotation.Propagation;
 import org.springframework.transaction.annotation.Transactional;
 
-import java.util.List;
-
+/**
+ * Repository for responses.
+ */
 @Repository
 @RepositoryDefinition(idClass = Long.class, domainClass = Response.class)
 @Transactional(propagation = Propagation.REQUIRED)
 public interface ResponseRepository {
-
-
-
-    default Response findByIdAndSurveyId(Long id, Long surveyId) {
-        return findByIdAndParticipation_Survey_Id(id, surveyId);
-    }
-
     /**
      * @deprecated For extensibility Reasons, please use {@link #findByIdAndSurveyId(Long, Long)}
      * instead of this method.
@@ -35,7 +28,25 @@ public interface ResponseRepository {
     @Deprecated
     Response findByIdAndParticipation_Survey_Id(Long id, Long surveyId);
 
-    void save(Response toSave);
+    /**
+     * Queries a response based on the id and survey id.
+     * @param responseId The id of the response
+     * @param surveyId The id of the survey
+     * @return The requested Response or null if it does not exists.
+     */
+    default Response findByIdAndSurveyId(Long responseId, Long surveyId) {
+        return findByIdAndParticipation_Survey_Id(responseId, surveyId);
+    }
 
+    /**
+     * Saves a response.
+     * @param response The response to save.
+     */
+    void save(Response response);
+
+    /**
+     * Deletes a response.
+     * @param response The response to delete.
+     */
     void delete(Response response);
 }

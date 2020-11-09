@@ -6,16 +6,37 @@ import org.springframework.stereotype.Repository;
 import org.springframework.transaction.annotation.Propagation;
 import org.springframework.transaction.annotation.Transactional;
 
+/**
+ * Repository for users.
+ */
 @Repository
 @RepositoryDefinition(idClass = Long.class, domainClass = User.class)
 @Transactional(propagation = Propagation.REQUIRED)
 public interface UserRepository {
 
+    /**
+     * Queries a single user by its unique email.
+     * @param email THe email of the user.
+     * @return The user with the given email or null if it does not exist.
+     */
     User findByEmail(String email);
 
+    /**
+     * Queries a single user by the id.
+     * @param id The id of the user.
+     * @return The requested user or null if it does not exists.
+     */
     User findById(Long id);
 
-    User save(User toSave);
+    /**
+     * Saves a user.
+     * @param user The user to save.
+     */
+    User save(User user);
 
+    /**
+     * Deletes a user.
+     * @param user The user to delete.
+     */
     void delete(User user);
 }

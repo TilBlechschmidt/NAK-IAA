@@ -19,6 +19,9 @@ import java.util.stream.Collectors;
 
 import static java.nio.charset.StandardCharsets.UTF_8;
 
+/**
+ * Service to generate and parse JWT tokens.
+ */
 @Service
 public class JWTService {
     private final static String CLAIM_USER_ID = "userID";
@@ -26,10 +29,14 @@ public class JWTService {
     private final static String CLAIM_EMAIL = "email";
     private final static String CLAIM_FULL_NAME = "fullName";
 
-
     private final String secret;
     private final long expirationTime;
 
+    /**
+     * Creates a new JWTService.
+     * @param secret The secret used for generating and parsing the tokens.
+     * @param expirationTime The time a token is valid for.
+     */
     public JWTService(@Value("${spring.noodle.security.secret}") String secret,
                       @Value("${spring.noodle.security.expirationTime}") long expirationTime) {
         this.secret = secret;
@@ -46,6 +53,12 @@ public class JWTService {
             .signWith(SignatureAlgorithm.HS256, secret.getBytes(UTF_8));
     }
 
+    /**
+     * Generates a token for the account creating which can be mailed to the user.
+     * @param email The email of the user.
+     * @param fullName The full name of the user.
+     * @return The generated token.
+     */
     public String buildEmailToken(String email, String fullName) {
         return baseTokenBuilder(email)
             .claim(CLAIM_EMAIL, email)
@@ -53,6 +66,11 @@ public class JWTService {
             .compact();
     }
 
+    /**
+     * Generates a token which can be used to authenticate in future requests.
+     * @param user The user for which the token should be generated.
+     * @return The generated token.
+     */
     public String buildSpringAuthenticationToken(User user) {
         List<GrantedAuthority> grantedAuthorities = AuthorityUtils.commaSeparatedStringToAuthorityList("ROLE_USER");
 
@@ -65,11 +83,23 @@ public class JWTService {
             .compact();
     }
 
+    /**
+     * Parses te user details from an user creation token.
+     * @param token The user creation token.
+     * @return The parsed user details.
+     * @throws JWTException Thrown, when the token is invalid.
+     */
     public UserDetails userDetailsForToken(String token) throws JWTException {
         Claims claims = extractClaimsFromToken(token);
         return extractUserDetailsFromClaims(claims);
     }
 
+    /**
+     * Parses the authentication data from an authentication token.
+     * @param token The authentication token.
+     * @return The parsed authentication details.
+     * @throws JWTException Thrown, when the token is invalid.
+     */
     public SpringAuthenticationDetails authenticationDetailsForToken(String token) throws JWTException {
         Claims claims = extractClaimsFromToken(token);
         return extractAuthenticationDetailsFromClaims(claims);

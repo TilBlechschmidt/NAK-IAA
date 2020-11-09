@@ -4,6 +4,11 @@ import javax.persistence.*;
 import java.util.Objects;
 import java.util.UUID;
 
+/**
+ * Entity representing the participation of a user to a survey.
+ * The participation is not deleted, when a survey is updated.
+ * Instead the response of the participation will be deleted.
+ */
 @Entity
 @Table(name = "participation",
     uniqueConstraints = {@UniqueConstraint(columnNames = {"participant_id", "survey_id"})})
@@ -27,9 +32,18 @@ public class Participation {
     @OneToOne(optional = true, cascade = CascadeType.ALL, mappedBy = "participation", fetch = FetchType.LAZY)
     private Response response;
 
+    /**
+     * Creates a new participation without initial values.
+     */
     public Participation() {
     }
 
+    /**
+     * Creates a new participation with initial values.
+     * @param participant The user who created the participation.
+     * @param survey The survey the participation is for.
+     * @param response The optional response.
+     */
     public Participation(User participant, Survey survey, Response response) {
         this.participant = participant;
         this.survey = survey;

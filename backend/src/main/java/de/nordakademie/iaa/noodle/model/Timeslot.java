@@ -5,6 +5,9 @@ import java.util.Date;
 import java.util.Objects;
 import java.util.UUID;
 
+/**
+ * One of the options users can vote for in a survey.
+ */
 @Entity
 @Table(name = "timeslot")
 public class Timeslot {
@@ -28,10 +31,18 @@ public class Timeslot {
     @Column(name = "end",nullable = true)
     private Date end;
 
-
+    /**
+     * Creates a new timeslot without initial values.
+     */
     public Timeslot() {
     }
 
+    /**
+     * Creates a new timeslot with initial values.
+     * @param survey The survey this timeslot is for.
+     * @param start The start date/time of the timeslot.
+     * @param end The end date/time of the timeslot.
+     */
     public Timeslot(Survey survey, Date start, Date end) {
         this.survey = survey;
         this.start = start;

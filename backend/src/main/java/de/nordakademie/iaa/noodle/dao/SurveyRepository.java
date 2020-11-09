@@ -12,10 +12,24 @@ import org.springframework.transaction.annotation.Transactional;
 
 import java.util.List;
 
+/**
+ * Repository for surveys.
+ */
 @Repository
 @RepositoryDefinition(idClass = Long.class, domainClass = Survey.class)
 @Transactional(propagation = Propagation.REQUIRED)
 public interface SurveyRepository {
+
+    /**
+     * Query the QuerySurveysItem of multiple surveys which fulfill the given criteria.
+     * @param userID The id of the user the other criteria refer to.
+     * @param didParticipateIn The user must habe participated in the survey.
+     * @param isCompleted The survey is completed.
+     * @param isOwnSurvey The survey was created by the user.
+     * @param isUpcoming The selected timeslot is in the future.
+     * @param requiresAttention THe user's response was discarded due to an update of the survey.
+     * @return List of QuerySurveysItems which fulfill the given criteria.
+     */
 // Sadly, JPQL does not allow us to use "<boolean_expr> = flag", so we need to emulate it using boolean logic
 // This leads to doubled logic
 // However, the alternatives would be either writing a lot of queries, introducing a second query approach for one
@@ -67,6 +81,11 @@ AND
                                        @Param("upcoming")          Boolean isUpcoming,
                                        @Param("attentionRequired") Boolean requiresAttention);
 
+    /**
+     * Queries a single survey by the id.
+     * @param id The id of the survey.
+     * @return The requested survey or null if it does not exists.
+     */
     @EntityGraph(attributePaths = {
         "timeslots",
         "participations",
@@ -76,7 +95,15 @@ AND
     })
     Survey findById(Long id);
 
-    Survey save(Survey toSave);
+    /**
+     * Saves a survey.
+     * @param survey The survey to save.
+     */
+    Survey save(Survey survey);
 
+    /**
+     * Deletes a survey.
+     * @param survey The survey to delete.
+     */
     void delete(Survey survey);
 }

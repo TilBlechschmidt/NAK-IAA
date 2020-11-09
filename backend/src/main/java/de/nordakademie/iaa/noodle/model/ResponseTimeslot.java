@@ -4,6 +4,9 @@ import javax.persistence.*;
 import java.util.Objects;
 import java.util.UUID;
 
+/**
+ * The answer to a specific timeslot.
+ */
 @Entity
 @Table(name = "response_timeslot",
     uniqueConstraints = {@UniqueConstraint(columnNames = {"response_id", "timeslot_id"})})
@@ -29,9 +32,18 @@ public class ResponseTimeslot {
     @Column(name = "response_type")
     private ResponseType responseType;
 
+    /**
+     * Creates a new response timeslot without initial values.
+     */
     public ResponseTimeslot() {
     }
 
+    /**
+     * Creates a new response timeslot with initial values.
+     * @param response The response the answer is for.
+     * @param timeslot The timeslot for which the answer is.
+     * @param responseType The type of the answer.
+     */
     public ResponseTimeslot(Response response, Timeslot timeslot, ResponseType responseType) {
         this.response = response;
         this.timeslot = timeslot;
