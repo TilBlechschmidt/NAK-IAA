@@ -8,7 +8,7 @@ import org.springframework.transaction.annotation.Propagation;
 import org.springframework.transaction.annotation.Transactional;
 
 /**
- * Repository for responses.
+ * Repository for {@link Response}s.
  */
 @Repository
 @RepositoryDefinition(idClass = Long.class, domainClass = Response.class)
@@ -16,7 +16,7 @@ import org.springframework.transaction.annotation.Transactional;
 public interface ResponseRepository {
     /**
      * @deprecated For extensibility Reasons, please use {@link #findByIdAndSurveyId(Long, Long)}
-     * instead of this method.
+     * instead of this method, as this method name is dependent on the database structure.
      */
     @EntityGraph(attributePaths = {
         "participation",
@@ -29,9 +29,10 @@ public interface ResponseRepository {
     Response findByIdAndParticipation_Survey_Id(Long id, Long surveyId);
 
     /**
-     * Queries a response based on the id and survey id.
+     * Queries a response based on its id and survey id.
+     *
      * @param responseId The id of the response
-     * @param surveyId The id of the survey
+     * @param surveyId   The id of the survey
      * @return The requested Response or null if it does not exists.
      */
     default Response findByIdAndSurveyId(Long responseId, Long surveyId) {
@@ -40,12 +41,14 @@ public interface ResponseRepository {
 
     /**
      * Saves a response.
+     *
      * @param response The response to save.
      */
     void save(Response response);
 
     /**
      * Deletes a response.
+     *
      * @param response The response to delete.
      */
     void delete(Response response);

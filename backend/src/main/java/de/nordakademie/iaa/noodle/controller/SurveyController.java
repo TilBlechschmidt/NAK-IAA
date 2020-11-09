@@ -23,7 +23,10 @@ import java.util.Optional;
 import static org.springframework.http.HttpStatus.CREATED;
 
 /**
- * Rest controller for all routes regarding surveys.
+ * Rest controller for all routes regarding {@link Survey}s.
+ *
+ * @see SurveyService
+ * @see SurveyMapper
  */
 @RestController
 public class SurveyController extends AuthenticatedController implements SurveysApi {
@@ -33,8 +36,9 @@ public class SurveyController extends AuthenticatedController implements Surveys
 
     /**
      * Creates a new SurveyController.
-     * @param surveyService Services used for operations on surveys.
-     * @param surveyMapper Service used to map surveys to SurveyDTOs.
+     *
+     * @param surveyService  Services used for operations on surveys.
+     * @param surveyMapper   Service used to map surveys to SurveyDTOs.
      * @param timeslotMapper Service used to map timeslotDTOs to timeslot data.
      */
     @Autowired

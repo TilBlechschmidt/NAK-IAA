@@ -40,10 +40,10 @@ public class PasswordService {
     }
 
     /**
-     * Checks if the give password is correct for the user.
+     * Checks if the given password is correct for the user.
      * @param user The user to check the password for.
-     * @param password THe password to check.
-     * @return True if the password is correct. False otherwise.
+     * @param password The password to check.
+     * @return <code>True</code> if the password is correct. <code>False</code> otherwise.
      */
     public boolean isPasswordCorrect(User user, String password) {
         if (!isPasswordValid(password)) {

@@ -6,7 +6,7 @@ import java.util.Objects;
 import java.util.UUID;
 
 /**
- * One of the options users can vote for in a survey.
+ * One of the options {@link User}s can vote on in a {@link Survey}.
  */
 @Entity
 @Table(name = "timeslot")

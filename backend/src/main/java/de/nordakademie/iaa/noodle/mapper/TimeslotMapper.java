@@ -16,7 +16,11 @@ import java.util.Set;
 import java.util.stream.Collectors;
 
 /**
- * Mapper for Timeslots.
+ * Mapper for timeslots.
+ *
+ * @see Timeslot
+ * @see TimeslotDTO
+ * @see TimeslotCreationData
  */
 @Mapper(unmappedTargetPolicy = ReportingPolicy.WARN, componentModel = "spring")
 public interface TimeslotMapper {

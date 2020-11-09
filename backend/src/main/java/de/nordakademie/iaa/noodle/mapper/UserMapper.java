@@ -8,7 +8,10 @@ import org.mapstruct.Named;
 import org.mapstruct.ReportingPolicy;
 
 /**
- * Mapper for Users.
+ * Mapper for users.
+ *
+ * @see User
+ * @see IdentifiableUserDTO
  */
 @Mapper(unmappedTargetPolicy = ReportingPolicy.WARN, componentModel = "spring")
 public interface UserMapper {

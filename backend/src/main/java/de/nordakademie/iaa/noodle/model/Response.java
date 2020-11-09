@@ -5,7 +5,8 @@ import java.util.Objects;
 import java.util.Set;
 
 /**
- * A response for a survey which contains the answers to the timeslots.
+ * A response for a {@link Survey} which contains the answers to the {@link Timeslot}s.
+ * A response is always given in the context of a {@link Participation}.
  */
 @Entity
 @Table(name = "response")

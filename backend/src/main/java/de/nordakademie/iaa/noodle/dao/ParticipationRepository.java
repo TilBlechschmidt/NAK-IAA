@@ -9,7 +9,7 @@ import org.springframework.transaction.annotation.Propagation;
 import org.springframework.transaction.annotation.Transactional;
 
 /**
- * Repository for participations.
+ * Repository for {@link Participation}s.
  */
 @Repository
 @RepositoryDefinition(idClass = Long.class, domainClass = Participation.class)

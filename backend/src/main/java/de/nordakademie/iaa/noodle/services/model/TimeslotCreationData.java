@@ -3,7 +3,8 @@ package de.nordakademie.iaa.noodle.services.model;
 import java.util.Date;
 
 /**
- * POJO with the start and end Date for a Timeslot which can be used to create a new one.
+ * POJO with the start and end date for a {@link de.nordakademie.iaa.noodle.model.Timeslot}
+ * which can be used to create a new one.
  */
 public class TimeslotCreationData {
     private final Date start;

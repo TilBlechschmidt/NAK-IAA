@@ -14,7 +14,9 @@ import org.springframework.transaction.annotation.Transactional;
 import java.util.HashSet;
 
 /**
- * Service to manage users.
+ * Service to manage {@link User}s.
+ *
+ * @see UserRepository
  */
 @Service
 @Transactional(propagation = Propagation.REQUIRED, rollbackFor = { ServiceException.class })

@@ -8,14 +8,14 @@ import org.springframework.transaction.annotation.Propagation;
 import org.springframework.transaction.annotation.Transactional;
 
 /**
- * Repository for timeslots.
+ * Repository for {@link Timeslot}s.
  */
 @Repository
 @RepositoryDefinition(idClass = Long.class, domainClass = Timeslot.class)
 @Transactional(propagation = Propagation.REQUIRED)
 public interface TimeslotRepository {
     /**
-     * Queries a single timeslot by the id.
+     * Queries a single timeslot by its id.
      * @param timeslotID The id of the timeslot.
      * @return The requested timeslot or null if it does not exist.
      */

@@ -5,7 +5,7 @@ import java.util.Objects;
 import java.util.UUID;
 
 /**
- * The answer to a specific timeslot.
+ * The answer to a specific {@link Timeslot}.
  */
 @Entity
 @Table(name = "response_timeslot",

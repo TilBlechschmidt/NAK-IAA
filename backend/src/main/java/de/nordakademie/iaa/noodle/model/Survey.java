@@ -6,7 +6,9 @@ import java.util.Set;
 import java.util.UUID;
 
 /**
- * A survey has multiple timeslots users can respond to.
+ * The central domain object of the application.
+ * A {@link Survey} has multiple {@link Timeslot}s which {@link User}s can
+ * {@link Response respond} to with a {@link Participation}.
  */
 @Entity
 @Table(name = "survey")

@@ -21,6 +21,8 @@ import static java.nio.charset.StandardCharsets.UTF_8;
 
 /**
  * Service to generate and parse JWT tokens.
+ *
+ * @see de.nordakademie.iaa.noodle.filter.JWTAuthorizationFilter
  */
 @Service
 public class JWTService {
@@ -84,7 +86,7 @@ public class JWTService {
     }
 
     /**
-     * Parses te user details from an user creation token.
+     * Parses te user details from a user creation token.
      * @param token The user creation token.
      * @return The parsed user details.
      * @throws JWTException Thrown, when the token is invalid.

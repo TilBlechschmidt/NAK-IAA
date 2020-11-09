@@ -13,7 +13,9 @@ import java.util.HashSet;
 import java.util.Map;
 
 /**
- * Service to manage responses.
+ * Service to manage {@link Response}s.
+ *
+ * @see ResponseRepository
  */
 @Service
 @Transactional(propagation = Propagation.REQUIRED, rollbackFor = { ServiceException.class })

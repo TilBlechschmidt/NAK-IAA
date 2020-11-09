@@ -5,7 +5,7 @@ import java.util.Objects;
 import java.util.Set;
 
 /**
- * Represents a user of the system.
+ * Represents a user of the application.
  */
 @Entity
 @Table(name = "user")

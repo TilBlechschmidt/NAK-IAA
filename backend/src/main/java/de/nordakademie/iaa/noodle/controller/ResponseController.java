@@ -23,7 +23,10 @@ import java.util.Map;
 import static org.springframework.http.HttpStatus.CREATED;
 
 /**
- * Rest controller for all routes regarding responses.
+ * Rest controller for all routes regarding {@link Response}s.
+ *
+ * @see ResponseService
+ * @see ResponseMapper
  */
 @RestController
 public class ResponseController extends AuthenticatedController implements ResponsesApi {
@@ -32,8 +35,9 @@ public class ResponseController extends AuthenticatedController implements Respo
 
     /**
      * Creates a new ResponseController.
+     *
      * @param responseService Services used for operations on responses.
-     * @param responseMapper Service used to map responses to ResponseDTOs.
+     * @param responseMapper  Service used to map responses to ResponseDTOs.
      */
     @Autowired
     public ResponseController(ResponseService responseService, ResponseMapper responseMapper) {
@@ -87,9 +91,9 @@ public class ResponseController extends AuthenticatedController implements Respo
             Map<Long, ResponseType> responseTimeslotDataMap = responseMapper
                 .responseValueDTOsToMap(createResponseRequest.getValues());
             Response response = responseService.updateResponse(responseID,
-                                                               surveyID,
-                                                               responseTimeslotDataMap,
-                                                               currentUser);
+                surveyID,
+                responseTimeslotDataMap,
+                currentUser);
             ResponseDTO responseDTO = responseMapper.responseToDTO(response, currentUser);
             return ResponseEntity.status(CREATED).body(responseDTO);
         } catch (SemanticallyInvalidInputException e) {

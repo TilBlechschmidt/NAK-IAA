@@ -16,6 +16,13 @@ import java.util.stream.Collectors;
 
 /**
  * Mapper for surveys.
+ * @see Survey
+ * @see QuerySurveysItem
+ *
+ * @see SurveyDTO
+ * @see SurveyMetadataDTO
+ * @see QuerySurveysResult
+ * @see QuerySurveysResponse
  */
 @Mapper(unmappedTargetPolicy = ReportingPolicy.WARN,
     componentModel = "spring",
@@ -27,9 +34,9 @@ public abstract class SurveyMapper {
 
     /**
      * Maps a survey to a SurveyDTO.
-     * @param survey THe survey to map.
+     * @param survey The survey to map.
      * @param currentUser The current user.
-     * @return THe mapped SurveyDTO.
+     * @return The mapped SurveyDTO.
      */
     @Mapping(target = "creator", qualifiedByName = "userToIdentifiableUserDTO")
     @Mapping(target = "isEditable", source = ".", qualifiedByName = "surveyIsEditable")
@@ -41,9 +48,9 @@ public abstract class SurveyMapper {
 
     /**
      * Maps a survey to a SurveyMetadataDTO.
-     * @param survey THe survey to map.
+     * @param survey The survey to map.
      * @param currentUser The current user.
-     * @return THe mapped SurveyMetadataDTO.
+     * @return The mapped SurveyMetadataDTO.
      */
     @Named("surveyToMetadataDTO")
     @Mapping(target = "creator", qualifiedByName = "userToIdentifiableUserDTO")

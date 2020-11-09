@@ -5,9 +5,9 @@ import java.util.Objects;
 import java.util.UUID;
 
 /**
- * Entity representing the participation of a user to a survey.
+ * Entity representing the participation of a {@link User} to a {@link Survey}.
  * The participation is not deleted, when a survey is updated.
- * Instead the response of the participation will be deleted.
+ * Instead the {@link Response} of the participation will be deleted.
  */
 @Entity
 @Table(name = "participation",

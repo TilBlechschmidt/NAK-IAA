@@ -15,6 +15,8 @@ import java.util.stream.Collectors;
 
 /**
  * Mapper for responses.
+ * @see Response
+ * @see ResponseDTO
  */
 @Mapper(unmappedTargetPolicy = ReportingPolicy.WARN, componentModel = "spring", uses = {UserMapper.class})
 public abstract class ResponseMapper {

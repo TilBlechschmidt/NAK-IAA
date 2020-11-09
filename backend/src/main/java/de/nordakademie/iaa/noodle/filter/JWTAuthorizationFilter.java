@@ -17,7 +17,7 @@ import javax.servlet.http.HttpServletResponse;
 import java.io.IOException;
 
 /**
- * Filter to read the Authorization header and execute the authentication routine.
+ * Filter to read the Authorization header and execute the Authentication routine.
  */
 @Component
 public class JWTAuthorizationFilter extends OncePerRequestFilter {

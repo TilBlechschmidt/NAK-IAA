@@ -10,7 +10,9 @@ import org.springframework.transaction.annotation.Propagation;
 import org.springframework.transaction.annotation.Transactional;
 
 /**
- * Service to manage timeslots.
+ * Service to manage {@link Timeslot}s.
+ *
+ * @see TimeslotRepository
  */
 @Service
 @Transactional(propagation = Propagation.REQUIRED, rollbackFor = { ServiceException.class })
@@ -26,7 +28,7 @@ public class TimeslotService {
     }
 
     /**
-     * Find a timeslot of a survey by it's id.
+     * Find a timeslot of a survey by its id.
      * @param survey The survey of the timeslot.
      * @param timeslotID The id timeslot.
      * @return The requested timeslot.

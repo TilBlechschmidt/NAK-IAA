@@ -8,7 +8,7 @@ import org.springframework.transaction.annotation.Propagation;
 import org.springframework.transaction.annotation.Transactional;
 
 /**
- * Repository for responses timeslots.
+ * Repository for {@link ResponseTimeslot}s.
  */
 @Repository
 @RepositoryDefinition(idClass = Long.class, domainClass = ResponseTimeslot.class)

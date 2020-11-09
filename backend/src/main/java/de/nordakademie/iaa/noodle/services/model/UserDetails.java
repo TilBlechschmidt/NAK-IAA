@@ -1,7 +1,7 @@
 package de.nordakademie.iaa.noodle.services.model;
 
 /**
- * POJO with the user details of a new user.
+ * POJO with the user details of a new {@link de.nordakademie.iaa.noodle.model.User}.
  */
 public class UserDetails {
     private final String email;
@@ -9,7 +9,8 @@ public class UserDetails {
 
     /**
      * Creates new UserDetails.
-     * @param email The email of the user.
+     *
+     * @param email    The email of the user.
      * @param fullName The full name of the user.
      */
     public UserDetails(String email, String fullName) {
