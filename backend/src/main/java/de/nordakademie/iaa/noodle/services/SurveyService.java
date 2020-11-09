@@ -15,6 +15,7 @@ import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Propagation;
 import org.springframework.transaction.annotation.Transactional;
 
+import java.util.ArrayList;
 import java.util.HashSet;
 import java.util.List;
 import java.util.Optional;
@@ -137,7 +138,10 @@ public class SurveyService {
     }
 
     private void deleteSurveyResponses(Survey survey) {
-        for (Participation participation : survey.getParticipations()) {
+        // Create a copy of the list, so that we don't have an issue with concurrent modifications.
+        List<Participation> participations = new ArrayList<>(survey.getParticipations());
+
+        for (Participation participation : participations) {
             Response response = participation.getResponse();
             if (response != null) {
                 responseRepository.delete(response);
@@ -146,6 +150,7 @@ public class SurveyService {
 
             if (participation.getParticipant().equals(survey.getCreator())) {
                 participationRepository.delete(participation);
+                survey.getParticipations().remove(participation);
             }
         }
 
