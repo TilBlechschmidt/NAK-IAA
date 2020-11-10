@@ -10,6 +10,8 @@ import org.springframework.transaction.annotation.Transactional;
 
 /**
  * Repository for {@link Participation}s.
+ *
+ * @author Hans Rißer
  */
 @Repository
 @RepositoryDefinition(idClass = Long.class, domainClass = Participation.class)

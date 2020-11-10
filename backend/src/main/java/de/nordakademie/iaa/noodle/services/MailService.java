@@ -20,6 +20,9 @@ import static org.springframework.web.util.HtmlUtils.htmlEscape;
 
 /**
  * Service to send mails to the user.
+ *
+ * @author Noah Peeters
+ * @author Hans Rißer
  */
 @Service
 public class MailService {

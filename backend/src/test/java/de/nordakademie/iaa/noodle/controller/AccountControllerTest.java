@@ -16,6 +16,12 @@ import static org.junit.jupiter.api.Assertions.assertEquals;
 import static org.junit.jupiter.api.Assertions.assertNotNull;
 import static org.mockito.Mockito.*;
 
+/**
+ * Test for {@link AccountController}
+ *
+ * @author Hans Rißer
+ * @author Noah Peeters
+ */
 public class AccountControllerTest {
     private AccountController accountController;
     private SignInService signInService;

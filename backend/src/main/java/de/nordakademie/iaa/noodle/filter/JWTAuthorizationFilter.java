@@ -18,6 +18,8 @@ import java.io.IOException;
 
 /**
  * Filter to read the Authorization header and execute the Authentication routine.
+ *
+ * @author Noah Peeters
  */
 @Component
 public class JWTAuthorizationFilter extends OncePerRequestFilter {

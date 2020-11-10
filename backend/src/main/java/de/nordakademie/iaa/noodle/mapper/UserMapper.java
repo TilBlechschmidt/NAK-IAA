@@ -12,6 +12,8 @@ import org.mapstruct.ReportingPolicy;
  *
  * @see User
  * @see IdentifiableUserDTO
+ *
+ * @author Noah Peeters
  */
 @Mapper(unmappedTargetPolicy = ReportingPolicy.WARN, componentModel = "spring")
 public interface UserMapper {

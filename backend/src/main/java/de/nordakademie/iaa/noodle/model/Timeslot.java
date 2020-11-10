@@ -7,6 +7,8 @@ import java.util.UUID;
 
 /**
  * One of the options {@link User}s can vote on in a {@link Survey}.
+ *
+ * @author Hans Rißer
  */
 @Entity
 @Table(name = "timeslot")

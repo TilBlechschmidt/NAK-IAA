@@ -4,16 +4,18 @@ import de.nordakademie.iaa.noodle.model.User;
 import de.nordakademie.iaa.noodle.services.exceptions.PasswordException;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
-import org.springframework.boot.SpringBootConfiguration;
-import org.springframework.boot.test.context.SpringBootTest;
 import org.springframework.security.crypto.password.PasswordEncoder;
-import org.springframework.test.context.TestPropertySource;
 import org.springframework.test.util.ReflectionTestUtils;
 
 import static org.junit.jupiter.api.Assertions.*;
 import static org.mockito.Mockito.mock;
 import static org.mockito.Mockito.when;
 
+/**
+ * Test for {@link PasswordService}
+ *
+ * @author Noah Peeters
+ */
 public class PasswordServiceTest {
     private User user;
     private PasswordService passwordService;

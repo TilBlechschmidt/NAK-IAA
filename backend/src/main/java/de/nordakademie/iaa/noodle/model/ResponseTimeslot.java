@@ -6,6 +6,8 @@ import java.util.UUID;
 
 /**
  * The answer to a specific {@link Timeslot}.
+ *
+ * @author Hans Rißer
  */
 @Entity
 @Table(name = "response_timeslot",

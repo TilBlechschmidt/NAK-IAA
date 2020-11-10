@@ -4,6 +4,8 @@ import java.util.List;
 
 /**
  * POJO with Authentication details needed for Spring Authentication.
+ *
+ * @author Noah Peeters
  */
 public class SpringAuthenticationDetails {
     private final Long userID;

@@ -17,6 +17,12 @@ import static org.junit.jupiter.api.Assertions.*;
 import static org.mockito.Mockito.mock;
 import static org.mockito.Mockito.when;
 
+/**
+ * Utility Class that acts as a namespace for static methods used in Unit Testing.
+ *
+ * @author Hans Rißer
+ * @author Noah Peeters
+ */
 public class TestUtil {
     public static void skip() {
         throw new TestAbortedException();

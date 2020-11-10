@@ -9,6 +9,8 @@ import java.util.UUID;
  * The central domain object of the application.
  * A {@link Survey} has multiple {@link Timeslot}s which {@link User}s can
  * {@link Response respond} to with a {@link Participation}.
+ *
+ * @author Hans Rißer
  */
 @Entity
 @Table(name = "survey")

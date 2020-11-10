@@ -17,6 +17,8 @@ import static org.springframework.http.HttpStatus.CREATED;
 
 /**
  * Rest controller for all routes regarding authentication.
+ *
+ * @author Noah Peeters
  */
 @RestController
 public class AccountController implements AccountApi {

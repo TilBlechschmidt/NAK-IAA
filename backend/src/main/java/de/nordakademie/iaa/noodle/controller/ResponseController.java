@@ -27,6 +27,8 @@ import static org.springframework.http.HttpStatus.CREATED;
  *
  * @see ResponseService
  * @see ResponseMapper
+ *
+ * @author Noah Peeters
  */
 @RestController
 public class ResponseController extends AuthenticatedController implements ResponsesApi {

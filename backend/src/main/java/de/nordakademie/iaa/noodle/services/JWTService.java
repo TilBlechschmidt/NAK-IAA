@@ -23,6 +23,9 @@ import static java.nio.charset.StandardCharsets.UTF_8;
  * Service to generate and parse JWT tokens.
  *
  * @see de.nordakademie.iaa.noodle.filter.JWTAuthorizationFilter
+ *
+ * @author Noah Peeters
+ * @author Hans Rißer
  */
 @Service
 public class JWTService {

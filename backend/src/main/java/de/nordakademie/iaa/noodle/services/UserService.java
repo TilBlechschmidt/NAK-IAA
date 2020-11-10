@@ -17,6 +17,8 @@ import java.util.HashSet;
  * Service to manage {@link User}s.
  *
  * @see UserRepository
+ *
+ * @author Noah Peeters
  */
 @Service
 @Transactional(propagation = Propagation.REQUIRED, rollbackFor = { ServiceException.class })

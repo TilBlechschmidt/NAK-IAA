@@ -2,6 +2,8 @@ package de.nordakademie.iaa.noodle.services.model;
 
 /**
  * POJO with the user details of a new {@link de.nordakademie.iaa.noodle.model.User}.
+ *
+ * @author Noah Peeters
  */
 public class UserDetails {
     private final String email;

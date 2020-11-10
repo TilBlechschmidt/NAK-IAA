@@ -5,6 +5,8 @@ import java.util.Date;
 /**
  * POJO with the start and end date for a {@link de.nordakademie.iaa.noodle.model.Timeslot}
  * which can be used to create a new one.
+ *
+ * @author Noah Peeters
  */
 public class TimeslotCreationData {
     private final Date start;

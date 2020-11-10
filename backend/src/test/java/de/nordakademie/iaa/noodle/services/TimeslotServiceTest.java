@@ -10,6 +10,11 @@ import org.junit.jupiter.api.Test;
 import static org.junit.jupiter.api.Assertions.*;
 import static org.mockito.Mockito.*;
 
+/**
+ * Test for {@link TimeslotService}
+ *
+ * @author Noah Peeters
+ */
 class TimeslotServiceTest {
     TimeslotService timeslotService;
     TimeslotRepository timeslotRepository;

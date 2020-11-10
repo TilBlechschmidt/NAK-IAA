@@ -10,6 +10,11 @@ import javax.persistence.EntityManager;
 
 import static org.junit.jupiter.api.Assertions.*;
 
+/**
+ * Test for {@link UserRepository}
+ *
+ * @author Hans Rißer
+ */
 @DataJpaTest
 class UserRepositoryTest {
 

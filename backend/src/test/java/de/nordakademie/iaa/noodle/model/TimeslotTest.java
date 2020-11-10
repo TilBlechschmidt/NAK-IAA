@@ -12,6 +12,11 @@ import java.util.Date;
 import static org.assertj.core.api.Assumptions.assumeThatCode;
 import static org.junit.jupiter.api.Assertions.*;
 
+/**
+ * Test for {@link Timeslot}
+ *
+ * @author Hans Rißer
+ */
 @DataJpaTest
 class TimeslotTest {
 

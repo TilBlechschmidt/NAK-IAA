@@ -12,6 +12,11 @@ import java.util.HashSet;
 import static org.assertj.core.api.Assumptions.assumeThatCode;
 import static org.junit.jupiter.api.Assertions.*;
 
+/**
+ * Test for {@link User}
+ *
+ * @author Hans Rißer
+ */
 @DataJpaTest
 public
 class UserTest {

@@ -14,6 +14,8 @@ import java.util.List;
 
 /**
  * Repository for {@link Survey}s.
+ *
+ * @author Hans Rißer
  */
 @Repository
 @RepositoryDefinition(idClass = Long.class, domainClass = Survey.class)

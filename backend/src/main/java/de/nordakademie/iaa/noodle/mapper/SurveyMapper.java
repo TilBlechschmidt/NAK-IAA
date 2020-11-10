@@ -23,6 +23,9 @@ import java.util.stream.Collectors;
  * @see SurveyMetadataDTO
  * @see QuerySurveysResult
  * @see QuerySurveysResponse
+ *
+ * @author Noah Peeters
+ * @author Hans Rißer
  */
 @Mapper(unmappedTargetPolicy = ReportingPolicy.WARN,
     componentModel = "spring",

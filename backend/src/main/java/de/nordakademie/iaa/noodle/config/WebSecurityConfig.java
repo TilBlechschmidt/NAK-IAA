@@ -13,6 +13,8 @@ import org.springframework.security.web.authentication.UsernamePasswordAuthentic
 /**
  * Configuration for Authentication / Authorization with SpringSecurity.
  * @see JWTAuthorizationFilter
+ *
+ * @author Noah Peeters
  */
 @EnableWebSecurity
 @Configuration

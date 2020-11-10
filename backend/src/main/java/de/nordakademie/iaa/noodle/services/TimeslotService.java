@@ -13,6 +13,8 @@ import org.springframework.transaction.annotation.Transactional;
  * Service to manage {@link Timeslot}s.
  *
  * @see TimeslotRepository
+ *
+ * @author Noah Peeters
  */
 @Service
 @Transactional(propagation = Propagation.REQUIRED, rollbackFor = { ServiceException.class })

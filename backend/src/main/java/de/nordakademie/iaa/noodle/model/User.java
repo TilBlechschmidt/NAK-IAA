@@ -6,6 +6,8 @@ import java.util.Set;
 
 /**
  * Represents a user of the application.
+ *
+ * @author Hans Rißer
  */
 @Entity
 @Table(name = "user")

@@ -12,6 +12,11 @@ import static org.junit.jupiter.api.Assertions.assertEquals;
 import static org.mockito.Mockito.mock;
 import static org.mockito.Mockito.when;
 
+/**
+ * Test for {@link SurveyService}
+ *
+ * @author Noah Peeters
+ */
 public class SurveyServiceTest {
     private SurveyService surveyService;
     private SurveyRepository surveyRepository;

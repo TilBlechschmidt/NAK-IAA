@@ -24,6 +24,9 @@ import java.util.stream.Collectors;
  * Service to manage {@link Survey}s.
  *
  * @see SurveyRepository
+ *
+ * @author Noah Peeters
+ * @author Hans Rißer
  */
 @Service
 @Transactional(propagation = Propagation.REQUIRED, rollbackFor = {ServiceException.class})

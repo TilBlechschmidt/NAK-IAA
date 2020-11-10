@@ -15,6 +15,8 @@ import org.springframework.transaction.annotation.Transactional;
  * Service to manage {@link Participation}s.
  *
  * @see ParticipationRepository
+ *
+ * @author Noah Peeters
  */
 @Service
 @Transactional(propagation = Propagation.REQUIRED, rollbackFor = { ServiceException.class })

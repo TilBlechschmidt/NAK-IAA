@@ -9,6 +9,8 @@ import org.springframework.stereotype.Service;
 
 /**
  * Service to manage passwords.
+ *
+ * @author Noah Peeters
  */
 @Service
 public class PasswordService {

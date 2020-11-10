@@ -9,6 +9,8 @@ import org.springframework.transaction.annotation.Transactional;
 
 /**
  * Repository for {@link Response}s.
+ *
+ * @author Hans Rißer
  */
 @Repository
 @RepositoryDefinition(idClass = Long.class, domainClass = Response.class)

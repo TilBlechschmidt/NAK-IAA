@@ -26,6 +26,11 @@ import static org.mockito.ArgumentMatchers.same;
 import static org.mockito.Mockito.mock;
 import static org.mockito.Mockito.when;
 
+/**
+ * Test for {@link SurveyController}
+ *
+ * @author Hans Rißer
+ */
 public class SurveyControllerTest {
     private SurveyController surveyController;
     private SurveyService surveyService;

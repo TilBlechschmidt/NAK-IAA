@@ -16,6 +16,11 @@ import static org.junit.jupiter.api.Assertions.assertEquals;
 import static org.junit.jupiter.api.Assertions.assertThrows;
 import static org.mockito.Mockito.*;
 
+/**
+ * Test for {@link MailService}
+ *
+ * @author Noah Peeters
+ */
 public class MailServiceTest {
     private JavaMailSender mailSender;
     private MailService mailService;

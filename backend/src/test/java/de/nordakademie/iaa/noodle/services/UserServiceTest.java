@@ -1,7 +1,6 @@
 package de.nordakademie.iaa.noodle.services;
 
 import de.nordakademie.iaa.noodle.dao.UserRepository;
-import de.nordakademie.iaa.noodle.model.Survey;
 import de.nordakademie.iaa.noodle.model.User;
 import de.nordakademie.iaa.noodle.services.exceptions.ConflictException;
 import de.nordakademie.iaa.noodle.services.exceptions.EntityNotFoundException;
@@ -12,6 +11,11 @@ import org.springframework.dao.DataIntegrityViolationException;
 import static org.junit.jupiter.api.Assertions.*;
 import static org.mockito.Mockito.*;
 
+/**
+ * Test for {@link UserService}
+ *
+ * @author Noah Peeters
+ */
 class UserServiceTest {
     private UserService userService;
     private UserRepository userRepository;

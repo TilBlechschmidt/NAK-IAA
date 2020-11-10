@@ -9,6 +9,8 @@ import org.springframework.transaction.annotation.Transactional;
 
 /**
  * Repository for {@link ResponseTimeslot}s.
+ *
+ * @author Noah Peeters
  */
 @Repository
 @RepositoryDefinition(idClass = Long.class, domainClass = ResponseTimeslot.class)

@@ -11,6 +11,11 @@ import javax.persistence.EntityManager;
 import static org.assertj.core.api.Assumptions.assumeThatCode;
 import static org.junit.jupiter.api.Assertions.*;
 
+/**
+ * Test for {@link Participation}
+ *
+ * @author Hans Rißer
+ */
 @DataJpaTest
 public class ParticipationTest {
 

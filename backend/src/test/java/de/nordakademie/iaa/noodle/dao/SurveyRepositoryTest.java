@@ -12,6 +12,11 @@ import java.util.List;
 
 import static org.junit.jupiter.api.Assertions.*;
 
+/**
+ * Test for {@link SurveyRepository}
+ *
+ * @author Hans Rißer
+ */
 @DataJpaTest
 class SurveyRepositoryTest {
 

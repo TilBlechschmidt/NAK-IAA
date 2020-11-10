@@ -27,6 +27,9 @@ import static org.springframework.http.HttpStatus.CREATED;
  *
  * @see SurveyService
  * @see SurveyMapper
+ *
+ * @author Noah Peeters
+ * @author Hans Rißer
  */
 @RestController
 public class SurveyController extends AuthenticatedController implements SurveysApi {

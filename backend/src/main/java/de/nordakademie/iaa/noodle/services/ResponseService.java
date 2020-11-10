@@ -16,6 +16,8 @@ import java.util.Map;
  * Service to manage {@link Response}s.
  *
  * @see ResponseRepository
+ *
+ * @author Noah Peeters
  */
 @Service
 @Transactional(propagation = Propagation.REQUIRED, rollbackFor = { ServiceException.class })

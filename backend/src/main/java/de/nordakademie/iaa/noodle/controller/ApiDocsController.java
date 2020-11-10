@@ -12,6 +12,8 @@ import springfox.documentation.spring.web.plugins.Docket;
 
 /**
  * Home redirection to OpenAPI api documentation
+ *
+ * @author Noah Peeters
  */
 @Controller
 @Api(value = "ApiDocsController")

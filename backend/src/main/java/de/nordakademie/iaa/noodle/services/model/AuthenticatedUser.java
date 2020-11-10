@@ -6,6 +6,8 @@ import de.nordakademie.iaa.noodle.model.User;
  * {@link User} who is currently authenticated using a JWT token.
  *
  * @see de.nordakademie.iaa.noodle.services.JWTService
+ *
+ * @author Noah Peeters
  */
 public class AuthenticatedUser {
     private final User user;

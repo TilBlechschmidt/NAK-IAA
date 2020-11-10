@@ -21,6 +21,8 @@ import java.util.stream.Collectors;
  * @see Timeslot
  * @see TimeslotDTO
  * @see TimeslotCreationData
+ *
+ * @author Noah Peeters
  */
 @Mapper(unmappedTargetPolicy = ReportingPolicy.WARN, componentModel = "spring")
 public interface TimeslotMapper {

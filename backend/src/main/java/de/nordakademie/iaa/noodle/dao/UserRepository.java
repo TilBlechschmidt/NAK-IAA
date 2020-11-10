@@ -8,6 +8,8 @@ import org.springframework.transaction.annotation.Transactional;
 
 /**
  * Repository for {@link User}s.
+ *
+ * @author Hans Rißer
  */
 @Repository
 @RepositoryDefinition(idClass = Long.class, domainClass = User.class)

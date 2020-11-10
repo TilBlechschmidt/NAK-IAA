@@ -7,10 +7,14 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.autoconfigure.orm.jpa.DataJpaTest;
 
 import javax.persistence.EntityManager;
-import java.util.List;
 
 import static org.junit.jupiter.api.Assertions.*;
 
+/**
+ * Test for {@link ResponseRepository}
+ *
+ * @author Hans Rißer
+ */
 @DataJpaTest
 class ResponseRepositoryTest {
 
@@ -19,7 +23,6 @@ class ResponseRepositoryTest {
     @Autowired
     private EntityManager entityManager;
     private Response response;
-    private List<Response> responses;
 
     // CHECK data.sql for the TestData referenced here.
 

@@ -22,6 +22,11 @@ import static org.mockito.ArgumentMatchers.same;
 import static org.mockito.Mockito.mock;
 import static org.mockito.Mockito.when;
 
+/**
+ * Test for {@link ResponseController}
+ *
+ * @author Hans Rißer
+ */
 public class ResponseControllerTest {
     private ResponseController responseController;
     private ResponseService responseService;

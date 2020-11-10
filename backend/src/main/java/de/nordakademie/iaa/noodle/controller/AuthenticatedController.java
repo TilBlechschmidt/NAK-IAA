@@ -5,6 +5,7 @@ import org.springframework.security.core.context.SecurityContextHolder;
 
 /**
  * Controller with helper functions for controllers with authenticated routes.
+ * @author Noah Peeters
  */
 public abstract class AuthenticatedController {
     /**

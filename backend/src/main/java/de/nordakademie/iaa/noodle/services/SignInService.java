@@ -17,6 +17,9 @@ import java.util.stream.Collectors;
 
 /**
  * Service to manage signing in.
+ *
+ * @author Noah Peeters
+ * @author Hans Rißer
  */
 @Service
 public class SignInService {

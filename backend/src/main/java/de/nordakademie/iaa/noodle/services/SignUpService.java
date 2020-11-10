@@ -1,16 +1,19 @@
 package de.nordakademie.iaa.noodle.services;
 
 import de.nordakademie.iaa.noodle.model.User;
-import de.nordakademie.iaa.noodle.services.exceptions.*;
+import de.nordakademie.iaa.noodle.services.exceptions.ConflictException;
+import de.nordakademie.iaa.noodle.services.exceptions.JWTException;
+import de.nordakademie.iaa.noodle.services.exceptions.MailClientException;
+import de.nordakademie.iaa.noodle.services.exceptions.PasswordException;
 import de.nordakademie.iaa.noodle.services.model.UserDetails;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.mail.MailException;
 import org.springframework.stereotype.Service;
-
-import java.util.Optional;
 
 /**
  * Service to manage signing up.
+ *
+ * @author Noah Peeters
+ * @author Hans Rißer
  */
 @Service
 public class SignUpService {

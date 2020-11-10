@@ -7,6 +7,8 @@ import java.util.Set;
 /**
  * A response for a {@link Survey} which contains the answers to the {@link Timeslot}s.
  * A response is always given in the context of a {@link Participation}.
+ *
+ * @author Hans Rißer
  */
 @Entity
 @Table(name = "response")

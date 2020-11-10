@@ -6,6 +6,8 @@ import springfox.documentation.swagger2.annotations.EnableSwagger2;
 
 /**
  * Main entry point of the noodle application.
+ *
+ * @author Hans Rißer
  */
 @SpringBootApplication
 @EnableSwagger2

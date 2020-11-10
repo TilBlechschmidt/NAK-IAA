@@ -12,6 +12,11 @@ import org.junit.jupiter.api.Test;
 import static org.junit.jupiter.api.Assertions.*;
 import static org.mockito.Mockito.*;
 
+/**
+ * Test for {@link SignUpService}
+ *
+ * @author Noah Peeters
+ */
 class SignUpServiceTest {
     private SignUpService signUpService;
     private PasswordService passwordService;
