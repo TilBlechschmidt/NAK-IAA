@@ -22,9 +22,8 @@ import static org.mockito.Mockito.when;
  * @author Noah Peeters
  */
 class JWTServiceTest {
+    private static final String[] AUTHORITIES = {"ROLE_USER"};
     private JWTService jwtService;
-
-    private static String[] AUTHORITIES = {"ROLE_USER"};
 
     @BeforeEach
     public void setUp() {

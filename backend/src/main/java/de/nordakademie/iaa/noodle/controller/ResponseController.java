@@ -25,10 +25,9 @@ import static org.springframework.http.HttpStatus.CREATED;
 /**
  * Rest controller for all routes regarding {@link Response}s.
  *
+ * @author Noah Peeters
  * @see ResponseService
  * @see ResponseMapper
- *
- * @author Noah Peeters
  */
 @RestController
 public class ResponseController extends AuthenticatedController implements ResponsesApi {

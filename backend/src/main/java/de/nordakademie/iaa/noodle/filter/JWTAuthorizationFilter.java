@@ -29,6 +29,7 @@ public class JWTAuthorizationFilter extends OncePerRequestFilter {
 
     /**
      * Creates a new JWTAuthorizationFilter.
+     *
      * @param signInService The service used to authenticate a user.
      */
     @Autowired
@@ -41,7 +42,8 @@ public class JWTAuthorizationFilter extends OncePerRequestFilter {
      * {@inheritDoc}
      */
     @Override
-    protected void doFilterInternal(HttpServletRequest request, HttpServletResponse response, FilterChain chain) throws ServletException, IOException {
+    protected void doFilterInternal(HttpServletRequest request, HttpServletResponse response, FilterChain chain)
+        throws ServletException, IOException {
         try {
             String header = getJWTHeader(request);
             Authentication authentication = signInService.springAuthenticationForHeader(header);
@@ -54,7 +56,9 @@ public class JWTAuthorizationFilter extends OncePerRequestFilter {
 
     private String getJWTHeader(HttpServletRequest request) throws AuthenticationException {
         String header = request.getHeader(HEADER_STRING);
-        if (header == null) { throw new AuthenticationException("missingToken"); }
+        if (header == null) {
+            throw new AuthenticationException("missingToken");
+        }
         return header;
     }
 }

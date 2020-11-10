@@ -50,10 +50,10 @@ class UserRepositoryTest {
 
     @Test
     void testDelete() {
-        user = entityManager.find(User.class,1L);
+        user = entityManager.find(User.class, 1L);
         assertNotNull(user);
         userRepository.delete(user);
-        assertNull(entityManager.find(User.class,1L));
+        assertNull(entityManager.find(User.class, 1L));
         entityManager.persist(user);
     }
 }

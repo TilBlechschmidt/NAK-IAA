@@ -24,13 +24,15 @@ public class SignUpService {
 
     /**
      * Creates a new SignUpService.
+     *
      * @param passwordService Service used to manage passwords.
-     * @param userService Service used to manage users.
-     * @param jwtService Service used to manage JWT tokens.
-     * @param mailService Service used to send mails.
+     * @param userService     Service used to manage users.
+     * @param jwtService      Service used to manage JWT tokens.
+     * @param mailService     Service used to send mails.
      */
     @Autowired
-    public SignUpService(PasswordService passwordService, UserService userService, JWTService jwtService, MailService mailService) {
+    public SignUpService(PasswordService passwordService, UserService userService, JWTService jwtService,
+                         MailService mailService) {
         this.passwordService = passwordService;
         this.userService = userService;
         this.jwtService = jwtService;
@@ -39,10 +41,11 @@ public class SignUpService {
 
     /**
      * Creates a new account with a registration token and a password.
-     * @param token The registration token.
+     *
+     * @param token    The registration token.
      * @param password The password.
      * @return The new user.
-     * @throws JWTException Thrown, when the token is invalid.
+     * @throws JWTException      Thrown, when the token is invalid.
      * @throws ConflictException Thrown, when a user with the email address in the token already exists.
      * @throws PasswordException Throw, when the password is invalid.
      */
@@ -54,7 +57,8 @@ public class SignUpService {
 
     /**
      * Sends a token to the user for registration.
-     * @param email The email of the user.
+     *
+     * @param email    The email of the user.
      * @param fullName The full name of the user.
      * @throws MailClientException Thrown, when the mail cannot be send.
      */

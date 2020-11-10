@@ -15,10 +15,10 @@ import java.util.stream.Collectors;
 
 /**
  * Mapper for responses.
- * @see Response
- * @see ResponseDTO
  *
  * @author Noah Peeters
+ * @see Response
+ * @see ResponseDTO
  */
 @Mapper(unmappedTargetPolicy = ReportingPolicy.WARN, componentModel = "spring", uses = {UserMapper.class})
 public abstract class ResponseMapper {
@@ -28,8 +28,9 @@ public abstract class ResponseMapper {
 
     /**
      * Maps a list of participations to a list of response DTOs.
+     *
      * @param participations The participations.
-     * @param currentUser The current user.
+     * @param currentUser    The current user.
      * @return The mapped response dtos.
      */
     @Named("participationsToDTOs")
@@ -43,8 +44,9 @@ public abstract class ResponseMapper {
 
     /**
      * Maps a list of participations to the response of the current user.
+     *
      * @param participations The participations.
-     * @param currentUser The current user.
+     * @param currentUser    The current user.
      * @return The mapped response dto.
      */
     @Named("participationsToMyResponseDTO")
@@ -60,7 +62,8 @@ public abstract class ResponseMapper {
 
     /**
      * Maps a response to a response dto.
-     * @param response The response to map.
+     *
+     * @param response    The response to map.
      * @param currentUser The current user.
      * @return The mapped response dto.
      */
@@ -73,7 +76,8 @@ public abstract class ResponseMapper {
 
     /**
      * Maps if a response is editable by the current user.
-     * @param response The response to map.
+     *
+     * @param response    The response to map.
      * @param currentUser The current user.
      * @return True, if the response is editable. False otherwise.
      */
@@ -84,6 +88,7 @@ public abstract class ResponseMapper {
 
     /**
      * Maps ResponseTimeslots to ResponseValueDTOs.
+     *
      * @param responseTimeslots The ResponseTimeslots to map.
      * @return The mapped ResponseValueDTOs.
      */
@@ -97,6 +102,7 @@ public abstract class ResponseMapper {
 
     /**
      * Maps ResponseTimeslot to ResponseValueDTO.
+     *
      * @param responseTimeslot The ResponseTimeslot to map.
      * @return The mapped ResponseValueDTO.
      */
@@ -106,6 +112,7 @@ public abstract class ResponseMapper {
 
     /**
      * Maps a ResponseType to true or false.
+     *
      * @param responseType The ResponseType to map.
      * @return True, of the ResponseType was YES. False otherwise.
      */
@@ -115,6 +122,7 @@ public abstract class ResponseMapper {
 
     /**
      * Maps a ResponseValueDTO to a ResponseType.
+     *
      * @param responseValueDTO The ResponseValueDTO to map.
      * @return The mapped ResponseType.
      */
@@ -124,6 +132,7 @@ public abstract class ResponseMapper {
 
     /**
      * Maps ResponseValueDTO to a JAVA Map.
+     *
      * @param responseValueDTOs The ResponseValueDTO to map.
      * @return A Java Map with the timeslot ID and the ResponseType.
      */

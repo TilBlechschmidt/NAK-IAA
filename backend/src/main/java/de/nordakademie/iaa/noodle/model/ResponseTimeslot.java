@@ -11,7 +11,7 @@ import java.util.UUID;
  */
 @Entity
 @Table(name = "response_timeslot",
-    uniqueConstraints = {@UniqueConstraint(columnNames = {"response_id", "timeslot_id"})})
+       uniqueConstraints = {@UniqueConstraint(columnNames = {"response_id", "timeslot_id"})})
 public class ResponseTimeslot {
 
     @Id
@@ -42,8 +42,9 @@ public class ResponseTimeslot {
 
     /**
      * Creates a new response timeslot with initial values.
-     * @param response The response the answer is for.
-     * @param timeslot The timeslot for which the answer is.
+     *
+     * @param response     The response the answer is for.
+     * @param timeslot     The timeslot for which the answer is.
      * @param responseType The type of the answer.
      */
     public ResponseTimeslot(Response response, Timeslot timeslot, ResponseType responseType) {
@@ -71,8 +72,10 @@ public class ResponseTimeslot {
 
     @Override
     public boolean equals(Object o) {
-        if (this == o) return true;
-        if (!(o instanceof ResponseTimeslot)) return false;
+        if (this == o)
+            return true;
+        if (!(o instanceof ResponseTimeslot))
+            return false;
         ResponseTimeslot that = (ResponseTimeslot) o;
 
         if (getId() == null) {

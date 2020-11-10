@@ -58,17 +58,20 @@ public class TestUtil {
         return user;
     }
 
-    public static void assertExceptionEquals(HttpStatus expectedStatus, String expectedReason, ResponseStatusException exception) {
+    public static void assertExceptionEquals(HttpStatus expectedStatus, String expectedReason,
+                                             ResponseStatusException exception) {
         assertEquals(expectedStatus, exception.getStatus());
         assertEquals(expectedReason, exception.getReason());
     }
 
-    public static void assertThrowsResponseStatusException(HttpStatus expectedStatus, String expectedReason, Executable executable) {
+    public static void assertThrowsResponseStatusException(HttpStatus expectedStatus, String expectedReason,
+                                                           Executable executable) {
         ResponseStatusException exc = assertThrows(ResponseStatusException.class, executable);
         assertExceptionEquals(expectedStatus, expectedReason, exc);
     }
 
-    public static <T> void assertSameResponseEntity(HttpStatus expectedStatus, T expectedBody, ResponseEntity<T> responseEntity) {
+    public static <T> void assertSameResponseEntity(HttpStatus expectedStatus, T expectedBody,
+                                                    ResponseEntity<T> responseEntity) {
         assertSame(expectedStatus, responseEntity.getStatusCode());
         assertSame(expectedBody, responseEntity.getBody());
     }

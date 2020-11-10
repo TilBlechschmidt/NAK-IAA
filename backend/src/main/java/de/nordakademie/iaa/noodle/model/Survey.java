@@ -50,14 +50,16 @@ public class Survey {
 
     /**
      * Creates a new survey with initial values.
-     * @param timeslots The timeslots of this survey.
+     *
+     * @param timeslots        The timeslots of this survey.
      * @param selectedTimeslot The timeslot which was chosen as the result.
-     * @param creator The user who created the survey.
-     * @param participations The list of participations.
-     * @param title The title of the survey.
-     * @param description The description of the survey.
+     * @param creator          The user who created the survey.
+     * @param participations   The list of participations.
+     * @param title            The title of the survey.
+     * @param description      The description of the survey.
      */
-    public Survey(Set<Timeslot> timeslots, Timeslot selectedTimeslot, User creator, Set<Participation> participations, String title, String description) {
+    public Survey(Set<Timeslot> timeslots, Timeslot selectedTimeslot, User creator, Set<Participation> participations
+        , String title, String description) {
         this.timeslots = timeslots;
         this.selectedTimeslot = selectedTimeslot;
         this.creator = creator;
@@ -113,8 +115,10 @@ public class Survey {
 
     @Override
     public boolean equals(Object o) {
-        if (this == o) return true;
-        if (!(o instanceof Survey)) return false;
+        if (this == o)
+            return true;
+        if (!(o instanceof Survey))
+            return false;
         Survey survey = (Survey) o;
 
         if (getId() == null) {

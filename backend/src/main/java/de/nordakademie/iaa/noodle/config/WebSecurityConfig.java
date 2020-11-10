@@ -12,17 +12,16 @@ import org.springframework.security.web.authentication.UsernamePasswordAuthentic
 
 /**
  * Configuration for Authentication / Authorization with SpringSecurity.
- * @see JWTAuthorizationFilter
  *
  * @author Noah Peeters
+ * @see JWTAuthorizationFilter
  */
 @EnableWebSecurity
 @Configuration
 class WebSecurityConfig extends WebSecurityConfigurerAdapter {
     private final JWTAuthorizationFilter jwtAuthorizationFilter;
 
-    @Autowired
-    WebSecurityConfig(JWTAuthorizationFilter jwtAuthorizationFilter) {
+    @Autowired WebSecurityConfig(JWTAuthorizationFilter jwtAuthorizationFilter) {
         this.jwtAuthorizationFilter = jwtAuthorizationFilter;
     }
 

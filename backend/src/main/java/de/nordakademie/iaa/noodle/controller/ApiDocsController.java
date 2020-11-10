@@ -25,6 +25,7 @@ public class ApiDocsController {
 
     /**
      * Creates swagger api information.
+     *
      * @return Swagger API Information.
      */
     private ApiInfo apiInfo() {
@@ -40,6 +41,7 @@ public class ApiDocsController {
 
     /**
      * Creates the Swagger bean.
+     *
      * @return Swagger Bean.
      */
     @Bean

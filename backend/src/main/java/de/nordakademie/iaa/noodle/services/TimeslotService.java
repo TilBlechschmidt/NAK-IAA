@@ -12,17 +12,17 @@ import org.springframework.transaction.annotation.Transactional;
 /**
  * Service to manage {@link Timeslot}s.
  *
- * @see TimeslotRepository
- *
  * @author Noah Peeters
+ * @see TimeslotRepository
  */
 @Service
-@Transactional(propagation = Propagation.REQUIRED, rollbackFor = { ServiceException.class })
+@Transactional(propagation = Propagation.REQUIRED, rollbackFor = {ServiceException.class})
 public class TimeslotService {
     private final TimeslotRepository timeslotRepository;
 
     /**
      * Creates a new TimeslotService.
+     *
      * @param timeslotRepository Te repository for timeslots.
      */
     public TimeslotService(TimeslotRepository timeslotRepository) {
@@ -31,7 +31,8 @@ public class TimeslotService {
 
     /**
      * Find a timeslot of a survey by its id.
-     * @param survey The survey of the timeslot.
+     *
+     * @param survey     The survey of the timeslot.
      * @param timeslotID The id timeslot.
      * @return The requested timeslot.
      * @throws EntityNotFoundException Thrown, when the timeslot does not exist.
@@ -48,6 +49,7 @@ public class TimeslotService {
 
     /**
      * Deletes all timeslots of a survey.
+     *
      * @param survey The survey of which all timeslots will be deleted.
      */
     public void deleteTimeslotsOfSurvey(Survey survey) {

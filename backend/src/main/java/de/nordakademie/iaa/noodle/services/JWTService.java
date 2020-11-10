@@ -22,10 +22,9 @@ import static java.nio.charset.StandardCharsets.UTF_8;
 /**
  * Service to generate and parse JWT tokens.
  *
- * @see de.nordakademie.iaa.noodle.filter.JWTAuthorizationFilter
- *
  * @author Noah Peeters
  * @author Hans Rißer
+ * @see de.nordakademie.iaa.noodle.filter.JWTAuthorizationFilter
  */
 @Service
 public class JWTService {
@@ -39,7 +38,8 @@ public class JWTService {
 
     /**
      * Creates a new JWTService.
-     * @param secret The secret used for generating and parsing the tokens.
+     *
+     * @param secret         The secret used for generating and parsing the tokens.
      * @param expirationTime The time a token is valid for.
      */
     public JWTService(@Value("${spring.noodle.security.secret}") String secret,
@@ -60,7 +60,8 @@ public class JWTService {
 
     /**
      * Generates a token for the account creating which can be mailed to the user.
-     * @param email The email of the user.
+     *
+     * @param email    The email of the user.
      * @param fullName The full name of the user.
      * @return The generated token.
      */
@@ -73,11 +74,13 @@ public class JWTService {
 
     /**
      * Generates a token which can be used to authenticate in future requests.
+     *
      * @param user The user for which the token should be generated.
      * @return The generated token.
      */
     public String buildSpringAuthenticationToken(User user) {
-        List<GrantedAuthority> grantedAuthorities = AuthorityUtils.commaSeparatedStringToAuthorityList("ROLE_USER");
+        List<GrantedAuthority> grantedAuthorities =
+            AuthorityUtils.commaSeparatedStringToAuthorityList("ROLE_USER");
 
         return baseTokenBuilder(user.getEmail())
             .claim(CLAIM_USER_ID, user.getId())
@@ -90,6 +93,7 @@ public class JWTService {
 
     /**
      * Parses te user details from a user creation token.
+     *
      * @param token The user creation token.
      * @return The parsed user details.
      * @throws JWTException Thrown, when the token is invalid.
@@ -101,6 +105,7 @@ public class JWTService {
 
     /**
      * Parses the authentication data from an authentication token.
+     *
      * @param token The authentication token.
      * @return The parsed authentication details.
      * @throws JWTException Thrown, when the token is invalid.

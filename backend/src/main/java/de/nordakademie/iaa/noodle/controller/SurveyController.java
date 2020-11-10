@@ -25,11 +25,10 @@ import static org.springframework.http.HttpStatus.CREATED;
 /**
  * Rest controller for all routes regarding {@link Survey}s.
  *
- * @see SurveyService
- * @see SurveyMapper
- *
  * @author Noah Peeters
  * @author Hans Rißer
+ * @see SurveyService
+ * @see SurveyMapper
  */
 @RestController
 public class SurveyController extends AuthenticatedController implements SurveysApi {
@@ -80,7 +79,8 @@ public class SurveyController extends AuthenticatedController implements Surveys
     public ResponseEntity<SurveyMetadataDTO> createSurvey(SurveyCreationMetadataDTO surveyCreationMetadataDTO) {
         try {
             User currentUser = getCurrentUser();
-            List<TimeslotCreationData> timeslotCreationDataList = timeslotMapper.timeslotCreationDTOsToData(surveyCreationMetadataDTO.getTimeslots());
+            List<TimeslotCreationData> timeslotCreationDataList =
+                timeslotMapper.timeslotCreationDTOsToData(surveyCreationMetadataDTO.getTimeslots());
 
             Survey survey = surveyService.createSurvey(surveyCreationMetadataDTO.getTitle(),
                 surveyCreationMetadataDTO.getDescription(),
@@ -145,10 +145,12 @@ public class SurveyController extends AuthenticatedController implements Surveys
      * {@inheritDoc}
      */
     @Override
-    public ResponseEntity<SurveyMetadataDTO> updateSurvey(Long id, SurveyCreationMetadataDTO surveyCreationMetadataDTO) {
+    public ResponseEntity<SurveyMetadataDTO> updateSurvey(Long id,
+                                                          SurveyCreationMetadataDTO surveyCreationMetadataDTO) {
         try {
             User currentUser = getCurrentUser();
-            List<TimeslotCreationData> timeslotCreationDataList = timeslotMapper.timeslotCreationDTOsToData(surveyCreationMetadataDTO.getTimeslots());
+            List<TimeslotCreationData> timeslotCreationDataList =
+                timeslotMapper.timeslotCreationDTOsToData(surveyCreationMetadataDTO.getTimeslots());
 
             Survey survey = surveyService.updateSurvey(id,
                 surveyCreationMetadataDTO.getTitle(),

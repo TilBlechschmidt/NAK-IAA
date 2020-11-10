@@ -26,26 +26,30 @@ import static org.springframework.web.util.HtmlUtils.htmlEscape;
  */
 @Service
 public class MailService {
-    private static final String FOOTER = """
+    private static final String FOOTER =
+        """
         <br/><br/>
         Best regards<br/>
         Your team @Noodle
         """;
 
-    private static final String REGISTRATION_TEMPLATE = """
+    private static final String REGISTRATION_TEMPLATE =
+        """
         Hello ${name}!<br/>
         Thank you for your registration. Please click
         <a href="${baseurl}/activate?token=${token}">here</a>
         to complete the registration.
         """;
 
-    private static final String REGISTRATION_DUPLICATE_TEMPLATE = """
+    private static final String REGISTRATION_DUPLICATE_TEMPLATE =
+        """
         Hello ${name}!<br/>
         We have to inform you, that you already have an account with this email.
         Please try to sign in using this email.
         """;
 
-    private static final String NEEDS_ATTENTION_TEMPLATE = """
+    private static final String NEEDS_ATTENTION_TEMPLATE =
+        """
         Hello ${participant_name}!<br/>
         ${creator_name} modified the survey
         <a href=${baseurl}/surveys/${survey_id}>${survey_title}</a>.
@@ -58,9 +62,10 @@ public class MailService {
 
     /**
      * Creates a new MailService.
+     *
      * @param emailSender The JavaMailSender used to send the mails.
-     * @param fromEmail The email used to send the mails from.
-     * @param baseURL The base url of the noodle service. This will be used for links in the mails.
+     * @param fromEmail   The email used to send the mails from.
+     * @param baseURL     The base url of the noodle service. This will be used for links in the mails.
      */
     @Autowired
     public MailService(JavaMailSender emailSender,
@@ -73,9 +78,10 @@ public class MailService {
 
     /**
      * Sends a mail with the registration token.
-     * @param token The registration token.
+     *
+     * @param token    The registration token.
      * @param fullName The name of the user.
-     * @param email The email of the user.
+     * @param email    The email of the user.
      * @throws MailClientException Thrown, when the mail cannot be send.
      */
     public void sendRegistrationMail(String token, String fullName, String email) throws MailClientException {
@@ -89,8 +95,9 @@ public class MailService {
 
     /**
      * Send a mail to a user, when there is already an account with the given email.
+     *
      * @param fullName The name of the user.
-     * @param email The email of the user.
+     * @param email    The email of the user.
      * @throws MailClientException Thrown, when the mail cannot be send.
      */
     public void sendRegistrationMailDuplicateEmail(String fullName, String email) throws MailClientException {
@@ -102,9 +109,10 @@ public class MailService {
 
     /**
      * Sends a mail.
+     *
      * @param subject The subject of the mail.
-     * @param body The body of the mail.
-     * @param email The email the mail will be send to.
+     * @param body    The body of the mail.
+     * @param email   The email the mail will be send to.
      * @throws MailClientException Thrown, when the mail cannot be send.
      */
     public void sendMail(String subject, String body, String email) throws MailClientException {
@@ -122,7 +130,8 @@ public class MailService {
 
     /**
      * Sends a mail to every user to inform them, that their participation is stale.
-     * @param survey The survey the participations belong to.
+     *
+     * @param survey       The survey the participations belong to.
      * @param participants The participants who must creat a new response.
      */
     public void sendNeedsAttentionMailsAsync(Survey survey, List<User> participants) {
@@ -139,7 +148,8 @@ public class MailService {
 
     /**
      * Sends a mail to a user to inform them, that their participation is stale.
-     * @param survey The survey the participations belong to.
+     *
+     * @param survey      The survey the participations belong to.
      * @param participant The user with the stale response.
      * @throws MailClientException Thrown, when the mail cannot be send.
      */

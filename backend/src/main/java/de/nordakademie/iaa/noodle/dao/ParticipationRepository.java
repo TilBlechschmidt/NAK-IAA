@@ -29,7 +29,8 @@ public interface ParticipationRepository {
 
     /**
      * Fetch a participation based on the survey and the participant.
-     * @param surveyID The id of the survey.
+     *
+     * @param surveyID    The id of the survey.
      * @param participant The participant.
      * @return The requested participation or null of it does not exists.
      */
@@ -39,12 +40,14 @@ public interface ParticipationRepository {
 
     /**
      * Saves a participation.
+     *
      * @param participation The participation to save.
      */
     void save(Participation participation);
 
     /**
      * Deletes a participation.
+     *
      * @param participation The participation to delete.
      */
     void delete(Participation participation);

@@ -14,8 +14,9 @@ public class TimeslotCreationData {
 
     /**
      * Creates new TimeslotCreationData.
+     *
      * @param start The start date of the timeslot.
-     * @param end The end date of the timeslot.
+     * @param end   The end date of the timeslot.
      */
     public TimeslotCreationData(Date start, Date end) {
         this.start = start;

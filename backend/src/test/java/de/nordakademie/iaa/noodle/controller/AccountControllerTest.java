@@ -36,17 +36,21 @@ public class AccountControllerTest {
 
     @Test
     void testAuthenticateWrongPassword() throws PasswordException, EntityNotFoundException {
-        when(signInService.attemptAuthentication(any(), any())).thenThrow(new PasswordException("testAuthenticatePassword"));
+        when(signInService.attemptAuthentication(any(), any()))
+            .thenThrow(new PasswordException("testAuthenticatePassword"));
         AuthenticationRequest inputDTO = mock(AuthenticationRequest.class);
-        assertThrowsResponseStatusException(HttpStatus.UNAUTHORIZED, "invalidAuthenticationData", () -> accountController.authenticate(inputDTO));
+        assertThrowsResponseStatusException(HttpStatus.UNAUTHORIZED, "invalidAuthenticationData",
+            () -> accountController.authenticate(inputDTO));
 
     }
 
     @Test
     void testAuthenticateNotFound() throws PasswordException, EntityNotFoundException {
-        when(signInService.attemptAuthentication(any(), any())).thenThrow(new EntityNotFoundException("testAuthenticateNotFound"));
+        when(signInService.attemptAuthentication(any(), any()))
+            .thenThrow(new EntityNotFoundException("testAuthenticateNotFound"));
         AuthenticationRequest inputDTO = mock(AuthenticationRequest.class);
-        assertThrowsResponseStatusException(HttpStatus.UNAUTHORIZED, "invalidAuthenticationData", () -> accountController.authenticate(inputDTO));
+        assertThrowsResponseStatusException(HttpStatus.UNAUTHORIZED, "invalidAuthenticationData",
+            () -> accountController.authenticate(inputDTO));
     }
 
     @Test
@@ -93,7 +97,8 @@ public class AccountControllerTest {
 
     @Test
     void testCreateUserUnprocessableEntity() throws ConflictException, JWTException, PasswordException {
-        when(signUpService.createAccount(any(), any())).thenThrow(new PasswordException("testCreateUserUnprocessableEntity"));
+        when(signUpService.createAccount(any(), any()))
+            .thenThrow(new PasswordException("testCreateUserUnprocessableEntity"));
         ActivateUserRequest activateUserRequest = mock(ActivateUserRequest.class);
         assertThrowsResponseStatusException(HttpStatus.UNPROCESSABLE_ENTITY, "testCreateUserUnprocessableEntity",
             () -> accountController.activateUser(activateUserRequest));
@@ -136,7 +141,8 @@ public class AccountControllerTest {
         when(requestRegistrationEmailRequest.getName()).thenReturn("FULL_NAME");
         when(requestRegistrationEmailRequest.getEmail()).thenReturn("EMAIL");
 
-        ResponseEntity<RequestRegistrationEmailResponse> response = accountController.requestRegistrationEmail(requestRegistrationEmailRequest);
+        ResponseEntity<RequestRegistrationEmailResponse> response =
+            accountController.requestRegistrationEmail(requestRegistrationEmailRequest);
         RequestRegistrationEmailResponse requestRegistrationEmailResponse = response.getBody();
 
         verify(signUpService).mailSignupToken("EMAIL", "FULL_NAME");

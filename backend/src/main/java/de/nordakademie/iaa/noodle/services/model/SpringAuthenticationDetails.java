@@ -13,7 +13,8 @@ public class SpringAuthenticationDetails {
 
     /**
      * Creates new SpringAuthenticationDetails.
-     * @param userID The user id of the authenticated user.
+     *
+     * @param userID      The user id of the authenticated user.
      * @param authorities The authorities the user has.
      */
     public SpringAuthenticationDetails(Long userID, List<String> authorities) {

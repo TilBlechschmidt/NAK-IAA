@@ -18,6 +18,7 @@ import org.springframework.transaction.annotation.Transactional;
 public interface ResponseTimeslotRepository {
     /**
      * Deletes all response timeslots of a response.
+     *
      * @param response The response of which the response timeslots will be deleted.
      */
     void deleteAllByResponse(Response response);

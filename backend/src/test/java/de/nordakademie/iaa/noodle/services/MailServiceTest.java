@@ -39,14 +39,14 @@ public class MailServiceTest {
         mailService.sendRegistrationMail("TOKEN", "FULL_NAME", "EMAIL");
 
         String body = """
-            Hello FULL_NAME!<br/>
-            Thank you for your registration. Please click
-            <a href="BASEURL/activate?token=TOKEN">here</a>
-            to complete the registration.
-            <br/><br/>
-            Best regards<br/>
-            Your team @Noodle
-            """;
+                      Hello FULL_NAME!<br/>
+                      Thank you for your registration. Please click
+                      <a href="BASEURL/activate?token=TOKEN">here</a>
+                      to complete the registration.
+                      <br/><br/>
+                      Best regards<br/>
+                      Your team @Noodle
+                      """;
 
         verify(mimeMessage, times(1)).setFrom("FROM_EMAIL");
         verify(mimeMessage, times(1)).setRecipients(Message.RecipientType.TO, "EMAIL");
@@ -59,13 +59,13 @@ public class MailServiceTest {
         mailService.sendRegistrationMailDuplicateEmail("FULL_NAME", "EMAIL");
 
         String body = """
-            Hello FULL_NAME!<br/>
-            We have to inform you, that you already have an account with this email.
-            Please try to sign in using this email.
-            <br/><br/>
-            Best regards<br/>
-            Your team @Noodle
-            """;
+                      Hello FULL_NAME!<br/>
+                      We have to inform you, that you already have an account with this email.
+                      Please try to sign in using this email.
+                      <br/><br/>
+                      Best regards<br/>
+                      Your team @Noodle
+                      """;
 
         verify(mimeMessage, times(1)).setFrom("FROM_EMAIL");
         verify(mimeMessage, times(1)).setRecipients(Message.RecipientType.TO, "EMAIL");
@@ -89,14 +89,14 @@ public class MailServiceTest {
         mailService.sendNeedsAttentionMail(survey, participant);
 
         String body = """
-            Hello PARTICIPANT_FULL_NAME!<br/>
-            CREATOR_FULL_NAME modified the survey
-            <a href=BASEURL/surveys/42>TITLE</a>.
-            Please create a new response.
-            <br/><br/>
-            Best regards<br/>
-            Your team @Noodle
-            """;
+                      Hello PARTICIPANT_FULL_NAME!<br/>
+                      CREATOR_FULL_NAME modified the survey
+                      <a href=BASEURL/surveys/42>TITLE</a>.
+                      Please create a new response.
+                      <br/><br/>
+                      Best regards<br/>
+                      Your team @Noodle
+                      """;
 
         verify(mimeMessage, times(1)).setFrom("FROM_EMAIL");
         verify(mimeMessage, times(1)).setRecipients(Message.RecipientType.TO, "EMAIL");

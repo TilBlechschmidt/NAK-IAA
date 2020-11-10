@@ -18,17 +18,17 @@ import java.util.stream.Collectors;
 /**
  * Mapper for timeslots.
  *
+ * @author Noah Peeters
  * @see Timeslot
  * @see TimeslotDTO
  * @see TimeslotCreationData
- *
- * @author Noah Peeters
  */
 @Mapper(unmappedTargetPolicy = ReportingPolicy.WARN, componentModel = "spring")
 public interface TimeslotMapper {
 
     /**
      * Maps a date to an OffsetDateTime
+     *
      * @param date The date to map.
      * @return The mapped OffsetDateTime.
      */
@@ -41,6 +41,7 @@ public interface TimeslotMapper {
 
     /**
      * Maps an OffsetDateTime to a Date
+     *
      * @param offsetDateTime The date to map.
      * @return The mapped Date.
      */
@@ -53,6 +54,7 @@ public interface TimeslotMapper {
 
     /**
      * Maps a set of timeslots to timeslot DTOs.
+     *
      * @param timeslots The timeslots to map.
      * @return The mapped timeslots.
      */
@@ -65,6 +67,7 @@ public interface TimeslotMapper {
 
     /**
      * Maps a timeslot to timeslot DTO.
+     *
      * @param timeslot The timeslot to map.
      * @return The mapped timeslot.
      */
@@ -72,6 +75,7 @@ public interface TimeslotMapper {
 
     /**
      * Maps a list of TimeslotCreationDTO to TimeslotCreationData.
+     *
      * @param timeslotCreationDTOs The TimeslotCreationDTOs to map.
      * @return THe mapped TimeslotCreationData.
      */

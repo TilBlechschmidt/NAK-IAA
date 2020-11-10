@@ -18,9 +18,11 @@ import org.springframework.transaction.annotation.Transactional;
 public interface TimeslotRepository {
     /**
      * Queries a single timeslot by its id.
+     *
      * @param timeslotID The id of the timeslot.
      * @return The requested timeslot or null if it does not exist.
      */
     Timeslot findById(Long timeslotID);
+
     void deleteAllBySurvey(Survey survey);
 }

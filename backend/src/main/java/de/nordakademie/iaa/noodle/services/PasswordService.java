@@ -19,6 +19,7 @@ public class PasswordService {
 
     /**
      * Creates a new PasswordService.
+     *
      * @param hashPepper The pepper used for the password hashing.
      */
     public PasswordService(@Value("${spring.noodle.security.hashPepper}") String hashPepper) {
@@ -28,10 +29,11 @@ public class PasswordService {
 
     /**
      * Creates a hash for the given password.
+     *
      * @param password The password to hash.
      * @return A hash (including the salt) for the password.
      * @throws PasswordException Thrown, when the password is invalid,
-     * because it does not comply with the password rules.
+     *                           because it does not comply with the password rules.
      */
     public String hashPassword(String password) throws PasswordException {
         if (!isPasswordValid(password)) {
@@ -43,7 +45,8 @@ public class PasswordService {
 
     /**
      * Checks if the given password is correct for the user.
-     * @param user The user to check the password for.
+     *
+     * @param user     The user to check the password for.
      * @param password The password to check.
      * @return <code>True</code> if the password is correct. <code>False</code> otherwise.
      */

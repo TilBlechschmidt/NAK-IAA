@@ -3,10 +3,10 @@ package de.nordakademie.iaa.noodle.controller;
 import de.nordakademie.iaa.noodle.api.AccountApi;
 import de.nordakademie.iaa.noodle.api.model.*;
 import de.nordakademie.iaa.noodle.model.User;
-import de.nordakademie.iaa.noodle.services.exceptions.*;
-import de.nordakademie.iaa.noodle.services.model.AuthenticatedUser;
 import de.nordakademie.iaa.noodle.services.SignInService;
 import de.nordakademie.iaa.noodle.services.SignUpService;
+import de.nordakademie.iaa.noodle.services.exceptions.*;
+import de.nordakademie.iaa.noodle.services.model.AuthenticatedUser;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
@@ -27,6 +27,7 @@ public class AccountController implements AccountApi {
 
     /**
      * Creates a new AccountController
+     *
      * @param signUpService Service used for creating new accounts.
      * @param signInService Service used to authenticate users.
      */
@@ -76,7 +77,8 @@ public class AccountController implements AccountApi {
      * {@inheritDoc}
      */
     @Override
-    public ResponseEntity<RequestRegistrationEmailResponse> requestRegistrationEmail(RequestRegistrationEmailRequest requestRegistrationEmailRequest) {
+    public ResponseEntity<RequestRegistrationEmailResponse> requestRegistrationEmail(
+        RequestRegistrationEmailRequest requestRegistrationEmailRequest) {
         try {
             String email = requestRegistrationEmailRequest.getEmail();
             String fullName = requestRegistrationEmailRequest.getName();

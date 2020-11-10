@@ -10,16 +10,16 @@ import org.mapstruct.ReportingPolicy;
 /**
  * Mapper for users.
  *
+ * @author Noah Peeters
  * @see User
  * @see IdentifiableUserDTO
- *
- * @author Noah Peeters
  */
 @Mapper(unmappedTargetPolicy = ReportingPolicy.WARN, componentModel = "spring")
 public interface UserMapper {
 
     /**
      * Maps a User to a IdentifiableUserDTO.
+     *
      * @param user The user to map.
      * @return The mapped IdentifiableUserDTO.
      */

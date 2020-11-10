@@ -16,20 +16,19 @@ import java.util.stream.Collectors;
 
 /**
  * Mapper for surveys.
+ *
+ * @author Noah Peeters
+ * @author Hans Rißer
  * @see Survey
  * @see QuerySurveysItem
- *
  * @see SurveyDTO
  * @see SurveyMetadataDTO
  * @see QuerySurveysResult
  * @see QuerySurveysResponse
- *
- * @author Noah Peeters
- * @author Hans Rißer
  */
 @Mapper(unmappedTargetPolicy = ReportingPolicy.WARN,
-    componentModel = "spring",
-    uses = {UserMapper.class, ResponseMapper.class, TimeslotMapper.class})
+        componentModel = "spring",
+        uses = {UserMapper.class, ResponseMapper.class, TimeslotMapper.class})
 public abstract class SurveyMapper {
 
     @Autowired
@@ -37,7 +36,8 @@ public abstract class SurveyMapper {
 
     /**
      * Maps a survey to a SurveyDTO.
-     * @param survey The survey to map.
+     *
+     * @param survey      The survey to map.
      * @param currentUser The current user.
      * @return The mapped SurveyDTO.
      */
@@ -51,7 +51,8 @@ public abstract class SurveyMapper {
 
     /**
      * Maps a survey to a SurveyMetadataDTO.
-     * @param survey The survey to map.
+     *
+     * @param survey      The survey to map.
      * @param currentUser The current user.
      * @return The mapped SurveyMetadataDTO.
      */
@@ -65,6 +66,7 @@ public abstract class SurveyMapper {
 
     /**
      * Maps surveys to a QuerySurveysResponse.
+     *
      * @param surveys The surveys to map.
      * @return The mapped QuerySurveysResponse.
      */
@@ -76,6 +78,7 @@ public abstract class SurveyMapper {
 
     /**
      * Maps a QuerySurveysItem to a QuerySurveysResult.
+     *
      * @param survey The survey data to map.
      * @return The mapped QuerySurveysResult.
      */
@@ -85,7 +88,8 @@ public abstract class SurveyMapper {
 
     /**
      * Maps if a user can edit a survey.
-     * @param survey The survey.
+     *
+     * @param survey      The survey.
      * @param currentUser The user.
      * @return True, if the user can edit the survey. False otherwise.
      */
@@ -96,7 +100,8 @@ public abstract class SurveyMapper {
 
     /**
      * Maps if a user can close a survey.
-     * @param survey The survey.
+     *
+     * @param survey      The survey.
      * @param currentUser The user.
      * @return True, if the user can close the survey. False otherwise.
      */
@@ -107,7 +112,8 @@ public abstract class SurveyMapper {
 
     /**
      * Maps if a user can delete a survey.
-     * @param survey The survey.
+     *
+     * @param survey      The survey.
      * @param currentUser The user.
      * @return True, if the user can delete the survey. False otherwise.
      */

@@ -26,11 +26,11 @@ public class Timeslot {
     private Survey survey;
 
     @Temporal(TemporalType.TIMESTAMP)
-    @Column(name = "start",nullable = false)
+    @Column(name = "start", nullable = false)
     private Date start;
 
     @Temporal(TemporalType.TIMESTAMP)
-    @Column(name = "end",nullable = true)
+    @Column(name = "end", nullable = true)
     private Date end;
 
     /**
@@ -41,9 +41,10 @@ public class Timeslot {
 
     /**
      * Creates a new timeslot with initial values.
+     *
      * @param survey The survey this timeslot is for.
-     * @param start The start date/time of the timeslot.
-     * @param end The end date/time of the timeslot.
+     * @param start  The start date/time of the timeslot.
+     * @param end    The end date/time of the timeslot.
      */
     public Timeslot(Survey survey, Date start, Date end) {
         this.survey = survey;
@@ -70,8 +71,10 @@ public class Timeslot {
 
     @Override
     public boolean equals(Object o) {
-        if (this == o) return true;
-        if (!(o instanceof Timeslot)) return false;
+        if (this == o)
+            return true;
+        if (!(o instanceof Timeslot))
+            return false;
         Timeslot timeslot = (Timeslot) o;
 
         if (getId() == null) {

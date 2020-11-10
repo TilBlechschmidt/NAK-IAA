@@ -72,7 +72,7 @@ class TimeslotTest {
     void testDelete() {
         assumeThatCode(this::testCreate).doesNotThrowAnyException();
 
-        assertNotNull(entityManager.find(Timeslot.class,id));
+        assertNotNull(entityManager.find(Timeslot.class, id));
         entityManager.remove(timeslot);
         assertNull(entityManager.find(Timeslot.class, id));
     }

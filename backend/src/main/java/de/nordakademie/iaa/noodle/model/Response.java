@@ -33,7 +33,8 @@ public class Response {
 
     /**
      * Creates a new response with initial values.
-     * @param participation The participation the response is for.
+     *
+     * @param participation     The participation the response is for.
      * @param responseTimeslots The answers to the timeslots.
      */
     public Response(Participation participation, Set<ResponseTimeslot> responseTimeslots) {
@@ -55,8 +56,10 @@ public class Response {
 
     @Override
     public boolean equals(Object o) {
-        if (this == o) return true;
-        if (!(o instanceof Response)) return false;
+        if (this == o)
+            return true;
+        if (!(o instanceof Response))
+            return false;
         Response response = (Response) o;
         return Objects.equals(getId(), response.getId());
     }

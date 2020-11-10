@@ -25,4 +25,5 @@
             "type": "java.lang.String",
             "description": "URL to the root page of noodle."
         }
-    ] }
+    ]
+}

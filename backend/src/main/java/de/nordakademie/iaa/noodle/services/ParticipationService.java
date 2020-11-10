@@ -14,20 +14,20 @@ import org.springframework.transaction.annotation.Transactional;
 /**
  * Service to manage {@link Participation}s.
  *
- * @see ParticipationRepository
- *
  * @author Noah Peeters
+ * @see ParticipationRepository
  */
 @Service
-@Transactional(propagation = Propagation.REQUIRED, rollbackFor = { ServiceException.class })
+@Transactional(propagation = Propagation.REQUIRED, rollbackFor = {ServiceException.class})
 public class ParticipationService {
     private final ParticipationRepository participationRepository;
     private final SurveyService surveyService;
 
     /**
      * Creates a new ParticipationService.
+     *
      * @param participationRepository The repository for participations.
-     * @param surveyService The service to manage surveys.
+     * @param surveyService           The service to manage surveys.
      */
     @Autowired
     public ParticipationService(ParticipationRepository participationRepository, SurveyService surveyService) {
@@ -38,7 +38,8 @@ public class ParticipationService {
     /**
      * If the user already has a participation, the participation is returned.
      * Otherwise, a new participation is created.
-     * @param user The user for which the participation is returned.
+     *
+     * @param user     The user for which the participation is returned.
      * @param surveyID The id of the survey for which the participation is returned.
      * @return The participation of the give user for the given survey.
      * @throws EntityNotFoundException Thrown, when he survey with the given id does not exist.

@@ -48,7 +48,8 @@ public class SurveyControllerTest {
     @Test
     void testCloseSurveyBadRequest() {
         CloseSurveyRequest closeSurveyRequest = new CloseSurveyRequest();
-        assertThrowsResponseStatusException(HttpStatus.BAD_REQUEST, "unsupportedOperation", () -> surveyController.closeSurvey(42L, closeSurveyRequest));
+        assertThrowsResponseStatusException(HttpStatus.BAD_REQUEST, "unsupportedOperation",
+            () -> surveyController.closeSurvey(42L, closeSurveyRequest));
     }
 
     @Test
@@ -56,15 +57,18 @@ public class SurveyControllerTest {
         CloseSurveyRequest closeSurveyRequest = new CloseSurveyRequest();
         when(surveyService.closeSurvey(any(), any(), any())).thenThrow(new EntityNotFoundException("testCloseSurvey"));
         closeSurveyRequest.setOperation(CloseSurveyRequest.OperationEnum.CLOSE);
-        assertThrowsResponseStatusException(HttpStatus.NOT_FOUND, "testCloseSurvey", () -> surveyController.closeSurvey(42L, closeSurveyRequest));
+        assertThrowsResponseStatusException(HttpStatus.NOT_FOUND, "testCloseSurvey",
+            () -> surveyController.closeSurvey(42L, closeSurveyRequest));
     }
 
     @Test
     void testCloseSurveyForbidden() throws Exception {
         CloseSurveyRequest closeSurveyRequest = new CloseSurveyRequest();
         closeSurveyRequest.setOperation(CloseSurveyRequest.OperationEnum.CLOSE);
-        when(surveyService.closeSurvey(any(), any(), any())).thenThrow(new ForbiddenOperationException("testCloseSurvey"));
-        assertThrowsResponseStatusException(HttpStatus.FORBIDDEN, "testCloseSurvey", () -> surveyController.closeSurvey(42L, closeSurveyRequest));
+        when(surveyService.closeSurvey(any(), any(), any()))
+            .thenThrow(new ForbiddenOperationException("testCloseSurvey"));
+        assertThrowsResponseStatusException(HttpStatus.FORBIDDEN, "testCloseSurvey",
+            () -> surveyController.closeSurvey(42L, closeSurveyRequest));
     }
 
     @Test
@@ -84,8 +88,10 @@ public class SurveyControllerTest {
     @Test
     void testCreateSurveyUnprocessable() throws SemanticallyInvalidInputException {
         SurveyCreationMetadataDTO surveyCreationMetadataDTO = mock(SurveyCreationMetadataDTO.class);
-        when(surveyService.createSurvey(any(), any(), any(), any())).thenThrow(new SemanticallyInvalidInputException("testCreateSurvey"));
-        assertThrowsResponseStatusException(HttpStatus.UNPROCESSABLE_ENTITY, "testCreateSurvey", () -> surveyController.createSurvey(surveyCreationMetadataDTO));
+        when(surveyService.createSurvey(any(), any(), any(), any()))
+            .thenThrow(new SemanticallyInvalidInputException("testCreateSurvey"));
+        assertThrowsResponseStatusException(HttpStatus.UNPROCESSABLE_ENTITY, "testCreateSurvey",
+            () -> surveyController.createSurvey(surveyCreationMetadataDTO));
     }
 
     @Test
@@ -103,13 +109,15 @@ public class SurveyControllerTest {
     @Test
     void testDeleteSurveyNotFound() throws ForbiddenOperationException, EntityNotFoundException {
         when(surveyService.deleteSurvey(any(), any())).thenThrow(new EntityNotFoundException("deleteTest"));
-        assertThrowsResponseStatusException(HttpStatus.NOT_FOUND, "deleteTest", () -> surveyController.deleteSurvey(42L));
+        assertThrowsResponseStatusException(HttpStatus.NOT_FOUND, "deleteTest",
+            () -> surveyController.deleteSurvey(42L));
     }
 
     @Test
     void testDeleteSurveyForbidden() throws ForbiddenOperationException, EntityNotFoundException {
         when(surveyService.deleteSurvey(any(), any())).thenThrow(new ForbiddenOperationException("deleteTest"));
-        assertThrowsResponseStatusException(HttpStatus.FORBIDDEN, "deleteTest", () -> surveyController.deleteSurvey(42L));
+        assertThrowsResponseStatusException(HttpStatus.FORBIDDEN, "deleteTest",
+            () -> surveyController.deleteSurvey(42L));
     }
 
     @Test
@@ -146,40 +154,51 @@ public class SurveyControllerTest {
     @Test
     void testQuerySurveys() {
         List<QuerySurveysItem> expectedSurveys = new ArrayList<>();
-        when(surveyService.querySurveys(any(),any(),any(),any(),any(),any())).thenReturn(expectedSurveys);
+        when(surveyService.querySurveys(any(), any(), any(), any(), any(), any())).thenReturn(expectedSurveys);
         QuerySurveysResponse expectedDTO = mock(QuerySurveysResponse.class);
         when(surveyMapper.surveysToSurveysDTO(expectedSurveys)).thenReturn(expectedDTO);
-        ResponseEntity<QuerySurveysResponse> response = surveyController.querySurveys(empty(), empty(), empty(), empty(), empty());
+        ResponseEntity<QuerySurveysResponse> response =
+            surveyController.querySurveys(empty(), empty(), empty(), empty(), empty());
         assertSameResponseEntity(HttpStatus.OK, expectedDTO, response);
     }
 
 
     @Test
-    void testUpdateSurveyForbidden() throws EntityNotFoundException, ForbiddenOperationException, SemanticallyInvalidInputException {
-        when(surveyService.updateSurvey(any(), any(), any(), any(), any())).thenThrow(new ForbiddenOperationException("testUpdateSurvey"));
+    void testUpdateSurveyForbidden()
+        throws EntityNotFoundException, ForbiddenOperationException, SemanticallyInvalidInputException {
+        when(surveyService.updateSurvey(any(), any(), any(), any(), any()))
+            .thenThrow(new ForbiddenOperationException("testUpdateSurvey"));
         SurveyCreationMetadataDTO inputDTO = mock(SurveyCreationMetadataDTO.class);
 
-        assertThrowsResponseStatusException(HttpStatus.FORBIDDEN,"testUpdateSurvey",()->surveyController.updateSurvey(42L,inputDTO));
+        assertThrowsResponseStatusException(HttpStatus.FORBIDDEN, "testUpdateSurvey",
+            () -> surveyController.updateSurvey(42L, inputDTO));
     }
 
     @Test
-    void testUpdateSurveyNotFound() throws EntityNotFoundException, ForbiddenOperationException, SemanticallyInvalidInputException {
-        when(surveyService.updateSurvey(any(), any(), any(), any(), any())).thenThrow(new EntityNotFoundException("testUpdateSurvey"));
+    void testUpdateSurveyNotFound()
+        throws EntityNotFoundException, ForbiddenOperationException, SemanticallyInvalidInputException {
+        when(surveyService.updateSurvey(any(), any(), any(), any(), any()))
+            .thenThrow(new EntityNotFoundException("testUpdateSurvey"));
         SurveyCreationMetadataDTO inputDTO = mock(SurveyCreationMetadataDTO.class);
 
-        assertThrowsResponseStatusException(HttpStatus.NOT_FOUND,"testUpdateSurvey",()->surveyController.updateSurvey(42L,inputDTO));
+        assertThrowsResponseStatusException(HttpStatus.NOT_FOUND, "testUpdateSurvey",
+            () -> surveyController.updateSurvey(42L, inputDTO));
     }
 
     @Test
-    void testUpdateSurveyInvalid() throws EntityNotFoundException, ForbiddenOperationException, SemanticallyInvalidInputException {
-        when(surveyService.updateSurvey(any(), any(), any(), any(), any())).thenThrow(new SemanticallyInvalidInputException("testUpdateSurvey"));
+    void testUpdateSurveyInvalid()
+        throws EntityNotFoundException, ForbiddenOperationException, SemanticallyInvalidInputException {
+        when(surveyService.updateSurvey(any(), any(), any(), any(), any()))
+            .thenThrow(new SemanticallyInvalidInputException("testUpdateSurvey"));
         SurveyCreationMetadataDTO inputDTO = mock(SurveyCreationMetadataDTO.class);
 
-        assertThrowsResponseStatusException(HttpStatus.UNPROCESSABLE_ENTITY,"testUpdateSurvey",()->surveyController.updateSurvey(42L,inputDTO));
+        assertThrowsResponseStatusException(HttpStatus.UNPROCESSABLE_ENTITY, "testUpdateSurvey",
+            () -> surveyController.updateSurvey(42L, inputDTO));
     }
 
     @Test
-    void testUpdateSurvey() throws EntityNotFoundException, ForbiddenOperationException, SemanticallyInvalidInputException {
+    void testUpdateSurvey()
+        throws EntityNotFoundException, ForbiddenOperationException, SemanticallyInvalidInputException {
         Survey survey = mock(Survey.class);
         when(surveyService.updateSurvey(any(), any(), any(), any(), any())).thenReturn(survey);
         SurveyMetadataDTO expectedDTO = mock(SurveyMetadataDTO.class);

@@ -13,7 +13,7 @@ import java.util.UUID;
  */
 @Entity
 @Table(name = "participation",
-    uniqueConstraints = {@UniqueConstraint(columnNames = {"participant_id", "survey_id"})})
+       uniqueConstraints = {@UniqueConstraint(columnNames = {"participant_id", "survey_id"})})
 public class Participation {
 
     @Id
@@ -42,9 +42,10 @@ public class Participation {
 
     /**
      * Creates a new participation with initial values.
+     *
      * @param participant The user who created the participation.
-     * @param survey The survey the participation is for.
-     * @param response The optional response.
+     * @param survey      The survey the participation is for.
+     * @param response    The optional response.
      */
     public Participation(User participant, Survey survey, Response response) {
         this.participant = participant;
@@ -75,8 +76,10 @@ public class Participation {
 
     @Override
     public boolean equals(Object o) {
-        if (this == o) return true;
-        if (!(o instanceof Participation)) return false;
+        if (this == o)
+            return true;
+        if (!(o instanceof Participation))
+            return false;
         Participation that = (Participation) o;
 
         if (getId() == null) {
