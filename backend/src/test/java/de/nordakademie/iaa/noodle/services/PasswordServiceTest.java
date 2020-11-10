@@ -25,6 +25,7 @@ public class PasswordServiceTest {
         passwordService = new PasswordService("pepper");
         user = mock(User.class);
 
+        //noinspection SpellCheckingInspection
         when(user.getPasswordHash()).thenReturn("$2a$10$Ls0kE/AydHiuaHFdZXJXBuPpp4O51XC2vt.qfk4RlfVLn8OCry4aG");
     }
 
@@ -47,7 +48,7 @@ public class PasswordServiceTest {
 
     @Test
     void testHashPasswordTooLong() {
-        PasswordException exception = assertThrows(PasswordException.class,
+        @SuppressWarnings("SpellCheckingInspection") PasswordException exception = assertThrows(PasswordException.class,
             () -> passwordService.hashPassword("aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa"));
         assertEquals("passwordDoesNotMatchRules", exception.getMessage());
     }

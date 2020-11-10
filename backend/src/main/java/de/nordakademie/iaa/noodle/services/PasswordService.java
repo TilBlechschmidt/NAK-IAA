@@ -58,6 +58,7 @@ public class PasswordService {
         return passwordEncoder.matches(input, user.getPasswordHash());
     }
 
+    @SuppressWarnings("BooleanMethodIsAlwaysInverted")
     private boolean isPasswordValid(String password) {
         return password.length() >= 8 && password.length() <= 64;
     }

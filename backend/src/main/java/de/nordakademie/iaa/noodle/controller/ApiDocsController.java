@@ -18,8 +18,9 @@ import springfox.documentation.spring.web.plugins.Docket;
 @Controller
 @Api(value = "ApiDocsController")
 public class ApiDocsController {
-    @RequestMapping("/")
+    @SuppressWarnings("SameReturnValue") @RequestMapping("/")
     public String index() {
+        //noinspection SpringMVCViewInspection
         return "redirect:swagger-ui/index.html";
     }
 

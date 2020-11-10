@@ -30,7 +30,7 @@ public class Timeslot {
     private Date start;
 
     @Temporal(TemporalType.TIMESTAMP)
-    @Column(name = "end", nullable = true)
+    @Column(name = "end")
     private Date end;
 
     /**

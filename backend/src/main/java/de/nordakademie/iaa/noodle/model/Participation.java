@@ -31,7 +31,7 @@ public class Participation {
     @JoinColumn(name = "survey_id")
     private Survey survey;
 
-    @OneToOne(optional = true, cascade = CascadeType.ALL, mappedBy = "participation", fetch = FetchType.LAZY)
+    @OneToOne(cascade = CascadeType.ALL, mappedBy = "participation", fetch = FetchType.LAZY)
     private Response response;
 
     /**

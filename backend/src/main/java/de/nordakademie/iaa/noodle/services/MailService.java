@@ -135,15 +135,13 @@ public class MailService {
      * @param participants The participants who must creat a new response.
      */
     public void sendNeedsAttentionMailsAsync(Survey survey, List<User> participants) {
-        new Thread(() -> {
-            participants.forEach(user -> {
-                try {
-                    sendNeedsAttentionMail(survey, user);
-                } catch (MailClientException e) {
-                    System.err.println("Failed to send needs attention mail for " + user.getEmail());
-                }
-            });
-        }).start();
+        new Thread(() -> participants.forEach(user -> {
+            try {
+                sendNeedsAttentionMail(survey, user);
+            } catch (MailClientException e) {
+                System.err.println("Failed to send needs attention mail for " + user.getEmail());
+            }
+        })).start();
     }
 
     /**

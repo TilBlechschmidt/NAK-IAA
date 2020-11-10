@@ -41,9 +41,8 @@ class SignInServiceTest {
     void testAttemptAuthenticationUserNotFound() throws EntityNotFoundException {
         when(userService.getUserByEMail("EMAIL")).thenThrow(new EntityNotFoundException("userNotFound"));
 
-        EntityNotFoundException exception = assertThrows(EntityNotFoundException.class, () -> {
-            signInService.attemptAuthentication("EMAIL", "PASSWORD");
-        });
+        EntityNotFoundException exception =
+            assertThrows(EntityNotFoundException.class, () -> signInService.attemptAuthentication("EMAIL", "PASSWORD"));
 
         assertEquals("userNotFound", exception.getMessage());
     }

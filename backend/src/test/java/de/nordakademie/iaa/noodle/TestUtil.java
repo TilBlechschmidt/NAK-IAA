@@ -50,12 +50,11 @@ public class TestUtil {
         }
     }
 
-    public static User setupAuthentication() {
+    public static void setupAuthentication() {
         User user = mock(User.class);
         Authentication authentication = mock(Authentication.class);
         when(authentication.getDetails()).thenReturn(user);
         SecurityContextHolder.getContext().setAuthentication(authentication);
-        return user;
     }
 
     public static void assertExceptionEquals(HttpStatus expectedStatus, String expectedReason,

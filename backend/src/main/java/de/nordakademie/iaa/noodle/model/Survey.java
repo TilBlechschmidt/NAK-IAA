@@ -26,7 +26,7 @@ public class Survey {
     @OneToMany(mappedBy = "survey", cascade = CascadeType.ALL, orphanRemoval = true, fetch = FetchType.LAZY)
     private Set<Timeslot> timeslots;
 
-    @OneToOne(cascade = CascadeType.ALL, optional = true, fetch = FetchType.LAZY)
+    @OneToOne(cascade = CascadeType.ALL, fetch = FetchType.LAZY)
     @JoinColumn(name = "selected_timeslot_id")
     private Timeslot selectedTimeslot;
 

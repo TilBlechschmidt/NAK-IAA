@@ -25,7 +25,6 @@ class SurveyRepositoryTest {
     private SurveyRepository surveyRepository;
     @Autowired
     private EntityManager entityManager;
-    private QuerySurveysItem survey;
     private List<QuerySurveysItem> surveys;
     // CHECK data.sql for the TestData referenced here.
 
@@ -125,10 +124,6 @@ class SurveyRepositoryTest {
         Survey survey = surveyRepository.findById(10L);
         assertNotNull(survey);
         assertEquals(entityManager.find(Survey.class, 10L), survey);
-    }
-
-    private void printSurveys() {
-        surveys.stream().map(QuerySurveysItem::getId).forEach(System.out::println);
     }
 
     private void assertSurveysContainsAllWithoutID(Long id) {

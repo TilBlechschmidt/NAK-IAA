@@ -249,7 +249,7 @@ public class SurveyService {
      *
      * @param survey The survey.
      * @param user   The user.
-     * @return True, if the user can respond to the survey. False otherwise.
+     * @return <code>True</code>, if the user can respond to the survey. <code>False</code> otherwise.
      */
     public boolean canUserRespondToSurvey(Survey survey, User user) {
         boolean surveyAcceptsResponses = !survey.getIsClosed();
@@ -262,7 +262,7 @@ public class SurveyService {
      *
      * @param survey The survey.
      * @param user   The user.
-     * @return True, if the user can edit the survey. False otherwise.
+     * @return <code>True</code>, if the user can edit the survey. <code>False</code> otherwise.
      */
     public boolean isSurveyEditableByUser(Survey survey, User user) {
         return survey.getCreator().equals(user) && !survey.getIsClosed();
@@ -273,7 +273,7 @@ public class SurveyService {
      *
      * @param survey The survey.
      * @param user   The user.
-     * @return True, if the user can close the survey. False otherwise.
+     * @return <code>True</code>, if the user can close the survey. <code>False</code> otherwise.
      */
     public boolean isSurveyClosableByUser(Survey survey, User user) {
         return isSurveyEditableByUser(survey, user);
@@ -284,7 +284,7 @@ public class SurveyService {
      *
      * @param survey The survey.
      * @param user   The user.
-     * @return True, if the user can delete the survey. False otherwise.
+     * @return <code>True</code>, if the user can delete the survey. <code>False</code> otherwise.
      */
     public boolean isSurveyDeletableByUser(Survey survey, User user) {
         return survey.getCreator().equals(user);
@@ -294,7 +294,7 @@ public class SurveyService {
      * Query the QuerySurveysItem of multiple surveys which fulfill the given criteria.
      *
      * @param currentUser       The user the other criteria refer to.
-     * @param didParticipateIn  The user must habe participated in the survey.
+     * @param didParticipateIn  The user has participated in the survey.
      * @param isCompleted       The survey is completed.
      * @param isOwnSurvey       The survey was created by the user.
      * @param isUpcoming        The selected timeslot is in the future.

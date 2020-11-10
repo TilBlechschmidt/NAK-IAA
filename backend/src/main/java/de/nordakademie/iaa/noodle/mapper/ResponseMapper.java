@@ -31,7 +31,7 @@ public abstract class ResponseMapper {
      *
      * @param participations The participations.
      * @param currentUser    The current user.
-     * @return The mapped response dtos.
+     * @return The mapped response DTOs.
      */
     @Named("participationsToDTOs")
     public List<ResponseDTO> participationsToDTOs(Set<Participation> participations, @Context User currentUser) {
