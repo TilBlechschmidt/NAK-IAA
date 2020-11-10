@@ -18,7 +18,7 @@ export class NewSurveyButtonComponent implements OnInit {
 
   openDialog(): void {
       this.dialog.open(CreateSurveyDialogComponent, {
-          width: '600px'
+          width: '80%'
       });
   }
 

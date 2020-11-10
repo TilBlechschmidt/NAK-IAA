@@ -156,14 +156,9 @@ export class DetailViewComponent implements OnInit {
     }
 
     delete(): void {
-        const dialogRef = this.deleteDialog.open(DeleteSurveyComponent, {
+        this.deleteDialog.open(DeleteSurveyComponent, {
             width: '400px',
             data: {id: this.id, title: this.title}
-        });
-
-        dialogRef.afterClosed().subscribe(result => {
-            this.title = result.title;
-            this.description = result.description;
         });
     }
 

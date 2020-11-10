@@ -23,7 +23,7 @@ export class DeleteSurveyComponent implements OnInit {
     }
 
     onNoClick(): void {
-        this.dialogRef.close(this.data);
+        this.dialogRef.close();
     }
 
     delete(): void {
