@@ -1,7 +1,5 @@
 package de.nordakademie.iaa.noodle.services;
 
-import de.nordakademie.iaa.noodle.dao.ParticipationRepository;
-import de.nordakademie.iaa.noodle.dao.ResponseRepository;
 import de.nordakademie.iaa.noodle.dao.SurveyRepository;
 import de.nordakademie.iaa.noodle.dao.model.QuerySurveysItem;
 import de.nordakademie.iaa.noodle.model.*;
@@ -15,7 +13,6 @@ import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Propagation;
 import org.springframework.transaction.annotation.Transactional;
 
-import java.util.ArrayList;
 import java.util.List;
 import java.util.Optional;
 import java.util.stream.Collectors;
@@ -32,26 +29,32 @@ import java.util.stream.Collectors;
 public class SurveyService {
     private final SurveyRepository surveyRepository;
     private final TimeslotService timeslotService;
-    private final ResponseRepository responseRepository;
-    private final ParticipationRepository participationRepository;
     private final MailService mailService;
 
     @Autowired
-    public SurveyService(SurveyRepository surveyRepository, TimeslotService timeslotService,
-                         ResponseRepository responseRepository, ParticipationRepository participationRepository,
-                         MailService mailService) {
+    public SurveyService(SurveyRepository surveyRepository, TimeslotService timeslotService, MailService mailService) {
         this.surveyRepository = surveyRepository;
         this.timeslotService = timeslotService;
-        this.responseRepository = responseRepository;
-        this.participationRepository = participationRepository;
         this.mailService = mailService;
     }
 
-    private void addParticipationForCreator(Survey survey, List<TimeslotCreationData> timeslotCreationDataList)
-        throws SemanticallyInvalidInputException {
-        Participation participation = new Participation(survey.getCreator(), survey);
+    private Participation getOrCreateCreatorsParticipation(Survey survey) {
+        User creator = survey.getCreator();
+        for (Participation participation : survey.getParticipations()) {
+            if (participation.getParticipant().equals(creator)) {
+                return participation;
+            }
+        }
+
+        Participation participation = new Participation(creator, survey);
         // Don't add the participation to the creator because the user is detached
         survey.getParticipations().add(participation);
+        return participation;
+    }
+
+    private void addResponseForCreator(Survey survey, List<TimeslotCreationData> timeslotCreationDataList)
+        throws SemanticallyInvalidInputException {
+        Participation participation = getOrCreateCreatorsParticipation(survey);
 
         Response response = new Response(participation);
         participation.setResponse(response);
@@ -93,7 +96,7 @@ public class SurveyService {
         Survey survey = new Survey(creator, title, description);
         // Don't add the survey to the creator because the user is detached
 
-        addParticipationForCreator(survey, timeslotCreationDataList);
+        addResponseForCreator(survey, timeslotCreationDataList);
 
         surveyRepository.save(survey);
         return survey;
@@ -106,7 +109,7 @@ public class SurveyService {
      * @param title                    The new title of the survey.
      * @param description              The new description of the survey.
      * @param timeslotCreationDataList The new timeslots for the new survey.
-     * @param currentUser              THe current user.
+     * @param currentUser              The current user.
      * @return The updated survey.
      * @throws EntityNotFoundException           Thrown, when the survey does not exit.
      * @throws SemanticallyInvalidInputException Thrown, when the timeslots are invalid.
@@ -128,7 +131,7 @@ public class SurveyService {
 
         survey.setTitle(title);
         survey.setDescription(description);
-        addParticipationForCreator(survey, timeslotCreationDataList);
+        addResponseForCreator(survey, timeslotCreationDataList);
         surveyRepository.save(survey);
 
         mailService.sendNeedsAttentionMailsAsync(survey, usersWithOutdatedResponses);
@@ -137,22 +140,7 @@ public class SurveyService {
     }
 
     private void deleteSurveyResponses(Survey survey) {
-        // Create a copy of the list, so that we don't have an issue with concurrent modifications.
-        List<Participation> participations = new ArrayList<>(survey.getParticipations());
-
-        for (Participation participation : participations) {
-            Response response = participation.getResponse();
-            if (response != null) {
-                responseRepository.delete(response);
-                participation.setResponse(null);
-            }
-
-            if (participation.getParticipant().equals(survey.getCreator())) {
-                participationRepository.delete(participation);
-                survey.getParticipations().remove(participation);
-            }
-        }
-
+        survey.getParticipations().forEach(participation -> participation.setResponse(null));
         timeslotService.deleteTimeslotsOfSurvey(survey);
         survey.getTimeslots().clear();
     }

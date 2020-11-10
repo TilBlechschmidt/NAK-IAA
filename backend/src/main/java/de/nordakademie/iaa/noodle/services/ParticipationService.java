@@ -52,6 +52,7 @@ public class ParticipationService {
         } else {
             Survey survey = surveyService.querySurvey(surveyID);
             Participation newParticipation = new Participation(user, survey);
+            survey.getParticipations().add(newParticipation);
             participationRepository.save(newParticipation);
             return newParticipation;
         }

@@ -28,20 +28,15 @@ public class SurveyServiceTest {
     private SurveyService surveyService;
     private SurveyRepository surveyRepository;
     private TimeslotService timeslotRepository;
-    private ResponseRepository responseRepository;
-    private ParticipationRepository participationRepository;
     private MailService mailService;
 
     @BeforeEach
     public void setUp() {
         surveyRepository = mock(SurveyRepository.class);
         timeslotRepository = mock(TimeslotService.class);
-        responseRepository = mock(ResponseRepository.class);
-        participationRepository = mock(ParticipationRepository.class);
         mailService = mock(MailService.class);
         surveyService = new SurveyService(
-            surveyRepository, timeslotRepository,
-            responseRepository, participationRepository, mailService);
+            surveyRepository, timeslotRepository, mailService);
     }
 
     @Test
@@ -151,24 +146,20 @@ public class SurveyServiceTest {
         User otherUser1 = mock(User.class);
         User otherUser2 = mock(User.class);
 
-        Participation creatorsParticipation = mock(Participation.class);
-        Participation otherParticipation1 = mock(Participation.class);
-        Participation otherParticipation2 = mock(Participation.class);
-
-        Response creatorsResponse = mock(Response.class);
-        Response otherResponse = mock(Response.class);
-
-        when(creatorsParticipation.getResponse()).thenReturn(creatorsResponse);
-        when(otherParticipation1.getResponse()).thenReturn(otherResponse);
-        when(otherParticipation2.getResponse()).thenReturn(null);
-        when(creatorsParticipation.getParticipant()).thenReturn(creator);
-        when(otherParticipation1.getParticipant()).thenReturn(otherUser1);
-        when(otherParticipation2.getParticipant()).thenReturn(otherUser2);
-
         Survey survey = new Survey(
             creator,
             "OLD_TTLE",
             "OLD_DESCRIPTION");
+
+        Participation creatorsParticipation = new Participation(creator, survey);
+        Participation otherParticipation1 = new Participation(otherUser1, survey);
+        Participation otherParticipation2 = new Participation(otherUser2, survey);
+
+
+        Response creatorsResponse = new Response(creatorsParticipation);
+        Response otherResponse = new Response(otherParticipation1);
+        creatorsParticipation.setResponse(creatorsResponse);
+        otherParticipation1.setResponse(otherResponse);
 
         survey.getParticipations().addAll(Arrays.asList(
             creatorsParticipation, otherParticipation1, otherParticipation2));
@@ -185,12 +176,9 @@ public class SurveyServiceTest {
 
         assertEquals(survey, updatedSurvey);
         verify(surveyRepository, times(1)).save(survey);
-        verify(responseRepository, times(1)).delete(creatorsResponse);
-        verify(responseRepository, times(1)).delete(otherResponse);
-        verify(participationRepository, times(1)).delete(creatorsParticipation);
         verify(timeslotRepository, times(1)).deleteTimeslotsOfSurvey(survey);
-        verify(creatorsParticipation, times(1)).setResponse(null);
-        verify(otherParticipation1, times(1)).setResponse(null);
+        assertNotNull(creatorsParticipation.getResponse());
+        assertNull(otherParticipation1.getResponse());
         verify(mailService, times(1)).sendNeedsAttentionMailsAsync(eq(survey), argThat(users -> {
             assertEquals(1, users.size());
             assertEquals(otherUser1, users.get(0));
@@ -218,7 +206,7 @@ public class SurveyServiceTest {
         assertEquals(3, survey.getParticipations().size());
         assertTrue(survey.getParticipations().contains(otherParticipation1));
         assertTrue(survey.getParticipations().contains(otherParticipation2));
-        assertFalse(survey.getParticipations().contains(creatorsParticipation));
+        assertTrue(survey.getParticipations().contains(creatorsParticipation));
         Participation participation = survey.getParticipations()
             .stream()
             .filter(p -> !p.equals(otherParticipation1) && !p.equals(otherParticipation2))
