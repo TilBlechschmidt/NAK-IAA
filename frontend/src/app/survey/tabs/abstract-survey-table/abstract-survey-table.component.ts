@@ -20,7 +20,7 @@ export class AbstractSurveyTableComponent implements OnInit {
 
     ngOnInit(): void {
         this.surveysService.querySurveys({
-            isCompleted: this.filter.isCompleted,
+            isClosed: this.filter.isClosed,
             isUpcoming: this.filter.isUpcoming,
             didParticipateIn: this.filter.didParticipateIn,
             isOwnSurvey: this.filter.isOwnSurvey,
@@ -33,7 +33,7 @@ export class AbstractSurveyTableComponent implements OnInit {
 
 
 export interface Filter {
-    isCompleted?: boolean;
+    isClosed?: boolean;
     isUpcoming?: boolean;
     didParticipateIn?: boolean;
     requiresAttention?: boolean;

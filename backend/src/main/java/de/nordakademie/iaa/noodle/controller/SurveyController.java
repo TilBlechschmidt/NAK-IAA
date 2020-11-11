@@ -129,13 +129,13 @@ public class SurveyController extends AuthenticatedController implements Surveys
      */
     @Override
     public ResponseEntity<QuerySurveysResponse> querySurveys(
-        Optional<Boolean> didParticipateIn, Optional<Boolean> isCompleted,
+        Optional<Boolean> didParticipateIn, Optional<Boolean> isClosed,
         Optional<Boolean> isOwnSurvey, Optional<Boolean> isUpcoming, Optional<Boolean> requiresAttention) {
 
         return ResponseEntity.ok(surveyMapper.surveysToSurveysDTO(
             surveyService.querySurveys(getCurrentUser(),
                 didParticipateIn,
-                isCompleted,
+                isClosed,
                 isOwnSurvey,
                 isUpcoming,
                 requiresAttention)));

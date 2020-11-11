@@ -28,7 +28,7 @@ public interface SurveyRepository {
      *
      * @param userID            The id of the user some of the other criteria refer to.
      * @param didParticipateIn  The user has participated in the survey.
-     * @param isCompleted       The survey is completed.
+     * @param isClosed          The survey is closed.
      * @param isOwnSurvey       The survey was created by the user.
      * @param isUpcoming        The selected timeslot is in the future.
      * @param requiresAttention THe user's response was discarded due to an update of the survey.
@@ -53,10 +53,10 @@ public interface SurveyRepository {
                (:participated = false AND
                    (NOT EXISTS (SELECT p FROM Participation p WHERE p.survey=survey AND p.participant.id = :userID))))
            AND
-           (:completed IS NULL OR
-               (:completed=true  AND NOT
+           (:closed IS NULL OR
+               (:closed=true  AND NOT
                    survey.selectedTimeslot IS NULL) OR
-               (:completed=false AND
+               (:closed=false AND
                    survey.selectedTimeslot IS NULL))
            AND
            (:owned IS NULL OR
@@ -84,7 +84,7 @@ public interface SurveyRepository {
                """)
     List<QuerySurveysItem> querySurvey(@Param("userID") Long userID,
                                        @Param("participated") Boolean didParticipateIn,
-                                       @Param("completed") Boolean isCompleted,
+                                       @Param("closed") Boolean isClosed,
                                        @Param("owned") Boolean isOwnSurvey,
                                        @Param("upcoming") Boolean isUpcoming,
                                        @Param("attentionRequired") Boolean requiresAttention);

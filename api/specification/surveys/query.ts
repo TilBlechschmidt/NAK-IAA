@@ -30,8 +30,8 @@ class QuerySurveys {
 interface QuerySurveysRequest {
     /** Return only upcoming surveys */
     isUpcoming?: boolean;
-    /** Return only completed surveys */
-    isCompleted?: boolean;
+    /** Return only closed surveys */
+    isClosed?: boolean;
     /** Return only surveys which have been modified by the owner after a response has been given */
     requiresAttention?: boolean;
     /** Return only surveys created by the authenticated user */

@@ -287,18 +287,18 @@ public class SurveyService {
      *
      * @param currentUser       The user the other criteria refer to.
      * @param didParticipateIn  The user has participated in the survey.
-     * @param isCompleted       The survey is completed.
+     * @param isClosed       The survey is completed.
      * @param isOwnSurvey       The survey was created by the user.
      * @param isUpcoming        The selected timeslot is in the future.
      * @param requiresAttention THe user's response was discarded due to an update of the survey.
      * @return List of QuerySurveysItems which fulfill the given criteria.
      */
     public List<QuerySurveysItem> querySurveys(User currentUser, Optional<Boolean> didParticipateIn,
-                                               Optional<Boolean> isCompleted, Optional<Boolean> isOwnSurvey,
+                                               Optional<Boolean> isClosed, Optional<Boolean> isOwnSurvey,
                                                Optional<Boolean> isUpcoming, Optional<Boolean> requiresAttention) {
 
         return surveyRepository.querySurvey(currentUser.getId(),
-            didParticipateIn.orElse(null), isCompleted.orElse(null), isOwnSurvey.orElse(null),
+            didParticipateIn.orElse(null), isClosed.orElse(null), isOwnSurvey.orElse(null),
             isUpcoming.orElse(null), requiresAttention.orElse(null));
     }
 }

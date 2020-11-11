@@ -5,7 +5,7 @@ import {QuerySurveysResult} from '../../../api/models/query-surveys-result';
 export class AbstractSurveyTableComponent implements OnInit {
 
     constructor(private service: SurveysService,
-                private isCompleted: QueryParameterToggle,
+                private isClosed: QueryParameterToggle,
                 private isUpcoming: QueryParameterToggle,
                 private didParticipateIn: QueryParameterToggle,
                 private requiresAttention: QueryParameterToggle,
@@ -18,7 +18,7 @@ export class AbstractSurveyTableComponent implements OnInit {
 
     ngOnInit(): void {
         this.service.querySurveys({
-            isCompleted: this.isCompleted,
+            isClosed: this.isClosed,
             isUpcoming: this.isUpcoming,
             didParticipateIn: this.didParticipateIn,
             isOwnSurvey: this.isOwnSurvey,
