@@ -3,6 +3,7 @@ import {SurveysService} from '../../api/services/surveys.service';
 import {MAT_DIALOG_DATA, MatDialogRef} from '@angular/material/dialog';
 import {DetailViewComponent} from '../detail/detail-view/detail-view.component';
 import {Router} from '@angular/router';
+import {TimeslotDto} from '../../api/models/timeslot-dto';
 
 @Component({
     selector: 'app-close-survey',
@@ -15,6 +16,7 @@ export class CloseSurveyComponent implements OnInit {
 
     constructor(public dialogRef: MatDialogRef<DetailViewComponent>,
                 @Inject(MAT_DIALOG_DATA) public surveyId: number,
+                @Inject(MAT_DIALOG_DATA) public timeslot: TimeslotDto,
                 public service: SurveysService, public router: Router) {
     }
 

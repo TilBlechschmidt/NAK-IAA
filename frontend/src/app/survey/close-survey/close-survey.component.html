@@ -1,3 +1,7 @@
+<div>
+    Möchtest du den Termin für diese Terminumfrage auf folgende Daten festlegen?
+    {{ timeslot.start }} - {{ timeslot.start }}
+</div>
 <button mat-raised-button color=accent class="closeButton" (click) = "closeSurvey()">
     <mat-icon>done</mat-icon>
     {{ "survey.close" | translate }}

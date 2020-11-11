@@ -2,6 +2,7 @@ import {Component, Input, OnInit} from '@angular/core';
 import {TimeslotDto} from '../../../api/models/timeslot-dto';
 import {ResponseDto} from '../../../api/models/response-dto';
 import * as moment from 'moment';
+import {Identifier} from '../../../api/models';
 
 @Component({
     selector: 'app-result-overview',
@@ -12,6 +13,7 @@ export class ResultOverviewComponent implements OnInit {
 
     @Input() timeSlots: TimeslotDto[] = [];
     @Input() responses: ResponseDto[] = [];
+    @Input() surveyId: Identifier = 0;
     displayedColumns: string[] = [];
 
     constructor() {

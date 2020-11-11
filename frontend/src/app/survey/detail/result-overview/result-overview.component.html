@@ -3,7 +3,7 @@
         <ng-container matColumnDef="name">
             <th mat-header-cell *matHeaderCellDef></th>
             <td mat-cell *matCellDef="let participant" class="cell"> {{participant.user.name}} </td>
-            <mat-footer-cell mat-footer-cell *matFooterCellDef> </mat-footer-cell>
+            <mat-footer-cell mat-footer-cell *matFooterCellDef></mat-footer-cell>
         </ng-container>
 
         <ng-container *ngFor="let timeslot of timeSlots">
@@ -12,12 +12,22 @@
                     <span>{{formatDate(timeslot.start)}}</span><div *ngIf="timeslot.end"> - </div>
                     <span>{{formatDate(timeslot.end)}}</span>
                 </th>
-                <ng-container *matCellDef="let participant" [ngSwitch]="responseForParticipantAndTimeslot(participant, timeslot)">
-                    <td mat-cell *ngSwitchCase="true" class="cell timeslot accept"><mat-icon>check</mat-icon></td>
-                    <td mat-cell *ngSwitchCase="false" class="cell timeslot reject"><mat-icon>clear</mat-icon></td>
-                    <td mat-cell *ngSwitchDefault class="cell timeslot unknown"><mat-icon>help_outline</mat-icon></td>
+                <ng-container *matCellDef="let participant"
+                              [ngSwitch]="responseForParticipantAndTimeslot(participant, timeslot)">
+                    <td mat-cell *ngSwitchCase="true" class="cell timeslot accept">
+                        <mat-icon>check</mat-icon>
+                    </td>
+                    <td mat-cell *ngSwitchCase="false" class="cell timeslot reject">
+                        <mat-icon>clear</mat-icon>
+                    </td>
+                    <td mat-cell *ngSwitchDefault class="cell timeslot unknown">
+                        <mat-icon>help_outline</mat-icon>
+                    </td>
                 </ng-container>
-                <td mat-footer-cell *matFooterCellDef> {{timeslot.id}} </td>
+                <td mat-footer-cell *matFooterCellDef>
+                    <app-close-survey-button
+                        [surveyId]="surveyId" [timeSlot]="timeslot"></app-close-survey-button>
+                </td>
             </ng-container>
         </ng-container>
 
