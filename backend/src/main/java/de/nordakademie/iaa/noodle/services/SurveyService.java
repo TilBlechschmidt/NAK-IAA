@@ -52,8 +52,7 @@ public class SurveyService {
         return participation;
     }
 
-    private void addResponseForCreator(Survey survey, List<TimeslotCreationData> timeslotCreationDataList)
-        throws SemanticallyInvalidInputException {
+    private void addResponseForCreator(Survey survey, List<TimeslotCreationData> timeslotCreationDataList) {
         Participation participation = getOrCreateCreatorsParticipation(survey);
 
         Response response = new Response(participation);
@@ -65,12 +64,7 @@ public class SurveyService {
     }
 
     private void addResponseTimeslotForCreator(Survey survey, Response response,
-                                               TimeslotCreationData timeslotCreationData)
-        throws SemanticallyInvalidInputException {
-
-        if (!isTimeslotCreationDataValid(timeslotCreationData)) {
-            throw new SemanticallyInvalidInputException("invalidTimeslot");
-        }
+                                               TimeslotCreationData timeslotCreationData) {
 
         Timeslot timeslot = new Timeslot(survey, timeslotCreationData.getStart(), timeslotCreationData.getEnd());
         survey.getTimeslots().add(timeslot);
@@ -82,21 +76,22 @@ public class SurveyService {
     /**
      * Creates a new survey.
      *
-     * @param title                    The title of the survey.
-     * @param description              The description of the survey.
-     * @param timeslotCreationDataList The timeslots for the new survey.
-     * @param creator                  The creator of the survey.
+     * @param title                     The title of the survey.
+     * @param description               The description of the survey.
+     * @param timeslotCreationDataInput The timeslots for the new survey.
+     * @param creator                   The creator of the survey.
      * @return The new survey.
      * @throws SemanticallyInvalidInputException Thrown, when the timeslots are invalid.
      */
-    public Survey createSurvey(String title, String description, List<TimeslotCreationData> timeslotCreationDataList,
+    public Survey createSurvey(String title, String description, List<TimeslotCreationData> timeslotCreationDataInput,
                                User creator) throws SemanticallyInvalidInputException {
-        checkSurveyCreationData(title, description, timeslotCreationDataList);
+        List<TimeslotCreationData> timeslotCreationData =
+            checkSurveyCreationData(title, description, timeslotCreationDataInput);
 
         Survey survey = new Survey(creator, title, description);
         // Don't add the survey to the creator because the user is detached
 
-        addResponseForCreator(survey, timeslotCreationDataList);
+        addResponseForCreator(survey, timeslotCreationData);
 
         surveyRepository.save(survey);
         return survey;
@@ -105,38 +100,58 @@ public class SurveyService {
     /**
      * Updates a survey.
      *
-     * @param surveyID                 The id of the survey.
-     * @param title                    The new title of the survey.
-     * @param description              The new description of the survey.
-     * @param timeslotCreationDataList The new timeslots for the new survey.
-     * @param currentUser              The current user.
+     * @param surveyID                  The id of the survey.
+     * @param title                     The new title of the survey.
+     * @param description               The new description of the survey.
+     * @param timeslotCreationDataInput The new timeslots for the new survey.
+     * @param currentUser               The current user.
      * @return The updated survey.
      * @throws EntityNotFoundException           Thrown, when the survey does not exit.
      * @throws SemanticallyInvalidInputException Thrown, when the timeslots are invalid.
      * @throws ForbiddenOperationException       Thrown, when the current used is not allowed to update the survey.
      */
     public Survey updateSurvey(Long surveyID, String title, String description,
-                               List<TimeslotCreationData> timeslotCreationDataList, User currentUser)
+                               List<TimeslotCreationData> timeslotCreationDataInput, User currentUser)
         throws EntityNotFoundException, SemanticallyInvalidInputException, ForbiddenOperationException {
 
-        checkSurveyCreationData(title, description, timeslotCreationDataList);
+        List<TimeslotCreationData> timeslotCreationData =
+            checkSurveyCreationData(title, description, timeslotCreationDataInput);
 
         Survey survey = querySurvey(surveyID);
         if (!isSurveyEditableByUser(survey, currentUser)) {
             throw new ForbiddenOperationException("forbidden");
         }
 
-        List<User> usersWithOutdatedResponses = usersWithOutdatedParticipationsAfterUpdate(survey);
-        deleteSurveyResponses(survey);
+        if (timeslotsChanged(survey, timeslotCreationData)) {
+            List<User> usersWithOutdatedResponses = usersWithOutdatedParticipationsAfterUpdate(survey);
+            deleteSurveyResponses(survey);
 
-        survey.setTitle(title);
-        survey.setDescription(description);
-        addResponseForCreator(survey, timeslotCreationDataList);
-        surveyRepository.save(survey);
+            survey.setTitle(title);
+            survey.setDescription(description);
+            addResponseForCreator(survey, timeslotCreationData);
+            surveyRepository.save(survey);
 
-        mailService.sendNeedsAttentionMailsAsync(survey, usersWithOutdatedResponses);
+            mailService.sendNeedsAttentionMailsAsync(survey, usersWithOutdatedResponses);
+        } else {
+            survey.setTitle(title);
+            survey.setDescription(description);
+            surveyRepository.save(survey);
+        }
 
         return survey;
+    }
+
+    private boolean timeslotsChanged(Survey survey, List<TimeslotCreationData> timeslotCreationDataList) {
+        if (survey.getTimeslots().size() != timeslotCreationDataList.size()) {
+            return true;
+        }
+
+        return timeslotCreationDataList
+            .stream()
+            .anyMatch(data ->
+                survey.getTimeslots()
+                    .stream()
+                    .noneMatch(timeslot -> timeslotService.timeslotCreationDataMatchesTimeslot(data, timeslot)));
     }
 
     private void deleteSurveyResponses(Survey survey) {
@@ -199,8 +214,8 @@ public class SurveyService {
         return survey;
     }
 
-    private void checkSurveyCreationData(String title, String description,
-                                         List<TimeslotCreationData> timeslotCreationDataList)
+    private List<TimeslotCreationData> checkSurveyCreationData(String title, String description,
+                                                               List<TimeslotCreationData> timeslotCreationDataList)
         throws SemanticallyInvalidInputException {
         if (timeslotCreationDataList.size() == 0) {
             throw new SemanticallyInvalidInputException("noTimeslots");
@@ -214,6 +229,14 @@ public class SurveyService {
         if (description.length() > 2048) {
             throw new SemanticallyInvalidInputException("descriptionTooLong");
         }
+
+        for (TimeslotCreationData timeslotCreationData : timeslotCreationDataList) {
+            if (!isTimeslotCreationDataValid(timeslotCreationData)) {
+                throw new SemanticallyInvalidInputException("invalidTimeslot");
+            }
+        }
+
+        return timeslotCreationDataList.stream().distinct().collect(Collectors.toList());
     }
 
     private boolean isTimeslotCreationDataValid(TimeslotCreationData timeslotCreationData) {
