@@ -1,0 +1,28 @@
+<mat-card style="padding: 0">
+    <table mat-table [dataSource]="responses">
+        <ng-container matColumnDef="name">
+            <th mat-header-cell *matHeaderCellDef></th>
+            <td mat-cell *matCellDef="let participant" class="cell"> {{participant.user.name}} </td>
+            <mat-footer-cell mat-footer-cell *matFooterCellDef> </mat-footer-cell>
+        </ng-container>
+
+        <ng-container *ngFor="let timeslot of timeSlots">
+            <ng-container matColumnDef="{{timeslot.id}}">
+                <th mat-header-cell *matHeaderCellDef class="cell timeslot-header">
+                    <span class="mat-subheading-1 date">{{formatDate(timeslot.start)}}</span><br/>
+                    <span>{{formatTime(timeslot.start)}} - {{formatTime(timeslot.end)}}</span>
+                </th>
+                <ng-container *matCellDef="let participant" [ngSwitch]="responseForParticipantAndTimeslot(participant, timeslot)">
+                    <td mat-cell *ngSwitchCase="true" class="cell timeslot accept"><mat-icon>check</mat-icon></td>
+                    <td mat-cell *ngSwitchCase="false" class="cell timeslot reject"><mat-icon>clear</mat-icon></td>
+                    <td mat-cell *ngSwitchDefault class="cell timeslot unknown"><mat-icon>help_outline</mat-icon></td>
+                </ng-container>
+                <td mat-footer-cell *matFooterCellDef> {{timeslot.id}} </td>
+            </ng-container>
+        </ng-container>
+
+        <tr mat-header-row *matHeaderRowDef="displayedColumns"></tr>
+        <tr mat-row *matRowDef="let row; columns: displayedColumns;"></tr>
+        <tr mat-footer-row *matFooterRowDef="displayedColumns"></tr>
+    </table>
+</mat-card>

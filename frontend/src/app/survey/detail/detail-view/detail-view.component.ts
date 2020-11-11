@@ -23,6 +23,8 @@ export class DetailViewComponent implements OnInit {
     description = '';
     timeSlots: TimeslotDto[] = [];
     responses: ResponseValueDto[] = [];
+    fetchedTimeSlots: TimeslotDto[] = [];
+    fetchedResponses: ResponseDto[] = [];
     saveError = false;
     fetchError = false;
     routerError = false;
@@ -40,6 +42,8 @@ export class DetailViewComponent implements OnInit {
             this.routerError = true;
         } else {
             this.service.querySurvey({id: this.id}).subscribe(next => {
+                this.fetchedTimeSlots = next.timeslots;
+                this.fetchedResponses = next.responses;
                 this.title = next.title;
                 this.description = next.description;
                 this.timeSlots = next.timeslots;
