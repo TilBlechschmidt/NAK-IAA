@@ -33,7 +33,6 @@ class WebSecurityConfig extends WebSecurityConfigurerAdapter {
             // dont authenticate this particular request
             .antMatchers(HttpMethod.POST, "/authenticate").permitAll()
             .antMatchers(HttpMethod.POST, "/registrationEmail").permitAll()
-            .antMatchers(HttpMethod.POST, "/authenticate").permitAll()
             .antMatchers(HttpMethod.POST, "/users").permitAll()
             .antMatchers(HttpMethod.GET, "/").permitAll()
             .antMatchers(HttpMethod.GET, "/swagger-ui/**").permitAll()
