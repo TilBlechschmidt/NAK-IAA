@@ -13,6 +13,7 @@ import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Propagation;
 import org.springframework.transaction.annotation.Transactional;
 
+import javax.persistence.EntityManager;
 import java.util.Map;
 
 /**
@@ -29,6 +30,7 @@ public class ResponseServiceImpl implements ResponseService {
     private final ResponseTimeslotRepository responseTimeslotRepository;
     private final ParticipationService participationService;
     private final SurveyService surveyService;
+    private final EntityManager entityManager;
 
     /**
      * Creates a new ResponseService.
@@ -38,18 +40,21 @@ public class ResponseServiceImpl implements ResponseService {
      * @param timeslotService            The service to manage timeslots.
      * @param participationService       The service to manage participations.
      * @param surveyService              The service to manage surveys.
+     * @param entityManager              Manager for the entities.
      */
     @Autowired
     public ResponseServiceImpl(ResponseRepository responseRepository,
                                ResponseTimeslotRepository responseTimeslotRepository,
                                TimeslotService timeslotService,
                                ParticipationService participationService,
-                               SurveyService surveyService) {
+                               SurveyService surveyService,
+                               EntityManager entityManager) {
         this.responseRepository = responseRepository;
         this.responseTimeslotRepository = responseTimeslotRepository;
         this.timeslotService = timeslotService;
         this.participationService = participationService;
         this.surveyService = surveyService;
+        this.entityManager = entityManager;
     }
 
     /**
@@ -97,6 +102,7 @@ public class ResponseServiceImpl implements ResponseService {
         responseTimeslotRepository.deleteAllByResponse(response);
         response.getResponseTimeslots().clear();
         addTimeslotsToResponse(response, responseTimeslotDataMap);
+        entityManager.flush();
         responseRepository.save(response);
         return response;
     }
