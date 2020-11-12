@@ -22,7 +22,11 @@ export class ApiInterceptorService implements HttpInterceptor {
 
         return next.handle(req).pipe(
             tap(x => x, err => {
-                console.error(`Error performing request, status code = ${err.status}`);
+                if(err.status === 401) {
+                    this.tokenService.deleteToken();
+                } else {
+                    console.error(`Error performing request, status code = ${err.status}`);
+                }
             })
         );
     }
