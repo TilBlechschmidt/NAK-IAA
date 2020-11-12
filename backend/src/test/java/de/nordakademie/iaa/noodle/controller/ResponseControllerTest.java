@@ -5,11 +5,12 @@ import de.nordakademie.iaa.noodle.api.model.CreateResponseRequest;
 import de.nordakademie.iaa.noodle.api.model.ResponseDTO;
 import de.nordakademie.iaa.noodle.mapper.ResponseMapper;
 import de.nordakademie.iaa.noodle.model.Response;
-import de.nordakademie.iaa.noodle.services.ResponseService;
 import de.nordakademie.iaa.noodle.services.exceptions.ConflictException;
 import de.nordakademie.iaa.noodle.services.exceptions.EntityNotFoundException;
 import de.nordakademie.iaa.noodle.services.exceptions.ForbiddenOperationException;
 import de.nordakademie.iaa.noodle.services.exceptions.SemanticallyInvalidInputException;
+import de.nordakademie.iaa.noodle.services.implementation.ResponseServiceImpl;
+import de.nordakademie.iaa.noodle.services.interfaces.ResponseService;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 import org.springframework.http.HttpStatus;
@@ -35,7 +36,7 @@ public class ResponseControllerTest {
     @BeforeEach
     public void setUp() {
         TestUtil.setupAuthentication();
-        responseService = mock(ResponseService.class);
+        responseService = mock(ResponseServiceImpl.class);
         responseMapper = mock(ResponseMapper.class);
         responseController = new ResponseController(responseService, responseMapper);
     }

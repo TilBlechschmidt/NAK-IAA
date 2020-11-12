@@ -2,6 +2,8 @@ package de.nordakademie.iaa.noodle.services;
 
 import de.nordakademie.iaa.noodle.model.User;
 import de.nordakademie.iaa.noodle.services.exceptions.JWTException;
+import de.nordakademie.iaa.noodle.services.implementation.JWTServiceImpl;
+import de.nordakademie.iaa.noodle.services.interfaces.JWTService;
 import de.nordakademie.iaa.noodle.services.model.SpringAuthenticationDetails;
 import de.nordakademie.iaa.noodle.services.model.UserDetails;
 import io.jsonwebtoken.Claims;
@@ -17,7 +19,7 @@ import static org.mockito.Mockito.mock;
 import static org.mockito.Mockito.when;
 
 /**
- * Test for {@link JWTService}
+ * Test for {@link JWTServiceImpl}
  *
  * @author Noah Peeters
  */
@@ -27,7 +29,7 @@ class JWTServiceTest {
 
     @BeforeEach
     public void setUp() {
-        jwtService = new JWTService("secret", 10000);
+        jwtService = new JWTServiceImpl("secret", 10000);
     }
 
     @Test

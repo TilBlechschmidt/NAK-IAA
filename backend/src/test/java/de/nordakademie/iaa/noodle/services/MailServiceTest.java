@@ -3,6 +3,8 @@ package de.nordakademie.iaa.noodle.services;
 import de.nordakademie.iaa.noodle.model.Survey;
 import de.nordakademie.iaa.noodle.model.User;
 import de.nordakademie.iaa.noodle.services.exceptions.MailClientException;
+import de.nordakademie.iaa.noodle.services.implementation.MailServiceImpl;
+import de.nordakademie.iaa.noodle.services.interfaces.MailService;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 import org.springframework.mail.MailException;
@@ -17,7 +19,7 @@ import static org.junit.jupiter.api.Assertions.assertThrows;
 import static org.mockito.Mockito.*;
 
 /**
- * Test for {@link MailService}
+ * Test for {@link MailServiceImpl}
  *
  * @author Noah Peeters
  */
@@ -31,7 +33,7 @@ public class MailServiceTest {
         mailSender = mock(JavaMailSender.class);
         mimeMessage = mock(MimeMessage.class);
         when(mailSender.createMimeMessage()).thenReturn(mimeMessage);
-        mailService = new MailService(mailSender, "FROM_EMAIL", "BASEURL");
+        mailService = new MailServiceImpl(mailSender, "FROM_EMAIL", "BASEURL");
     }
 
     @Test

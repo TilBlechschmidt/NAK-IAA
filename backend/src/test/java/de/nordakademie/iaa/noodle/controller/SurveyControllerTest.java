@@ -6,10 +6,11 @@ import de.nordakademie.iaa.noodle.dao.model.QuerySurveysItem;
 import de.nordakademie.iaa.noodle.mapper.SurveyMapper;
 import de.nordakademie.iaa.noodle.mapper.TimeslotMapper;
 import de.nordakademie.iaa.noodle.model.Survey;
-import de.nordakademie.iaa.noodle.services.SurveyService;
 import de.nordakademie.iaa.noodle.services.exceptions.EntityNotFoundException;
 import de.nordakademie.iaa.noodle.services.exceptions.ForbiddenOperationException;
 import de.nordakademie.iaa.noodle.services.exceptions.SemanticallyInvalidInputException;
+import de.nordakademie.iaa.noodle.services.implementation.SurveyServiceImpl;
+import de.nordakademie.iaa.noodle.services.interfaces.SurveyService;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 import org.springframework.http.HttpStatus;
@@ -39,7 +40,7 @@ public class SurveyControllerTest {
     @BeforeEach
     public void setUp() {
         TestUtil.setupAuthentication();
-        surveyService = mock(SurveyService.class);
+        surveyService = mock(SurveyServiceImpl.class);
         surveyMapper = mock(SurveyMapper.class);
         TimeslotMapper timeslotMapper = mock(TimeslotMapper.class);
         surveyController = new SurveyController(surveyService, surveyMapper, timeslotMapper);

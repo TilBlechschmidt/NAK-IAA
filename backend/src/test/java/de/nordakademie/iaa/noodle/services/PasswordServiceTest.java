@@ -2,6 +2,8 @@ package de.nordakademie.iaa.noodle.services;
 
 import de.nordakademie.iaa.noodle.model.User;
 import de.nordakademie.iaa.noodle.services.exceptions.PasswordException;
+import de.nordakademie.iaa.noodle.services.implementation.PasswordServiceImpl;
+import de.nordakademie.iaa.noodle.services.interfaces.PasswordService;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 import org.springframework.security.crypto.password.PasswordEncoder;
@@ -12,7 +14,7 @@ import static org.mockito.Mockito.mock;
 import static org.mockito.Mockito.when;
 
 /**
- * Test for {@link PasswordService}
+ * Test for {@link PasswordServiceImpl}
  *
  * @author Noah Peeters
  */
@@ -22,7 +24,7 @@ public class PasswordServiceTest {
 
     @BeforeEach
     public void setUp() {
-        passwordService = new PasswordService("pepper");
+        passwordService = new PasswordServiceImpl("pepper");
         user = mock(User.class);
 
         //noinspection SpellCheckingInspection

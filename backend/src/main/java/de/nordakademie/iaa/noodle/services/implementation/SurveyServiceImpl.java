@@ -1,4 +1,4 @@
-package de.nordakademie.iaa.noodle.services;
+package de.nordakademie.iaa.noodle.services.implementation;
 
 import de.nordakademie.iaa.noodle.dao.SurveyRepository;
 import de.nordakademie.iaa.noodle.dao.model.QuerySurveysItem;
@@ -7,6 +7,9 @@ import de.nordakademie.iaa.noodle.services.exceptions.EntityNotFoundException;
 import de.nordakademie.iaa.noodle.services.exceptions.ForbiddenOperationException;
 import de.nordakademie.iaa.noodle.services.exceptions.SemanticallyInvalidInputException;
 import de.nordakademie.iaa.noodle.services.exceptions.ServiceException;
+import de.nordakademie.iaa.noodle.services.interfaces.MailService;
+import de.nordakademie.iaa.noodle.services.interfaces.SurveyService;
+import de.nordakademie.iaa.noodle.services.interfaces.TimeslotService;
 import de.nordakademie.iaa.noodle.services.model.TimeslotCreationData;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
@@ -24,15 +27,16 @@ import java.util.stream.Collectors;
  * @author Hans Rißer
  * @see SurveyRepository
  */
-@Service
+@Service("SurveyService")
 @Transactional(propagation = Propagation.REQUIRED, rollbackFor = {ServiceException.class})
-public class SurveyService {
+public class SurveyServiceImpl implements SurveyService {
     private final SurveyRepository surveyRepository;
     private final TimeslotService timeslotService;
     private final MailService mailService;
 
     @Autowired
-    public SurveyService(SurveyRepository surveyRepository, TimeslotService timeslotService, MailService mailService) {
+    public SurveyServiceImpl(SurveyRepository surveyRepository, TimeslotService timeslotService,
+                             MailService mailService) {
         this.surveyRepository = surveyRepository;
         this.timeslotService = timeslotService;
         this.mailService = mailService;
@@ -74,15 +78,9 @@ public class SurveyService {
     }
 
     /**
-     * Creates a new survey.
-     *
-     * @param title                     The title of the survey.
-     * @param description               The description of the survey.
-     * @param timeslotCreationDataInput The timeslots for the new survey.
-     * @param creator                   The creator of the survey.
-     * @return The new survey.
-     * @throws SemanticallyInvalidInputException Thrown, when the timeslots are invalid.
+     * {@inheritDoc}
      */
+    @Override
     public Survey createSurvey(String title, String description, List<TimeslotCreationData> timeslotCreationDataInput,
                                User creator) throws SemanticallyInvalidInputException {
         List<TimeslotCreationData> timeslotCreationData =
@@ -98,18 +96,9 @@ public class SurveyService {
     }
 
     /**
-     * Updates a survey.
-     *
-     * @param surveyID                  The id of the survey.
-     * @param title                     The new title of the survey.
-     * @param description               The new description of the survey.
-     * @param timeslotCreationDataInput The new timeslots for the new survey.
-     * @param currentUser               The current user.
-     * @return The updated survey.
-     * @throws EntityNotFoundException           Thrown, when the survey does not exit.
-     * @throws SemanticallyInvalidInputException Thrown, when the timeslots are invalid.
-     * @throws ForbiddenOperationException       Thrown, when the current used is not allowed to update the survey.
+     * {@inheritDoc}
      */
+    @Override
     public Survey updateSurvey(Long surveyID, String title, String description,
                                List<TimeslotCreationData> timeslotCreationDataInput, User currentUser)
         throws EntityNotFoundException, SemanticallyInvalidInputException, ForbiddenOperationException {
@@ -171,15 +160,9 @@ public class SurveyService {
     }
 
     /**
-     * Closes a survey.
-     *
-     * @param surveyID    The survey id.
-     * @param timeslotID  The timeslot if of the selected timeslot.
-     * @param currentUser The current user.
-     * @return The updated survey.
-     * @throws EntityNotFoundException     Thrown, when the survey or the timeslot does not exist.
-     * @throws ForbiddenOperationException Thrown, when the current used is not allowed to close the survey.
+     * {@inheritDoc}
      */
+    @Override
     public Survey closeSurvey(Long surveyID, Long timeslotID, User currentUser)
         throws EntityNotFoundException, ForbiddenOperationException {
 
@@ -196,14 +179,9 @@ public class SurveyService {
     }
 
     /**
-     * Deletes a survey.
-     *
-     * @param surveyID    The id of the survey to delete.
-     * @param currentUser The current user.
-     * @return The deleted survey.
-     * @throws EntityNotFoundException     Thrown, when the survey does not exist.
-     * @throws ForbiddenOperationException Thrown, when the current used is not allowed to delete the survey.
+     * {@inheritDoc}
      */
+    @Override
     public Survey deleteSurvey(Long surveyID, User currentUser)
         throws EntityNotFoundException, ForbiddenOperationException {
         Survey survey = querySurvey(surveyID);
@@ -245,12 +223,9 @@ public class SurveyService {
     }
 
     /**
-     * Queries a single survey.
-     *
-     * @param id The id of the survey.
-     * @return The requested survey.
-     * @throws EntityNotFoundException Thrown, when the survey does not exist.
+     * {@inheritDoc}
      */
+    @Override
     public Survey querySurvey(Long id) throws EntityNotFoundException {
         Survey survey = surveyRepository.findById(id);
         if (survey == null) {
@@ -260,12 +235,9 @@ public class SurveyService {
     }
 
     /**
-     * Checks if a user can respond to a survey.
-     *
-     * @param survey The survey.
-     * @param user   The user.
-     * @return <code>True</code>, if the user can respond to the survey. <code>False</code> otherwise.
+     * {@inheritDoc}
      */
+    @Override
     public boolean canUserRespondToSurvey(Survey survey, User user) {
         boolean surveyAcceptsResponses = !survey.getIsClosed();
         boolean isSurveyCreator = survey.getCreator().equals(user);
@@ -273,52 +245,37 @@ public class SurveyService {
     }
 
     /**
-     * Checks if a user can edit a survey.
-     *
-     * @param survey The survey.
-     * @param user   The user.
-     * @return <code>True</code>, if the user can edit the survey. <code>False</code> otherwise.
+     * {@inheritDoc}
      */
+    @Override
     public boolean isSurveyEditableByUser(Survey survey, User user) {
         return survey.getCreator().equals(user) && !survey.getIsClosed();
     }
 
     /**
-     * Checks if a user can close a survey.
-     *
-     * @param survey The survey.
-     * @param user   The user.
-     * @return <code>True</code>, if the user can close the survey. <code>False</code> otherwise.
+     * {@inheritDoc}
      */
+    @Override
     public boolean isSurveyClosableByUser(Survey survey, User user) {
         return isSurveyEditableByUser(survey, user);
     }
 
     /**
-     * Checks if a user can delete a survey.
-     *
-     * @param survey The survey.
-     * @param user   The user.
-     * @return <code>True</code>, if the user can delete the survey. <code>False</code> otherwise.
+     * {@inheritDoc}
      */
+    @Override
     public boolean isSurveyDeletableByUser(Survey survey, User user) {
         return survey.getCreator().equals(user);
     }
 
     /**
-     * Query the QuerySurveysItem of multiple surveys which fulfill the given criteria.
-     *
-     * @param currentUser       The user the other criteria refer to.
-     * @param didParticipateIn  The user has participated in the survey.
-     * @param isClosed       The survey is completed.
-     * @param isOwnSurvey       The survey was created by the user.
-     * @param isUpcoming        The selected timeslot is in the future.
-     * @param requiresAttention THe user's response was discarded due to an update of the survey.
-     * @return List of QuerySurveysItems which fulfill the given criteria.
+     * {@inheritDoc}
      */
+    @Override
     public List<QuerySurveysItem> querySurveys(User currentUser, Optional<Boolean> didParticipateIn,
                                                Optional<Boolean> isClosed, Optional<Boolean> isOwnSurvey,
-                                               Optional<Boolean> isUpcoming, Optional<Boolean> requiresAttention) {
+                                               Optional<Boolean> isUpcoming,
+                                               Optional<Boolean> requiresAttention) {
 
         return surveyRepository.querySurvey(currentUser.getId(),
             didParticipateIn.orElse(null), isClosed.orElse(null), isOwnSurvey.orElse(null),

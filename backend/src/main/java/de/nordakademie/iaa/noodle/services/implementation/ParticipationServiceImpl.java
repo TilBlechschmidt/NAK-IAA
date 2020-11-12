@@ -1,4 +1,4 @@
-package de.nordakademie.iaa.noodle.services;
+package de.nordakademie.iaa.noodle.services.implementation;
 
 import de.nordakademie.iaa.noodle.dao.ParticipationRepository;
 import de.nordakademie.iaa.noodle.model.Participation;
@@ -6,6 +6,8 @@ import de.nordakademie.iaa.noodle.model.Survey;
 import de.nordakademie.iaa.noodle.model.User;
 import de.nordakademie.iaa.noodle.services.exceptions.EntityNotFoundException;
 import de.nordakademie.iaa.noodle.services.exceptions.ServiceException;
+import de.nordakademie.iaa.noodle.services.interfaces.ParticipationService;
+import de.nordakademie.iaa.noodle.services.interfaces.SurveyService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Propagation;
@@ -17,9 +19,9 @@ import org.springframework.transaction.annotation.Transactional;
  * @author Noah Peeters
  * @see ParticipationRepository
  */
-@Service
+@Service("ParticipationService")
 @Transactional(propagation = Propagation.REQUIRED, rollbackFor = {ServiceException.class})
-public class ParticipationService {
+public class ParticipationServiceImpl implements ParticipationService {
     private final ParticipationRepository participationRepository;
     private final SurveyService surveyService;
 
@@ -30,20 +32,15 @@ public class ParticipationService {
      * @param surveyService           The service to manage surveys.
      */
     @Autowired
-    public ParticipationService(ParticipationRepository participationRepository, SurveyService surveyService) {
+    public ParticipationServiceImpl(ParticipationRepository participationRepository, SurveyService surveyService) {
         this.participationRepository = participationRepository;
         this.surveyService = surveyService;
     }
 
     /**
-     * If the user already has a participation, the participation is returned.
-     * Otherwise, a new participation is created.
-     *
-     * @param user     The user for which the participation is returned.
-     * @param surveyID The id of the survey for which the participation is returned.
-     * @return The participation of the give user for the given survey.
-     * @throws EntityNotFoundException Thrown, when he survey with the given id does not exist.
+     * {@inheritDoc}
      */
+    @Override
     public Participation getOrCreateParticipation(User user, Long surveyID) throws EntityNotFoundException {
         Participation queriedParticipation = participationRepository.findParticipation(surveyID, user);
 

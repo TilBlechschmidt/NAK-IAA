@@ -1,9 +1,9 @@
 package de.nordakademie.iaa.noodle.filter;
 
-import de.nordakademie.iaa.noodle.services.SignInService;
 import de.nordakademie.iaa.noodle.services.exceptions.AuthenticationException;
 import de.nordakademie.iaa.noodle.services.exceptions.EntityNotFoundException;
 import de.nordakademie.iaa.noodle.services.exceptions.JWTException;
+import de.nordakademie.iaa.noodle.services.interfaces.SignInService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.core.Authentication;
 import org.springframework.security.core.context.SecurityContextHolder;

@@ -5,6 +5,9 @@ import de.nordakademie.iaa.noodle.services.exceptions.ConflictException;
 import de.nordakademie.iaa.noodle.services.exceptions.JWTException;
 import de.nordakademie.iaa.noodle.services.exceptions.MailClientException;
 import de.nordakademie.iaa.noodle.services.exceptions.PasswordException;
+import de.nordakademie.iaa.noodle.services.implementation.MailServiceImpl;
+import de.nordakademie.iaa.noodle.services.implementation.SignUpServiceImpl;
+import de.nordakademie.iaa.noodle.services.interfaces.*;
 import de.nordakademie.iaa.noodle.services.model.UserDetails;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
@@ -13,7 +16,7 @@ import static org.junit.jupiter.api.Assertions.assertEquals;
 import static org.mockito.Mockito.*;
 
 /**
- * Test for {@link SignUpService}
+ * Test for {@link SignUpServiceImpl}
  *
  * @author Noah Peeters
  */
@@ -29,8 +32,8 @@ class SignUpServiceTest {
         passwordService = mock(PasswordService.class);
         userService = mock(UserService.class);
         jwtService = mock(JWTService.class);
-        mailService = mock(MailService.class);
-        signUpService = new SignUpService(passwordService, userService, jwtService, mailService);
+        mailService = mock(MailServiceImpl.class);
+        signUpService = new SignUpServiceImpl(passwordService, userService, jwtService, mailService);
     }
 
     @Test

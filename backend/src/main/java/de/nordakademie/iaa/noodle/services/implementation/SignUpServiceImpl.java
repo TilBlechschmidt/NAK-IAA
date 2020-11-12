@@ -1,10 +1,11 @@
-package de.nordakademie.iaa.noodle.services;
+package de.nordakademie.iaa.noodle.services.implementation;
 
 import de.nordakademie.iaa.noodle.model.User;
 import de.nordakademie.iaa.noodle.services.exceptions.ConflictException;
 import de.nordakademie.iaa.noodle.services.exceptions.JWTException;
 import de.nordakademie.iaa.noodle.services.exceptions.MailClientException;
 import de.nordakademie.iaa.noodle.services.exceptions.PasswordException;
+import de.nordakademie.iaa.noodle.services.interfaces.*;
 import de.nordakademie.iaa.noodle.services.model.UserDetails;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
@@ -15,8 +16,8 @@ import org.springframework.stereotype.Service;
  * @author Noah Peeters
  * @author Hans Rißer
  */
-@Service
-public class SignUpService {
+@Service("SignUpService")
+public class SignUpServiceImpl implements SignUpService {
     private final PasswordService passwordService;
     private final UserService userService;
     private final JWTService jwtService;
@@ -31,8 +32,8 @@ public class SignUpService {
      * @param mailService     Service used to send mails.
      */
     @Autowired
-    public SignUpService(PasswordService passwordService, UserService userService, JWTService jwtService,
-                         MailService mailService) {
+    public SignUpServiceImpl(PasswordService passwordService, UserService userService, JWTService jwtService,
+                             MailService mailService) {
         this.passwordService = passwordService;
         this.userService = userService;
         this.jwtService = jwtService;
@@ -40,15 +41,9 @@ public class SignUpService {
     }
 
     /**
-     * Creates a new account with a registration token and a password.
-     *
-     * @param token    The registration token.
-     * @param password The password.
-     * @return The new user.
-     * @throws JWTException      Thrown, when the token is invalid.
-     * @throws ConflictException Thrown, when a user with the email address in the token already exists.
-     * @throws PasswordException Throw, when the password is invalid.
+     * {@inheritDoc}
      */
+    @Override
     public User createAccount(String token, String password) throws JWTException, ConflictException, PasswordException {
         // Token does not have the TOKEN_PREFIX, because it is not used for authentication
         UserDetails userDetails = jwtService.userDetailsForToken(token);
@@ -56,12 +51,9 @@ public class SignUpService {
     }
 
     /**
-     * Sends a token to the user for registration.
-     *
-     * @param email    The email of the user.
-     * @param fullName The full name of the user.
-     * @throws MailClientException Thrown, when the mail cannot be send.
+     * {@inheritDoc}
      */
+    @Override
     public void mailSignupToken(String email, String fullName) throws MailClientException {
         if (userService.existsUserWithEMail(email)) {
             mailService.sendRegistrationMailDuplicateEmail(fullName, email);

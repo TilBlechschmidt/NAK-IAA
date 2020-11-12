@@ -5,6 +5,11 @@ import de.nordakademie.iaa.noodle.services.exceptions.AuthenticationException;
 import de.nordakademie.iaa.noodle.services.exceptions.EntityNotFoundException;
 import de.nordakademie.iaa.noodle.services.exceptions.JWTException;
 import de.nordakademie.iaa.noodle.services.exceptions.PasswordException;
+import de.nordakademie.iaa.noodle.services.implementation.SignInServiceImpl;
+import de.nordakademie.iaa.noodle.services.interfaces.JWTService;
+import de.nordakademie.iaa.noodle.services.interfaces.PasswordService;
+import de.nordakademie.iaa.noodle.services.interfaces.SignInService;
+import de.nordakademie.iaa.noodle.services.interfaces.UserService;
 import de.nordakademie.iaa.noodle.services.model.AuthenticatedUser;
 import de.nordakademie.iaa.noodle.services.model.SpringAuthenticationDetails;
 import org.junit.jupiter.api.BeforeEach;
@@ -18,7 +23,7 @@ import static org.mockito.Mockito.mock;
 import static org.mockito.Mockito.when;
 
 /**
- * Test for {@link SignInService}
+ * Test for {@link SignInServiceImpl}
  *
  * @author Noah Peeters
  */
@@ -34,7 +39,7 @@ class SignInServiceTest {
         userService = mock(UserService.class);
         jwtService = mock(JWTService.class);
 
-        signInService = new SignInService(passwordService, userService, jwtService);
+        signInService = new SignInServiceImpl(passwordService, userService, jwtService);
     }
 
     @Test

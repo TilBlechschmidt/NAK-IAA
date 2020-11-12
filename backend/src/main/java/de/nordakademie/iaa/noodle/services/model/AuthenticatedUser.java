@@ -1,12 +1,13 @@
 package de.nordakademie.iaa.noodle.services.model;
 
 import de.nordakademie.iaa.noodle.model.User;
+import de.nordakademie.iaa.noodle.services.interfaces.JWTService;
 
 /**
  * {@link User} who is currently authenticated using a JWT token.
  *
  * @author Noah Peeters
- * @see de.nordakademie.iaa.noodle.services.JWTService
+ * @see JWTService
  */
 public class AuthenticatedUser {
     private final User user;

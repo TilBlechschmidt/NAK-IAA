@@ -1,10 +1,11 @@
-package de.nordakademie.iaa.noodle.services;
+package de.nordakademie.iaa.noodle.services.implementation;
 
 import de.nordakademie.iaa.noodle.dao.UserRepository;
 import de.nordakademie.iaa.noodle.model.User;
 import de.nordakademie.iaa.noodle.services.exceptions.ConflictException;
 import de.nordakademie.iaa.noodle.services.exceptions.EntityNotFoundException;
 import de.nordakademie.iaa.noodle.services.exceptions.ServiceException;
+import de.nordakademie.iaa.noodle.services.interfaces.UserService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.dao.DataIntegrityViolationException;
 import org.springframework.stereotype.Service;
@@ -17,9 +18,9 @@ import org.springframework.transaction.annotation.Transactional;
  * @author Noah Peeters
  * @see UserRepository
  */
-@Service
+@Service("UserService")
 @Transactional(propagation = Propagation.REQUIRED, rollbackFor = {ServiceException.class})
-public class UserService {
+public class UserServiceImpl implements UserService {
     private final UserRepository userRepository;
 
     /**
@@ -28,17 +29,14 @@ public class UserService {
      * @param userRepository The repository for users.
      */
     @Autowired
-    public UserService(UserRepository userRepository) {
+    public UserServiceImpl(UserRepository userRepository) {
         this.userRepository = userRepository;
     }
 
     /**
-     * Queries a user identified by the unique email.
-     *
-     * @param email The email of the user.
-     * @return The requested user.
-     * @throws EntityNotFoundException Thrown, when the use does not exist.
+     * {@inheritDoc}
      */
+    @Override
     public User getUserByEMail(String email) throws EntityNotFoundException {
         User user = userRepository.findByEmail(email);
         if (user == null) {
@@ -47,17 +45,18 @@ public class UserService {
         return user;
     }
 
+    /**
+     * {@inheritDoc}
+     */
+    @Override
     public boolean existsUserWithEMail(String email) {
         return userRepository.findByEmail(email) != null;
     }
 
     /**
-     * Queries a user wit an id.
-     *
-     * @param userID The id of the user.
-     * @return The requested user.
-     * @throws EntityNotFoundException Thrown, when the use does not exist.
+     * {@inheritDoc}
      */
+    @Override
     public User getUserByUserID(Long userID) throws EntityNotFoundException {
         User user = userRepository.findById(userID);
         if (user == null) {
@@ -67,14 +66,9 @@ public class UserService {
     }
 
     /**
-     * Creates a new user.
-     *
-     * @param email        The email of the user.
-     * @param fullName     The full name of the user.
-     * @param passwordHash The password hash.
-     * @return The new user.
-     * @throws ConflictException Thrown, when there is already a user with the given email.
+     * {@inheritDoc}
      */
+    @Override
     public User createNewUser(String email, String fullName, String passwordHash) throws ConflictException {
         try {
             User user = new User(email, fullName, passwordHash);

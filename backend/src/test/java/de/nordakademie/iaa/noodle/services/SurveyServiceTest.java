@@ -1,12 +1,14 @@
 package de.nordakademie.iaa.noodle.services;
 
-import de.nordakademie.iaa.noodle.dao.ParticipationRepository;
-import de.nordakademie.iaa.noodle.dao.ResponseRepository;
 import de.nordakademie.iaa.noodle.dao.SurveyRepository;
 import de.nordakademie.iaa.noodle.model.*;
 import de.nordakademie.iaa.noodle.services.exceptions.EntityNotFoundException;
 import de.nordakademie.iaa.noodle.services.exceptions.ForbiddenOperationException;
 import de.nordakademie.iaa.noodle.services.exceptions.SemanticallyInvalidInputException;
+import de.nordakademie.iaa.noodle.services.implementation.SurveyServiceImpl;
+import de.nordakademie.iaa.noodle.services.interfaces.MailService;
+import de.nordakademie.iaa.noodle.services.interfaces.SurveyService;
+import de.nordakademie.iaa.noodle.services.interfaces.TimeslotService;
 import de.nordakademie.iaa.noodle.services.model.TimeslotCreationData;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
@@ -20,7 +22,7 @@ import static org.junit.jupiter.api.Assertions.*;
 import static org.mockito.Mockito.*;
 
 /**
- * Test for {@link SurveyService}
+ * Test for {@link SurveyServiceImpl}
  *
  * @author Noah Peeters
  */
@@ -35,7 +37,7 @@ public class SurveyServiceTest {
         surveyRepository = mock(SurveyRepository.class);
         timeslotRepository = mock(TimeslotService.class);
         mailService = mock(MailService.class);
-        surveyService = new SurveyService(
+        surveyService = new SurveyServiceImpl(
             surveyRepository, timeslotRepository, mailService);
     }
 

@@ -1,10 +1,11 @@
-package de.nordakademie.iaa.noodle.services;
+package de.nordakademie.iaa.noodle.services.implementation;
 
 import de.nordakademie.iaa.noodle.dao.TimeslotRepository;
 import de.nordakademie.iaa.noodle.model.Survey;
 import de.nordakademie.iaa.noodle.model.Timeslot;
 import de.nordakademie.iaa.noodle.services.exceptions.EntityNotFoundException;
 import de.nordakademie.iaa.noodle.services.exceptions.ServiceException;
+import de.nordakademie.iaa.noodle.services.interfaces.TimeslotService;
 import de.nordakademie.iaa.noodle.services.model.TimeslotCreationData;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Propagation;
@@ -18,9 +19,9 @@ import java.util.Date;
  * @author Noah Peeters
  * @see TimeslotRepository
  */
-@Service
+@Service("TimeslotService")
 @Transactional(propagation = Propagation.REQUIRED, rollbackFor = {ServiceException.class})
-public class TimeslotService {
+public class TimeslotServiceImpl implements TimeslotService {
     private final TimeslotRepository timeslotRepository;
 
     /**
@@ -28,18 +29,24 @@ public class TimeslotService {
      *
      * @param timeslotRepository Te repository for timeslots.
      */
-    public TimeslotService(TimeslotRepository timeslotRepository) {
+    public TimeslotServiceImpl(TimeslotRepository timeslotRepository) {
         this.timeslotRepository = timeslotRepository;
     }
 
+    static private boolean dateEquals(Date a, Date b) {
+        if (a == b) {
+            return true;
+        } else if ((a == null) || (b == null)) {
+            return false;
+        } else {
+            return a.compareTo(b) == 0;
+        }
+    }
+
     /**
-     * Find a timeslot of a survey by its id.
-     *
-     * @param survey     The survey of the timeslot.
-     * @param timeslotID The id timeslot.
-     * @return The requested timeslot.
-     * @throws EntityNotFoundException Thrown, when the timeslot does not exist.
+     * {@inheritDoc}
      */
+    @Override
     public Timeslot findTimeslot(Survey survey, Long timeslotID) throws EntityNotFoundException {
         Timeslot timeslot = timeslotRepository.findById(timeslotID);
 
@@ -51,35 +58,21 @@ public class TimeslotService {
     }
 
     /**
-     * Deletes all timeslots of a survey.
-     *
-     * @param survey The survey of which all timeslots will be deleted.
+     * {@inheritDoc}
      */
+    @Override
     public void deleteTimeslotsOfSurvey(Survey survey) {
         timeslotRepository.deleteAllBySurvey(survey);
     }
 
     /**
-     * Checks if the given timeslot creation data produce a timeslot with the same dates as the given timeslot.
-     * @param timeslotCreationData The creation data for the timeslot.
-     * @param timeslot The timeslot to check against.
-     * @return True, if the timeslot produces by the creation data has the same start and end date as the given
-     * timeslot. False otherwise.
+     * {@inheritDoc}
      */
+    @Override
     public boolean timeslotCreationDataMatchesTimeslot(TimeslotCreationData timeslotCreationData, Timeslot timeslot) {
         boolean startIsEqual = dateEquals(timeslot.getStart(), timeslotCreationData.getStart());
         boolean endIsEqual = dateEquals(timeslot.getEnd(), timeslotCreationData.getEnd());
 
         return startIsEqual && endIsEqual;
-    }
-
-    private static boolean dateEquals(Date a, Date b) {
-        if (a == b) {
-            return true;
-        } else if ((a == null) || ( b==null )) {
-            return false;
-        } else {
-            return a.compareTo(b) == 0;
-        }
     }
 }

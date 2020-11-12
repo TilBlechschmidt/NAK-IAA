@@ -4,6 +4,8 @@ import de.nordakademie.iaa.noodle.dao.TimeslotRepository;
 import de.nordakademie.iaa.noodle.model.Survey;
 import de.nordakademie.iaa.noodle.model.Timeslot;
 import de.nordakademie.iaa.noodle.services.exceptions.EntityNotFoundException;
+import de.nordakademie.iaa.noodle.services.implementation.TimeslotServiceImpl;
+import de.nordakademie.iaa.noodle.services.interfaces.TimeslotService;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 
@@ -12,7 +14,7 @@ import static org.junit.jupiter.api.Assertions.assertThrows;
 import static org.mockito.Mockito.*;
 
 /**
- * Test for {@link TimeslotService}
+ * Test for {@link TimeslotServiceImpl}
  *
  * @author Noah Peeters
  */
@@ -23,7 +25,7 @@ class TimeslotServiceTest {
     @BeforeEach
     void setUp() {
         timeslotRepository = mock(TimeslotRepository.class);
-        timeslotService = new TimeslotService(timeslotRepository);
+        timeslotService = new TimeslotServiceImpl(timeslotRepository);
     }
 
     @Test

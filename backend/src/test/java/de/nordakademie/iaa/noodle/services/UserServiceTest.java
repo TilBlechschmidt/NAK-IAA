@@ -4,6 +4,8 @@ import de.nordakademie.iaa.noodle.dao.UserRepository;
 import de.nordakademie.iaa.noodle.model.User;
 import de.nordakademie.iaa.noodle.services.exceptions.ConflictException;
 import de.nordakademie.iaa.noodle.services.exceptions.EntityNotFoundException;
+import de.nordakademie.iaa.noodle.services.implementation.UserServiceImpl;
+import de.nordakademie.iaa.noodle.services.interfaces.UserService;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 import org.springframework.dao.DataIntegrityViolationException;
@@ -12,7 +14,7 @@ import static org.junit.jupiter.api.Assertions.*;
 import static org.mockito.Mockito.*;
 
 /**
- * Test for {@link UserService}
+ * Test for {@link UserServiceImpl}
  *
  * @author Noah Peeters
  */
@@ -23,7 +25,7 @@ class UserServiceTest {
     @BeforeEach
     void setUp() {
         userRepository = mock(UserRepository.class);
-        userService = new UserService(userRepository);
+        userService = new UserServiceImpl(userRepository);
     }
 
     @Test

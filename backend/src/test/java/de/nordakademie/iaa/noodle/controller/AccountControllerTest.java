@@ -2,9 +2,11 @@ package de.nordakademie.iaa.noodle.controller;
 
 import de.nordakademie.iaa.noodle.api.model.*;
 import de.nordakademie.iaa.noodle.model.User;
-import de.nordakademie.iaa.noodle.services.SignInService;
-import de.nordakademie.iaa.noodle.services.SignUpService;
 import de.nordakademie.iaa.noodle.services.exceptions.*;
+import de.nordakademie.iaa.noodle.services.implementation.SignInServiceImpl;
+import de.nordakademie.iaa.noodle.services.implementation.SignUpServiceImpl;
+import de.nordakademie.iaa.noodle.services.interfaces.SignInService;
+import de.nordakademie.iaa.noodle.services.interfaces.SignUpService;
 import de.nordakademie.iaa.noodle.services.model.AuthenticatedUser;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
@@ -29,8 +31,8 @@ public class AccountControllerTest {
 
     @BeforeEach
     public void setUp() {
-        signInService = mock(SignInService.class);
-        signUpService = mock(SignUpService.class);
+        signInService = mock(SignInServiceImpl.class);
+        signUpService = mock(SignUpServiceImpl.class);
         accountController = new AccountController(signUpService, signInService);
     }
 

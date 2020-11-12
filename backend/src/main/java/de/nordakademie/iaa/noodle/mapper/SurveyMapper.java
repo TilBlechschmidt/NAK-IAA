@@ -7,7 +7,7 @@ import de.nordakademie.iaa.noodle.api.model.SurveyMetadataDTO;
 import de.nordakademie.iaa.noodle.dao.model.QuerySurveysItem;
 import de.nordakademie.iaa.noodle.model.Survey;
 import de.nordakademie.iaa.noodle.model.User;
-import de.nordakademie.iaa.noodle.services.SurveyService;
+import de.nordakademie.iaa.noodle.services.interfaces.SurveyService;
 import org.mapstruct.*;
 import org.springframework.beans.factory.annotation.Autowired;
 

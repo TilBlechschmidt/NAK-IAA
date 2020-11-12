@@ -3,7 +3,7 @@ package de.nordakademie.iaa.noodle.mapper;
 import de.nordakademie.iaa.noodle.api.model.ResponseDTO;
 import de.nordakademie.iaa.noodle.api.model.ResponseValueDTO;
 import de.nordakademie.iaa.noodle.model.*;
-import de.nordakademie.iaa.noodle.services.ResponseService;
+import de.nordakademie.iaa.noodle.services.interfaces.ResponseService;
 import org.mapstruct.*;
 import org.springframework.beans.factory.annotation.Autowired;
 

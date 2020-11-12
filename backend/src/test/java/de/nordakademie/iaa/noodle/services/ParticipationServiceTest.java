@@ -5,12 +5,20 @@ import de.nordakademie.iaa.noodle.model.Participation;
 import de.nordakademie.iaa.noodle.model.Survey;
 import de.nordakademie.iaa.noodle.model.User;
 import de.nordakademie.iaa.noodle.services.exceptions.EntityNotFoundException;
+import de.nordakademie.iaa.noodle.services.implementation.ParticipationServiceImpl;
+import de.nordakademie.iaa.noodle.services.interfaces.ParticipationService;
+import de.nordakademie.iaa.noodle.services.interfaces.SurveyService;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 
 import static org.junit.jupiter.api.Assertions.assertEquals;
 import static org.mockito.Mockito.*;
 
+/**
+ * Test for {@link ParticipationServiceImpl}
+ *
+ * @author Noah Peeters
+ */
 class ParticipationServiceTest {
     private ParticipationService participationService;
     private ParticipationRepository participationRepository;
@@ -20,7 +28,7 @@ class ParticipationServiceTest {
     void setUp() {
         participationRepository = mock(ParticipationRepository.class);
         surveyService = mock(SurveyService.class);
-        participationService = new ParticipationService(participationRepository, surveyService);
+        participationService = new ParticipationServiceImpl(participationRepository, surveyService);
     }
 
     @Test

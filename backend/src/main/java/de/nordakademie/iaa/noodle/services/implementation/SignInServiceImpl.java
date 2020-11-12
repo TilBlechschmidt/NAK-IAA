@@ -1,10 +1,14 @@
-package de.nordakademie.iaa.noodle.services;
+package de.nordakademie.iaa.noodle.services.implementation;
 
 import de.nordakademie.iaa.noodle.model.User;
 import de.nordakademie.iaa.noodle.services.exceptions.AuthenticationException;
 import de.nordakademie.iaa.noodle.services.exceptions.EntityNotFoundException;
 import de.nordakademie.iaa.noodle.services.exceptions.JWTException;
 import de.nordakademie.iaa.noodle.services.exceptions.PasswordException;
+import de.nordakademie.iaa.noodle.services.interfaces.JWTService;
+import de.nordakademie.iaa.noodle.services.interfaces.PasswordService;
+import de.nordakademie.iaa.noodle.services.interfaces.SignInService;
+import de.nordakademie.iaa.noodle.services.interfaces.UserService;
 import de.nordakademie.iaa.noodle.services.model.AuthenticatedUser;
 import de.nordakademie.iaa.noodle.services.model.SpringAuthenticationDetails;
 import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
@@ -21,8 +25,8 @@ import java.util.stream.Collectors;
  * @author Noah Peeters
  * @author Hans Rißer
  */
-@Service
-public class SignInService {
+@Service("SignInService")
+public class SignInServiceImpl implements SignInService {
     private static final String TOKEN_PREFIX = "Bearer ";
 
     private final PasswordService passwordService;
@@ -36,21 +40,16 @@ public class SignInService {
      * @param userService     Service used to manage users.
      * @param jwtService      Service used to manage JWT tokens.
      */
-    public SignInService(PasswordService passwordService, UserService userService, JWTService jwtService) {
+    public SignInServiceImpl(PasswordService passwordService, UserService userService, JWTService jwtService) {
         this.passwordService = passwordService;
         this.userService = userService;
         this.jwtService = jwtService;
     }
 
     /**
-     * Tries to authenticate a user.
-     *
-     * @param email    The email of the user.
-     * @param password The password of the user.
-     * @return An authenticated user.
-     * @throws EntityNotFoundException Thrown, when the user does not exist.
-     * @throws PasswordException       Thrown, when the password is invalid.
+     * {@inheritDoc}
      */
+    @Override
     public AuthenticatedUser attemptAuthentication(String email, String password)
         throws EntityNotFoundException, PasswordException {
 
@@ -62,14 +61,9 @@ public class SignInService {
     }
 
     /**
-     * Parses the Authentication data from a HTTP Header.
-     *
-     * @param header THe Authorization header value of a request.
-     * @return Authentication data.
-     * @throws JWTException            Thrown, when the JWT token is invalid.
-     * @throws EntityNotFoundException Thrown, when the authenticated user does not exist.
-     * @throws AuthenticationException Thrown, when the header does not contain valid data.
+     * {@inheritDoc}
      */
+    @Override
     public Authentication springAuthenticationForHeader(String header)
         throws JWTException, EntityNotFoundException, AuthenticationException {
 
