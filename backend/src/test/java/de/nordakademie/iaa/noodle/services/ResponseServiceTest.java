@@ -4,8 +4,15 @@ import de.nordakademie.iaa.noodle.dao.ResponseRepository;
 import de.nordakademie.iaa.noodle.dao.ResponseTimeslotRepository;
 import de.nordakademie.iaa.noodle.model.Response;
 import de.nordakademie.iaa.noodle.services.exceptions.EntityNotFoundException;
+import de.nordakademie.iaa.noodle.services.implementation.ResponseServiceImpl;
+import de.nordakademie.iaa.noodle.services.interfaces.ParticipationService;
+import de.nordakademie.iaa.noodle.services.interfaces.ResponseService;
+import de.nordakademie.iaa.noodle.services.interfaces.SurveyService;
+import de.nordakademie.iaa.noodle.services.interfaces.TimeslotService;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
+
+import javax.persistence.EntityManager;
 
 import static org.junit.jupiter.api.Assertions.assertEquals;
 import static org.junit.jupiter.api.Assertions.assertThrows;
@@ -20,20 +27,17 @@ import static org.mockito.Mockito.when;
 public class ResponseServiceTest {
     private ResponseService responseService;
     private ResponseRepository responseRepository;
-    private TimeslotService timeslotService;
-    private ResponseTimeslotRepository responseTimeslotRepository;
-    private ParticipationService participationService;
-    private SurveyService surveyService;
 
     @BeforeEach
     public void setUp() {
         responseRepository = mock(ResponseRepository.class);
-        timeslotService = mock(TimeslotService.class);
-        responseTimeslotRepository = mock(ResponseTimeslotRepository.class);
-        participationService = mock(ParticipationService.class);
-        surveyService = mock(SurveyService.class);
-        responseService = new ResponseService(responseRepository, responseTimeslotRepository, timeslotService,
-            participationService, surveyService);
+        TimeslotService timeslotService = mock(TimeslotService.class);
+        ResponseTimeslotRepository responseTimeslotRepository = mock(ResponseTimeslotRepository.class);
+        ParticipationService participationService = mock(ParticipationService.class);
+        SurveyService surveyService = mock(SurveyService.class);
+        EntityManager entityManager = mock(EntityManager.class);
+        responseService = new ResponseServiceImpl(responseRepository, responseTimeslotRepository, timeslotService,
+            participationService, surveyService, entityManager);
     }
 
     @Test

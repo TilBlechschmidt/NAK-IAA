@@ -6,11 +6,13 @@ import de.nordakademie.iaa.noodle.model.Timeslot;
 import de.nordakademie.iaa.noodle.services.exceptions.EntityNotFoundException;
 import de.nordakademie.iaa.noodle.services.implementation.TimeslotServiceImpl;
 import de.nordakademie.iaa.noodle.services.interfaces.TimeslotService;
+import de.nordakademie.iaa.noodle.services.model.TimeslotCreationData;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 
-import static org.junit.jupiter.api.Assertions.assertEquals;
-import static org.junit.jupiter.api.Assertions.assertThrows;
+import java.util.Date;
+
+import static org.junit.jupiter.api.Assertions.*;
 import static org.mockito.Mockito.*;
 
 /**
@@ -71,5 +73,85 @@ class TimeslotServiceTest {
         Survey survey = mock(Survey.class);
         timeslotService.deleteTimeslotsOfSurvey(survey);
         verify(timeslotRepository, times(1)).deleteAllBySurvey(survey);
+    }
+
+    @Test
+    void testTimeslotCreationDataMatchesTimeslot() {
+        Survey survey = mock(Survey.class);
+
+        Timeslot timeslot = new Timeslot(survey, new Date(0), null);
+        TimeslotCreationData creationData = new TimeslotCreationData(new Date(0), null);
+
+        assertTrue(timeslotService.timeslotCreationDataMatchesTimeslot(creationData, timeslot));
+    }
+
+    @Test
+    void testTimeslotCreationDataMatchesTimeslotStartDiffers() {
+        Survey survey = mock(Survey.class);
+
+        Timeslot timeslot = new Timeslot(survey, new Date(0), null);
+        TimeslotCreationData creationData = new TimeslotCreationData(new Date(1), null);
+
+        assertFalse(timeslotService.timeslotCreationDataMatchesTimeslot(creationData, timeslot));
+    }
+
+    @Test
+    void testTimeslotCreationDataMatchesTimeslotWithEndDate() {
+        Survey survey = mock(Survey.class);
+
+        Timeslot timeslot = new Timeslot(survey, new Date(0), new Date(10));
+        TimeslotCreationData creationData = new TimeslotCreationData(new Date(0), new Date(10));
+
+        assertTrue(timeslotService.timeslotCreationDataMatchesTimeslot(creationData, timeslot));
+    }
+
+    @Test
+    void testTimeslotCreationDataMatchesTimeslotWithEndStartDiffers() {
+        Survey survey = mock(Survey.class);
+
+        Timeslot timeslot = new Timeslot(survey, new Date(0), new Date(10));
+        TimeslotCreationData creationData = new TimeslotCreationData(new Date(1), new Date(10));
+
+        assertFalse(timeslotService.timeslotCreationDataMatchesTimeslot(creationData, timeslot));
+    }
+
+    @Test
+    void testTimeslotCreationDataMatchesTimeslotWithEndEndDiffers() {
+        Survey survey = mock(Survey.class);
+
+        Timeslot timeslot = new Timeslot(survey, new Date(0), new Date(10));
+        TimeslotCreationData creationData = new TimeslotCreationData(new Date(0), new Date(11));
+
+        assertFalse(timeslotService.timeslotCreationDataMatchesTimeslot(creationData, timeslot));
+    }
+
+    @Test
+    void testTimeslotCreationDataMatchesTimeslotWithEndBothDiffer() {
+        Survey survey = mock(Survey.class);
+
+        Timeslot timeslot = new Timeslot(survey, new Date(0), new Date(10));
+        TimeslotCreationData creationData = new TimeslotCreationData(new Date(1), new Date(11));
+
+        assertFalse(timeslotService.timeslotCreationDataMatchesTimeslot(creationData, timeslot));
+    }
+
+    @Test
+    void testTimeslotCreationDataMatchesTimeslotNewEnd() {
+        Survey survey = mock(Survey.class);
+
+        Timeslot timeslot = new Timeslot(survey, new Date(0), null);
+        TimeslotCreationData creationData = new TimeslotCreationData(new Date(0), new Date(11));
+
+        assertFalse(timeslotService.timeslotCreationDataMatchesTimeslot(creationData, timeslot));
+    }
+
+    @Test
+    void testTimeslotCreationDataMatchesTimeslotEndRemoved() {
+        Survey survey = mock(Survey.class);
+
+        Timeslot timeslot = new Timeslot(survey, new Date(0), new Date(10));
+        TimeslotCreationData creationData = new TimeslotCreationData(new Date(0), null);
+
+        assertFalse(timeslotService.timeslotCreationDataMatchesTimeslot(creationData, timeslot));
     }
 }

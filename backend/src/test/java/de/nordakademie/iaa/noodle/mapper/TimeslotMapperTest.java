@@ -2,7 +2,6 @@ package de.nordakademie.iaa.noodle.mapper;
 
 import de.nordakademie.iaa.noodle.api.model.TimeslotDTO;
 import de.nordakademie.iaa.noodle.model.Timeslot;
-import de.nordakademie.iaa.noodle.services.SignUpService;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 import org.mapstruct.factory.Mappers;

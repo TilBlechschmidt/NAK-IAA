@@ -37,8 +37,7 @@ public class SurveyServiceTest {
         surveyRepository = mock(SurveyRepository.class);
         timeslotRepository = mock(TimeslotService.class);
         mailService = mock(MailService.class);
-        surveyService = new SurveyServiceImpl(
-            surveyRepository, timeslotRepository, mailService);
+        surveyService = new SurveyServiceImpl(surveyRepository, timeslotRepository, mailService);
     }
 
     @Test
