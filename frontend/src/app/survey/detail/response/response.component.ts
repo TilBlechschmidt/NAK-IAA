@@ -1,8 +1,10 @@
 import {Component, EventEmitter, Input, OnInit, Output} from '@angular/core';
-import {FormBuilder, FormControl, FormGroup, Validators} from '@angular/forms';
+import {AbstractControl, FormBuilder, FormControl, FormGroup, Validators} from '@angular/forms';
 import {TimeslotCreationDto} from '../../../api/models/timeslot-creation-dto';
 import {ResponseValueDto} from '../../../api/models/response-value-dto';
 import {TimeslotDto} from '../../../api/models/timeslot-dto';
+import * as moment from 'moment';
+
 
 @Component({
     selector: 'app-response',
@@ -23,41 +25,20 @@ export class ResponseComponent implements OnInit {
     @Output() responded = new EventEmitter<ResponseValueDto>();
 
     constructor(private formBuilder: FormBuilder) {
-        const dateRegex = '^[0-9]{4}\\-((0[1-9]|1[0-2])){1}-(0[1-9]|1[0-9]|2[0-9]|3[0-1])\\' +
-            ' (23\\:59\\:60|(([01]([0-9])|(2[0-3])){1}:?([0-5][0-9])){1})$';
-
         this.form = this.formBuilder.group({
-            start: new FormControl('', [Validators.required, Validators.pattern(dateRegex)]),
-            end: new FormControl('', [Validators.pattern(dateRegex)])
+            start: new FormControl('', [DateValidator.validate, Validators.required]),
+            end: new FormControl('', [DateValidator.validate])
         });
     }
 
     ngOnInit(): void {
         if (this.timeSlot.id) {
-            this.form.controls.start.setValue(this.dateToString(this.timeSlot.start));
-            this.form.controls.end.setValue(this.dateToString(this.timeSlot.end));
+            this.form.controls.start.setValue(this.timeSlot.start);
+            this.form.controls.end.setValue(this.timeSlot.end);
         } else {
-            this.form.controls.start.setValue(this.dateToString(this.timeSlotCreate.start));
-            this.form.controls.end.setValue(this.dateToString(this.timeSlotCreate.end));
+            this.form.controls.start.setValue(this.timeSlotCreate.start);
+            this.form.controls.end.setValue(this.timeSlotCreate.end);
         }
-    }
-
-    stringToDate(str: string): string {
-        if (str === '') {
-            return '';
-        }
-        const splitString = str.split(' ');
-        return splitString[0] + 'T' + splitString[1] + 'Z';
-    }
-
-    dateToString(date: string): string {
-        if (date === null || date === '' || date === undefined) {
-            return '';
-        }
-        const d1 = date.replace('T', ' ');
-        const d2 = d1.replace('Z', '');
-        const splitDate = d2.split(':');
-        return splitDate[0] + ':' + splitDate[1];
     }
 
     isEndPresent(): boolean {
@@ -67,31 +48,23 @@ export class ResponseComponent implements OnInit {
     onChange(): void {
         const start: string = this.form.get('start')?.value;
         const end: string = this.form.get('end')?.value;
-        if (this.isFormValid()) {
-            this.responseEdited.emit({
-                id: this.timeSlot.id,
-                start: this.stringToDate(start),
-                end: this.stringToDate(end)
-            });
-            this.timeslotCreated.emit(
-                {
-                    start: this.stringToDate(start),
-                    end: this.stringToDate(end)
-                }
-            );
-            this.form.controls.start.setValue('');
-            this.form.controls.end.setValue('');
-        }
+        this.responseEdited.emit({
+            id: this.timeSlot.id,
+            start,
+            end
+        });
+        this.timeslotCreated.emit(
+            {
+                start,
+                end
+            }
+        );
+        this.form.controls.start.setValue('');
+        this.form.controls.end.setValue('');
     }
 
     isInMode(modes: Mode[]): boolean {
         return modes.some(mode => this.mode === mode);
-    }
-
-    isFormValid(): boolean {
-        return this.form.get('date') !== undefined &&
-            this.form.get('start') !== undefined &&
-            this.form.get('end') !== undefined;
     }
 
     setResponse(response: boolean): void {
@@ -108,4 +81,13 @@ export class ResponseComponent implements OnInit {
 }
 
 export type Mode = 'view' | 'edit' | 'create' | 'create-view' | 'view-not-answerable';
+
+export class DateValidator {
+    static validate(AC: AbstractControl): {dateValidator: boolean} | null {
+        if (AC && AC.value && !moment(AC.value, 'YYYY-MM-DD hh:mm', true).isValid()) {
+            return {dateValidator: true};
+        }
+        return null;
+    }
+}
 

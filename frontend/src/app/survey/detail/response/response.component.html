@@ -25,7 +25,7 @@
     </form>
     <div *ngIf="isInMode(['create', 'edit'])" class="button-container">
         <button mat-icon-button class="accept" (click)="onChange()">
-            <mat-icon>done</mat-icon>
+            <mat-icon>add</mat-icon>
         </button>
     </div>
     <button mat-icon-button disableRipple color="warn" *ngIf="isInMode(['edit','create-view'])" class="delete-button"

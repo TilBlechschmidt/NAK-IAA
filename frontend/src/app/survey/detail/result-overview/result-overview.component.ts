@@ -1,6 +1,7 @@
 import {Component, Input, OnInit} from '@angular/core';
 import {TimeslotDto} from '../../../api/models/timeslot-dto';
 import {ResponseDto} from '../../../api/models/response-dto';
+import * as moment from 'moment';
 
 @Component({
     selector: 'app-result-overview',
@@ -24,21 +25,11 @@ export class ResultOverviewComponent implements OnInit {
 
     responseForParticipantAndTimeslot(participant: ResponseDto, timeslot: TimeslotDto): boolean | null {
         const result = participant.responses.find(r => r.timeslotID === timeslot.id);
-
         return result ? result.value : null;
     }
 
-    appendLeadingZeroes(n: number): string {
-        return n <= 9 ? `0${n}` : `${n}`;
-    }
-
-    formatDate(dateString: string): string {
-        const date = new Date(dateString);
-        return `${date.getDate()}.${date.getMonth() + 1}.${date.getFullYear()}`;
-    }
-
-    formatTime(dateString: string): string {
-        const date = new Date(dateString);
-        return `${this.appendLeadingZeroes(date.getHours())}:${this.appendLeadingZeroes(date.getMinutes())}`;
+    formatDate(date: string): string {
+        if (!date) { return ''; }
+        return moment(date).format('yyyy-MM-DD hh:mm');
     }
 }

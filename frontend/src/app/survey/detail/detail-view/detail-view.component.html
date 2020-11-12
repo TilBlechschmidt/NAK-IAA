@@ -23,7 +23,7 @@
             </button>
         </div>
     </div>
-    <div class="responses">
+    <div class="responses" *ngIf="!isClosed">
         <div class="response" *ngFor="let timeslot of timeSlots; let itemIndex = index">
             <app-response [mode]="getMode()" [timeSlot]="timeslot" (deleted)="onDelete(itemIndex)"
                           (responseEdited)="updateTimeSlot(itemIndex, $event)"
@@ -38,7 +38,7 @@
                     [routerLink]="'/survey'">{{ "back" | translate }}</button>
             <button *ngIf="isDeletable" mat-raised-button color="warn" class="button"
                     (click)="delete()">{{ "survey.delete" | translate }}</button>
-            <button mat-raised-button color="primary" class="button"
+            <button *ngIf="!isClosed" mat-raised-button color="primary" class="button"
                     (click)="submit()">{{ "survey.save" | translate }}</button>
         </div>
     </div>

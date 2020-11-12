@@ -15,7 +15,6 @@ import {MatInputModule} from '@angular/material/input';
 import {RegistrationDialogComponent} from './authentication/registration-dialog/registration-dialog.component';
 import {MatTabsModule} from '@angular/material/tabs';
 import {MatTableModule} from '@angular/material/table';
-import {ResponseOverviewComponent} from './survey/detail/response-overview/response-overview.component';
 import {MatIconModule} from '@angular/material/icon';
 import {NewSurveyButtonComponent} from './survey/create/new-survey-button/new-survey-button.component';
 import {DashboardComponent} from './survey/tabs/dashboard/dashboard.component';
@@ -93,7 +92,6 @@ const SelectedApiModule = environment.api.mocked ? ApiModule.mocked() : ApiModul
         RegistrationDialogComponent,
         SurveyTabViewComponent,
         DetailViewComponent,
-        ResponseOverviewComponent,
         NewSurveyButtonComponent,
         NewSurveyButtonComponent,
         DashboardComponent,

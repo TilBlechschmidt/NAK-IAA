@@ -24,6 +24,8 @@
     "@angular/platform-browser-dynamic": "~10.1.6",
     "@angular/router": "~10.1.6",
     "@ngx-translate/core": "^13.0.0",
+    "@types/moment": "^2.13.0",
+    "moment": "^2.29.1",
     "ngx-translate-testing": "^5.0.0",
     "rxjs": "~6.6.0",
     "tslib": "^2.0.0",

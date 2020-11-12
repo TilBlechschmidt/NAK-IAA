@@ -2,6 +2,8 @@ import {Component, OnInit} from '@angular/core';
 import {MatDialogRef} from '@angular/material/dialog';
 import {SurveysService} from '../../../api/services/surveys.service';
 import {TimeslotCreationDto} from '../../../api/models/timeslot-creation-dto';
+import {TimeslotDto} from '../../../api/models/timeslot-dto';
+import * as moment from 'moment';
 
 @Component({
     selector: 'app-create-survey-dialog',
@@ -32,9 +34,13 @@ export class CreateSurveyDialogComponent implements OnInit {
             body: {
                 title: this.title,
                 description: this.description,
-                timeslots: this.timeSlots
+                timeslots: this.timeSlots.map(t => this.convertTimeSlotToISOString(t))
             }
         }).subscribe(next => {this.onNoClick(), window.location.reload(); }, err  => this.saveError = true);
+    }
+
+    convertTimeSlotToISOString(timeSlot: TimeslotCreationDto): TimeslotCreationDto {
+        return { start: moment(timeSlot.start).toISOString(), end: moment(timeSlot.end).toISOString()};
     }
 
     createTimeSlot(timeSlot: TimeslotCreationDto): void {

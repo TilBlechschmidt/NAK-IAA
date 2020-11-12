@@ -7,6 +7,7 @@ import {Identifier, ResponseDto, ResponseValueDto, TimeslotDto} from '../../../a
 import {EditSurveyWarnComponent} from '../edit-view-warn/edit-survey-warn.component';
 import {ResponsesService} from '../../../api/services/responses.service';
 import {Mode} from '../response/response.component';
+import * as moment from 'moment';
 
 @Component({
     selector: 'app-detail-view',
@@ -29,6 +30,8 @@ export class DetailViewComponent implements OnInit {
     fetchError = false;
     routerError = false;
     isDeletable = false;
+    isClosed = false;
+    initialTimeSlots: TimeslotDto[] = [];
     myResponse?: ResponseDto;
     id?: Identifier;
 
@@ -46,9 +49,11 @@ export class DetailViewComponent implements OnInit {
                 this.fetchedResponses = next.responses;
                 this.title = next.title;
                 this.description = next.description;
-                this.timeSlots = next.timeslots;
+                this.timeSlots = next.timeslots.map(t => this.convertTimeSlotToYYYYMMDD(t));
+                this.initialTimeSlots = Object.assign([], next.timeslots.map(t => this.convertTimeSlotToYYYYMMDD(t)));
                 this.isEditable = next.isEditable;
                 this.isDeletable = next.isDeletable;
+                this.isClosed = next.isClosed;
                 this.myResponse = next.myResponse;
             }, error => this.fetchError = true);
         }
@@ -59,12 +64,23 @@ export class DetailViewComponent implements OnInit {
     }
 
     getMode(): Mode {
-        return !this.isEditable ? 'view' : this.isEdit ? 'edit' : 'view-not-answerable';
+        if (!this.isEditable) {
+            return 'view';
+        } else {
+            if (this.isEdit) {
+                return 'edit';
+            } else {
+                return 'view-not-answerable';
+            }
+        }
     }
 
     private haveTimeslotsChanged(): boolean {
-        // Not implemented
-        return true;
+        return this.timeSlots.filter(timeslot => !this.includesTimeslot(this.initialTimeSlots, timeslot)).length > 0;
+    }
+
+    private includesTimeslot(timeslots: TimeslotDto[], timeSlot: TimeslotDto): boolean {
+        return timeslots.filter(t => t.start === timeSlot.start && t.end === timeSlot.end).length > 0;
     }
 
     submit(): void {
@@ -94,15 +110,30 @@ export class DetailViewComponent implements OnInit {
                 body: {
                     title: this.title,
                     description: this.description,
-                    timeslots: this.timeSlots,
+                    timeslots: this.timeSlots.map(timeslot => this.convertTimeSlotToISOString(timeslot)),
                 }
             }).subscribe(next => this.router.navigateByUrl('/survey'),
                 error => this.saveError = true);
         }
     }
 
+    convertTimeSlotToISOString(timeSlot: TimeslotDto): TimeslotDto {
+        return {id: timeSlot.id, start: moment(timeSlot.start).toISOString(), end: moment(timeSlot.end).toISOString()};
+    }
+
+    convertTimeSlotToYYYYMMDD(timeSlot: TimeslotDto): TimeslotDto {
+        return {id: timeSlot.id, start: this.convertDate(timeSlot.start), end: this.convertDate(timeSlot.end)};
+    }
+
+    convertDate(date: string): string {
+        if (!date) { return ''; }
+        return moment(date).format('YYYY-MM-DD hh:mm');
+    }
+
     respondSurvey(): void {
-        if (this.id === undefined) { return; }
+        if (this.id === undefined) {
+            return;
+        }
 
         if (this.myResponse) {
             this.responseService.updateResponse({
