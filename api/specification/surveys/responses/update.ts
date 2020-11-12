@@ -54,7 +54,7 @@ interface UpdateResponsePathParams {
 }
 
 interface UpdateResponseUnprocessableEntityErrorResponse extends UnprocessableEntityErrorResponseTemplate {
-    message: "noTimeslotsSelected"
+    message: "noTimeslotsSelected" | "duplicateTimeslotResponse"
 }
 
 interface UpdateResponseNotFoundErrorResponse extends NotFoundErrorResponseTemplate {

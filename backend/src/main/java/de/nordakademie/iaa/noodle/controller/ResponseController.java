@@ -5,20 +5,20 @@ import de.nordakademie.iaa.noodle.api.model.CreateResponseRequest;
 import de.nordakademie.iaa.noodle.api.model.ResponseDTO;
 import de.nordakademie.iaa.noodle.mapper.ResponseMapper;
 import de.nordakademie.iaa.noodle.model.Response;
-import de.nordakademie.iaa.noodle.model.ResponseType;
 import de.nordakademie.iaa.noodle.model.User;
 import de.nordakademie.iaa.noodle.services.exceptions.ConflictException;
 import de.nordakademie.iaa.noodle.services.exceptions.EntityNotFoundException;
 import de.nordakademie.iaa.noodle.services.exceptions.ForbiddenOperationException;
 import de.nordakademie.iaa.noodle.services.exceptions.SemanticallyInvalidInputException;
 import de.nordakademie.iaa.noodle.services.interfaces.ResponseService;
+import de.nordakademie.iaa.noodle.services.model.ResponseValue;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.RestController;
 import org.springframework.web.server.ResponseStatusException;
 
-import java.util.Map;
+import java.util.List;
 
 import static org.springframework.http.HttpStatus.CREATED;
 
@@ -53,9 +53,9 @@ public class ResponseController extends AuthenticatedController implements Respo
     public ResponseEntity<ResponseDTO> createResponse(Long surveyID, CreateResponseRequest createResponseRequest) {
         try {
             User currentUser = getCurrentUser();
-            Map<Long, ResponseType> responseTimeslotDataMap = responseMapper
-                .responseValueDTOsToMap(createResponseRequest.getValues());
-            Response response = responseService.createResponse(surveyID, responseTimeslotDataMap, currentUser);
+            List<ResponseValue> responseValues =
+                responseMapper.responseValueDTOsToResponseValues(createResponseRequest.getValues());
+            Response response = responseService.createResponse(surveyID, responseValues, currentUser);
             ResponseDTO responseDTO = responseMapper.responseToDTO(response, currentUser);
             return ResponseEntity.status(CREATED).body(responseDTO);
         } catch (EntityNotFoundException e) {
@@ -89,11 +89,11 @@ public class ResponseController extends AuthenticatedController implements Respo
                                                       CreateResponseRequest createResponseRequest) {
         try {
             User currentUser = getCurrentUser();
-            Map<Long, ResponseType> responseTimeslotDataMap = responseMapper
-                .responseValueDTOsToMap(createResponseRequest.getValues());
+            List<ResponseValue> responseValues =
+                responseMapper.responseValueDTOsToResponseValues(createResponseRequest.getValues());
             Response response = responseService.updateResponse(responseID,
                 surveyID,
-                responseTimeslotDataMap,
+                responseValues,
                 currentUser);
             ResponseDTO responseDTO = responseMapper.responseToDTO(response, currentUser);
             return ResponseEntity.status(CREATED).body(responseDTO);

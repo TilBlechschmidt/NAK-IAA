@@ -8,13 +8,14 @@ import de.nordakademie.iaa.noodle.services.interfaces.ParticipationService;
 import de.nordakademie.iaa.noodle.services.interfaces.ResponseService;
 import de.nordakademie.iaa.noodle.services.interfaces.SurveyService;
 import de.nordakademie.iaa.noodle.services.interfaces.TimeslotService;
+import de.nordakademie.iaa.noodle.services.model.ResponseValue;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Propagation;
 import org.springframework.transaction.annotation.Transactional;
 
 import javax.persistence.EntityManager;
-import java.util.Map;
+import java.util.List;
 
 /**
  * Service to manage {@link Response}s.
@@ -69,13 +70,13 @@ public class ResponseServiceImpl implements ResponseService {
         return response;
     }
 
-    private void addTimeslotsToResponse(Response response, Map<Long, ResponseType> responseTimeslotDataMap)
+    private void addTimeslotsToResponse(Response response, List<ResponseValue> responseValues)
         throws EntityNotFoundException {
-        for (Map.Entry<Long, ResponseType> responseTimeslotData : responseTimeslotDataMap.entrySet()) {
+        for (ResponseValue responseValue : responseValues) {
             Timeslot timeslot = timeslotService.findTimeslot(response.getParticipation().getSurvey(),
-                responseTimeslotData.getKey());
+                responseValue.getTimeslotId());
             ResponseTimeslot responseTimeslot =
-                new ResponseTimeslot(response, timeslot, responseTimeslotData.getValue());
+                new ResponseTimeslot(response, timeslot, responseValue.getResponseType());
             response.getResponseTimeslots().add(responseTimeslot);
         }
     }
@@ -85,12 +86,10 @@ public class ResponseServiceImpl implements ResponseService {
      */
     @Override
     public Response updateResponse(Long responseID, Long surveyID,
-                                   Map<Long, ResponseType> responseTimeslotDataMap, User currentUser)
+                                   List<ResponseValue> responseValues, User currentUser)
         throws EntityNotFoundException, SemanticallyInvalidInputException, ForbiddenOperationException {
 
-        if (responseTimeslotDataMap.isEmpty()) {
-            throw new SemanticallyInvalidInputException("noTimeslotsSelected");
-        }
+        checkResponseCreationData(responseValues);
 
         Response response = queryResponse(responseID, surveyID);
 
@@ -101,8 +100,8 @@ public class ResponseServiceImpl implements ResponseService {
 
         responseTimeslotRepository.deleteAllByResponse(response);
         response.getResponseTimeslots().clear();
-        addTimeslotsToResponse(response, responseTimeslotDataMap);
         entityManager.flush();
+        addTimeslotsToResponse(response, responseValues);
         responseRepository.save(response);
         return response;
     }
@@ -111,12 +110,10 @@ public class ResponseServiceImpl implements ResponseService {
      * {@inheritDoc}
      */
     @Override
-    public Response createResponse(Long surveyID, Map<Long, ResponseType> responseTimeslotDataMap, User currentUser)
+    public Response createResponse(Long surveyID, List<ResponseValue> responseValues, User currentUser)
         throws EntityNotFoundException, ConflictException, SemanticallyInvalidInputException {
 
-        if (responseTimeslotDataMap.isEmpty()) {
-            throw new SemanticallyInvalidInputException("noTimeslotsSelected");
-        }
+        checkResponseCreationData(responseValues);
 
         Participation participation = participationService.getOrCreateParticipation(currentUser, surveyID);
 
@@ -127,7 +124,7 @@ public class ResponseServiceImpl implements ResponseService {
         Response response = new Response(participation);
         participation.setResponse(response);
 
-        addTimeslotsToResponse(response, responseTimeslotDataMap);
+        addTimeslotsToResponse(response, responseValues);
         responseRepository.save(response);
         return response;
     }
@@ -144,5 +141,23 @@ public class ResponseServiceImpl implements ResponseService {
         boolean canRespondToSurvey = surveyService.canUserRespondToSurvey(survey, user);
 
         return responderIsCurrentUser && canRespondToSurvey;
+    }
+
+    private void checkResponseCreationData(List<ResponseValue> responseValues)
+        throws SemanticallyInvalidInputException {
+
+        if (responseValues.isEmpty()) {
+            throw new SemanticallyInvalidInputException("noTimeslotsSelected");
+        }
+
+        long distinctCount = responseValues
+            .stream()
+            .map(ResponseValue::getTimeslotId)
+            .distinct()
+            .count();
+
+        if (distinctCount != responseValues.size()) {
+            throw new SemanticallyInvalidInputException("duplicateTimeslotResponse");
+        }
     }
 }

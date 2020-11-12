@@ -56,7 +56,7 @@ export interface CreateResponseRequest {
 }
 
 interface CreateResponseUnprocessableEntityErrorResponse extends UnprocessableEntityErrorResponseTemplate {
-    message: "noTimeslotsSelected"
+    message: "noTimeslotsSelected" | "duplicateTimeslotResponse"
 }
 
 interface CreateResponseNotFoundErrorResponse extends NotFoundErrorResponseTemplate {

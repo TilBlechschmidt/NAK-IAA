@@ -4,11 +4,11 @@ import de.nordakademie.iaa.noodle.api.model.ResponseDTO;
 import de.nordakademie.iaa.noodle.api.model.ResponseValueDTO;
 import de.nordakademie.iaa.noodle.model.*;
 import de.nordakademie.iaa.noodle.services.interfaces.ResponseService;
+import de.nordakademie.iaa.noodle.services.model.ResponseValue;
 import org.mapstruct.*;
 import org.springframework.beans.factory.annotation.Autowired;
 
 import java.util.List;
-import java.util.Map;
 import java.util.Objects;
 import java.util.Set;
 import java.util.stream.Collectors;
@@ -126,8 +126,10 @@ public abstract class ResponseMapper {
      * @param responseValueDTO The ResponseValueDTO to map.
      * @return The mapped ResponseType.
      */
-    public ResponseType responseValueDTOToResponseType(ResponseValueDTO responseValueDTO) {
-        return responseValueDTO.getValue() ? ResponseType.YES : ResponseType.NO;
+    public ResponseValue responseValueDTOToResponseValue(ResponseValueDTO responseValueDTO) {
+        ResponseType responseType = responseValueDTO.getValue() ? ResponseType.YES : ResponseType.NO;
+
+        return new ResponseValue(responseValueDTO.getTimeslotID(), responseType);
     }
 
     /**
@@ -136,11 +138,10 @@ public abstract class ResponseMapper {
      * @param responseValueDTOs The ResponseValueDTO to map.
      * @return A Java Map with the timeslot ID and the ResponseType.
      */
-    public Map<Long, ResponseType> responseValueDTOsToMap(List<ResponseValueDTO> responseValueDTOs) {
+    public List<ResponseValue> responseValueDTOsToResponseValues(List<ResponseValueDTO> responseValueDTOs) {
         return responseValueDTOs
             .stream()
-            .collect(Collectors.toMap(
-                ResponseValueDTO::getTimeslotID,
-                this::responseValueDTOToResponseType));
+            .map(this::responseValueDTOToResponseValue)
+            .collect(Collectors.toList());
     }
 }
