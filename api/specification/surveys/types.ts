@@ -10,7 +10,7 @@ export interface TimeslotCreationDTO {
     /** Beginning of the timeslot */
     start: DateTime;
     /** End of the timeslot */
-    end: DateTime;
+    end?: DateTime;
 }
 
 export interface TimeslotDTO extends TimeslotCreationDTO {

@@ -28,7 +28,7 @@ export class ResultOverviewComponent implements OnInit {
         return result ? result.value : null;
     }
 
-    formatDate(date: string): string {
+    formatDate(date: string | undefined): string {
         if (!date) { return ''; }
         return moment(date).format('yyyy-MM-DD hh:mm');
     }

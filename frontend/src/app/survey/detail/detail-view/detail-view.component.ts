@@ -125,7 +125,7 @@ export class DetailViewComponent implements OnInit {
         return {id: timeSlot.id, start: this.convertDate(timeSlot.start), end: this.convertDate(timeSlot.end)};
     }
 
-    convertDate(date: string): string {
+    convertDate(date: string | undefined): string {
         if (!date) { return ''; }
         return moment(date).format('YYYY-MM-DD hh:mm');
     }
