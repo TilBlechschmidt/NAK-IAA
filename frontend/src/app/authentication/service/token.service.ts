@@ -9,13 +9,8 @@ export class TokenService {
     constructor() {
     }
 
-    getToken(): Jwt {
-        const token = localStorage.getItem('jwt');
-        if (token === null) {
-            return '';
-        } else {
-            return token;
-        }
+    getToken(): Jwt | null {
+        return localStorage.getItem('jwt');
     }
 
     isAuthenticated(): boolean {
