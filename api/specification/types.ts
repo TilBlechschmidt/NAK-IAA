@@ -54,7 +54,7 @@ export interface ServiceUnavailableErrorResponseTemplate extends ErrorResponse {
 }
 
 export interface UnauthorizedErrorResponse extends UnauthorizedErrorResponseTemplate {
-    message: "Access Denied"
+    message: "accessDenied"
 }
 
 export interface MalformedRequestErrorResponse extends BadRequestErrorResponseTemplate {

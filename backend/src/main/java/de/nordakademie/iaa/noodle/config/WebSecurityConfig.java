@@ -20,9 +20,12 @@ import org.springframework.security.web.authentication.UsernamePasswordAuthentic
 @Configuration
 class WebSecurityConfig extends WebSecurityConfigurerAdapter {
     private final JWTAuthorizationFilter jwtAuthorizationFilter;
+    private final JWTAuthEntryPoint jwtAuthEntryPoint;
 
-    @Autowired WebSecurityConfig(JWTAuthorizationFilter jwtAuthorizationFilter) {
+    @Autowired WebSecurityConfig(JWTAuthorizationFilter jwtAuthorizationFilter,
+                                 JWTAuthEntryPoint jwtAuthEntryPoint) {
         this.jwtAuthorizationFilter = jwtAuthorizationFilter;
+        this.jwtAuthEntryPoint = jwtAuthEntryPoint;
     }
 
     @Override
@@ -42,6 +45,8 @@ class WebSecurityConfig extends WebSecurityConfigurerAdapter {
             .anyRequest().authenticated()
             // Disable sessions
             .and().sessionManagement()
-            .sessionCreationPolicy(SessionCreationPolicy.STATELESS);
+            .sessionCreationPolicy(SessionCreationPolicy.STATELESS)
+            .and()
+            .exceptionHandling().authenticationEntryPoint(jwtAuthEntryPoint);
     }
 }
