@@ -3,6 +3,7 @@ import {TimeslotDto} from '../../../api/models/timeslot-dto';
 import {ResponseDto} from '../../../api/models/response-dto';
 import * as moment from 'moment';
 import {Identifier} from '../../../api/models';
+import { MatTableModule } from '@angular/material/table';
 
 @Component({
     selector: 'app-result-overview',

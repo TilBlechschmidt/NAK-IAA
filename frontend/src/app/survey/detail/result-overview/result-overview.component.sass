@@ -4,17 +4,38 @@ table
     width: 100%
 
 .timeslot-header
-    text-align: center
+    display: flex
+    flex-direction: column
+    align-items: center
 
 .date
     color: black
 
 .mat-footer-row
+    min-height: 5px
+
+.mat-footer-cell
+    display: flex
+    justify-content: center
     height: fit-content
+
+    &:first-of-type
+        padding-left: 0
+    &:last-of-type
+        padding-right: 0
+
+
+.mat-cell
+    display: flex
+    justify-content: center
 
 .cell
     padding: 16px
     text-align: center
+    width: 100px
+    display: flex
+    align-items: center
+    justify-content: center
 
     &.timeslot
         &.accept
