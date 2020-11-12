@@ -9,7 +9,8 @@
         <ng-container *ngFor="let timeslot of timeSlots">
             <ng-container matColumnDef="{{timeslot.id}}">
                 <th mat-header-cell *matHeaderCellDef class="cell timeslot-header">
-                    <span>{{formatDate(timeslot.start)}}</span><div *ngIf="timeslot.end"> - </div>
+                    <span>{{formatDate(timeslot.start)}}</span>
+                    <div *ngIf="timeslot.end"> -</div>
                     <span>{{formatDate(timeslot.end)}}</span>
                 </th>
                 <ng-container *matCellDef="let participant"
@@ -26,7 +27,7 @@
                 </ng-container>
                 <td mat-footer-cell *matFooterCellDef>
                     <app-close-survey-button
-                        [surveyId]="surveyId" [timeSlot]="timeslot"></app-close-survey-button>
+                        *ngIf="isCloseable" [surveyId]="surveyId" [timeSlot]="timeslot"></app-close-survey-button>
                 </td>
             </ng-container>
         </ng-container>

@@ -43,6 +43,7 @@ import {PasswordConfirmationDialogComponent} from './authentication/password-con
 import { ResultOverviewComponent } from './survey/detail/result-overview/result-overview.component';
 import { CloseSurveyComponent } from './survey/close-survey/close-survey.component';
 import { CloseSurveyButtonComponent } from './survey/close-survey/close-survey-button/close-survey-button.component';
+import {MatTooltipModule} from '@angular/material/tooltip';
 
 
 export const API_INTERCEPTOR_PROVIDER: Provider = {
@@ -129,7 +130,8 @@ const SelectedApiModule = environment.api.mocked ? ApiModule.mocked() : ApiModul
         TranslateModule.forRoot(),
         SelectedApiModule,
         MatMenuModule,
-        MatRippleModule
+        MatRippleModule,
+        MatTooltipModule
     ],
     providers: [
         LoggedInGuard,

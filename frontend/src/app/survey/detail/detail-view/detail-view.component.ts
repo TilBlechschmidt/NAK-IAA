@@ -31,6 +31,8 @@ export class DetailViewComponent implements OnInit {
     routerError = false;
     isDeletable = false;
     isClosed = false;
+    isClosable = false;
+    selectedTimeslot?: TimeslotDto;
     initialTimeSlots: TimeslotDto[] = [];
     myResponse?: ResponseDto;
     id?: Identifier;
@@ -54,7 +56,9 @@ export class DetailViewComponent implements OnInit {
                 this.isEditable = next.isEditable;
                 this.isDeletable = next.isDeletable;
                 this.isClosed = next.isClosed;
+                this.isClosable = next.isClosable;
                 this.myResponse = next.myResponse;
+                this.selectedTimeslot = next.selectedTimeslot;
             }, error => this.fetchError = true);
         }
     }

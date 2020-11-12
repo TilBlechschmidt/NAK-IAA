@@ -15,6 +15,10 @@
                     <textarea matInput [(ngModel)]="description" name="description"></textarea>
                 </mat-form-field>
             </div>
+            <div *ngIf="selectedTimeslot">
+                Der Termin ist auf {{ convertDate(selectedTimeslot.start) }} -
+                {{ convertDate(selectedTimeslot.end) }} festgesetzt
+            </div>
         </div>
         <div class="edit">
             <button *ngIf="isEditable" mat-mini-fab color="primary" aria-label="Edit" (click)="toggleEdit()">
@@ -30,7 +34,8 @@
                           (responded)="responded($event)"></app-response>
         </div>
     </div>
-    <app-result-overview [responses]="fetchedResponses" [timeSlots]="fetchedTimeSlots"></app-result-overview>
+    <app-result-overview [responses]="fetchedResponses" [timeSlots]="fetchedTimeSlots"
+                         [surveyId]="id" [isCloseable]="isClosable"></app-result-overview>
     <div class="buttonWithErrorMsg">
         <mat-error *ngIf="saveError">{{ "survey.errors.saveError" | translate }}</mat-error>
         <div class="buttons">

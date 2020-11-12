@@ -2,6 +2,8 @@ import {Component, Input, OnInit} from '@angular/core';
 import {MatDialog} from '@angular/material/dialog';
 import {CloseSurveyComponent} from '../close-survey.component';
 import {TimeslotDto} from '../../../api/models/timeslot-dto';
+import {Identifier} from '../../../api/models';
+import * as moment from 'moment';
 
 @Component({
     selector: 'app-close-survey-button',
@@ -10,8 +12,8 @@ import {TimeslotDto} from '../../../api/models/timeslot-dto';
 })
 export class CloseSurveyButtonComponent implements OnInit {
 
-    @Input() surveyId = 0;
-    @Input() timeSlot: TimeslotDto = { id: 0, start: "", end: ""};
+    @Input() surveyId?: Identifier;
+    @Input() timeSlot?: TimeslotDto;
 
     constructor(public dialog: MatDialog) {
     }
@@ -21,8 +23,17 @@ export class CloseSurveyButtonComponent implements OnInit {
 
     openDialog(): void {
         this.dialog.open(CloseSurveyComponent, {
-            width: '50%',
+            width: '30%',
             data: { surveyId: this.surveyId, timeslot: this.timeSlot }
         });
     }
+
+    formatDate(date: string): string {
+        return moment(date).format('YYYY-MM-DD hh:mm');
+    }
+}
+
+export interface CloseSurveyDialogData {
+    surveyId: Identifier;
+    timeslot: TimeslotDto;
 }

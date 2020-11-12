@@ -3,7 +3,8 @@ import {SurveysService} from '../../api/services/surveys.service';
 import {MAT_DIALOG_DATA, MatDialogRef} from '@angular/material/dialog';
 import {DetailViewComponent} from '../detail/detail-view/detail-view.component';
 import {Router} from '@angular/router';
-import {TimeslotDto} from '../../api/models/timeslot-dto';
+import {CloseSurveyDialogData} from './close-survey-button/close-survey-button.component';
+import * as moment from 'moment';
 
 @Component({
     selector: 'app-close-survey',
@@ -12,29 +13,27 @@ import {TimeslotDto} from '../../api/models/timeslot-dto';
 })
 export class CloseSurveyComponent implements OnInit {
 
-    selectedTimeslot = 0;
-
     constructor(public dialogRef: MatDialogRef<DetailViewComponent>,
-                @Inject(MAT_DIALOG_DATA) public surveyId: number,
-                @Inject(MAT_DIALOG_DATA) public timeslot: TimeslotDto,
+                @Inject(MAT_DIALOG_DATA) public data: CloseSurveyDialogData,
                 public service: SurveysService, public router: Router) {
     }
 
     ngOnInit(): void {
-
     }
 
-    selectTimeSlot(selectedTimSlot: number) {
-        this.selectedTimeslot = selectedTimSlot;
+    closeSurvey(): void {
+        this.service.closeSurvey({
+            id: this.data.surveyId,
+            body: {operation: 'close', selectedTimeslot: this.data.timeslot?.id}
+        })
+            .subscribe(next => {
+                this.dialogRef.close();
+                this.router.navigateByUrl('survey?selectedIndex=1');
+            });
     }
 
-    onNoClick(): void {
-        this.dialogRef.close();
-    }
-
-    closeSurvey() {
-        this.service.closeSurvey({id: this.surveyId, body: {operation: 'close', selectedTimeslot: this.selectedTimeslot}})
-            .subscribe(next => this.router.navigateByUrl('surveys?selectedIndex=1'));
+    formatDate(date: string): string {
+        return moment(date).format('YYYY-MM-DD hh:mm');
     }
 
 }
