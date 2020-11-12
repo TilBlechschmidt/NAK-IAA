@@ -33,7 +33,7 @@ public class TimeslotServiceImpl implements TimeslotService {
         this.timeslotRepository = timeslotRepository;
     }
 
-    static private boolean dateEquals(Date a, Date b) {
+    private static boolean dateEquals(Date a, Date b) {
         if (a == b) {
             return true;
         } else if ((a == null) || (b == null)) {
