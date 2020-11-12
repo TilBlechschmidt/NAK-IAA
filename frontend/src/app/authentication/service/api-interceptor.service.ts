@@ -18,7 +18,7 @@ export class ApiInterceptorService implements HttpInterceptor {
 
         const token = this.tokenService.getToken();
 
-        if(token) {
+        if (token) {
             req = req.clone({
                 setHeaders: {
                     Authorization: token
@@ -28,9 +28,9 @@ export class ApiInterceptorService implements HttpInterceptor {
 
         return next.handle(req).pipe(
             tap(x => x, err => {
-                if(err.status === 401) {
+                if (err.status === 401) {
                     this.tokenService.deleteToken();
-                    this.router.navigateByUrl("sign_in");
+                    this.router.navigateByUrl('sign_in');
                 } else {
                     console.error(`Error performing request, status code = ${err.status}`);
                 }
