@@ -28,6 +28,7 @@ export class ResultOverviewComponent implements OnInit, OnChanges {
 
 
     formatDate(date: string | undefined): string {
+
         if (!date) {
             return '';
         }
