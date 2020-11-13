@@ -100,6 +100,11 @@ public class ResponseServiceImpl implements ResponseService {
 
         responseTimeslotRepository.deleteAllByResponse(response);
         response.getResponseTimeslots().clear();
+
+        // Here, we have to flush the delete operations because we will insert new response timeslots
+        // which (in most cases) will insert new response timeslots for the same response and timeslot.
+        // Normally, hibernate first executes the inserts and then the deletions. Due to the the DB constraints,
+        // this order is not possible and we manually have to flush the delete operations first.
         entityManager.flush();
         addTimeslotsToResponse(response, responseValues);
         responseRepository.save(response);
