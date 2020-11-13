@@ -43,10 +43,12 @@ public interface SurveyRepository {
            SELECT DISTINCT
                survey.id AS id,
                survey.title AS title,
-                   (SELECT COUNT(response) FROM Response response WHERE response.participation.survey = survey)
+               surveySelectedTimeslot AS selectedTimeslot,
+               (SELECT COUNT(response) FROM Response response WHERE response.participation.survey = survey)
                    AS responseCount
            FROM Survey survey
            LEFT OUTER JOIN Participation participation ON participation.survey = survey
+           LEFT OUTER JOIN Timeslot surveySelectedTimeslot ON survey.selectedTimeslot = surveySelectedTimeslot
            WHERE
            (:participated IS NULL OR
                (:participated = true  AND

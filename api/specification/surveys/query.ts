@@ -1,6 +1,6 @@
 import {body, endpoint, Int32, queryParams, request, response} from "@airtasker/spot";
-import {Identifier, MalformedRequestErrorResponse, UnauthorizedErrorResponse} from "../types";
-import {SurveyTitle} from "./types";
+import {MalformedRequestErrorResponse, UnauthorizedErrorResponse} from "../types";
+import {QuerySurveysResult} from "./types";
 
 /** Retrieves a list of survey metadata with optional filters */
 @endpoint({
@@ -41,13 +41,6 @@ interface QuerySurveysRequest {
     /** Return only surveys the authenticated user has participated in and the responded with "OKAY" to the selected
      *  timeslot */
     acceptsSelectedTimeslot?: boolean
-}
-
-interface QuerySurveysResult {
-    id: Identifier;
-    title: SurveyTitle;
-    /** Number of participants of a survey */
-    participantCount: Int32;
 }
 
 interface QuerySurveysResponse {

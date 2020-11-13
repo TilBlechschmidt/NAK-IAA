@@ -1,5 +1,7 @@
 package de.nordakademie.iaa.noodle.dao.model;
 
+import de.nordakademie.iaa.noodle.model.Timeslot;
+
 /**
  * Survey data subset with the data required for listing surveys.
  *
@@ -12,4 +14,6 @@ public interface QuerySurveysItem {
     String getTitle();
 
     Long getResponseCount();
+
+    Timeslot getSelectedTimeslot();
 }

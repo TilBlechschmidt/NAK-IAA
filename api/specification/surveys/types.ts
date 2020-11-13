@@ -1,4 +1,4 @@
-import {DateTime, String} from "@airtasker/spot";
+import {DateTime, Int32, String} from '@airtasker/spot';
 import {ResponseDTO} from './responses/types';
 import {Identifier} from "../types";
 import {IdentifiableUserDTO} from "../account/types";
@@ -57,4 +57,15 @@ export interface SurveyMetadataDTO extends SurveyGeneralMetadataDTO{
 export interface SurveyDTO extends SurveyMetadataDTO {
     responses: ResponseDTO[]
     myResponse?: ResponseDTO
+}
+
+export interface QuerySurveysResult {
+    id: Identifier;
+    title: SurveyTitle;
+
+    /** Number of participants of a survey */
+    participantCount: Int32;
+
+    /** Final timeslot that has been selected by the creator */
+    selectedTimeslot?: TimeslotDTO;
 }
