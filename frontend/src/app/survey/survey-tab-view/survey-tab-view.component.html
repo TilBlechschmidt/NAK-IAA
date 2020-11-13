@@ -1,19 +1,29 @@
 <mat-card class="card">
     <mat-tab-group [selectedIndex]="selectedIndex" (selectedIndexChange)="setSelectedIndex($event)">
         <mat-tab label='{{ "survey.tabs.dashboard" | translate }}'>
-            <app-dashboard></app-dashboard>
+            <ng-template matTabContent>
+                <app-dashboard></app-dashboard>
+            </ng-template>
         </mat-tab>
         <mat-tab label='{{ "survey.tabs.fixed_appointments" | translate }}'>
-            <app-abstract-survey-table [filter]="{ acceptsSelectedTimeslot:true }"></app-abstract-survey-table>
+            <ng-template matTabContent>
+                <app-abstract-survey-table [filter]="{ acceptsSelectedTimeslot:true }"></app-abstract-survey-table>
+            </ng-template>
         </mat-tab>
         <mat-tab label='{{ "survey.tabs.my_surveys" | translate }}'>
-            <app-abstract-survey-table [filter]="{ isOwnSurvey: true }"></app-abstract-survey-table>
+            <ng-template matTabContent>
+                <app-abstract-survey-table [filter]="{ isOwnSurvey: true }"></app-abstract-survey-table>
+            </ng-template>
         </mat-tab>
         <mat-tab label='{{ "survey.tabs.answered_surveys" | translate }}'>
-            <app-abstract-survey-table [filter]="{ didParticipateIn: true, requiresAttention: false, isOwnSurvey: false}"></app-abstract-survey-table>
+            <ng-template matTabContent>
+                <app-abstract-survey-table [filter]="{ didParticipateIn: true, requiresAttention: false, isOwnSurvey: false}"></app-abstract-survey-table>
+            </ng-template>
         </mat-tab>
         <mat-tab label='{{ "survey.tabs.open_surveys" | translate }}'>
-            <app-abstract-survey-table [filter]="{ didParticipateIn: false, isClosed: false }"></app-abstract-survey-table>
+            <ng-template matTabContent>
+                <app-abstract-survey-table [filter]="{ didParticipateIn: false, isClosed: false }"></app-abstract-survey-table>
+            </ng-template>
         </mat-tab>
     </mat-tab-group>
 </mat-card>
