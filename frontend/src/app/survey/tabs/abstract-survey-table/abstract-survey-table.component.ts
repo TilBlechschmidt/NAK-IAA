@@ -24,7 +24,8 @@ export class AbstractSurveyTableComponent implements OnInit {
             isUpcoming: this.filter.isUpcoming,
             didParticipateIn: this.filter.didParticipateIn,
             isOwnSurvey: this.filter.isOwnSurvey,
-            requiresAttention: this.filter.requiresAttention
+            requiresAttention: this.filter.requiresAttention,
+            acceptsSelectedTimeslot: this.filter.acceptsSelectedTimeslot
         }).subscribe(next => this.data = next.surveys, error => {
             this.fetchError = true;
         });
@@ -38,4 +39,5 @@ export interface Filter {
     didParticipateIn?: boolean;
     requiresAttention?: boolean;
     isOwnSurvey?: boolean;
+    acceptsSelectedTimeslot?:boolean
 }

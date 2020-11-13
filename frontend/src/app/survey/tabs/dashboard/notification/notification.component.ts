@@ -17,7 +17,8 @@ export class NotificationComponent implements OnInit {
 
     ngOnInit(): void {
         this.surveysService.querySurveys({
-            requiresAttention: true
+            requiresAttention: true,
+            isClosed: false
         }).subscribe(next => this.notifications = next.surveys, error => this.notifications = []);
     }
 
