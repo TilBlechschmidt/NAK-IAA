@@ -11,8 +11,8 @@
         "logout": "Logout",
         "sign_in": {
             "display": "Anmelden",
-            "welcome": "Schön dich wiederzusehen",
-            "error": "Email oder Passwort ist falsch"
+            "welcome": "Schön, dich wiederzusehen",
+            "error": "Deine E-Mail oder dein Passwort ist fehlerhaft"
         },
         "sign_up": {
             "display": "Registrieren",
@@ -23,13 +23,13 @@
                 "email": "Gib deine E-Mail-Addresse ein"
             },
             "errors": {
-                "name_required": "Kein Name angegeben",
-                "invalid_mail": "Invalide Mailadresse",
-                "password_length": "Das Passwort muss zwischen 8 und 64 Zeichen besitzen",
-                "password_confirmation": "Passwörter stimmen nicht überein"
+                "name_required": "Huch, du hast keinen Namen angegeben",
+                "invalid_mail": "Diese Mailadresse ist leider ungültig",
+                "password_length": "Dein Passwort muss zwischen 8 und 64 Zeichen besitzen",
+                "password_confirmation": "Die Passwörter stimmen nicht überein"
             }
         },
-        "auth.activate.error": "Fehler beim Versenden"
+        "auth.activate.error": "Es ist ein Fehler beim Versenden der Login-Daten aufgetreten"
     },
     "survey": {
         "title": "Titel",
@@ -53,7 +53,7 @@
             "answered_surveys": "Beantwortete Umfragen",
             "open_surveys": "Offene Umfragen"
         },
-        "delete_confirmation": "Möchtest du wirklich die Terminumfrage \"{{title}}\" löschen?",
+        "delete_confirmation": "Möchtest du die Terminumfrage \"{{title}}\" wirklich löschen?",
         "errors": {
             "editError": "Es ist ein Fehler beim Bearbeiten aufgetreten",
             "deleteError": "Es ist ein Fehler beim Löschen aufgetreten",
