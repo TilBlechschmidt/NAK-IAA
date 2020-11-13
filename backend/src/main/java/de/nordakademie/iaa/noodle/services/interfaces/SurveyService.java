@@ -123,15 +123,20 @@ public interface SurveyService {
     /**
      * Query the QuerySurveysItem of multiple surveys which fulfill the given criteria.
      *
-     * @param currentUser       The user the other criteria refer to.
-     * @param didParticipateIn  The user has participated in the survey.
-     * @param isClosed          The survey is completed.
-     * @param isOwnSurvey       The survey was created by the user.
-     * @param isUpcoming        The selected timeslot is in the future.
-     * @param requiresAttention THe user's response was discarded due to an update of the survey.
+     * @param currentUser             The user the other criteria refer to.
+     * @param acceptsSelectedTimeslot The user accepted the selected timeslot.
+     * @param didParticipateIn        The user has participated in the survey.
+     * @param isClosed                The survey is completed.
+     * @param isOwnSurvey             The survey was created by the user.
+     * @param isUpcoming              The selected timeslot is in the future.
+     * @param requiresAttention       THe user's response was discarded due to an update of the survey.
      * @return List of QuerySurveysItems which fulfill the given criteria.
      */
-    List<QuerySurveysItem> querySurveys(User currentUser, Optional<Boolean> didParticipateIn,
-                                        Optional<Boolean> isClosed, Optional<Boolean> isOwnSurvey,
-                                        Optional<Boolean> isUpcoming, Optional<Boolean> requiresAttention);
+    List<QuerySurveysItem> querySurveys(User currentUser,
+                                        Optional<Boolean> acceptsSelectedTimeslot,
+                                        Optional<Boolean> didParticipateIn,
+                                        Optional<Boolean> isClosed,
+                                        Optional<Boolean> isOwnSurvey,
+                                        Optional<Boolean> isUpcoming,
+                                        Optional<Boolean> requiresAttention);
 }

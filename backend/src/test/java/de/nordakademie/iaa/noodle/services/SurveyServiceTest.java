@@ -497,8 +497,8 @@ public class SurveyServiceTest {
         User user = mock(User.class);
         when(user.getId()).thenReturn(42L);
 
-        surveyService.querySurveys(user, empty(), empty(), empty(), empty(), empty());
-        verify(surveyRepository, times(1)).querySurvey(42L, null, null, null, null, null);
+        surveyService.querySurveys(user, empty(), empty(), empty(), empty(), empty(), empty());
+        verify(surveyRepository, times(1)).querySurveys(42L, null, null, null, null, null, null);
     }
 
     @Test
@@ -507,8 +507,8 @@ public class SurveyServiceTest {
         when(user.getId()).thenReturn(42L);
         Optional<Boolean> opTrue = Optional.of(true);
 
-        surveyService.querySurveys(user, opTrue, opTrue, opTrue, opTrue, opTrue);
-        verify(surveyRepository, times(1)).querySurvey(42L, true, true, true, true, true);
+        surveyService.querySurveys(user, opTrue, opTrue, opTrue, opTrue, opTrue, opTrue);
+        verify(surveyRepository, times(1)).querySurveys(42L, true, true, true, true, true, true);
     }
 
     @Test
@@ -517,7 +517,7 @@ public class SurveyServiceTest {
         when(user.getId()).thenReturn(42L);
         Optional<Boolean> opFalse = Optional.of(false);
 
-        surveyService.querySurveys(user, opFalse, opFalse, opFalse, opFalse, opFalse);
-        verify(surveyRepository, times(1)).querySurvey(42L, false, false, false, false, false);
+        surveyService.querySurveys(user, opFalse, opFalse, opFalse, opFalse, opFalse, opFalse);
+        verify(surveyRepository, times(1)).querySurveys(42L, false, false, false, false, false, false);
     }
 }

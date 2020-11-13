@@ -26,12 +26,13 @@ public interface SurveyRepository {
      * Query the {@link QuerySurveysItem} of multiple surveys which fulfill the given criteria.
      * A <code>null</code> value for one of the parameters signifies a <i>don't care</i>.
      *
-     * @param userID            The id of the user some of the other criteria refer to.
-     * @param didParticipateIn  The user has participated in the survey.
-     * @param isClosed          The survey is closed.
-     * @param isOwnSurvey       The survey was created by the user.
-     * @param isUpcoming        The selected timeslot is in the future.
-     * @param requiresAttention THe user's response was discarded due to an update of the survey.
+     * @param userID                  The id of the user some of the other criteria refer to.
+     * @param acceptsSelectedTimeslot The user accepted the selected timeslot.
+     * @param didParticipateIn        The user has participated in the survey.
+     * @param isClosed                The survey is closed.
+     * @param isOwnSurvey             The survey was created by the user.
+     * @param isUpcoming              The selected timeslot is in the future.
+     * @param requiresAttention       THe user's response was discarded due to an update of the survey.
      * @return A List of all <code>QuerySurveysItems</code> which fulfill the given criteria.
      */
 // Sadly, JPQL does not allow us to use "<boolean_expr> = flag", so we need to emulate it using boolean logic
@@ -81,13 +82,28 @@ public interface SurveyRepository {
                    (NOT EXISTS (SELECT p FROM Participation p WHERE p.survey=survey AND p.participant.id = :userID) OR
                         EXISTS (SELECT r FROM Response r    WHERE r.participation=participation
                                                             AND participation.participant.id=:userID))))
+           AND
+            (:acceptsSelectedTimeslot IS NULL OR
+                (:acceptsSelectedTimeslot = true  AND
+                   (EXISTS (    SELECT responseTimeslot
+                                FROM ResponseTimeslot responseTimeslot
+                                WHERE responseTimeslot.responseType = 'YES' AND
+                                      responseTimeslot.timeslot = survey.selectedTimeslot AND
+                                      responseTimeslot.response.participation.participant.id = :userID ))) OR
+                (:acceptsSelectedTimeslot = false AND
+                   (NOT EXISTS (SELECT responseTimeslot
+                                FROM ResponseTimeslot responseTimeslot
+                                WHERE responseTimeslot.responseType = 'YES' AND
+                                      responseTimeslot.timeslot = survey.selectedTimeslot AND
+                                      responseTimeslot.response.participation.participant.id = :userID ))))
                """)
-    List<QuerySurveysItem> querySurvey(@Param("userID") Long userID,
-                                       @Param("participated") Boolean didParticipateIn,
-                                       @Param("closed") Boolean isClosed,
-                                       @Param("owned") Boolean isOwnSurvey,
-                                       @Param("upcoming") Boolean isUpcoming,
-                                       @Param("attentionRequired") Boolean requiresAttention);
+    List<QuerySurveysItem> querySurveys(@Param("userID") Long userID,
+                                        @Param("acceptsSelectedTimeslot") Boolean acceptsSelectedTimeslot,
+                                        @Param("participated") Boolean didParticipateIn,
+                                        @Param("closed") Boolean isClosed,
+                                        @Param("owned") Boolean isOwnSurvey,
+                                        @Param("upcoming") Boolean isUpcoming,
+                                        @Param("attentionRequired") Boolean requiresAttention);
 
     /**
      * Queries a single survey by its id.

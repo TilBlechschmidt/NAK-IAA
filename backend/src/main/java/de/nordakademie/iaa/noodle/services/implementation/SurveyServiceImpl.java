@@ -272,13 +272,21 @@ public class SurveyServiceImpl implements SurveyService {
      * {@inheritDoc}
      */
     @Override
-    public List<QuerySurveysItem> querySurveys(User currentUser, Optional<Boolean> didParticipateIn,
-                                               Optional<Boolean> isClosed, Optional<Boolean> isOwnSurvey,
+    public List<QuerySurveysItem> querySurveys(User currentUser,
+                                               Optional<Boolean> acceptsSelectedTimeslot,
+                                               Optional<Boolean> didParticipateIn,
+                                               Optional<Boolean> isClosed,
+                                               Optional<Boolean> isOwnSurvey,
                                                Optional<Boolean> isUpcoming,
                                                Optional<Boolean> requiresAttention) {
 
-        return surveyRepository.querySurvey(currentUser.getId(),
-            didParticipateIn.orElse(null), isClosed.orElse(null), isOwnSurvey.orElse(null),
-            isUpcoming.orElse(null), requiresAttention.orElse(null));
+        return surveyRepository.querySurveys(
+            currentUser.getId(),
+            acceptsSelectedTimeslot.orElse(null),
+            didParticipateIn.orElse(null),
+            isClosed.orElse(null),
+            isOwnSurvey.orElse(null),
+            isUpcoming.orElse(null),
+            requiresAttention.orElse(null));
     }
 }

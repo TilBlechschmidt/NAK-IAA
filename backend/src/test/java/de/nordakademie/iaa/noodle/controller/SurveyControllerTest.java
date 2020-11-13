@@ -155,11 +155,11 @@ public class SurveyControllerTest {
     @Test
     void testQuerySurveys() {
         List<QuerySurveysItem> expectedSurveys = new ArrayList<>();
-        when(surveyService.querySurveys(any(), any(), any(), any(), any(), any())).thenReturn(expectedSurveys);
+        when(surveyService.querySurveys(any(), any(), any(), any(), any(), any(), any())).thenReturn(expectedSurveys);
         QuerySurveysResponse expectedDTO = mock(QuerySurveysResponse.class);
         when(surveyMapper.surveysToSurveysDTO(expectedSurveys)).thenReturn(expectedDTO);
         ResponseEntity<QuerySurveysResponse> response =
-            surveyController.querySurveys(empty(), empty(), empty(), empty(), empty());
+            surveyController.querySurveys(empty(), empty(), empty(), empty(), empty(), empty());
         assertSameResponseEntity(HttpStatus.OK, expectedDTO, response);
     }
 

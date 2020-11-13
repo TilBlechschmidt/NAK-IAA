@@ -38,6 +38,9 @@ interface QuerySurveysRequest {
     isOwnSurvey?: boolean;
     /** Return only surveys the authenticated user has participated in */
     didParticipateIn?: boolean;
+    /** Return only surveys the authenticated user has participated in and the responded with "OKAY" to the selected
+     *  timeslot */
+    acceptsSelectedTimeslot?: boolean
 }
 
 interface QuerySurveysResult {
