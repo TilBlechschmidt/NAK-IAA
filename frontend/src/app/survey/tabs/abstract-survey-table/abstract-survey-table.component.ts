@@ -39,5 +39,5 @@ export interface Filter {
     didParticipateIn?: boolean;
     requiresAttention?: boolean;
     isOwnSurvey?: boolean;
-    acceptsSelectedTimeslot?:boolean
+    acceptsSelectedTimeslot?: boolean;
 }
