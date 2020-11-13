@@ -93,7 +93,7 @@ public class MailServiceTest {
         String body = """
                       Hello PARTICIPANT_FULL_NAME!<br/>
                       CREATOR_FULL_NAME modified the survey
-                      <a href=BASEURL/surveys/42>TITLE</a>.
+                      <a href=BASEURL/survey/detail/42>TITLE</a>.
                       Please create a new response.
                       <br/><br/>
                       Best regards<br/>

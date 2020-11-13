@@ -53,7 +53,7 @@ public class MailServiceImpl implements MailService {
         """
         Hello ${participant_name}!<br/>
         ${creator_name} modified the survey
-        <a href=${baseurl}/surveys/${survey_id}>${survey_title}</a>.
+        <a href=${baseurl}/survey/detail/${survey_id}>${survey_title}</a>.
         Please create a new response.
         """;
 
