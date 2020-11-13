@@ -1,4 +1,5 @@
 import {Component, Input, OnInit} from '@angular/core';
+import {Location} from '@angular/common';
 import {SurveysService} from '../../../api/services/surveys.service';
 import {ActivatedRoute, Router} from '@angular/router';
 import {MatDialog} from '@angular/material/dialog';
@@ -38,7 +39,8 @@ export class DetailViewComponent implements OnInit {
     id?: Identifier;
 
     constructor(private service: SurveysService, private responseService: ResponsesService, private router: Router,
-                private deleteDialog: MatDialog, private editDialog: MatDialog, private route: ActivatedRoute) {
+                private deleteDialog: MatDialog, private editDialog: MatDialog, private route: ActivatedRoute,
+                private location: Location) {
         this.route.params.subscribe(next => this.id = next.id);
     }
 
@@ -130,8 +132,11 @@ export class DetailViewComponent implements OnInit {
     }
 
     convertDate(date: string | undefined): string {
-        if (!date) { return ''; }
+        if (!date) {
+            return '';
+        }
         return moment(date).format('YYYY-MM-DD hh:mm');
+
     }
 
     respondSurvey(): void {
@@ -151,7 +156,7 @@ export class DetailViewComponent implements OnInit {
                 surveyID: this.id, body: {
                     values: this.responses
                 }
-            }).subscribe(next => this.router.navigateByUrl('survey'));
+            }).subscribe(next => this.router.navigateByUrl('survey'), err => this.saveError = true);
         }
     }
 
@@ -162,8 +167,8 @@ export class DetailViewComponent implements OnInit {
         });
     }
 
-    updateTimeSlot(index: number, updatedTimeslot: TimeslotDto): void {
-        this.timeSlots[index] = updatedTimeslot;
+    updateTimeSlot(itemIndex: number, updatedTimeSlot: TimeslotDto): void {
+        this.timeSlots[itemIndex] = updatedTimeSlot;
     }
 
     onDelete(index: number): void {
@@ -172,5 +177,13 @@ export class DetailViewComponent implements OnInit {
 
     responded(response: ResponseValueDto): void {
         this.responses.push(response);
+    }
+
+    getResponse(timeslot: TimeslotDto): ResponseValueDto | undefined {
+        return this.myResponse?.responses.find(response => response.timeslotID === timeslot.id);
+    }
+
+    back(): void {
+        this.location.back();
     }
 }

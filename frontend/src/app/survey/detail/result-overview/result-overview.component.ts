@@ -3,7 +3,6 @@ import {TimeslotDto} from '../../../api/models/timeslot-dto';
 import {ResponseDto} from '../../../api/models/response-dto';
 import * as moment from 'moment';
 import {Identifier} from '../../../api/models';
-import { MatTableModule } from '@angular/material/table';
 
 @Component({
     selector: 'app-result-overview',
@@ -20,7 +19,9 @@ export class ResultOverviewComponent implements OnInit, OnChanges {
 
     constructor() { }
 
-    ngOnInit(): void { }
+    ngOnInit(): void {
+        this.displayedColumns = ['name', ...this.timeSlots.map(timeslot => timeslot.id.toString())];
+    }
 
     responseForParticipantAndTimeslot(participant: ResponseDto, timeslot: TimeslotDto): boolean | null {
         const result = participant.responses.find(r => r.timeslotID === timeslot.id);
@@ -33,7 +34,7 @@ export class ResultOverviewComponent implements OnInit, OnChanges {
         if (!date) {
             return '';
         }
-        return moment(date).format('yyyy-MM-DD hh:mm');
+        return moment(date).format('yyyy-MM-DD HH:mm');
     }
 
     ngOnChanges(changes: SimpleChanges): void {

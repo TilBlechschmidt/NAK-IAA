@@ -13,6 +13,7 @@ const routes: Routes = [
     { path: 'activate', component: PasswordConfirmationDialogComponent },
     { path: 'survey', component: SurveyTabViewComponent, canActivate: [LoggedInGuard] },
     { path: 'survey/detail/:id', component: DetailViewComponent, canActivate: [LoggedInGuard] },
+    { path: '**', component: SurveyTabViewComponent, canActivate: [LoggedInGuard] }
 ];
 
 

@@ -23,10 +23,13 @@ button.delete-button
     transition: background-color 0.25s ease-in-out
 
     &.accept
-        border-color: mat-color($mat-green, 50)
+        border-color: mat-color($mat-green, 700)
 
     &.reject
-        border-color: mat-color($mat-red, 50)
+        border-color: mat-color($mat-red, 700)
+
+    &.neutral
+        border-color: white
 
     &.new
         &:not(:focus-within):not(:hover)
@@ -69,6 +72,7 @@ button:not(.delete-button)
     border-radius: 3px
     transform: translateY(0)
     transition: all 0.1s ease-in-out
+    margin: 10px
 
     &:hover
         transform: translateY(-1px)

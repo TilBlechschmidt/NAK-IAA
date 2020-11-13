@@ -1,5 +1,5 @@
 <mat-card class="card">
-    <mat-tab-group [(selectedIndex)]="selectedIndex">
+    <mat-tab-group [selectedIndex]="selectedIndex" (selectedIndexChange)="setSelectedIndex($event)">
         <mat-tab label='{{ "survey.tabs.dashboard" | translate }}'>
             <app-dashboard></app-dashboard>
         </mat-tab>
@@ -10,10 +10,10 @@
             <app-abstract-survey-table [filter]="{ isOwnSurvey: true }"></app-abstract-survey-table>
         </mat-tab>
         <mat-tab label='{{ "survey.tabs.answered_surveys" | translate }}'>
-            <app-abstract-survey-table [filter]="{ didParticipateIn: true, isUpcoming: true }"></app-abstract-survey-table>
+            <app-abstract-survey-table [filter]="{ didParticipateIn: true }"></app-abstract-survey-table>
         </mat-tab>
         <mat-tab label='{{ "survey.tabs.open_surveys" | translate }}'>
-            <app-abstract-survey-table [filter]="{ isUpcoming: true, isCompleted: false }"></app-abstract-survey-table>
+            <app-abstract-survey-table [filter]="{ isClosed: false }"></app-abstract-survey-table>
         </mat-tab>
     </mat-tab-group>
 </mat-card>

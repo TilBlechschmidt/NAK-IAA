@@ -5,7 +5,7 @@
 export const environment = {
     production: false,
     api: {
-        mocked: true,
+        mocked: false,
         rootUrl: ''
     }
 };

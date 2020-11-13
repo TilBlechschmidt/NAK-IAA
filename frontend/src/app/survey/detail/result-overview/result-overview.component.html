@@ -10,7 +10,7 @@
             <ng-container matColumnDef="{{timeslot.id}}">
                 <mat-header-cell *matHeaderCellDef class="cell timeslot-header">
                     <span>{{formatDate(timeslot.start)}}</span>
-                    <div *ngIf="timeslot.end"> -</div>
+                    <div *ngIf="timeslot.end"> - </div>
                     <span>{{formatDate(timeslot.end)}}</span>
                 </mat-header-cell>
                 <ng-container *matCellDef="let participant"

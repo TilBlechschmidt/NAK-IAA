@@ -1,5 +1,5 @@
 import { Component, OnInit } from '@angular/core';
-import {ActivatedRoute, Params} from '@angular/router';
+import {ActivatedRoute, Params, Router} from '@angular/router';
 
 @Component({
   selector: 'app-survey-tab-view',
@@ -8,12 +8,16 @@ import {ActivatedRoute, Params} from '@angular/router';
 })
 export class SurveyTabViewComponent implements OnInit {
 
-  selectedIndex = 0;
+  selectedIndex?: number;
 
-  constructor(private route: ActivatedRoute) { }
+  constructor(private route: ActivatedRoute, private router: Router) { }
 
   ngOnInit(): void {
-      this.route.queryParams.subscribe((params: Params) => this.selectedIndex = params.view);
+      this.route.queryParams.subscribe((params: Params) => this.selectedIndex = params.selectedIndex);
+  }
+
+  setSelectedIndex(index: number): void {
+      this.router.navigateByUrl('survey?selectedIndex=' + index);
   }
 
 }

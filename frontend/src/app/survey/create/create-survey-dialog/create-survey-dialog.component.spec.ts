@@ -4,6 +4,7 @@ import { CreateSurveyDialogComponent } from './create-survey-dialog.component';
 import {MAT_DIALOG_DATA, MatDialogRef} from '@angular/material/dialog';
 import {TranslateModule} from '@ngx-translate/core';
 import {HttpClientTestingModule} from '@angular/common/http/testing';
+import {RouterTestingModule} from '@angular/router/testing';
 
 describe('CreateSurveyDialogComponent', () => {
   let component: CreateSurveyDialogComponent;
@@ -12,7 +13,7 @@ describe('CreateSurveyDialogComponent', () => {
   beforeEach(async () => {
     await TestBed.configureTestingModule({
       declarations: [ CreateSurveyDialogComponent ],
-        imports: [ TranslateModule.forRoot(), HttpClientTestingModule ],
+        imports: [ TranslateModule.forRoot(), HttpClientTestingModule, RouterTestingModule ],
         providers: [ { provide: MatDialogRef, useValue: {} }, { provide: MAT_DIALOG_DATA, useValue: {}} ]
     })
     .compileComponents();

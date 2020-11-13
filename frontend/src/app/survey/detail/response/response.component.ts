@@ -1,9 +1,10 @@
-import {Component, EventEmitter, Input, OnInit, Output} from '@angular/core';
+import {Component, EventEmitter, Input, OnChanges, OnInit, Output, SimpleChanges} from '@angular/core';
 import {AbstractControl, FormBuilder, FormControl, FormGroup, Validators} from '@angular/forms';
 import {TimeslotCreationDto} from '../../../api/models/timeslot-creation-dto';
 import {ResponseValueDto} from '../../../api/models/response-value-dto';
 import {TimeslotDto} from '../../../api/models/timeslot-dto';
 import * as moment from 'moment';
+import {ResponseDto} from '../../../api/models/response-dto';
 
 
 @Component({
@@ -11,12 +12,15 @@ import * as moment from 'moment';
     templateUrl: './response.component.html',
     styleUrls: ['./response.component.sass']
 })
-export class ResponseComponent implements OnInit {
+export class ResponseComponent implements OnInit, OnChanges {
     form: FormGroup;
     isNew = false;
+    formError = false;
     date: Date = new Date();
+    state: State = 'neutral';
     @Input() timeSlot: TimeslotDto = {id: 0, start: '', end: ''};
     @Input() timeSlotCreate: TimeslotCreationDto = {start: '', end: ''};
+    @Input() response?: ResponseValueDto;
     @Input() mode: Mode = 'view';
     @Output() responseEdited = new EventEmitter<TimeslotDto>();
     @Output() timeslotCreated = new EventEmitter<TimeslotCreationDto>();
@@ -29,6 +33,16 @@ export class ResponseComponent implements OnInit {
             start: new FormControl('', [DateValidator.validate, Validators.required]),
             end: new FormControl('', [DateValidator.validate])
         });
+    }
+
+    ngOnChanges(changes: SimpleChanges): void {
+        if (this.response !== undefined) {
+            if (this.response.value){
+                this.state = 'accept';
+            } else {
+                this.state = 'reject';
+            }
+        }
     }
 
     ngOnInit(): void {
@@ -46,21 +60,30 @@ export class ResponseComponent implements OnInit {
     }
 
     onChange(): void {
-        const start: string = this.form.get('start')?.value;
-        const end: string = this.form.get('end')?.value;
-        this.responseEdited.emit({
-            id: this.timeSlot.id,
-            start,
-            end
-        });
-        this.timeslotCreated.emit(
-            {
+        if (!this.isFormValid()) {
+            this.formError = true;
+        } else {
+            this.formError = false;
+            const start: string = this.form.get('start')?.value;
+            const end: string = this.form.get('end')?.value;
+            this.responseEdited.emit({
+                id: this.timeSlot.id,
                 start,
                 end
-            }
-        );
-        this.form.controls.start.setValue('');
-        this.form.controls.end.setValue('');
+            });
+            this.timeslotCreated.emit(
+                {
+                    start,
+                    end
+                }
+            );
+            this.form.controls.start.setValue('');
+            this.form.controls.end.setValue('');
+        }
+    }
+
+    private isFormValid(): boolean {
+        return !this.form.get('start')?.invalid && !this.form.get('end')?.invalid;
     }
 
     isInMode(modes: Mode[]): boolean {
@@ -68,6 +91,12 @@ export class ResponseComponent implements OnInit {
     }
 
     setResponse(response: boolean): void {
+        if (response) {
+            this.state = 'accept';
+        } else {
+            this.state = 'reject';
+        }
+
         this.responded.emit({timeslotID: this.timeSlot.id, value: response});
     }
 
@@ -82,9 +111,11 @@ export class ResponseComponent implements OnInit {
 
 export type Mode = 'view' | 'edit' | 'create' | 'create-view' | 'view-not-answerable';
 
+export type State = 'accept' | 'reject' | 'neutral';
+
 export class DateValidator {
     static validate(AC: AbstractControl): {dateValidator: boolean} | null {
-        if (AC && AC.value && !moment(AC.value, 'YYYY-MM-DD hh:mm', true).isValid()) {
+        if (AC && AC.value && !moment(AC.value, 'YYYY-MM-DD HH:mm', true).isValid()) {
             return {dateValidator: true};
         }
         return null;

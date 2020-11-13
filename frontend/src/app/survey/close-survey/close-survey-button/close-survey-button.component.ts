@@ -29,7 +29,7 @@ export class CloseSurveyButtonComponent implements OnInit {
     }
 
     formatDate(date: string): string {
-        return moment(date).format('YYYY-MM-DD hh:mm');
+        return moment(date).format('YYYY-MM-DD HH:mm');
     }
 }
 

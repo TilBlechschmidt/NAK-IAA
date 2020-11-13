@@ -1,4 +1,4 @@
-<mat-card class="response" [class.new]="isNew">
+<mat-card class="response + {{ state }}" [class.new]="isNew">
     <div *ngIf="isInMode(['view', 'create-view', 'view-not-answerable'])" class="date-view">
         <div class="date"><p> {{ "survey.begin" | translate }} </p> {{ this.form.get('start')?.value }} </div>
         <div class="date" *ngIf="isEndPresent()"><p>{{ "survey.end" | translate }}</p> {{
@@ -14,13 +14,13 @@
         </div>
     </div>
     <form *ngIf="isInMode(['create', 'edit'])" [formGroup]="form" class="input-container">
-        <mat-form-field floatLabel="never" class="date-input">
+        <mat-form-field class="date-input">
             <mat-label>Start</mat-label>
-            <input matInput formControlName="start" placeholder="dd-MM-yyyy hh:mm"/>
+            <input matInput formControlName="start" placeholder="YYYY-MM-DD hh:mm"/>
         </mat-form-field>
-        <mat-form-field floatLabel="never" class="date-input">
+        <mat-form-field class="date-input">
             <mat-label>End</mat-label>
-            <input matInput formControlName="end" placeholder="dd-MM-yyyy hh:mm"/>
+            <input matInput formControlName="end" placeholder="YYYY-MM-DD hh:mm"/>
         </mat-form-field>
     </form>
     <div *ngIf="isInMode(['create', 'edit'])" class="button-container">
@@ -32,4 +32,5 @@
             (click)="onDelete()">
         <mat-icon>clear</mat-icon>
     </button>
+    <mat-error *ngIf="formError">Ungültiges Datum</mat-error>
 </mat-card>
