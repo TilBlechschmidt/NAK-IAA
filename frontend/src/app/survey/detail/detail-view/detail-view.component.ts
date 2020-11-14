@@ -188,7 +188,18 @@ export class DetailViewComponent implements OnInit {
     }
 
     responded(response: ResponseValueDto): void {
-        this.responses.push(response);
+        const includesResponseNewResponse = this.responses.map(res => res.timeslotID).includes(response.timeslotID);
+        if(includesResponseNewResponse) {
+            this.responses = this.responses.map(res => {
+                if (res.timeslotID === response.timeslotID) {
+                    return response
+                } else {
+                    return res;
+                }
+            });
+        } else {
+            this.responses.push(response);
+        }
     }
 
     getResponse(timeslot: TimeslotDto): ResponseValueDto | undefined {
