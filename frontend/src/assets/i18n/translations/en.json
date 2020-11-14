@@ -58,7 +58,8 @@
         "errors": {
             "editError": "An error has occurred while editing",
             "deleteError": "An error has occurred while deleting",
-            "saveError": "An error has occurred while saving"
+            "saveError": "An error has occurred while saving",
+            "timeslots_empty": "You must have one timeslot"
         }
     }
 }

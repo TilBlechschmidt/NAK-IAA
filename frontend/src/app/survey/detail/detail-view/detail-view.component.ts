@@ -37,6 +37,7 @@ export class DetailViewComponent implements OnInit {
     initialTimeSlots: TimeslotDto[] = [];
     myResponse?: ResponseDto;
     id?: Identifier;
+    timeSlotsEmptyError = false;
 
     constructor(private service: SurveysService, private responseService: ResponsesService, private router: Router,
                 private deleteDialog: MatDialog, private editDialog: MatDialog, private route: ActivatedRoute,
@@ -108,6 +109,11 @@ export class DetailViewComponent implements OnInit {
     }
 
     updateSurvey(): void {
+        if (this.timeSlots.length < 1) {
+            this.timeSlotsEmptyError = true;
+            return;
+        }
+
         if (this.id === undefined) {
             this.routerError = true;
         } else {

@@ -40,6 +40,7 @@
                          [surveyId]="id" [isCloseable]="isClosable"></app-result-overview>
     <div class="buttonWithErrorMsg">
         <mat-error *ngIf="saveError">{{ "survey.errors.saveError" | translate }}</mat-error>
+        <mat-error *ngIf="timeSlotsEmptyError">{{ "survey.errors.timeslots_empty" | translate }}</mat-error>
         <div class="buttons">
             <button mat-raised-button class="button"
                     (click) = back()>{{ "back" | translate }}</button>
