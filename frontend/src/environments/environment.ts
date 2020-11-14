@@ -6,7 +6,7 @@ export const environment = {
     production: false,
     api: {
         mocked: false,
-        rootUrl: ''
+        rootUrl: '/api'
     }
 };
 
