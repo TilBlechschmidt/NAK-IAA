@@ -125,7 +125,7 @@ export class DetailViewComponent implements OnInit {
                     description: this.description,
                     timeslots: this.timeSlots.map(timeslot => this.convertTimeSlotToISOString(timeslot)),
                 }
-            }).subscribe(next => this.router.navigateByUrl('/survey'),
+            }).subscribe(next => this.isEdit = false,
                 error => this.saveError = true);
         }
     }
