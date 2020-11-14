@@ -101,6 +101,11 @@ yarn install
 ng serve
 ```
 
+To actually run the frontend _against the backend_ run `ng proxy` instead of `ng serve`. 
+
+> Note: Live-Reload can lead to Errors in the Angular frontend.
+> When encounter a problem after changing code, restart the application.
+
 ### Backend
 
 On the backend, [Spring Boot](https://spring.io/projects/spring-boot) does the heavy lifting.
