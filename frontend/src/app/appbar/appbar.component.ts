@@ -1,5 +1,6 @@
 import { Component, OnInit } from '@angular/core';
 import {TokenService} from '../authentication/service/token.service';
+import {UserContextService} from '../authentication/service/user-context.service';
 
 @Component({
   selector: 'app-appbar',
@@ -8,18 +9,22 @@ import {TokenService} from '../authentication/service/token.service';
 })
 export class AppbarComponent implements OnInit {
 
-  constructor(private authService: TokenService) { }
+  constructor(private tokenService: TokenService, private userContextService: UserContextService) { }
 
   ngOnInit(): void {
   }
 
   changeLanguage(code: string): void {
-      localStorage.setItem('locale', code);
+      this.userContextService.setLanguage(code);
       window.location.reload();
   }
 
   isAuthenticated(): boolean {
-      return this.authService.isAuthenticated();
+      return this.tokenService.isAuthenticated();
+  }
+
+  getUserName(): string {
+      return this.userContextService.getUserName();
   }
 
 }

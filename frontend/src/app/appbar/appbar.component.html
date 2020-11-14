@@ -5,7 +5,8 @@
             <img class="image" src="assets/noodle.svg" alt="Logo" />
             <span>{{ 'appbar.title' | translate }}</span>
         </div>
-        <div>
+        <div class="context">
+            <div class="username" *ngIf="isAuthenticated()"> {{getUserName()}} </div>
             <button mat-button [matMenuTriggerFor]="menu"><mat-icon>language</mat-icon></button>
             <mat-menu #menu="matMenu">
                 <button mat-menu-item (click)="changeLanguage('en')">English</button>

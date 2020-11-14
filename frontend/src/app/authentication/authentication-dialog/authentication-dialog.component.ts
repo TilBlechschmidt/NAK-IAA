@@ -4,6 +4,7 @@ import {Router} from '@angular/router';
 import {TokenService} from '../service/token.service';
 import {AccountService} from '../../api/services/account.service';
 import {FormBuilder, FormControl, FormGroup, Validators} from '@angular/forms';
+import {UserContextService} from '../service/user-context.service';
 
 
 @Component({
@@ -18,7 +19,7 @@ export class AuthenticationDialogComponent implements OnInit {
     authError = false;
 
     constructor(private accountService: AccountService, private authService: TokenService,
-                private router: Router, private formBuilder: FormBuilder) {
+                private router: Router, private formBuilder: FormBuilder, private userContextService: UserContextService) {
         this.form = this.formBuilder.group({
             email: new FormControl('', [Validators.required]),
             password: new FormControl('', [Validators.required]),
@@ -38,6 +39,7 @@ export class AuthenticationDialogComponent implements OnInit {
             (next: AuthenticatedResponse) => {
                 this.authService.setToken(next.token);
                 this.router.navigateByUrl('survey');
+                this.userContextService.setUserName(next.name)
             }, (err: AuthenticatedResponse) => this.authError = true
         );
     }
