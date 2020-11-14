@@ -130,7 +130,7 @@ export class DetailViewComponent implements OnInit {
     }
 
     convertTimeSlotToISOString(timeSlot: TimeslotDto): TimeslotCreationDto {
-        return { start: moment(timeSlot.start).toISOString(), end: moment(timeSlot.end).toISOString()};
+        return {start: moment(timeSlot.start).toISOString(), end: moment(timeSlot.end).toISOString()};
     }
 
     convertTimeSlotToYYYYMMDD(timeSlot: TimeslotDto): TimeslotDto {
@@ -154,7 +154,7 @@ export class DetailViewComponent implements OnInit {
             this.responseService.updateResponse({
                 responseID: this.myResponse.responseID,
                 surveyID: this.id, body: {
-                    values: this.responses
+                    values: this.mergeResponseWithNewResponses(this.myResponse.responses, this.responses)
                 }
             }).subscribe(next => this.router.navigateByUrl('survey'));
         } else {
@@ -164,6 +164,12 @@ export class DetailViewComponent implements OnInit {
                 }
             }).subscribe(next => this.router.navigateByUrl('survey'), err => this.saveError = true);
         }
+    }
+
+    private mergeResponseWithNewResponses(myResponse: ResponseValueDto[], newResponse: ResponseValueDto[]) {
+        const myResponsesWithoutNewResponses = myResponse.filter(response =>
+              !newResponse.map(res => res.timeslotID).includes(response.timeslotID));
+        return newResponse.concat(myResponsesWithoutNewResponses);
     }
 
     delete(): void {
