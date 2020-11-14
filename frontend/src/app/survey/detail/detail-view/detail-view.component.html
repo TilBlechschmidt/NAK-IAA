@@ -46,7 +46,7 @@
                     (click) = back()>{{ "back" | translate }}</button>
             <button *ngIf="isDeletable" mat-raised-button color="warn" class="button"
                     (click)="delete()">{{ "survey.delete" | translate }}</button>
-            <button *ngIf="!isClosed" mat-raised-button color="primary" class="button"
+            <button *ngIf="!isClosed" mat-raised-button color="primary" class="button" [disabled]="notResponded()"
                     (click)="submit()">{{ "survey.save" | translate }}</button>
         </div>
     </div>

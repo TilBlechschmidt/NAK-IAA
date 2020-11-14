@@ -192,4 +192,8 @@ export class DetailViewComponent implements OnInit {
     back(): void {
         this.location.back();
     }
+
+    notResponded(): boolean {
+        return this.getMode() === 'view' && this.responses.length < 1;
+    }
 }
