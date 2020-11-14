@@ -10,15 +10,15 @@ export class UserContextService {
     constructor() {
     }
 
-    setUserName(username: string) {
-        this.username = username
+    setUserName(username: string): void {
+        this.username = username;
     }
 
     getUserName(): string {
-        return this.username ? this.username : "";
+        return this.username ? this.username : '';
     }
 
-    setLanguage(langCode: string) {
+    setLanguage(langCode: string): void {
         localStorage.setItem('locale', langCode);
     }
 }

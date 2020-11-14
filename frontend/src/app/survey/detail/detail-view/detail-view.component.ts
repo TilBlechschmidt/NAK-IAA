@@ -42,7 +42,7 @@ export class DetailViewComponent implements OnInit {
     isClosable = false;
     selectedTimeslot?: TimeslotDto;
     initialTimeSlots: TimeslotDto[] = [];
-    creatorName: string = "";
+    creatorName = '';
     myResponse?: ResponseDto;
     id?: Identifier;
     timeSlotsEmptyError = false;

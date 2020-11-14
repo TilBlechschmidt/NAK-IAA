@@ -39,7 +39,7 @@ export class AuthenticationDialogComponent implements OnInit {
             (next: AuthenticatedResponse) => {
                 this.authService.setToken(next.token);
                 this.router.navigateByUrl('survey');
-                this.userContextService.setUserName(next.name)
+                this.userContextService.setUserName(next.name);
             }, (err: AuthenticatedResponse) => this.authError = true
         );
     }

@@ -16,12 +16,13 @@
     <form *ngIf="isInMode(['create', 'edit'])" [formGroup]="form" class="input-container">
         <mat-form-field class="date-input">
             <mat-label>{{ "survey.beginField" | translate }}</mat-label>
-            <input matInput formControlName="start" placeholder="YYYY-MM-DD hh:mm" (blur)="onBlur()"/>
+            <input matInput [required]="true"  formControlName="start" placeholder="YYYY-MM-DD hh:mm"
+                   (blur)="onBlur()"/>
             <mat-error>{{ "survey.invalid_date" | translate }}</mat-error>
         </mat-form-field>
         <mat-form-field class="date-input">
             <mat-label>{{ "survey.endField" | translate }}</mat-label>
-            <input matInput formControlName="end" placeholder="YYYY-MM-DD hh:mm" (blur)="onBlur()" />
+            <input matInput [required]="false" formControlName="end" placeholder="YYYY-MM-DD hh:mm" (blur)="onBlur()" />
             <mat-error>{{ " survey.invalid_date" | translate }}</mat-error>
         </mat-form-field>
     </form>
