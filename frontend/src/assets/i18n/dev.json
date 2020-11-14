@@ -58,7 +58,8 @@
             "editError": "An error has occurred while editing",
             "deleteError": "An error has occurred while deleting",
             "saveError": "An error has occurred while saving",
-            "timeslots_empty": "You must have one timeslot"
+            "timeslots_empty": "You must have one timeslot",
+            "duplicate_error": "Timeslot must not be identical"
         }
     }
 }

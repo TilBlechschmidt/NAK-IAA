@@ -166,7 +166,7 @@ export class DetailViewComponent implements OnInit {
         }
     }
 
-    private mergeResponseWithNewResponses(myResponse: ResponseValueDto[], newResponse: ResponseValueDto[]) {
+    private mergeResponseWithNewResponses(myResponse: ResponseValueDto[], newResponse: ResponseValueDto[]): ResponseValueDto[] {
         const myResponsesWithoutNewResponses = myResponse.filter(response =>
               !newResponse.map(res => res.timeslotID).includes(response.timeslotID));
         return newResponse.concat(myResponsesWithoutNewResponses);
@@ -189,10 +189,10 @@ export class DetailViewComponent implements OnInit {
 
     responded(response: ResponseValueDto): void {
         const includesResponseNewResponse = this.responses.map(res => res.timeslotID).includes(response.timeslotID);
-        if(includesResponseNewResponse) {
+        if (includesResponseNewResponse) {
             this.responses = this.responses.map(res => {
                 if (res.timeslotID === response.timeslotID) {
-                    return response
+                    return response;
                 } else {
                     return res;
                 }

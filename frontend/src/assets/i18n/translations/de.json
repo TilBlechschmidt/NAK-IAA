@@ -58,7 +58,8 @@
             "editError": "Es ist ein Fehler beim Bearbeiten aufgetreten",
             "deleteError": "Es ist ein Fehler beim Löschen aufgetreten",
             "saveError": "Es ist ein Fehler beim Speichern aufgetreten",
-            "timeslots_empty": "Es muss mindestens ein Termin zur Verfügung stehen"
+            "timeslots_empty": "Es muss mindestens ein Termin zur Verfügung stehen",
+            "duplicate_error": "Termine dürfen nicht identisch sein"
         }
     }
 }

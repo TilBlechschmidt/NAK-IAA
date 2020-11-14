@@ -17,6 +17,7 @@ export class CreateSurveyDialogComponent implements OnInit {
     description = '';
     timeSlots: TimeslotCreationDto[] = [];
     saveError = false;
+    duplicateError = false;
 
     constructor(
         public dialogRef: MatDialogRef<CreateSurveyDialogComponent>,
@@ -45,6 +46,11 @@ export class CreateSurveyDialogComponent implements OnInit {
     }
 
     createTimeSlot(timeSlot: TimeslotCreationDto): void {
+        this.duplicateError = false;
+        if (this.timeSlots.filter(ts => ts.start === timeSlot.start && ts.start === timeSlot.start).length > 0) {
+            this.duplicateError = true;
+            return;
+        }
         this.timeSlots.push(timeSlot);
     }
 
