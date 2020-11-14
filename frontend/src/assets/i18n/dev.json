@@ -45,6 +45,7 @@
         "close": "Close Survey",
         "edit_warning": "Do you really want to edit this survey? All participants have to answer them again!",
         "edited": "The survey \"{{ title }}\" was edited. You have answer the again",
+        "creator": "Creator: {{creator}}",
         "timeslotSelected": "The survey is fixed on {{start}} - {{end}}",
         "fix_appointment": "Do you want to select this date?",
         "tabs": {

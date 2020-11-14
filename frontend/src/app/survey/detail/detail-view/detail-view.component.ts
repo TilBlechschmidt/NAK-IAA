@@ -4,7 +4,14 @@ import {SurveysService} from '../../../api/services/surveys.service';
 import {ActivatedRoute, Router} from '@angular/router';
 import {MatDialog} from '@angular/material/dialog';
 import {DeleteSurveyComponent} from '../delete-survey/delete-survey.component';
-import {Identifier, ResponseDto, ResponseValueDto, TimeslotCreationDto, TimeslotDto} from '../../../api/models';
+import {
+    IdentifiableUserDto,
+    Identifier,
+    ResponseDto,
+    ResponseValueDto,
+    TimeslotCreationDto,
+    TimeslotDto
+} from '../../../api/models';
 import {EditSurveyWarnComponent} from '../edit-view-warn/edit-survey-warn.component';
 import {ResponsesService} from '../../../api/services/responses.service';
 import {Mode} from '../response/response.component';
@@ -35,6 +42,7 @@ export class DetailViewComponent implements OnInit {
     isClosable = false;
     selectedTimeslot?: TimeslotDto;
     initialTimeSlots: TimeslotDto[] = [];
+    creatorName: string = "";
     myResponse?: ResponseDto;
     id?: Identifier;
     timeSlotsEmptyError = false;
@@ -63,6 +71,7 @@ export class DetailViewComponent implements OnInit {
                 this.isClosable = next.isClosable;
                 this.myResponse = next.myResponse;
                 this.selectedTimeslot = next.selectedTimeslot;
+                this.creatorName = next.creator.name;
             }, error => this.fetchError = true);
         }
     }

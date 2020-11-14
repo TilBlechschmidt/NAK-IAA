@@ -50,6 +50,7 @@
         "The survey \"{{ title }}\" was edited. You need to answer it again to make sure everything is alright.",
         "timeslotSelected": "The survey chose the following date: {{start}} - {{end}}",
         "fix_appointment": "Do you want to select this date to conclude the survey?",
+        "creator": "Creator: {{creator}}",
         "tabs": {
             "dashboard": "Dashboard",
             "fixed_appointments": "Fixed Appointments",

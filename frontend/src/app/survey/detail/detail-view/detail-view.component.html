@@ -3,7 +3,8 @@
         <div>
             <div class="title" *ngIf="!isEdit">
                 <h2>{{ title }}</h2>
-                <span>{{ description }}</span>
+                <p>{{ description }}</p>
+                <p> {{ "survey.creator" | translate : {creator: creatorName} }} </p>
             </div>
             <div class="title" *ngIf="isEdit">
                 <mat-form-field class="form-field">

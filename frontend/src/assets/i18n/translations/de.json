@@ -49,6 +49,7 @@
         "edited": "Die Terminumfrage \"{{ title }}\" wurde bearbeitet. Du musst sie nochmals beantworten",
         "timeslotSelected": "Der Termin wurde auf {{start}} - {{end}} festgelegt",
         "fix_appointment": "Möchtest du den Termin für diese Terminumfrage auf folgende Daten festlegen?",
+        "creator": "Ersteller: {{creator}}",
         "tabs": {
             "dashboard": "Dashboard",
             "fixed_appointments": "Feste Termine",
