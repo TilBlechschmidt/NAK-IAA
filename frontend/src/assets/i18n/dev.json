@@ -48,6 +48,7 @@
         "creator": "Creator: {{creator}}",
         "timeslotSelected": "The survey is fixed on {{start}} - {{end}}",
         "fix_appointment": "Do you want to select this date?",
+        "invalid_date": "Check that your date is valid and in the format YYYY-MM-DD HH:mm",
         "tabs": {
             "dashboard": "Dashboard",
             "fixed_appointments": "Fixed Appointments",
