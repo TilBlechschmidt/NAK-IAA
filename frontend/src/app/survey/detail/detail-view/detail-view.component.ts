@@ -71,6 +71,12 @@ export class DetailViewComponent implements OnInit {
         this.isEdit = !this.isEdit;
     }
 
+    abortEdit(): void {
+        this.isEdit = false;
+        // Re-fetch the current server-side state
+        this.ngOnInit();
+    }
+
     getMode(): Mode {
         if (!this.isEditable) {
             return 'view';
@@ -125,8 +131,10 @@ export class DetailViewComponent implements OnInit {
                     description: this.description,
                     timeslots: this.timeSlots.map(timeslot => this.convertTimeSlotToISOString(timeslot)),
                 }
-            }).subscribe(next => this.isEdit = false,
-                error => this.saveError = true);
+            }).subscribe(next => {
+                this.isEdit = false;
+                this.initialTimeSlots = this.timeSlots;
+            }, error => this.saveError = true);
         }
     }
 

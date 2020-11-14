@@ -15,15 +15,15 @@
     </div>
     <form *ngIf="isInMode(['create', 'edit'])" [formGroup]="form" class="input-container">
         <mat-form-field class="date-input">
-            <mat-label>Start</mat-label>
-            <input matInput formControlName="start" placeholder="YYYY-MM-DD hh:mm"/>
+            <mat-label>{{ "survey.beginField" | translate }}</mat-label>
+            <input matInput formControlName="start" placeholder="YYYY-MM-DD hh:mm" (blur)="onBlur()"/>
         </mat-form-field>
         <mat-form-field class="date-input">
-            <mat-label>End</mat-label>
-            <input matInput formControlName="end" placeholder="YYYY-MM-DD hh:mm"/>
+            <mat-label>{{ "survey.endField" | translate }}</mat-label>
+            <input matInput formControlName="end" placeholder="YYYY-MM-DD hh:mm" (blur)="onBlur()"/>
         </mat-form-field>
     </form>
-    <div *ngIf="isInMode(['create', 'edit'])" class="button-container">
+    <div *ngIf="isInMode(['create'])" class="button-container">
         <button mat-icon-button class="accept" (click)="onChange()">
             <mat-icon>add</mat-icon>
         </button>

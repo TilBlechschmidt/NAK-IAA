@@ -37,6 +37,8 @@
         "description": "Beschreibung",
         "begin": "Beginn: ",
         "end": "Ende: ",
+        "beginField": "Start",
+        "endField": "Ende (optional)",
         "participantCount": "Teilnehmer",
         "create": "Neue Terminumfrage erstellen",
         "delete": "Löschen",

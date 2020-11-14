@@ -37,6 +37,8 @@
         "description": "Description",
         "begin": "Begin: ",
         "end": "End: ",
+        "beginField": "Start",
+        "endField": "End (optional)",
         "participantCount": "Participants",
         "create": "Create New Survey",
         "delete": "Delete",

@@ -3,6 +3,9 @@
         {{ "survey.edit_warning" | translate }}
     </h3>
     <div class="container">
+        <button mat-raised-button (click)="onNoClick()">
+            {{ "back" | translate }}
+        </button>
         <button mat-raised-button color="primary" (click)="edit()">
             {{ "survey.edit" | translate }}
         </button>

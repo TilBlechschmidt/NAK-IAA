@@ -4,6 +4,7 @@ import formatISO from 'date-fns/formatISO';
 import parse from 'date-fns/parse';
 import parseISO from 'date-fns/parseISO';
 import isValid from 'date-fns/isValid';
+import isBefore from 'date-fns/isBefore';
 
 export type ISODateString = string;
 export type HumanReadableDateString = string;
@@ -16,7 +17,7 @@ export class DateService {
 
     constructor() {}
 
-    parseHumanReadable(date: HumanReadableDateString, referenceDate: Date): Date {
+    parseHumanReadable(date: HumanReadableDateString, referenceDate: Date = new Date()): Date {
         return parse(date, DateService.humanReadableFormat, referenceDate);
     }
 
@@ -30,5 +31,9 @@ export class DateService {
 
     validateHumanReadable(date: HumanReadableDateString, referenceDate: Date = new Date()): boolean {
         return isValid(this.parseHumanReadable(date, referenceDate));
+    }
+
+    isBefore(a: HumanReadableDateString, b: HumanReadableDateString): boolean {
+        return isBefore(this.parseHumanReadable(a), this.parseHumanReadable(b));
     }
 }
