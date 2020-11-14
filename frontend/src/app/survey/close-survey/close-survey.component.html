@@ -3,7 +3,7 @@
         {{ "survey.fix_appointment" | translate}}
     </div>
     <div class="date">
-        {{ formatDate(data.timeslot.start) }} - {{ formatDate(data.timeslot.start) }}
+        {{ formatHumanReadable(data.timeslot.start) }} - {{ formatHumanReadable(data.timeslot.start) }}
     </div>
     <button mat-raised-button color=primary class="button" (click)="closeSurvey()">
         <mat-icon>check_circle</mat-icon>

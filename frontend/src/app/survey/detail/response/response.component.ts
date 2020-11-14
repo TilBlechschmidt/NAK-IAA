@@ -1,11 +1,17 @@
-import {Component, EventEmitter, Input, OnChanges, OnInit, Output, SimpleChanges} from '@angular/core';
-import {AbstractControl, FormBuilder, FormControl, FormGroup, Validators} from '@angular/forms';
+import {Component, EventEmitter, Injectable, Input, OnChanges, OnInit, Output, SimpleChanges} from '@angular/core';
+import {
+    AbstractControl,
+    FormBuilder,
+    FormControl,
+    FormGroup,
+    ValidationErrors,
+    ValidatorFn,
+    Validators
+} from '@angular/forms';
 import {TimeslotCreationDto} from '../../../api/models/timeslot-creation-dto';
 import {ResponseValueDto} from '../../../api/models/response-value-dto';
 import {TimeslotDto} from '../../../api/models/timeslot-dto';
-import * as moment from 'moment';
-import {ResponseDto} from '../../../api/models/response-dto';
-
+import {DateService} from '../../../date.service';
 
 @Component({
     selector: 'app-response',
@@ -28,10 +34,10 @@ export class ResponseComponent implements OnInit, OnChanges {
     @Output() deleted = new EventEmitter();
     @Output() responded = new EventEmitter<ResponseValueDto>();
 
-    constructor(private formBuilder: FormBuilder) {
+    constructor(private formBuilder: FormBuilder, private dateValidatorService: DateValidatorService) {
         this.form = this.formBuilder.group({
-            start: new FormControl('', [DateValidator.validate, Validators.required]),
-            end: new FormControl('', [DateValidator.validate])
+            start: new FormControl('', [dateValidatorService.validate(), Validators.required]),
+            end: new FormControl('', [dateValidatorService.validate()])
         });
     }
 
@@ -113,12 +119,19 @@ export type Mode = 'view' | 'edit' | 'create' | 'create-view' | 'view-not-answer
 
 export type State = 'accept' | 'reject' | 'neutral';
 
-export class DateValidator {
-    static validate(AC: AbstractControl): {dateValidator: boolean} | null {
-        if (AC && AC.value && !moment(AC.value, 'YYYY-MM-DD HH:mm', true).isValid()) {
-            return {dateValidator: true};
-        }
-        return null;
+@Injectable({
+    providedIn: 'root'
+})
+export class DateValidatorService {
+    constructor(private dateService: DateService) {}
+
+    validate(): ValidatorFn {
+        return (AC: AbstractControl): ValidationErrors | null => {
+            if (AC && AC.value && !this.dateService.validateHumanReadable(AC.value)) {
+                return {dateValidator: true};
+            }
+            return null;
+        };
     }
 }
 

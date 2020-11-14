@@ -8,7 +8,7 @@ import {Identifier, ResponseDto, ResponseValueDto, TimeslotCreationDto, Timeslot
 import {EditSurveyWarnComponent} from '../edit-view-warn/edit-survey-warn.component';
 import {ResponsesService} from '../../../api/services/responses.service';
 import {Mode} from '../response/response.component';
-import * as moment from 'moment';
+import {DateService} from '../../../date.service';
 
 @Component({
     selector: 'app-detail-view',
@@ -39,7 +39,8 @@ export class DetailViewComponent implements OnInit {
     id?: Identifier;
     timeSlotsEmptyError = false;
 
-    constructor(private service: SurveysService, private responseService: ResponsesService, private router: Router,
+    constructor(private service: SurveysService, private responseService: ResponsesService,
+                private dateService: DateService, private router: Router,
                 private deleteDialog: MatDialog, private editDialog: MatDialog, private route: ActivatedRoute,
                 private location: Location) {
         this.route.params.subscribe(next => this.id = next.id);
@@ -54,8 +55,8 @@ export class DetailViewComponent implements OnInit {
                 this.fetchedResponses = next.responses;
                 this.title = next.title;
                 this.description = next.description;
-                this.timeSlots = next.timeslots.map(t => this.convertTimeSlotToYYYYMMDD(t));
-                this.initialTimeSlots = Object.assign([], next.timeslots.map(t => this.convertTimeSlotToYYYYMMDD(t)));
+                this.timeSlots = next.timeslots.map(t => this.convertTimeSlotToHumanReadable(t));
+                this.initialTimeSlots = Object.assign([], next.timeslots.map(t => this.convertTimeSlotToHumanReadable(t)));
                 this.isEditable = next.isEditable;
                 this.isDeletable = next.isDeletable;
                 this.isClosed = next.isClosed;
@@ -130,19 +131,22 @@ export class DetailViewComponent implements OnInit {
     }
 
     convertTimeSlotToISOString(timeSlot: TimeslotDto): TimeslotCreationDto {
-        return {start: moment(timeSlot.start).toISOString(), end: moment(timeSlot.end).toISOString()};
+        return {
+            start: this.dateService.formatISO(timeSlot.start),
+            end: timeSlot.end ? this.dateService.formatISO(timeSlot.end) : undefined
+        };
     }
 
-    convertTimeSlotToYYYYMMDD(timeSlot: TimeslotDto): TimeslotDto {
-        return {id: timeSlot.id, start: this.convertDate(timeSlot.start), end: this.convertDate(timeSlot.end)};
+    convertTimeSlotToHumanReadable(timeSlot: TimeslotDto): TimeslotDto {
+        return {
+            id: timeSlot.id,
+            start: this.convertDateToHumanReadable(timeSlot.start),
+            end: this.convertDateToHumanReadable(timeSlot.end)
+        };
     }
 
-    convertDate(date: string | undefined): string {
-        if (!date) {
-            return '';
-        }
-        return moment(date).format('YYYY-MM-DD hh:mm');
-
+    convertDateToHumanReadable(date: string | undefined): string {
+        return date ? this.dateService.formatHumanReadable(date) : '';
     }
 
     respondSurvey(): void {

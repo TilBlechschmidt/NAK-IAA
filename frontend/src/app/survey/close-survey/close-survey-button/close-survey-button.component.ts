@@ -3,7 +3,6 @@ import {MatDialog} from '@angular/material/dialog';
 import {CloseSurveyComponent} from '../close-survey.component';
 import {TimeslotDto} from '../../../api/models/timeslot-dto';
 import {Identifier} from '../../../api/models';
-import * as moment from 'moment';
 
 @Component({
     selector: 'app-close-survey-button',
@@ -26,10 +25,6 @@ export class CloseSurveyButtonComponent implements OnInit {
             width: '30%',
             data: { surveyId: this.surveyId, timeslot: this.timeSlot }
         });
-    }
-
-    formatDate(date: string): string {
-        return moment(date).format('YYYY-MM-DD HH:mm');
     }
 }
 
