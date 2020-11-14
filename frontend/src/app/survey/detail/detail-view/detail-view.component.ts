@@ -4,7 +4,7 @@ import {SurveysService} from '../../../api/services/surveys.service';
 import {ActivatedRoute, Router} from '@angular/router';
 import {MatDialog} from '@angular/material/dialog';
 import {DeleteSurveyComponent} from '../delete-survey/delete-survey.component';
-import {Identifier, ResponseDto, ResponseValueDto, TimeslotDto} from '../../../api/models';
+import {Identifier, ResponseDto, ResponseValueDto, TimeslotCreationDto, TimeslotDto} from '../../../api/models';
 import {EditSurveyWarnComponent} from '../edit-view-warn/edit-survey-warn.component';
 import {ResponsesService} from '../../../api/services/responses.service';
 import {Mode} from '../response/response.component';
@@ -129,8 +129,8 @@ export class DetailViewComponent implements OnInit {
         }
     }
 
-    convertTimeSlotToISOString(timeSlot: TimeslotDto): TimeslotDto {
-        return {id: timeSlot.id, start: moment(timeSlot.start).toISOString(), end: moment(timeSlot.end).toISOString()};
+    convertTimeSlotToISOString(timeSlot: TimeslotDto): TimeslotCreationDto {
+        return { start: moment(timeSlot.start).toISOString(), end: moment(timeSlot.end).toISOString()};
     }
 
     convertTimeSlotToYYYYMMDD(timeSlot: TimeslotDto): TimeslotDto {
