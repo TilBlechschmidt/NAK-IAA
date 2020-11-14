@@ -5,17 +5,20 @@ import {Injectable} from '@angular/core';
 })
 export class UserContextService {
 
-    username?: string;
-
     constructor() {
     }
 
     setUserName(username: string): void {
-        this.username = username;
+        localStorage.setItem('username', username);
     }
 
     getUserName(): string {
-        return this.username ? this.username : '';
+        const username = localStorage.getItem('username');
+        if (username === null) {
+            return '';
+        } else {
+            return username;
+        }
     }
 
     setLanguage(langCode: string): void {

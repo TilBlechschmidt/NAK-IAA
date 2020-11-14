@@ -1,4 +1,6 @@
 <div class="container">
     <app-new-survey-button class="addButton"></app-new-survey-button>
     <app-notification></app-notification>
+    <div class="heading">{{ "survey.fixed" | translate }}</div>
+    <app-abstract-survey-table class="table" [filter]="{ acceptsSelectedTimeslot: true }"></app-abstract-survey-table>
 </div>

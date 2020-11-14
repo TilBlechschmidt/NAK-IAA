@@ -14,4 +14,6 @@
     <tr mat-header-row *matHeaderRowDef="displayedColumns"></tr>
     <tr mat-row class="row" *matRowDef="let row; columns: displayedColumns;" [routerLink]="'detail/' + row.id"></tr>
 </table>
-<div *ngIf="data.length < 1">No data available</div>
+<div class="container">
+    <div *ngIf="data.length < 1">{{ "survey.no_data" | translate }}</div>
+</div>
