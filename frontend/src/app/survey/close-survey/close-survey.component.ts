@@ -4,7 +4,7 @@ import {MAT_DIALOG_DATA, MatDialogRef} from '@angular/material/dialog';
 import {DetailViewComponent} from '../detail/detail-view/detail-view.component';
 import {Router} from '@angular/router';
 import {CloseSurveyDialogData} from './close-survey-button/close-survey-button.component';
-import * as moment from 'moment';
+import {DateService, HumanReadableDateString, ISODateString} from '../../date.service';
 
 @Component({
     selector: 'app-close-survey',
@@ -15,7 +15,7 @@ export class CloseSurveyComponent implements OnInit {
 
     constructor(public dialogRef: MatDialogRef<DetailViewComponent>,
                 @Inject(MAT_DIALOG_DATA) public data: CloseSurveyDialogData,
-                public service: SurveysService, public router: Router) {
+                public service: SurveysService, public dateService: DateService, public router: Router) {
     }
 
     ngOnInit(): void {
@@ -32,8 +32,7 @@ export class CloseSurveyComponent implements OnInit {
             });
     }
 
-    formatDate(date: string): string {
-        return moment(date).format('YYYY-MM-DD HH:mm');
+    formatHumanReadable(date: ISODateString): HumanReadableDateString {
+        return this.dateService.formatHumanReadable(date);
     }
-
 }

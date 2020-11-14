@@ -15,7 +15,7 @@ describe('CloseSurveyComponent', () => {
       declarations: [ CloseSurveyComponent ],
         imports: [HttpClientTestingModule, TranslateModule.forRoot(), RouterTestingModule],
         providers: [{provide: MatDialogRef, useValue: {}},
-            {provide: MAT_DIALOG_DATA, useValue: {timeslot: {start: '', end: ''}}}]
+            {provide: MAT_DIALOG_DATA, useValue: {timeslot: {start: '2020-11-14T12:30:00.000Z', end: '2020-11-14T13:00:00.000Z'}}}]
     })
     .compileComponents();
   });

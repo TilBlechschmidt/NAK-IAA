@@ -2,9 +2,8 @@ import {Component, OnInit} from '@angular/core';
 import {MatDialogRef} from '@angular/material/dialog';
 import {SurveysService} from '../../../api/services/surveys.service';
 import {TimeslotCreationDto} from '../../../api/models/timeslot-creation-dto';
-import {TimeslotDto} from '../../../api/models/timeslot-dto';
-import * as moment from 'moment';
 import {Router} from '@angular/router';
+import {DateService} from '../../../date.service';
 
 @Component({
     selector: 'app-create-survey-dialog',
@@ -21,7 +20,7 @@ export class CreateSurveyDialogComponent implements OnInit {
 
     constructor(
         public dialogRef: MatDialogRef<CreateSurveyDialogComponent>,
-        private surveysService: SurveysService, private router: Router) {
+        private surveysService: SurveysService, private dateService: DateService, private router: Router) {
     }
 
     onNoClick(): void {
@@ -38,11 +37,17 @@ export class CreateSurveyDialogComponent implements OnInit {
                 description: this.description,
                 timeslots: this.timeSlots.map(t => this.convertTimeSlotToISOString(t))
             }
-        }).subscribe(next => {this.onNoClick(), this.router.navigateByUrl('survey/detail/' + next.id); }, err  => this.saveError = true);
+        }).subscribe(next => {
+            this.onNoClick();
+            this.router.navigateByUrl('survey/detail/' + next.id);
+        }, ()  => this.saveError = true);
     }
 
     convertTimeSlotToISOString(timeSlot: TimeslotCreationDto): TimeslotCreationDto {
-        return { start: moment(timeSlot.start).toISOString(), end: moment(timeSlot.end).toISOString()};
+        return {
+            start: this.dateService.formatISO(timeSlot.start),
+            end: timeSlot.end ? this.dateService.formatISO(timeSlot.end) : undefined
+        };
     }
 
     createTimeSlot(timeSlot: TimeslotCreationDto): void {

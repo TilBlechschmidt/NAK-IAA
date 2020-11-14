@@ -1,8 +1,8 @@
 import {Component, Input, OnChanges, OnInit, SimpleChanges} from '@angular/core';
 import {TimeslotDto} from '../../../api/models/timeslot-dto';
 import {ResponseDto} from '../../../api/models/response-dto';
-import * as moment from 'moment';
 import {Identifier} from '../../../api/models';
+import {DateService} from '../../../date.service';
 
 @Component({
     selector: 'app-result-overview',
@@ -17,7 +17,7 @@ export class ResultOverviewComponent implements OnInit, OnChanges {
     @Input() isCloseable?: boolean;
     displayedColumns: string[] = [];
 
-    constructor() { }
+    constructor(private dateService: DateService) { }
 
     ngOnInit(): void {
         this.displayedColumns = ['name', ...this.timeSlots.map(timeslot => timeslot.id.toString())];
@@ -28,13 +28,8 @@ export class ResultOverviewComponent implements OnInit, OnChanges {
         return result ? result.value : null;
     }
 
-
     formatDate(date: string | undefined): string {
-
-        if (!date) {
-            return '';
-        }
-        return moment(date).format('yyyy-MM-DD HH:mm');
+        return date ? this.dateService.formatHumanReadable(date) : '';
     }
 
     ngOnChanges(changes: SimpleChanges): void {
