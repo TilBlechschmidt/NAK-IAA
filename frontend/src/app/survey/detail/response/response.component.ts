@@ -34,7 +34,7 @@ export class ResponseComponent implements OnInit, OnChanges {
     @Output() deleted = new EventEmitter();
     @Output() responded = new EventEmitter<ResponseValueDto>();
 
-    constructor(private formBuilder: FormBuilder, private dateValidatorService: DateValidatorService) {
+    constructor(private formBuilder: FormBuilder, private dateService: DateService, private dateValidatorService: DateValidatorService) {
         this.form = this.formBuilder.group({
             start: new FormControl('', [dateValidatorService.validate(), Validators.required]),
             end: new FormControl('', [dateValidatorService.validate()])
@@ -65,6 +65,10 @@ export class ResponseComponent implements OnInit, OnChanges {
         return this.form.get('end')?.value !== '';
     }
 
+    onBlur(): void {
+        if (this.isInMode(['edit'])) { this.onChange(); }
+    }
+
     onChange(): void {
         if (!this.isFormValid()) {
             this.formError = true;
@@ -89,7 +93,10 @@ export class ResponseComponent implements OnInit, OnChanges {
     }
 
     private isFormValid(): boolean {
-        return !this.form.get('start')?.invalid && !this.form.get('end')?.invalid;
+        const start = this.form.get('start')?.value;
+        const end = this.form.get('end')?.value;
+        const endBeforeStart = start && end ? this.dateService.isBefore(end, start) : false;
+        return !this.form.get('start')?.invalid && !this.form.get('end')?.invalid && !endBeforeStart;
     }
 
     isInMode(modes: Mode[]): boolean {
