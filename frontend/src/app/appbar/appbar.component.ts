@@ -2,6 +2,10 @@ import { Component, OnInit } from '@angular/core';
 import {TokenService} from '../authentication/service/token.service';
 import {UserContextService} from '../authentication/service/user-context.service';
 
+/**
+ * @author Hendrik Reiter
+ */
+
 @Component({
   selector: 'app-appbar',
   templateUrl: './appbar.component.html',

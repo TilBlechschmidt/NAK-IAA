@@ -5,6 +5,10 @@ import {SurveysService} from '../../../api/services/surveys.service';
 import {Identifier} from '../../../api/models';
 import {Router} from '@angular/router';
 
+/**
+ * @author Hendrik Reiter
+ */
+
 @Component({
     selector: 'app-delete-survey',
     templateUrl: './delete-survey.component.html',

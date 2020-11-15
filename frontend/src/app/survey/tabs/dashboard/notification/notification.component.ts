@@ -3,6 +3,10 @@ import {SurveysService} from '../../../../api/services/surveys.service';
 import {Router} from '@angular/router';
 import {QuerySurveysResult} from '../../../../api/models';
 
+/**
+ * @author Hendrik Reiter
+ */
+
 @Component({
     selector: 'app-notification',
     templateUrl: './notification.component.html',

@@ -11,6 +11,10 @@ import isEqual from 'date-fns/isEqual';
 export type ISODateString = string;
 export type HumanReadableDateString = string;
 
+/**
+ * @author Til Blechschmidt
+ */
+
 @Injectable({
     providedIn: 'root'
 })

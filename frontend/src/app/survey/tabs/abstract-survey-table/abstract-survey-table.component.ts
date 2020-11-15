@@ -4,6 +4,10 @@ import {SurveysService} from '../../../api/services/surveys.service';
 import {DateService} from '../../../date.service';
 import {TimeslotDto} from '../../../api/models/timeslot-dto';
 
+/**
+ * @author Hendrik Reiter
+ */
+
 @Component({
     selector: 'app-abstract-survey-table',
     templateUrl: './abstract-survey-table.component.html',

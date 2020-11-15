@@ -7,6 +7,10 @@ import {ActivateUserResponse} from '../../api/models/activate-user-response';
 import {MatSnackBar} from '@angular/material/snack-bar';
 import {TranslateService} from '@ngx-translate/core';
 
+/**
+ * @author Hendrik Reiter
+ */
+
 @Component({
     selector: 'app-password-confirmation-dialog',
     templateUrl: './password-confirmation-dialog.component.html',

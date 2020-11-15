@@ -7,6 +7,10 @@ import {CloseSurveyDialogData} from './close-survey-button/close-survey-button.c
 import {DateService, HumanReadableDateString, ISODateString} from '../../date.service';
 import {TimeslotDto} from '../../api/models';
 
+/**
+ * @author Hendrik Reiter
+ */
+
 @Component({
     selector: 'app-close-survey',
     templateUrl: './close-survey.component.html',
@@ -16,7 +20,7 @@ export class CloseSurveyComponent implements OnInit {
 
     constructor(public dialogRef: MatDialogRef<DetailViewComponent>,
                 @Inject(MAT_DIALOG_DATA) public data: CloseSurveyDialogData,
-                public service: SurveysService, public dateService: DateService, public router: Router) {
+                private service: SurveysService, private dateService: DateService, private router: Router) {
     }
 
     ngOnInit(): void {

@@ -3,6 +3,10 @@ import {Observable} from 'rxjs';
 import {TokenService} from './token.service';
 import {Injectable} from '@angular/core';
 
+/**
+ * @author Hendrik Reiter
+ */
+
 @Injectable()
 export class LoggedInGuard implements CanActivate {
 

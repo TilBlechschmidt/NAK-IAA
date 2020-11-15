@@ -4,6 +4,10 @@ import {TokenService} from '../service/token.service';
 import {MatSnackBar} from '@angular/material/snack-bar';
 import {TranslateService} from '@ngx-translate/core';
 
+/**
+ * @author Hendrik Reiter & Til Blechschmidt
+ */
+
 @Component({
   selector: 'app-logout-button',
   templateUrl: './logout-button.component.html',

@@ -5,6 +5,10 @@ import {TokenService} from './token.service';
 import {tap} from 'rxjs/operators';
 import {Router} from '@angular/router';
 
+/**
+ * @author Hendrik Reiter
+ */
+
 @Injectable({
     providedIn: 'root'
 })

@@ -10,6 +10,10 @@ import {ResponsesService} from '../../../api/services/responses.service';
 import {Mode} from '../response/response.component';
 import {DateService} from '../../../date.service';
 
+/**
+ * @author Hendrik Reiter & Til Blechschmidt
+ */
+
 @Component({
     selector: 'app-detail-view',
     templateUrl: './detail-view.component.html',

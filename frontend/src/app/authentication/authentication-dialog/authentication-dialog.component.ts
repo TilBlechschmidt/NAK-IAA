@@ -6,6 +6,9 @@ import {AccountService} from '../../api/services/account.service';
 import {FormBuilder, FormControl, FormGroup, Validators} from '@angular/forms';
 import {UserContextService} from '../service/user-context.service';
 
+/**
+ * @author Hendrik Reiter
+ */
 
 @Component({
     selector: 'app-authentication-dialog',

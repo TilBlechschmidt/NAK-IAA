@@ -13,6 +13,10 @@ import {DateService} from '../../../date.service';
 import {TimeslotBo} from '../detail-view/detail-view.component';
 import {Identifier} from '../../../api/models/identifier';
 
+/**
+ * @author Hendrik Reiter (TS) & Til Blechschmidt (HTML & CSS)
+ */
+
 @Component({
     selector: 'app-response',
     templateUrl: './response.component.html',

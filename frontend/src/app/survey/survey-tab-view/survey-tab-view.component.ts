@@ -1,6 +1,10 @@
 import { Component, OnInit } from '@angular/core';
 import {ActivatedRoute, Params, Router} from '@angular/router';
 
+/**
+ * @author Hendrik Reiter
+ */
+
 @Component({
   selector: 'app-survey-tab-view',
   templateUrl: './survey-tab-view.component.html',

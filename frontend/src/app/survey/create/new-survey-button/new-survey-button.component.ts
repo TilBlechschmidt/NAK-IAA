@@ -2,6 +2,10 @@ import { Component, OnInit } from '@angular/core';
 import {MatDialog} from '@angular/material/dialog';
 import {CreateSurveyDialogComponent} from '../create-survey-dialog/create-survey-dialog.component';
 
+/**
+ * @author Hendrik Reiter
+ */
+
 @Component({
   selector: 'app-new-survey-button',
   templateUrl: './new-survey-button.component.html',

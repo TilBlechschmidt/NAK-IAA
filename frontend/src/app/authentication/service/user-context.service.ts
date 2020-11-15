@@ -1,5 +1,9 @@
 import {Injectable} from '@angular/core';
 
+/**
+ * @author Hendrik Reiter
+ */
+
 @Injectable({
     providedIn: 'root'
 })

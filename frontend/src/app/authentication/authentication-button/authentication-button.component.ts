@@ -1,5 +1,9 @@
 import { Component, OnInit } from '@angular/core';
 
+/**
+ * @author Hendrik Reiter
+ */
+
 @Component({
   selector: 'app-authentication-button',
   templateUrl: './authentication-button.component.html',

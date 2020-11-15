@@ -15,6 +15,11 @@ import {
     templateUrl: './create-survey-dialog.component.html',
     styleUrls: ['./create-survey-dialog.component.sass']
 })
+
+/**
+ * @author Hendrik Reiter
+ */
+
 export class CreateSurveyDialogComponent implements OnInit {
 
     title = '';

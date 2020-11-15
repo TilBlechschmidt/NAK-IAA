@@ -6,6 +6,10 @@ import {RequestRegistrationEmailResponse} from '../../api/models/request-registr
 import {MatSnackBar} from '@angular/material/snack-bar';
 import {TranslateService} from '@ngx-translate/core';
 
+/**
+ * @author Hendrik Reiter & Til Blechschmidt
+ */
+
 @Component({
     selector: 'app-registration-dialog',
     templateUrl: './registration-dialog.component.html',
@@ -15,8 +19,9 @@ export class RegistrationDialogComponent implements OnInit {
 
     public form: FormGroup;
 
-    constructor(public service: AccountService, protected readonly formBuilder: FormBuilder, private router: Router,
+    constructor(private service: AccountService, private formBuilder: FormBuilder, private router: Router,
                 private snackBar: MatSnackBar, private translateService: TranslateService) {
+
         this.form = this.formBuilder.group({
             name: new FormControl('', Validators.required),
             email: new FormControl('', [Validators.required, Validators.email])

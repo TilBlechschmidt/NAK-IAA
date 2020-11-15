@@ -1,6 +1,10 @@
 import {Injectable} from '@angular/core';
 import {Jwt} from '../../api/models/jwt';
 
+/**
+ * @author Hendrik Reiter
+ */
+
 @Injectable({
     providedIn: 'root'
 })

@@ -4,6 +4,10 @@ import {ResponseDto} from '../../../api/models/response-dto';
 import {Identifier} from '../../../api/models';
 import {DateService} from '../../../date.service';
 
+/**
+ * @author Hendrik Reiter & Til Blechschmidt
+ */
+
 @Component({
     selector: 'app-result-overview',
     templateUrl: './result-overview.component.html',

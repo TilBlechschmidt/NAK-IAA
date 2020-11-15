@@ -3,7 +3,10 @@ import {MAT_DIALOG_DATA, MatDialogRef} from '@angular/material/dialog';
 import {DetailViewComponent} from '../detail-view/detail-view.component';
 import {SurveysService} from '../../../api/services/surveys.service';
 import {Router} from '@angular/router';
-import {Identifier} from '../../../api/models/identifier';
+
+/**
+ * @author Hendrik Reiter
+ */
 
 @Component({
   selector: 'app-edit-survey-warn',
@@ -11,8 +14,6 @@ import {Identifier} from '../../../api/models/identifier';
   styleUrls: ['./edit-survey-warn.component.sass']
 })
 export class EditSurveyWarnComponent implements OnInit {
-
-    editError = false;
 
     constructor(public dialogRef: MatDialogRef<DetailViewComponent>,
                 public service: SurveysService, public router: Router) {
