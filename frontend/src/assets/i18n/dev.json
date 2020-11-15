@@ -47,7 +47,7 @@
         "edited": "The survey \"{{ title }}\" was edited. You have answer the again",
         "creator": "Creator: {{creator}}",
         "fixed": "Fixed Appointments",
-        "timeslotSelected": "The survey is fixed on {{start}} - {{end}}",
+        "timeslotSelected": "The survey is fixed on {{range}}",
         "fix_appointment": "Do you want to select this date?",
         "invalid_date": "Check that your date is valid and in the format YYYY-MM-DD HH:mm",
         "no_data": "There are no data available for that view",

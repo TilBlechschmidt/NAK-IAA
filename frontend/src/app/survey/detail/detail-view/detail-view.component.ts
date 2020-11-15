@@ -161,6 +161,10 @@ export class DetailViewComponent implements OnInit {
         };
     }
 
+    formatTimeslotRange(timeslot: TimeslotDto): string {
+        return this.dateService.formatTimeslotRange(timeslot);
+    }
+
     convertDateToHumanReadable(date: string | undefined): string {
         return date ? this.dateService.formatHumanReadable(date) : '';
     }

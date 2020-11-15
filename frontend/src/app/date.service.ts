@@ -5,6 +5,7 @@ import parse from 'date-fns/parse';
 import parseISO from 'date-fns/parseISO';
 import isValid from 'date-fns/isValid';
 import isBefore from 'date-fns/isBefore';
+import {TimeslotDto} from './api/models';
 
 export type ISODateString = string;
 export type HumanReadableDateString = string;
@@ -35,5 +36,16 @@ export class DateService {
 
     isBefore(a: HumanReadableDateString, b: HumanReadableDateString): boolean {
         return isBefore(this.parseHumanReadable(a), this.parseHumanReadable(b));
+    }
+
+    formatTimeslotRange(timeslot: TimeslotDto): string {
+        const start = this.formatHumanReadable(timeslot.start);
+
+        if (timeslot.end !== undefined && timeslot.end !== null) {
+            const end = this.formatHumanReadable(timeslot.end);
+            return `${start} - ${end}`;
+        } else {
+            return start;
+        }
     }
 }

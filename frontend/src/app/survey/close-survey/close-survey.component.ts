@@ -5,6 +5,7 @@ import {DetailViewComponent} from '../detail/detail-view/detail-view.component';
 import {Router} from '@angular/router';
 import {CloseSurveyDialogData} from './close-survey-button/close-survey-button.component';
 import {DateService, HumanReadableDateString, ISODateString} from '../../date.service';
+import {TimeslotDto} from '../../api/models';
 
 @Component({
     selector: 'app-close-survey',
@@ -34,5 +35,9 @@ export class CloseSurveyComponent implements OnInit {
 
     formatHumanReadable(date: ISODateString): HumanReadableDateString {
         return this.dateService.formatHumanReadable(date);
+    }
+
+    formatTimeslotRange(timeslot: TimeslotDto): string {
+        return this.dateService.formatTimeslotRange(timeslot);
     }
 }
