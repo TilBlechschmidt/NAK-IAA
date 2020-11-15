@@ -25,10 +25,10 @@
                         <mat-icon>help_outline</mat-icon>
                     </mat-cell>
                 </ng-container>
-                <mat-footer-cell *matFooterCellDef>
-                    <span class="total-accepted">{{positiveResponseCountForTimeslot(timeslot)}}</span>
+                <mat-footer-cell *matFooterCellDef style="flex-direction: column">
                     <app-close-survey-button
                         *ngIf="isCloseable" [surveyId]="surveyId" [timeSlot]="timeslot"></app-close-survey-button>
+                    <div class="total-accepted">{{positiveResponseCountForTimeslot(timeslot)}}</div>
                 </mat-footer-cell>
             </ng-container>
         </ng-container>

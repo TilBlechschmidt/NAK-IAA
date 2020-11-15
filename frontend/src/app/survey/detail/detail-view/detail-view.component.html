@@ -50,7 +50,8 @@
                     (click) = abortEdit()>{{ "abort" | translate }}</button>
             <button *ngIf="isDeletable" mat-raised-button color="warn" class="button"
                     (click)="delete()">{{ "survey.delete" | translate }}</button>
-            <button *ngIf="(isEditable && !isClosed && isEdit) || !isClosed" mat-raised-button color="primary"
+            <button *ngIf="(isEditable && !isClosed && isEdit) || (!isEditable && !isClosed)" mat-raised-button
+                    color="primary"
                     class="button"
                     [disabled]="notResponded()"
                     (click)="submit()">{{ "survey.save" | translate }}</button>
