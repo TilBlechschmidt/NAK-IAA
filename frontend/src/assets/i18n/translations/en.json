@@ -52,7 +52,8 @@
         "fixed": "Fixed Appointments",
         "fix_appointment": "Do you want to select this date to conclude the survey?",
         "invalid_date": "Check that the date is in the format YYYY-MM-DD HH:mm",
-        "survey.no_data": "There are no data available for that view",
+        "no_data": "There are no data available for that view",
+        "selectedTimeslot": "Selected Timeslot",
         "creator": "Creator: {{creator}}",
         "tabs": {
             "dashboard": "Dashboard",

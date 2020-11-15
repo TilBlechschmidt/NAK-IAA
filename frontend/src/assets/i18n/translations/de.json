@@ -51,7 +51,8 @@
         "fix_appointment": "Möchtest du den Termin für diese Terminumfrage auf folgende Daten festlegen?",
         "fixed": "Feste Termine",
         "invalid_date": "Das Datum muss im Format YYYY-MM-DD HH:mm sein",
-        "survey.no_data": "Für diese Ansicht sind keine Daten verfügbar",
+        "no_data": "Für diese Ansicht sind keine Daten verfügbar",
+        "selectedTimeslot": "Ausgewählter Termin",
         "creator": "Ersteller: {{creator}}",
         "tabs": {
             "dashboard": "Dashboard",
