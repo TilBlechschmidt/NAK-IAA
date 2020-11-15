@@ -62,15 +62,6 @@ class ResponseTimeslotTest {
     }
 
     @Test
-    void testUpdate() {
-//        We have decided not to make entities updatable before it is necessary
-//        This test will be used but skipped until that decision is made final.
-        TestUtil.skip();
-
-        assumeThatCode(this::testCreate).doesNotThrowAnyException();
-    }
-
-    @Test
     void testDelete() {
         assumeThatCode(this::testCreate).doesNotThrowAnyException();
 
