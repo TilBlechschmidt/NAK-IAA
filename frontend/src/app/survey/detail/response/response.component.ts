@@ -11,6 +11,7 @@ import {
 import {ResponseValueDto} from '../../../api/models/response-value-dto';
 import {DateService} from '../../../date.service';
 import {TimeslotBo} from '../detail-view/detail-view.component';
+import {Identifier} from '../../../api/models/identifier';
 
 @Component({
     selector: 'app-response',
@@ -29,6 +30,7 @@ export class ResponseComponent implements OnInit, OnChanges {
     @Output() timeslotChanged = new EventEmitter<TimeslotBo>();
     @Output() deleted = new EventEmitter();
     @Output() responded = new EventEmitter<ResponseValueDto>();
+    @Output() responseDeleted = new EventEmitter<Identifier>();
 
     constructor(private formBuilder: FormBuilder, private dateService: DateService, private dateValidatorService: DateValidatorService) {
         this.form = this.formBuilder.group({
@@ -88,14 +90,17 @@ export class ResponseComponent implements OnInit, OnChanges {
     }
 
     setResponse(response: boolean): void {
-        if (response) {
+        if (this.state !== 'accept' && response) {
             this.state = 'accept';
-        } else {
+        } else if (this.state !== 'reject' && !response) {
             this.state = 'reject';
+        } else {
+            this.state = 'neutral';
         }
-
-        if (this.timeSlot && this.timeSlot.id) {
+        if (this.timeSlot && this.timeSlot.id && this.state !== 'neutral') {
             this.responded.emit({timeslotID: this.timeSlot?.id, value: response});
+       } else {
+            this.responseDeleted.emit(this.timeSlot?.id);
         }
     }
 
@@ -103,9 +108,6 @@ export class ResponseComponent implements OnInit, OnChanges {
         this.deleted.emit();
     }
 
-    update(control: string, value: Event): void {
-        return this.form.controls[control].setValue(value);
-    }
 }
 
 export type Mode = 'view' | 'edit' | 'create' | 'create-view' | 'view-not-answerable';

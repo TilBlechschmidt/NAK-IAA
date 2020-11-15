@@ -72,7 +72,7 @@ export class CreateSurveyDialogComponent implements OnInit {
             return;
         }
 
-        if (this.timeSlots.filter(ts => ts.start === timeSlot.start && ts.start === timeSlot.start).length > 0) {
+        if (this.timeSlots.filter(ts => ts.start === timeSlot.start && ts.end === timeSlot.end).length > 0) {
             this.duplicateError = true;
             return;
         }

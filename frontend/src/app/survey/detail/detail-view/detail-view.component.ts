@@ -36,7 +36,8 @@ export class DetailViewComponent implements OnInit {
     selectedTimeslot?: TimeslotDto;
     initialTimeSlots: TimeslotBo[] = [];
     creatorName = '';
-    myResponse?: ResponseDto;
+    myResponse: ResponseValueDto[] = [];
+    responseId?: Identifier;
     id?: Identifier;
     timeSlotsEmptyError = false;
     duplicateError = false;
@@ -68,7 +69,8 @@ export class DetailViewComponent implements OnInit {
                 this.isDeletable = next.isDeletable;
                 this.isClosed = next.isClosed;
                 this.isClosable = next.isClosable;
-                this.myResponse = next.myResponse;
+                this.myResponse = next.myResponse?.responses ?? [];
+                this.responseId = next.myResponse?.responseID;
                 this.selectedTimeslot = next.selectedTimeslot;
                 this.creatorName = next.creator.name;
             }, error => this.fetchError = true);
@@ -175,11 +177,11 @@ export class DetailViewComponent implements OnInit {
             return;
         }
 
-        if (this.myResponse) {
+        if (this.responseId) {
             this.responseService.updateResponse({
-                responseID: this.myResponse.responseID,
+                responseID: this.responseId,
                 surveyID: this.id, body: {
-                    values: this.mergeResponseWithNewResponses(this.myResponse.responses, this.responses)
+                    values: this.myResponse
                 }
             }).subscribe(() => {
                 this.responses = [];
@@ -188,19 +190,13 @@ export class DetailViewComponent implements OnInit {
         } else {
             this.responseService.createResponse({
                 surveyID: this.id, body: {
-                    values: this.responses
+                    values: this.myResponse ?? []
                 }
             }).subscribe(() => {
                 this.responses = [];
                 this.refetchSurvey();
             }, err => this.saveError = true);
         }
-    }
-
-    private mergeResponseWithNewResponses(myResponse: ResponseValueDto[], newResponse: ResponseValueDto[]): ResponseValueDto[] {
-        const myResponsesWithoutNewResponses = myResponse.filter(response =>
-            !newResponse.map(res => res.timeslotID).includes(response.timeslotID));
-        return newResponse.concat(myResponsesWithoutNewResponses);
     }
 
     delete(): void {
@@ -219,9 +215,9 @@ export class DetailViewComponent implements OnInit {
     }
 
     responded(response: ResponseValueDto): void {
-        const includesResponseNewResponse = this.responses.map(res => res.timeslotID).includes(response.timeslotID);
+        const includesResponseNewResponse = this.myResponse.map(res => res.timeslotID).includes(response.timeslotID);
         if (includesResponseNewResponse) {
-            this.responses = this.responses.map(res => {
+            this.myResponse = this.myResponse.map(res => {
                 if (res.timeslotID === response.timeslotID) {
                     return response;
                 } else {
@@ -229,12 +225,12 @@ export class DetailViewComponent implements OnInit {
                 }
             });
         } else {
-            this.responses.push(response);
+            this.myResponse.push(response);
         }
     }
 
     getResponse(timeslot: TimeslotBo): ResponseValueDto | undefined {
-        return this.myResponse?.responses.find(response => response.timeslotID === timeslot.id);
+        return this.myResponse?.find(response => response.timeslotID === timeslot.id);
     }
 
     back(): void {
@@ -242,7 +238,7 @@ export class DetailViewComponent implements OnInit {
     }
 
     notResponded(): boolean {
-        return this.getMode() === 'view' && this.responses.length < 1;
+        return this.getMode() === 'view' && this.myResponse.length < 1;
     }
 
     createTimeslot(timeslot: TimeslotBo): void {
@@ -254,6 +250,9 @@ export class DetailViewComponent implements OnInit {
         this.timeSlots.push(timeslot);
     }
 
+    deleteResponse(timeslotId: Identifier): void {
+        this.myResponse = this.myResponse?.filter(res => res.timeslotID !== timeslotId);
+    }
 }
 
 export interface TimeslotBo {

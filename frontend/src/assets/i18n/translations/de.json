@@ -9,7 +9,7 @@
         "email": "Email",
         "password": "Passwort",
         "password_confirmation": "Passwort Bestätigen",
-        "logout": "Logout",
+        "logout": "Abmelden",
         "sign_in": {
             "display": "Anmelden",
             "welcome": "Schön, dich wiederzusehen",

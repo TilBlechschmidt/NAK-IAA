@@ -33,6 +33,7 @@
         <div class="response" *ngFor="let timeslot of timeSlots; let itemIndex = index">
             <app-response [mode]="getMode()" [timeSlot]="timeslot" (deleted)="onDelete(itemIndex)"
                           (timeslotChanged)="updateTimeSlot(itemIndex, $event)" [response]="getResponse(timeslot)"
+                          (responseDeleted)="deleteResponse($event)"
                           (responded)="responded($event)"></app-response>
         </div>
     </div>
