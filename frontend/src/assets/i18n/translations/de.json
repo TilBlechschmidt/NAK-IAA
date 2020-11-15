@@ -67,7 +67,9 @@
             "deleteError": "Es ist ein Fehler beim Löschen aufgetreten",
             "saveError": "Es ist ein Fehler beim Speichern aufgetreten",
             "timeslots_empty": "Es muss mindestens ein Termin zur Verfügung stehen",
-            "duplicate_error": "Termine dürfen nicht identisch sein"
+            "duplicate_error": "Termine dürfen nicht identisch sein",
+            "equals_error": "Start- und Endzeit dürfen nicht gleich sein",
+            "endDateBeforeStartDateError": "Enddatum darf nicht vor dem Startdatum sein"
         }
     }
 }

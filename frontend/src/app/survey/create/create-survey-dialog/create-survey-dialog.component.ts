@@ -22,6 +22,8 @@ export class CreateSurveyDialogComponent implements OnInit {
     timeSlots: TimeslotCreationDto[] = [];
     saveError = false;
     duplicateError = false;
+    equalsError = false;
+    endDateBeforeStartDateError = false;
 
     constructor(
         public dialogRef: MatDialogRef<CreateSurveyDialogComponent>,
@@ -57,11 +59,26 @@ export class CreateSurveyDialogComponent implements OnInit {
 
     createTimeSlot(timeSlot: TimeslotBo): void {
         this.duplicateError = false;
-        if (this.timeSlots.filter(ts => ts.start === timeSlot.start && ts.end === timeSlot.end).length > 0) {
+        this.equalsError = false;
+        this.endDateBeforeStartDateError = false;
+
+        if (timeSlot.end && this.dateService.isBefore(timeSlot.end, timeSlot.start)) {
+            this.endDateBeforeStartDateError = true;
+            return;
+        }
+
+        if (timeSlot.end && this.dateService.isEqual(timeSlot.start, timeSlot.end)) {
+            this.equalsError = true;
+            return;
+        }
+
+        if (this.timeSlots.filter(ts => ts.start === timeSlot.start && ts.start === timeSlot.start).length > 0) {
             this.duplicateError = true;
             return;
         }
+
         this.timeSlots.push(timeslotBoToCreationDto(timeSlot));
+
     }
 
     onDelete(index: number): void {

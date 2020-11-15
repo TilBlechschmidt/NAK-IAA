@@ -6,6 +6,7 @@ import parseISO from 'date-fns/parseISO';
 import isValid from 'date-fns/isValid';
 import isBefore from 'date-fns/isBefore';
 import {TimeslotDto} from './api/models';
+import isEqual from 'date-fns/isEqual';
 
 export type ISODateString = string;
 export type HumanReadableDateString = string;
@@ -48,4 +49,9 @@ export class DateService {
             return start;
         }
     }
+
+    isEqual(a: HumanReadableDateString, b: HumanReadableDateString): boolean {
+        return isEqual(this.parseHumanReadable(a), this.parseHumanReadable(b));
+    }
+
 }

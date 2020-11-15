@@ -80,10 +80,7 @@ export class ResponseComponent implements OnInit, OnChanges {
     }
 
     private isFormValid(): boolean {
-        const start = this.form.get('start')?.value;
-        const end = this.form.get('end')?.value;
-        const endBeforeStart = start && end ? this.dateService.isBefore(end, start) : false;
-        return !this.form.get('start')?.invalid && !this.form.get('end')?.invalid && !endBeforeStart;
+        return !this.form.get('start')?.invalid && !this.form.get('end')?.invalid;
     }
 
     isInMode(modes: Mode[]): boolean {

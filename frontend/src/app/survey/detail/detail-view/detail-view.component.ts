@@ -41,6 +41,7 @@ export class DetailViewComponent implements OnInit {
     timeSlotsEmptyError = false;
     duplicateError = false;
 
+
     constructor(private service: SurveysService, private responseService: ResponsesService,
                 private dateService: DateService, private router: Router,
                 private deleteDialog: MatDialog, private editDialog: MatDialog, private route: ActivatedRoute,

@@ -68,7 +68,9 @@
             "deleteError": "An error has occurred while deleting",
             "saveError": "An error has occurred while saving",
             "timeslots_empty": "You must have one timeslot",
-            "duplicate_error": "Timeslot must not be identical"
+            "duplicate_error": "Timeslot must not be identical",
+            "equals_error": "Start and end time must not be equals",
+            "endDateBeforeStartDateError": "End time must not be before start date"
         }
     }
 }
