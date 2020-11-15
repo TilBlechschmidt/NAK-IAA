@@ -174,6 +174,7 @@ public class SurveyServiceImpl implements SurveyService {
         Timeslot timeslot = timeslotService.findTimeslot(survey, timeslotID);
         survey.setSelectedTimeslot(timeslot);
         surveyRepository.save(survey);
+        mailService.sendSurveyClosedMailsAsync(survey);
 
         return survey;
     }

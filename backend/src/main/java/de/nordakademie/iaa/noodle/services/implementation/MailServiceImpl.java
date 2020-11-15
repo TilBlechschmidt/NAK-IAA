@@ -1,5 +1,6 @@
 package de.nordakademie.iaa.noodle.services.implementation;
 
+import de.nordakademie.iaa.noodle.model.Participation;
 import de.nordakademie.iaa.noodle.model.Survey;
 import de.nordakademie.iaa.noodle.model.User;
 import de.nordakademie.iaa.noodle.services.exceptions.MailClientException;
@@ -55,6 +56,14 @@ public class MailServiceImpl implements MailService {
         ${creator_name} modified the survey
         <a href=${baseurl}/survey/detail/${survey_id}>${survey_title}</a>.
         Please create a new response.
+        """;
+
+    private static final String SURVEY_CLOSED_TEMPLATE =
+        """
+        Hello ${participant_name}!<br/>
+        ${creator_name} closed the survey
+        <a href=${baseurl}/survey/detail/${survey_id}>${survey_title}</a>.
+        The final result is now published.
         """;
 
     private final JavaMailSender emailSender;
@@ -123,13 +132,17 @@ public class MailServiceImpl implements MailService {
      */
     @Override
     public void sendNeedsAttentionMailsAsync(Survey survey, List<User> participants) {
-        new Thread(() -> participants.forEach(user -> {
+        new Thread(() -> sendNeedsAttentionMails(survey, participants)).start();
+    }
+
+    private void sendNeedsAttentionMails(Survey survey, List<User> participants) {
+        participants.forEach(user -> {
             try {
                 sendNeedsAttentionMail(survey, user);
             } catch (MailClientException e) {
                 System.err.println("Failed to send needs attention mail for " + user.getEmail());
             }
-        })).start();
+        });
     }
 
     /**
@@ -138,6 +151,44 @@ public class MailServiceImpl implements MailService {
     @Override
     public void sendNeedsAttentionMail(Survey survey, User participant) throws MailClientException {
         String body = fillTemplate(NEEDS_ATTENTION_TEMPLATE, Map.ofEntries(
+            entry("participant_name", participant.getFullName()),
+            entry("creator_name", survey.getCreator().getFullName()),
+            entry("survey_id", survey.getId().toString()),
+            entry("survey_title", survey.getTitle()),
+            entry("baseurl", baseURL)
+        ));
+        sendMail("Survey update", body, participant.getEmail());
+    }
+
+    /**
+     * {@inheritDoc}
+     */
+    @Override
+    public void sendSurveyClosedMailsAsync(Survey survey) {
+        new Thread(() -> this.sendSurveyClosedMails(survey)).start();
+    }
+
+    private void sendSurveyClosedMails(Survey survey) {
+        survey.getParticipations()
+            .stream()
+            .filter(participation -> participation.getResponse() != null)
+            .filter(participation -> !participation.getParticipant().equals(survey.getCreator()))
+            .map(Participation::getParticipant)
+            .forEach(user -> {
+                try {
+                    sendNeedsAttentionMail(survey, user);
+                } catch (MailClientException e) {
+                    System.err.println("Failed to send survey closed mail for " + user.getEmail());
+                }
+            });
+    }
+
+    /**
+     * {@inheritDoc}
+     */
+    @Override
+    public void sendSurveyClosedMail(Survey survey, User participant) throws MailClientException {
+        String body = fillTemplate(SURVEY_CLOSED_TEMPLATE, Map.ofEntries(
             entry("participant_name", participant.getFullName()),
             entry("creator_name", survey.getCreator().getFullName()),
             entry("survey_id", survey.getId().toString()),

@@ -107,6 +107,37 @@ public class MailServiceTest {
     }
 
     @Test
+    void testSendSurveyClosedMail() throws MailClientException, MessagingException {
+        Survey survey = mock(Survey.class);
+        User participant = mock(User.class);
+        User creator = mock(User.class);
+
+        when(survey.getCreator()).thenReturn(creator);
+        when(survey.getTitle()).thenReturn("TITLE");
+        when(survey.getId()).thenReturn(42L);
+        when(creator.getFullName()).thenReturn("CREATOR_FULL_NAME");
+        when(participant.getFullName()).thenReturn("PARTICIPANT_FULL_NAME");
+        when(participant.getEmail()).thenReturn("EMAIL");
+
+        mailService.sendSurveyClosedMail(survey, participant);
+
+        String body = """
+                      Hello PARTICIPANT_FULL_NAME!<br/>
+                      CREATOR_FULL_NAME closed the survey
+                      <a href=BASEURL/survey/detail/42>TITLE</a>.
+                      The final result is now published.
+                      <br/><br/>
+                      Best regards<br/>
+                      Your team @Noodle
+                      """;
+
+        verify(mimeMessage, times(1)).setFrom("FROM_EMAIL");
+        verify(mimeMessage, times(1)).setRecipients(Message.RecipientType.TO, "EMAIL");
+        verify(mimeMessage, times(1)).setSubject("Survey update");
+        verify(mimeMessage, times(1)).setText(body, null, "html");
+    }
+
+    @Test
     void testSendMail() throws MailClientException, MessagingException {
         mailService.sendMail("SUBJECT", "BODY", "EMAIL");
 

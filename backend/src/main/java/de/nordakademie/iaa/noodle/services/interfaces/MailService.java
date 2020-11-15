@@ -58,4 +58,21 @@ public interface MailService {
      * @throws MailClientException Thrown, when the mail cannot be send.
      */
     void sendNeedsAttentionMail(Survey survey, User participant) throws MailClientException;
+
+    /**
+     * Sends a mail to every participant with a response (except for the creator)
+     * to inform them, that the survey was closed.
+     *
+     * @param survey The closed survey.
+     */
+    void sendSurveyClosedMailsAsync(Survey survey);
+
+    /**
+     * Sends a mail to a user to inform them, that a survey was closed.
+     *
+     * @param survey      The closed survey.
+     * @param participant The user to inform.
+     * @throws MailClientException Thrown, when the mail cannot be send.
+     */
+    void sendSurveyClosedMail(Survey survey, User participant) throws MailClientException;
 }
