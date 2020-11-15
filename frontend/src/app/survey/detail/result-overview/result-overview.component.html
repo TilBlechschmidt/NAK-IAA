@@ -9,9 +9,7 @@
         <ng-container *ngFor="let timeslot of timeSlots">
             <ng-container matColumnDef="{{timeslot.id}}">
                 <mat-header-cell *matHeaderCellDef class="cell timeslot-header">
-                    <span>{{formatDate(timeslot.start)}}</span>
-                    <div *ngIf="timeslot.end"> - </div>
-                    <span>{{formatDate(timeslot.end)}}</span>
+                    {{formatTimeslotRange(timeslot)}}
                 </mat-header-cell>
                 <ng-container *matCellDef="let participant"
                               [ngSwitch]="responseForParticipantAndTimeslot(participant, timeslot)">
