@@ -39,12 +39,7 @@ export class AbstractSurveyTableComponent implements OnInit {
     }
 
     formatDate(selectedTimeslot: TimeslotDto): string {
-        const start = this.dateService.formatHumanReadable(selectedTimeslot.start);
-        if (selectedTimeslot.end) {
-            return start + ' - ' + this.dateService.formatHumanReadable(selectedTimeslot.end);
-        } else {
-            return start;
-        }
+        return this.dateService.formatTimeslotRange(selectedTimeslot);
     }
 }
 
