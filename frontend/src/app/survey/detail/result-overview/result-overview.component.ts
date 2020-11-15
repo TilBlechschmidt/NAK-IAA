@@ -28,6 +28,16 @@ export class ResultOverviewComponent implements OnInit, OnChanges {
         return result ? result.value : null;
     }
 
+    positiveResponseCountForTimeslot(timeslot: TimeslotDto): number {
+        return this.responses.reduce((acc, response) => {
+            return acc + (
+                response.responses.find(timeslotResponse =>
+                    timeslotResponse.timeslotID === timeslot.id && timeslotResponse.value
+                ) !== undefined ? 1 : 0
+            );
+        }, 0);
+    }
+
     formatDate(date: string | undefined): string {
         return date ? this.dateService.formatHumanReadable(date) : '';
     }

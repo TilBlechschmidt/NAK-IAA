@@ -49,6 +49,10 @@ export class DetailViewComponent implements OnInit {
     }
 
     ngOnInit(): void {
+        this.refetchSurvey();
+    }
+
+    refetchSurvey(): void {
         if (this.id === undefined) {
             this.routerError = true;
         } else {
@@ -76,8 +80,7 @@ export class DetailViewComponent implements OnInit {
 
     abortEdit(): void {
         this.isEdit = false;
-        // Re-fetch the current server-side state
-        this.ngOnInit();
+        this.refetchSurvey();
     }
 
     getMode(): Mode {
@@ -138,6 +141,7 @@ export class DetailViewComponent implements OnInit {
             }).subscribe(next => {
                 this.isEdit = false;
                 this.initialTimeSlots = this.timeSlots;
+                this.refetchSurvey();
             }, error => this.saveError = true);
         }
     }
@@ -172,13 +176,19 @@ export class DetailViewComponent implements OnInit {
                 surveyID: this.id, body: {
                     values: this.mergeResponseWithNewResponses(this.myResponse.responses, this.responses)
                 }
-            }).subscribe(next => this.router.navigateByUrl('survey'));
+            }).subscribe(() => {
+                this.responses = [];
+                this.refetchSurvey();
+            });
         } else {
             this.responseService.createResponse({
                 surveyID: this.id, body: {
                     values: this.responses
                 }
-            }).subscribe(next => this.router.navigateByUrl('survey'), err => this.saveError = true);
+            }).subscribe(() => {
+                this.responses = [];
+                this.refetchSurvey();
+            }, err => this.saveError = true);
         }
     }
 

@@ -26,6 +26,7 @@
                     </mat-cell>
                 </ng-container>
                 <mat-footer-cell *matFooterCellDef>
+                    <span class="total-accepted">{{positiveResponseCountForTimeslot(timeslot)}}</span>
                     <app-close-survey-button
                         *ngIf="isCloseable" [surveyId]="surveyId" [timeSlot]="timeslot"></app-close-survey-button>
                 </mat-footer-cell>
