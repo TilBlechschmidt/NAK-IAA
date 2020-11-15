@@ -38,8 +38,8 @@ export class ResultOverviewComponent implements OnInit, OnChanges {
         }, 0);
     }
 
-    formatTimeslotRange(timeslot: TimeslotDto): string {
-        return this.dateService.formatTimeslotRange(timeslot);
+    formatDate(date: string | undefined): string {
+        return date ? this.dateService.formatHumanReadable(date) : '';
     }
 
     ngOnChanges(changes: SimpleChanges): void {
