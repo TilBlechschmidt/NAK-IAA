@@ -47,7 +47,7 @@
         "close": "Terminumfrage beenden",
         "edit_warning": "Möchtest du die Terminumfrage wirklich bearbeiten? Alle Teilnehmer müssen sie dann nochmals ausfüllen",
         "edited": "Die Terminumfrage \"{{ title }}\" wurde bearbeitet. Du musst sie nochmals beantworten",
-        "timeslotSelected": "Der Termin wurde auf {{start}} - {{end}} festgelegt",
+        "timeslotSelected": "Der Termin wurde auf {{range}} festgelegt",
         "fix_appointment": "Möchtest du den Termin für diese Terminumfrage auf folgende Daten festlegen?",
         "fixed": "Feste Termine",
         "invalid_date": "Das Datum muss im Format YYYY-MM-DD HH:mm sein",

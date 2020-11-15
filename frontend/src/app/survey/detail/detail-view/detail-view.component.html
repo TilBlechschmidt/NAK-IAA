@@ -18,8 +18,7 @@
             </div>
             <div *ngIf="selectedTimeslot" class="timeslotSelected">
                 {{ "survey.timeslotSelected" | translate : {
-                start: convertDateToHumanReadable(selectedTimeslot.start),
-                end: convertDateToHumanReadable(selectedTimeslot.end)
+                range: formatTimeslotRange(selectedTimeslot)
             } }}
             </div>
         </div>
