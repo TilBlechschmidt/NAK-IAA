@@ -30,12 +30,14 @@
         </div>
     </div>
     <div class="responses" *ngIf="!isClosed">
+        <app-response *ngIf="isEdit" [mode]="'create'" (timeslotChanged)="createTimeslot($event)"></app-response>
         <div class="response" *ngFor="let timeslot of timeSlots; let itemIndex = index">
             <app-response [mode]="getMode()" [timeSlot]="timeslot" (deleted)="onDelete(itemIndex)"
-                          (responseEdited)="updateTimeSlot(itemIndex, $event)" [response]="getResponse(timeslot)"
+                          (timeslotChanged)="updateTimeSlot(itemIndex, $event)" [response]="getResponse(timeslot)"
                           (responded)="responded($event)"></app-response>
         </div>
     </div>
+    <mat-error *ngIf="duplicateError">{{ "survey.errors.duplicate_error" | translate }}</mat-error>
     <app-result-overview [responses]="fetchedResponses" [timeSlots]="fetchedTimeSlots"
                          [surveyId]="id" [isCloseable]="isClosable && !isEdit"></app-result-overview>
     <div class="buttonWithErrorMsg">

@@ -4,14 +4,7 @@ import {SurveysService} from '../../../api/services/surveys.service';
 import {ActivatedRoute, Router} from '@angular/router';
 import {MatDialog} from '@angular/material/dialog';
 import {DeleteSurveyComponent} from '../delete-survey/delete-survey.component';
-import {
-    IdentifiableUserDto,
-    Identifier,
-    ResponseDto,
-    ResponseValueDto,
-    TimeslotCreationDto,
-    TimeslotDto
-} from '../../../api/models';
+import {Identifier, ResponseDto, ResponseValueDto, TimeslotCreationDto, TimeslotDto} from '../../../api/models';
 import {EditSurveyWarnComponent} from '../edit-view-warn/edit-survey-warn.component';
 import {ResponsesService} from '../../../api/services/responses.service';
 import {Mode} from '../response/response.component';
@@ -30,7 +23,7 @@ export class DetailViewComponent implements OnInit {
     isEdit = false;
     title = '';
     description = '';
-    timeSlots: TimeslotDto[] = [];
+    timeSlots: TimeslotBo[] = [];
     responses: ResponseValueDto[] = [];
     fetchedTimeSlots: TimeslotDto[] = [];
     fetchedResponses: ResponseDto[] = [];
@@ -41,11 +34,12 @@ export class DetailViewComponent implements OnInit {
     isClosed = false;
     isClosable = false;
     selectedTimeslot?: TimeslotDto;
-    initialTimeSlots: TimeslotDto[] = [];
+    initialTimeSlots: TimeslotBo[] = [];
     creatorName = '';
     myResponse?: ResponseDto;
     id?: Identifier;
     timeSlotsEmptyError = false;
+    duplicateError = false;
 
     constructor(private service: SurveysService, private responseService: ResponsesService,
                 private dateService: DateService, private router: Router,
@@ -63,7 +57,7 @@ export class DetailViewComponent implements OnInit {
                 this.fetchedResponses = next.responses;
                 this.title = next.title;
                 this.description = next.description;
-                this.timeSlots = next.timeslots.map(t => this.convertTimeSlotToHumanReadable(t));
+                this.timeSlots = next.timeslots.map(t => this.convertTimeSlotToHumanReadable(t)).map(t => timeslotDtoToBo(t));
                 this.initialTimeSlots = Object.assign([], next.timeslots.map(t => this.convertTimeSlotToHumanReadable(t)));
                 this.isEditable = next.isEditable;
                 this.isDeletable = next.isDeletable;
@@ -102,7 +96,7 @@ export class DetailViewComponent implements OnInit {
         return this.timeSlots.filter(timeslot => !this.includesTimeslot(this.initialTimeSlots, timeslot)).length > 0;
     }
 
-    private includesTimeslot(timeslots: TimeslotDto[], timeSlot: TimeslotDto): boolean {
+    private includesTimeslot(timeslots: TimeslotBo[], timeSlot: TimeslotBo): boolean {
         return timeslots.filter(t => t.start === timeSlot.start && t.end === timeSlot.end).length > 0;
     }
 
@@ -138,7 +132,8 @@ export class DetailViewComponent implements OnInit {
                 body: {
                     title: this.title,
                     description: this.description,
-                    timeslots: this.timeSlots.map(timeslot => this.convertTimeSlotToISOString(timeslot)),
+                    timeslots: this.timeSlots.map(timeslot => this.convertTimeSlotToISOString(timeslot))
+                        .map(ts => timeslotBoToCreationDto(ts)),
                 }
             }).subscribe(next => {
                 this.isEdit = false;
@@ -147,11 +142,11 @@ export class DetailViewComponent implements OnInit {
         }
     }
 
-    convertTimeSlotToISOString(timeSlot: TimeslotDto): TimeslotCreationDto {
-        return {
+    convertTimeSlotToISOString(timeSlot: TimeslotBo): TimeslotBo {
+        return timeSlot.end ? {
             start: this.dateService.formatISO(timeSlot.start),
-            end: timeSlot.end ? this.dateService.formatISO(timeSlot.end) : undefined
-        };
+            end: this.dateService.formatISO(timeSlot.end)
+        } : { start: this.dateService.formatISO(timeSlot.start)};
     }
 
     convertTimeSlotToHumanReadable(timeSlot: TimeslotDto): TimeslotDto {
@@ -189,7 +184,7 @@ export class DetailViewComponent implements OnInit {
 
     private mergeResponseWithNewResponses(myResponse: ResponseValueDto[], newResponse: ResponseValueDto[]): ResponseValueDto[] {
         const myResponsesWithoutNewResponses = myResponse.filter(response =>
-              !newResponse.map(res => res.timeslotID).includes(response.timeslotID));
+            !newResponse.map(res => res.timeslotID).includes(response.timeslotID));
         return newResponse.concat(myResponsesWithoutNewResponses);
     }
 
@@ -200,7 +195,7 @@ export class DetailViewComponent implements OnInit {
         });
     }
 
-    updateTimeSlot(itemIndex: number, updatedTimeSlot: TimeslotDto): void {
+    updateTimeSlot(itemIndex: number, updatedTimeSlot: TimeslotBo): void {
         this.timeSlots[itemIndex] = updatedTimeSlot;
     }
 
@@ -223,7 +218,7 @@ export class DetailViewComponent implements OnInit {
         }
     }
 
-    getResponse(timeslot: TimeslotDto): ResponseValueDto | undefined {
+    getResponse(timeslot: TimeslotBo): ResponseValueDto | undefined {
         return this.myResponse?.responses.find(response => response.timeslotID === timeslot.id);
     }
 
@@ -234,4 +229,36 @@ export class DetailViewComponent implements OnInit {
     notResponded(): boolean {
         return this.getMode() === 'view' && this.responses.length < 1;
     }
+
+    createTimeslot(timeslot: TimeslotBo): void {
+        this.duplicateError = false;
+        if (this.timeSlots.filter(ts => ts.start === timeslot.start && ts.end === timeslot.end).length > 0) {
+            this.duplicateError = true;
+            return;
+        }
+        this.timeSlots.push(timeslot);
+    }
+
+}
+
+export interface TimeslotBo {
+    id?: Identifier;
+    start: string;
+    end?: string;
+}
+
+export function timeslotDtoToBo(dto: TimeslotDto): TimeslotBo {
+    return { id: dto.id, start: dto.start, end: dto.end };
+}
+
+export function timeslotCreationDtoToBo(dto: TimeslotCreationDto): TimeslotBo {
+    return { start: dto.start, end: dto.end };
+}
+
+export function timeslotBoToDto(bo: TimeslotBo): TimeslotDto {
+    return { id: bo.id ? bo.id : 0, start: bo.start, end: bo.end ? bo.end : '' };
+}
+
+export function timeslotBoToCreationDto(bo: TimeslotBo): TimeslotCreationDto {
+    return { start: bo.start, end: bo.end ? bo.end : '' };
 }

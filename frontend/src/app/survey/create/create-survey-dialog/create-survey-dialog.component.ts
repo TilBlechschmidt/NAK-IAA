@@ -4,6 +4,11 @@ import {SurveysService} from '../../../api/services/surveys.service';
 import {TimeslotCreationDto} from '../../../api/models/timeslot-creation-dto';
 import {Router} from '@angular/router';
 import {DateService} from '../../../date.service';
+import {
+    TimeslotBo,
+    timeslotBoToCreationDto,
+    timeslotCreationDtoToBo
+} from '../../detail/detail-view/detail-view.component';
 
 @Component({
     selector: 'app-create-survey-dialog',
@@ -50,16 +55,20 @@ export class CreateSurveyDialogComponent implements OnInit {
         };
     }
 
-    createTimeSlot(timeSlot: TimeslotCreationDto): void {
+    createTimeSlot(timeSlot: TimeslotBo): void {
         this.duplicateError = false;
-        if (this.timeSlots.filter(ts => ts.start === timeSlot.start && ts.start === timeSlot.start).length > 0) {
+        if (this.timeSlots.filter(ts => ts.start === timeSlot.start && ts.end === timeSlot.end).length > 0) {
             this.duplicateError = true;
             return;
         }
-        this.timeSlots.push(timeSlot);
+        this.timeSlots.push(timeslotBoToCreationDto(timeSlot));
     }
 
     onDelete(index: number): void {
         this.timeSlots.splice(index, 1);
+    }
+
+    toBo(timeslot: TimeslotCreationDto): TimeslotBo {
+        return timeslotCreationDtoToBo(timeslot);
     }
 }

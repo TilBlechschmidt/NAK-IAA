@@ -8,10 +8,9 @@ import {
     ValidatorFn,
     Validators
 } from '@angular/forms';
-import {TimeslotCreationDto} from '../../../api/models/timeslot-creation-dto';
 import {ResponseValueDto} from '../../../api/models/response-value-dto';
-import {TimeslotDto} from '../../../api/models/timeslot-dto';
 import {DateService} from '../../../date.service';
+import {TimeslotBo} from '../detail-view/detail-view.component';
 
 @Component({
     selector: 'app-response',
@@ -24,13 +23,10 @@ export class ResponseComponent implements OnInit, OnChanges {
     formError = false;
     date: Date = new Date();
     state: State = 'neutral';
-    @Input() timeSlot: TimeslotDto = {id: 0, start: '', end: ''};
-    @Input() timeSlotCreate: TimeslotCreationDto = {start: '', end: ''};
+    @Input() timeSlot?: TimeslotBo;
     @Input() response?: ResponseValueDto;
     @Input() mode: Mode = 'view';
-    @Output() responseEdited = new EventEmitter<TimeslotDto>();
-    @Output() timeslotCreated = new EventEmitter<TimeslotCreationDto>();
-    @Output() timeslotUpdated = new EventEmitter<TimeslotCreationDto>();
+    @Output() timeslotChanged = new EventEmitter<TimeslotBo>();
     @Output() deleted = new EventEmitter();
     @Output() responded = new EventEmitter<ResponseValueDto>();
 
@@ -43,7 +39,7 @@ export class ResponseComponent implements OnInit, OnChanges {
 
     ngOnChanges(changes: SimpleChanges): void {
         if (this.response !== undefined) {
-            if (this.response.value){
+            if (this.response.value) {
                 this.state = 'accept';
             } else {
                 this.state = 'reject';
@@ -52,13 +48,8 @@ export class ResponseComponent implements OnInit, OnChanges {
     }
 
     ngOnInit(): void {
-        if (this.timeSlot.id) {
-            this.form.controls.start.setValue(this.timeSlot.start);
-            this.form.controls.end.setValue(this.timeSlot.end);
-        } else {
-            this.form.controls.start.setValue(this.timeSlotCreate.start);
-            this.form.controls.end.setValue(this.timeSlotCreate.end);
-        }
+        this.form.controls.start.setValue(this.timeSlot?.start);
+        this.form.controls.end.setValue(this.timeSlot?.end);
     }
 
     isEndPresent(): boolean {
@@ -66,7 +57,9 @@ export class ResponseComponent implements OnInit, OnChanges {
     }
 
     onBlur(): void {
-        if (this.isInMode(['edit'])) { this.onChange(); }
+        if (this.isInMode(['edit'])) {
+            this.onChange();
+        }
     }
 
     onChange(): void {
@@ -76,17 +69,11 @@ export class ResponseComponent implements OnInit, OnChanges {
             this.formError = false;
             const start: string = this.form.get('start')?.value;
             const end: string = this.form.get('end')?.value;
-            this.responseEdited.emit({
-                id: this.timeSlot.id,
+            this.timeslotChanged.emit({
+                id: this.timeSlot?.id,
                 start,
                 end
             });
-            this.timeslotCreated.emit(
-                {
-                    start,
-                    end
-                }
-            );
             this.form.controls.start.setValue('');
             this.form.controls.end.setValue('');
         }
@@ -110,7 +97,9 @@ export class ResponseComponent implements OnInit, OnChanges {
             this.state = 'reject';
         }
 
-        this.responded.emit({timeslotID: this.timeSlot.id, value: response});
+        if (this.timeSlot && this.timeSlot.id) {
+            this.responded.emit({timeslotID: this.timeSlot?.id, value: response});
+        }
     }
 
     onDelete(): void {
@@ -130,7 +119,8 @@ export type State = 'accept' | 'reject' | 'neutral';
     providedIn: 'root'
 })
 export class DateValidatorService {
-    constructor(private dateService: DateService) {}
+    constructor(private dateService: DateService) {
+    }
 
     validate(): ValidatorFn {
         return (AC: AbstractControl): ValidationErrors | null => {

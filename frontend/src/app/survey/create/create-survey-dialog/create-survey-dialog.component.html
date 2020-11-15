@@ -12,11 +12,12 @@
 </div>
 <div class="responses">
     <div class="container" *ngFor="let timeslot of timeSlots; let itemIndex = index">
-        <app-response class="response" [mode]="'create-view'" [timeSlotCreate]="timeslot" (deleted)="onDelete(itemIndex)"></app-response>
+        <app-response class="response" [mode]="'create-view'" [timeSlot]="toBo(timeslot)"
+                      (deleted)="onDelete(itemIndex)"></app-response>
     </div>
-    <app-response class="response" [mode]="'create'" (timeslotCreated)="createTimeSlot($event)"></app-response>
+    <app-response class="response" [mode]="'create'" (timeslotChanged)="createTimeSlot($event)"></app-response>
 </div>
-<mat-error *ngIf="duplicateError">{{ "survey.errors.duplicate_error" |translate }}</mat-error>
+<mat-error *ngIf="duplicateError">{{ "survey.errors.duplicate_error" | translate }}</mat-error>
 <div class="buttonWithErrorMsg">
     <mat-error *ngIf="saveError">{{ "survey.errors.saveError" | translate }}</mat-error>
     <div class="buttons">
