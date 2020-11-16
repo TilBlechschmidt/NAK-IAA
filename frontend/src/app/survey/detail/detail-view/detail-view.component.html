@@ -38,6 +38,11 @@
         </div>
     </div>
     <mat-error *ngIf="duplicateError">{{ "survey.errors.duplicate_error" | translate }}</mat-error>
+    <mat-error *ngIf="equalsError">{{ "survey.errors.equals_error" | translate }}</mat-error>
+    <mat-error *ngIf="endDateBeforeStartDateError">{{ "survey.errors.endDateBeforeStartDateError" | translate }}</mat-error>
+    <mat-error *ngIf="emptyTitleError">{{ "survey.errors.titleEmptyError" | translate }}</mat-error>
+    <mat-error *ngIf="titleOrDescriptionTooLongError">{{ "survey.errors.titleOrDescriptionTooLongError" | translate }}</mat-error>
+    <mat-error *ngIf="timeSlotsEmptyError">{{ "survey.errors.timeslots_empty" | translate }}</mat-error>
     <app-result-overview [responses]="fetchedResponses" [timeSlots]="fetchedTimeSlots"
                          [surveyId]="id" [isCloseable]="isClosable && !isEdit"></app-result-overview>
     <div class="buttonWithErrorMsg">

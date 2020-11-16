@@ -45,6 +45,10 @@ export class DetailViewComponent implements OnInit {
     id?: Identifier;
     timeSlotsEmptyError = false;
     duplicateError = false;
+    titleOrDescriptionTooLongError = false;
+    emptyTitleError = false;
+    endDateBeforeStartDateError = false;
+    equalsError = false;
 
 
     constructor(private service: SurveysService, private responseService: ResponsesService,
@@ -111,6 +115,28 @@ export class DetailViewComponent implements OnInit {
     }
 
     submit(): void {
+        this.titleOrDescriptionTooLongError = false;
+        this.timeSlotsEmptyError = false;
+        this.emptyTitleError = false;
+
+        if (this.title === '') {
+            this.emptyTitleError = true;
+        }
+
+        if (this.title.length > 2048 || this.description.length > 2048) {
+            this.titleOrDescriptionTooLongError = true;
+        }
+
+
+        if (this.timeSlots.length < 1) {
+            this.timeSlotsEmptyError = true;
+        }
+
+        if (this.timeSlotsEmptyError || this.titleOrDescriptionTooLongError || this.emptyTitleError) {
+            return;
+        }
+
+
         if (this.isEditable) {
             if (this.haveTimeslotsChanged()) {
                 this.editDialog.open(EditSurveyWarnComponent, {
@@ -129,11 +155,6 @@ export class DetailViewComponent implements OnInit {
     }
 
     updateSurvey(): void {
-        if (this.timeSlots.length < 1) {
-            this.timeSlotsEmptyError = true;
-            return;
-        }
-
         if (this.id === undefined) {
             this.routerError = true;
         } else {
@@ -211,6 +232,19 @@ export class DetailViewComponent implements OnInit {
     }
 
     updateTimeSlot(itemIndex: number, updatedTimeSlot: TimeslotBo): void {
+        this.endDateBeforeStartDateError = false;
+        this.equalsError = false;
+
+        if (updatedTimeSlot.end && this.dateService.isEqual(updatedTimeSlot.start, updatedTimeSlot.end)) {
+            this.equalsError = true;
+            return;
+        }
+
+        if (updatedTimeSlot.end && this.dateService.isBefore(updatedTimeSlot.end, updatedTimeSlot.start)) {
+            this.endDateBeforeStartDateError = true;
+            return;
+        }
+
         this.timeSlots[itemIndex] = updatedTimeSlot;
     }
 
