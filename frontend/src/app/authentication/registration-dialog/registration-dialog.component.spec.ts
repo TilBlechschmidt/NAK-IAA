@@ -9,6 +9,7 @@ import {HttpClient} from '@angular/common/http';
 import {TranslateModule, TranslateService} from '@ngx-translate/core';
 import {RouterTestingModule} from '@angular/router/testing';
 import {AccountService} from '../../api/services/account.service';
+import {MatSnackBarModule} from '@angular/material/snack-bar';
 
 describe('RegistrationDialogComponent', () => {
     let component: RegistrationDialogComponent;
@@ -17,7 +18,7 @@ describe('RegistrationDialogComponent', () => {
     beforeEach(async () => {
         await TestBed.configureTestingModule({
             declarations: [RegistrationDialogComponent],
-            imports: [HttpClientTestingModule, RouterTestingModule, TranslateModule.forRoot()],
+            imports: [HttpClientTestingModule, RouterTestingModule, MatSnackBarModule, TranslateModule.forRoot()],
             providers: [AccountService, FormBuilder, {
                 provide: APP_INITIALIZER,
                 useFactory: initApp,

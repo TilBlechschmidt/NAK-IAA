@@ -44,6 +44,7 @@ import { ResultOverviewComponent } from './survey/detail/result-overview/result-
 import { CloseSurveyComponent } from './survey/close-survey/close-survey.component';
 import { CloseSurveyButtonComponent } from './survey/close-survey/close-survey-button/close-survey-button.component';
 import {MatTooltipModule} from '@angular/material/tooltip';
+import {MAT_SNACK_BAR_DEFAULT_OPTIONS, MatSnackBarModule} from '@angular/material/snack-bar';
 
 
 export const API_INTERCEPTOR_PROVIDER: Provider = {
@@ -131,7 +132,8 @@ const SelectedApiModule = environment.api.mocked ? ApiModule.mocked() : ApiModul
         SelectedApiModule,
         MatMenuModule,
         MatRippleModule,
-        MatTooltipModule
+        MatTooltipModule,
+        MatSnackBarModule
     ],
     providers: [
         LoggedInGuard,
@@ -142,7 +144,8 @@ const SelectedApiModule = environment.api.mocked ? ApiModule.mocked() : ApiModul
             multi: true
         },
         ApiInterceptorService,
-        API_INTERCEPTOR_PROVIDER
+        API_INTERCEPTOR_PROVIDER,
+        { provide: MAT_SNACK_BAR_DEFAULT_OPTIONS, useValue: { duration: 4500 } }
     ],
     bootstrap: [AppComponent]
 })

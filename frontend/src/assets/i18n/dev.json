@@ -10,6 +10,7 @@
         "password": "Password",
         "password_confirmation": "Confirm Password",
         "logout": "Logout",
+        "logged_out": "You have been logged out!",
         "sign_in": {
             "display": "Sign In",
             "welcome": "Nice to see you again",
@@ -28,9 +29,13 @@
                 "invalid_mail": "Invalid email",
                 "password_length": "Password requires between 16 to 64 characters",
                 "password_confirmation": "Passwords don't match"
-            }
+            },
+            "mail_sent": "Check your inbox to complete account creation!"
         },
-        "auth.activate.error": "Error while sending password data"
+        "activate": {
+            "created": "Account created — you can now login with your credentials!",
+            "error": "Error while sending password data"
+        }
     },
     "survey": {
         "title": "Title",

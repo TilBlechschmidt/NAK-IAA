@@ -4,6 +4,8 @@ import {ActivatedRoute, Params, Router} from '@angular/router';
 import {Jwt} from '../../api/models/jwt';
 import {AccountService} from '../../api/services/account.service';
 import {ActivateUserResponse} from '../../api/models/activate-user-response';
+import {MatSnackBar} from '@angular/material/snack-bar';
+import {TranslateService} from '@ngx-translate/core';
 
 @Component({
     selector: 'app-password-confirmation-dialog',
@@ -17,7 +19,7 @@ export class PasswordConfirmationDialogComponent implements OnInit {
     public error = false;
 
     constructor(private formBuilder: FormBuilder, private route: ActivatedRoute, private accountService: AccountService,
-                private router: Router) {
+                private router: Router, private snackBar: MatSnackBar, private translateService: TranslateService) {
         this.form = this.formBuilder.group({
             password: new FormControl('', [Validators.required, Validators.minLength(8), Validators.maxLength(64)]),
             passwordConfirmation: new FormControl('', [Validators.required])
@@ -34,9 +36,12 @@ export class PasswordConfirmationDialogComponent implements OnInit {
                 password: this.form.get('password')?.value,
                 token: this.token
             }
-        }).subscribe((next: ActivateUserResponse) =>
-                this.router.navigateByUrl('/survey'), err => this.error = true
-        );
+        }).subscribe((next: ActivateUserResponse) => {
+            this.translateService.get('auth.activate.created').subscribe(message => {
+                this.snackBar.open(message);
+            });
+            this.router.navigateByUrl('/survey');
+        }, err => this.error = true);
     }
 
     isFormValid(): boolean {
