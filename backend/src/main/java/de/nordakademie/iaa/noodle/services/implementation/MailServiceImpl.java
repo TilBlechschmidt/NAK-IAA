@@ -41,6 +41,9 @@ public class MailServiceImpl implements MailService {
         Thank you for your registration. Please click
         <a href="${baseurl}/activate?token=${token}">here</a>
         to complete the registration.
+        <br/><br/>
+        If the link does not work, you can copy the following into your browser:<br/>
+        ${baseurl}/activate?token=${token}
         """;
 
     private static final String REGISTRATION_DUPLICATE_TEMPLATE =
@@ -56,6 +59,9 @@ public class MailServiceImpl implements MailService {
         ${creator_name} modified the survey
         <a href=${baseurl}/survey/detail/${survey_id}>${survey_title}</a>.
         Please create a new response.
+        <br/><br/>
+        If the link does not work, you can copy the following into your browser:<br/>
+        ${baseurl}/survey/detail/${survey_id}
         """;
 
     private static final String SURVEY_CLOSED_TEMPLATE =
@@ -64,6 +70,9 @@ public class MailServiceImpl implements MailService {
         ${creator_name} closed the survey
         <a href=${baseurl}/survey/detail/${survey_id}>${survey_title}</a>.
         The final result is now published.
+        <br/><br/>
+        If the link does not work, you can copy the following into your browser:<br/>
+        ${baseurl}/survey/detail/${survey_id}
         """;
 
     private final JavaMailSender emailSender;

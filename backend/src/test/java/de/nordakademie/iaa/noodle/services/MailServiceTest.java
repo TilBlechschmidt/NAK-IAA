@@ -46,6 +46,9 @@ public class MailServiceTest {
                       <a href="BASEURL/activate?token=TOKEN">here</a>
                       to complete the registration.
                       <br/><br/>
+                      If the link does not work, you can copy the following into your browser:<br/>
+                      BASEURL/activate?token=TOKEN
+                      <br/><br/>
                       Best regards<br/>
                       Your team @Noodle
                       """;
@@ -96,6 +99,9 @@ public class MailServiceTest {
                       <a href=BASEURL/survey/detail/42>TITLE</a>.
                       Please create a new response.
                       <br/><br/>
+                      If the link does not work, you can copy the following into your browser:<br/>
+                      BASEURL/survey/detail/42
+                      <br/><br/>
                       Best regards<br/>
                       Your team @Noodle
                       """;
@@ -126,6 +132,9 @@ public class MailServiceTest {
                       CREATOR_FULL_NAME closed the survey
                       <a href=BASEURL/survey/detail/42>TITLE</a>.
                       The final result is now published.
+                      <br/><br/>
+                      If the link does not work, you can copy the following into your browser:<br/>
+                      BASEURL/survey/detail/42
                       <br/><br/>
                       Best regards<br/>
                       Your team @Noodle
