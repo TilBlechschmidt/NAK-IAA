@@ -29,8 +29,9 @@ export class CreateSurveyDialogComponent implements OnInit {
     duplicateError = false;
     equalsError = false;
     endDateBeforeStartDateError = false;
-    titleOrDescriptionEmptyError = false;
+    titleOrDescriptionTooLongError = false;
     timeSlotsEmptyError = false;
+    emptyTitleError = false;
 
     constructor(
         public dialogRef: MatDialogRef<CreateSurveyDialogComponent>,
@@ -46,18 +47,23 @@ export class CreateSurveyDialogComponent implements OnInit {
 
     submit(): void {
         this.saveError = false;
-        this.titleOrDescriptionEmptyError = false;
+        this.titleOrDescriptionTooLongError = false;
         this.timeSlotsEmptyError = false;
+        this.emptyTitleError = false;
 
-        if (!this.title || !this.description) {
-            this.titleOrDescriptionEmptyError = true;
+        if (this.title.length > 2048 || this.description.length > 2048) {
+            this.titleOrDescriptionTooLongError = true;
+        }
+
+        if (this.title === '') {
+            this.emptyTitleError = true;
         }
 
         if (this.timeSlots.length < 1) {
             this.timeSlotsEmptyError = true;
         }
 
-        if (this.timeSlotsEmptyError || this.titleOrDescriptionEmptyError) {
+        if (this.timeSlotsEmptyError || this.titleOrDescriptionTooLongError || this.emptyTitleError) {
             return;
         }
 

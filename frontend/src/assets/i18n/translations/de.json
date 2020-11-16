@@ -75,7 +75,8 @@
             "duplicate_error": "Termine dürfen nicht identisch sein",
             "equals_error": "Start- und Endzeit dürfen nicht gleich sein",
             "endDateBeforeStartDateError": "Enddatum darf nicht vor dem Startdatum sein",
-            "titleOrDescriptionEmptyError": "Titel und Beschreibung müssen gefüllt sein"
+            "titleEmptyError": "Titel muss gefüllt sein",
+            "titleOrDescriptionTooLongError": "Titel und Beschreibung dürfen maximal 2048 Zeichen haben"
         }
     }
 }

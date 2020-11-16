@@ -21,7 +21,8 @@
 <mat-error *ngIf="duplicateError">{{ "survey.errors.duplicate_error" | translate }}</mat-error>
 <mat-error *ngIf="equalsError">{{ "survey.errors.equals_error" | translate }}</mat-error>
 <mat-error *ngIf="endDateBeforeStartDateError">{{ "survey.errors.endDateBeforeStartDateError" | translate }}</mat-error>
-<mat-error *ngIf="titleOrDescriptionEmptyError">{{ "survey.errors.titleOrDescriptionEmptyError" | translate }}</mat-error>
+<mat-error *ngIf="emptyTitleError">{{ "survey.errors.titleEmptyError" | translate }}</mat-error>
+<mat-error *ngIf="titleOrDescriptionTooLongError">{{ "survey.errors.titleOrDescriptionTooLongError" | translate }}</mat-error>
 <mat-error *ngIf="timeSlotsEmptyError">{{ "survey.errors.timeslots_empty" | translate }}</mat-error>
 <div class="buttonWithErrorMsg">
     <mat-error *ngIf="saveError">{{ "survey.errors.saveError" | translate }}</mat-error>

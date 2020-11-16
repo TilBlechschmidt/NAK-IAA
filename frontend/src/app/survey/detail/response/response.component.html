@@ -23,7 +23,7 @@
         <mat-form-field class="date-input">
             <mat-label>{{ "survey.endField" | translate }}</mat-label>
             <input matInput [required]="false" formControlName="end" placeholder="YYYY-MM-DD hh:mm" (blur)="onBlur()" />
-            <mat-error>{{ " survey.invalid_date" | translate }}</mat-error>
+            <mat-error>{{ "survey.invalid_date" | translate }}</mat-error>
         </mat-form-field>
     </form>
     <div *ngIf="isInMode(['create'])" class="button-container">

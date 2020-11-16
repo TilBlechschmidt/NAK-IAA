@@ -76,7 +76,8 @@
             "duplicate_error": "Timeslot must not be identical",
             "equals_error": "Start and end time must not be equals",
             "endDateBeforeStartDateError": "End time must not be before start date",
-            "titleOrDescriptionEmptyError": "Survey title and description must be filled"
+            "titleEmptyError": "Title must be filled",
+            "titleOrDescriptionTooLongError": "Title and description have a maximum length of 2048 characters"
         }
     }
 }
