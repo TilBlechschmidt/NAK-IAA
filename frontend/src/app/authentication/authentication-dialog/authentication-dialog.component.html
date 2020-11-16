@@ -1,6 +1,6 @@
 <mat-card class="card">
     <h1 class="greeting">{{ "auth.sign_in.welcome" | translate }}</h1>
-    <form class="auth-form" [formGroup]="form" >
+    <form class="auth-form" [formGroup]="form" (submit)="signIn()">
         <mat-form-field class="auth-full-width">
             <mat-label>{{ "auth.email" | translate }}</mat-label>
             <input matInput type="email" formControlName="email" placeholder='{{ "auth.email" | translate }}'>
@@ -9,7 +9,8 @@
             <mat-label>{{ "auth.password" | translate }}</mat-label>
             <input matInput type="password" formControlName="password" placeholder='{{ "auth.password" | translate }}'>
         </mat-form-field>
+        <mat-error *ngIf="authError">{{ "auth.sign_in.error" | translate }}</mat-error>
+        <button mat-raised-button color="primary" class="button"
+                type="submit">{{"auth.sign_in.display" | translate }}</button>
     </form>
-    <mat-error *ngIf="authError">{{ "auth.sign_in.error" | translate }}</mat-error>
-    <button mat-raised-button color="primary" class="button" (click)="signIn()">{{ "auth.sign_in.display" | translate }}</button>
 </mat-card>

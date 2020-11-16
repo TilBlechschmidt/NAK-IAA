@@ -10,6 +10,7 @@
         "password": "Passwort",
         "password_confirmation": "Passwort Bestätigen",
         "logout": "Abmelden",
+        "logged_out": "Du wurdest abgemeldet!",
         "sign_in": {
             "display": "Anmelden",
             "welcome": "Schön, dich wiederzusehen",
@@ -28,9 +29,13 @@
                 "invalid_mail": "Diese Mailadresse ist leider ungültig",
                 "password_length": "Dein Passwort muss zwischen 8 und 64 Zeichen enthalten",
                 "password_confirmation": "Die Passwörter stimmen nicht überein"
-            }
+            },
+            "mail_sent": "Wir haben dir eine E-Mail zugeschickt um dein Passwort zu setzen!"
         },
-        "auth.activate.error": "Es ist ein Fehler beim Versenden der Login-Daten aufgetreten"
+        "activate": {
+            "created": "Account erstellt — du kannst dich jetzt anmelden!",
+            "error": "Es ist ein Fehler beim Versenden der Login-Daten aufgetreten"
+        }
     },
     "survey": {
         "title": "Titel",

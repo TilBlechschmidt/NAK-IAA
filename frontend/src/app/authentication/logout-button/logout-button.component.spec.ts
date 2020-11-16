@@ -4,6 +4,7 @@ import { LogoutButtonComponent } from './logout-button.component';
 
 import {RouterTestingModule} from '@angular/router/testing';
 import {TranslateModule} from '@ngx-translate/core';
+import {MatSnackBarModule} from '@angular/material/snack-bar';
 
 describe('LogoutButtonComponent', () => {
   let component: LogoutButtonComponent;
@@ -12,7 +13,7 @@ describe('LogoutButtonComponent', () => {
   beforeEach(async () => {
     await TestBed.configureTestingModule({
       declarations: [ LogoutButtonComponent ],
-        imports: [ RouterTestingModule, TranslateModule.forRoot() ]
+        imports: [ RouterTestingModule, MatSnackBarModule, TranslateModule.forRoot() ]
     })
     .compileComponents();
   });

@@ -3,6 +3,8 @@ import {FormBuilder, FormControl, FormGroup, Validators} from '@angular/forms';
 import {Router} from '@angular/router';
 import {AccountService} from '../../api/services/account.service';
 import {RequestRegistrationEmailResponse} from '../../api/models/request-registration-email-response';
+import {MatSnackBar} from '@angular/material/snack-bar';
+import {TranslateService} from '@ngx-translate/core';
 
 @Component({
     selector: 'app-registration-dialog',
@@ -13,7 +15,8 @@ export class RegistrationDialogComponent implements OnInit {
 
     public form: FormGroup;
 
-    constructor(public service: AccountService, protected readonly formBuilder: FormBuilder, private router: Router) {
+    constructor(public service: AccountService, protected readonly formBuilder: FormBuilder, private router: Router,
+                private snackBar: MatSnackBar, private translateService: TranslateService) {
         this.form = this.formBuilder.group({
             name: new FormControl('', Validators.required),
             email: new FormControl('', [Validators.required, Validators.email])
@@ -30,7 +33,12 @@ export class RegistrationDialogComponent implements OnInit {
                     name: this.form.get('name')?.value,
                     email: this.form.get('email')?.value
                 }
-            }).subscribe((next: RequestRegistrationEmailResponse) => this.router.navigateByUrl('/survey'));
+            }).subscribe((next: RequestRegistrationEmailResponse) => {
+                this.router.navigateByUrl('/survey');
+                this.translateService.get('auth.sign_up.mail_sent').subscribe(message => {
+                    this.snackBar.open(message);
+                });
+            });
         }
     }
 

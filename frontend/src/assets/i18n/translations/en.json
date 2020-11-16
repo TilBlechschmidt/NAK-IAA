@@ -10,6 +10,7 @@
         "password": "Password",
         "password_confirmation": "Confirm Password",
         "logout": "Logout",
+        "logged_out": "You have been logged out!",
         "sign_in": {
             "display": "Sign In",
             "welcome": "Hey you, welcome back",
@@ -29,7 +30,11 @@
                 "password_length": "Your password must be 8 to 64 characters long",
                 "password_confirmation": "Passwords don't match"
             },
-            "auth.activate.error": "Error while sending password data"
+            "mail_sent": "Check your inbox to complete account creation!"
+        },
+        "activate": {
+            "created": "Account created — you can now login with your credentials!",
+            "error": "Error while sending password data"
         }
     },
     "survey": {

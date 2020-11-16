@@ -5,6 +5,7 @@ import {HttpClientModule} from '@angular/common/http';
 import {RouterTestingModule} from '@angular/router/testing';
 import {TranslateModule} from '@ngx-translate/core';
 import {FormBuilder} from '@angular/forms';
+import {MatSnackBarModule} from '@angular/material/snack-bar';
 
 describe('PasswordConfirmationDialogComponent', () => {
   let component: PasswordConfirmationDialogComponent;
@@ -12,7 +13,7 @@ describe('PasswordConfirmationDialogComponent', () => {
 
   beforeEach(async () => {
     await TestBed.configureTestingModule({
-        imports: [ HttpClientModule, RouterTestingModule, TranslateModule.forRoot() ],
+        imports: [ HttpClientModule, RouterTestingModule, MatSnackBarModule, TranslateModule.forRoot() ],
         providers: [ FormBuilder ],
         declarations: [ PasswordConfirmationDialogComponent ]
     })
