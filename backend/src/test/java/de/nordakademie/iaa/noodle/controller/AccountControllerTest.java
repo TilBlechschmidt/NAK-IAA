@@ -85,7 +85,7 @@ public class AccountControllerTest {
     void testCreateUserJWTError() throws ConflictException, JWTException, PasswordException {
         when(signUpService.createAccount(any(), any())).thenThrow(new JWTException("testCreateUserJWT"));
         ActivateUserRequest activateUserRequest = mock(ActivateUserRequest.class);
-        assertThrowsResponseStatusException(HttpStatus.UNAUTHORIZED, "testCreateUserJWT",
+        assertThrowsResponseStatusException(HttpStatus.FORBIDDEN, "testCreateUserJWT",
             () -> accountController.activateUser(activateUserRequest));
     }
 

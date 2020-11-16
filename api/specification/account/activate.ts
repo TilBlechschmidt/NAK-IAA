@@ -35,7 +35,7 @@ class ActivateUser {
     duplicateResponse(@body body: ActivateUserConflictErrorResponse) {}
 
     /** Missing or invalid authentication */
-    @response({ status: 401 })
+    @response({ status: 403 })
     unauthorizedResponse(@body body: ActivateUserUnauthorizedErrorResponse) {}
 }
 

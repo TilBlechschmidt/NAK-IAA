@@ -50,7 +50,7 @@ public class AccountController implements AccountApi {
             ActivateUserResponse activateUserResponse = responseForCreatedUser(user);
             return ResponseEntity.status(CREATED).body(activateUserResponse);
         } catch (JWTException e) {
-            throw new ResponseStatusException(HttpStatus.UNAUTHORIZED, e.getMessage(), e);
+            throw new ResponseStatusException(HttpStatus.FORBIDDEN, e.getMessage(), e);
         } catch (ConflictException e) {
             throw new ResponseStatusException(HttpStatus.CONFLICT, e.getMessage(), e);
         } catch (PasswordException e) {
