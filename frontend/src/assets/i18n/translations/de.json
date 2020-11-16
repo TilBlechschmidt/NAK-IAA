@@ -54,7 +54,7 @@
         "edited": "Die Terminumfrage \"{{ title }}\" wurde bearbeitet. Du musst sie nochmals beantworten",
         "timeslotSelected": "Der Termin wurde auf {{range}} festgelegt",
         "fix_appointment": "Möchtest du den Termin für diese Terminumfrage auf folgende Daten festlegen?",
-        "fixed": "Feste Termine",
+        "fixed": "Deine nächsten Termine",
         "invalid_date": "Das Datum muss im Format YYYY-MM-DD HH:mm sein",
         "no_data": "Für diese Ansicht sind keine Daten verfügbar",
         "selectedTimeslot": "Ausgewählter Termin",
