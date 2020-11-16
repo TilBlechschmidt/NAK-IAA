@@ -69,7 +69,8 @@
             "timeslots_empty": "Es muss mindestens ein Termin zur Verfügung stehen",
             "duplicate_error": "Termine dürfen nicht identisch sein",
             "equals_error": "Start- und Endzeit dürfen nicht gleich sein",
-            "endDateBeforeStartDateError": "Enddatum darf nicht vor dem Startdatum sein"
+            "endDateBeforeStartDateError": "Enddatum darf nicht vor dem Startdatum sein",
+            "titleOrDescriptionEmptyError": "Titel und Beschreibung müssen gefüllt sein"
         }
     }
 }

@@ -76,8 +76,6 @@ export class ResponseComponent implements OnInit, OnChanges {
                 start,
                 end
             });
-            this.form.controls.start.setValue('');
-            this.form.controls.end.setValue('');
         }
     }
 

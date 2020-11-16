@@ -24,6 +24,8 @@ export class CreateSurveyDialogComponent implements OnInit {
     duplicateError = false;
     equalsError = false;
     endDateBeforeStartDateError = false;
+    titleOrDescriptionEmptyError = false;
+    timeSlotsEmptyError = false;
 
     constructor(
         public dialogRef: MatDialogRef<CreateSurveyDialogComponent>,
@@ -38,6 +40,22 @@ export class CreateSurveyDialogComponent implements OnInit {
     }
 
     submit(): void {
+        this.saveError = false;
+        this.titleOrDescriptionEmptyError = false;
+        this.timeSlotsEmptyError = false;
+
+        if (!this.title || !this.description) {
+            this.titleOrDescriptionEmptyError = true;
+        }
+
+        if (this.timeSlots.length < 1) {
+            this.timeSlotsEmptyError = true;
+        }
+
+        if (this.timeSlotsEmptyError || this.titleOrDescriptionEmptyError) {
+            return;
+        }
+
         this.surveysService.createSurvey({
             body: {
                 title: this.title,
@@ -78,7 +96,6 @@ export class CreateSurveyDialogComponent implements OnInit {
         }
 
         this.timeSlots.push(timeslotBoToCreationDto(timeSlot));
-
     }
 
     onDelete(index: number): void {

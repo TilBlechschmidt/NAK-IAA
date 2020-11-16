@@ -2,7 +2,7 @@
     <div class="title">
         <mat-form-field class="form-field">
             <mat-label>{{ "survey.title" | translate }}</mat-label>
-            <input matInput  [(ngModel)]="title" name="title">
+            <input matInput [(ngModel)]="title" name="title">
         </mat-form-field>
         <mat-form-field class="form-field">
             <mat-label>{{ "survey.description" | translate }}</mat-label>
@@ -15,11 +15,14 @@
         <app-response class="response" [mode]="'create-view'" [timeSlot]="toBo(timeslot)"
                       (deleted)="onDelete(itemIndex)"></app-response>
     </div>
-    <app-response class="response" [mode]="'create'" (timeslotChanged)="createTimeSlot($event)"></app-response>
+    <app-response class="response" [mode]="'create'"
+                  (timeslotChanged)="createTimeSlot($event)"></app-response>
 </div>
 <mat-error *ngIf="duplicateError">{{ "survey.errors.duplicate_error" | translate }}</mat-error>
 <mat-error *ngIf="equalsError">{{ "survey.errors.equals_error" | translate }}</mat-error>
 <mat-error *ngIf="endDateBeforeStartDateError">{{ "survey.errors.endDateBeforeStartDateError" | translate }}</mat-error>
+<mat-error *ngIf="titleOrDescriptionEmptyError">{{ "survey.errors.titleOrDescriptionEmptyError" | translate }}</mat-error>
+<mat-error *ngIf="timeSlotsEmptyError">{{ "survey.errors.timeslots_empty" | translate }}</mat-error>
 <div class="buttonWithErrorMsg">
     <mat-error *ngIf="saveError">{{ "survey.errors.saveError" | translate }}</mat-error>
     <div class="buttons">
