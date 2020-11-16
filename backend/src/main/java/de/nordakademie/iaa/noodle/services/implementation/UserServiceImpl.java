@@ -2,12 +2,10 @@ package de.nordakademie.iaa.noodle.services.implementation;
 
 import de.nordakademie.iaa.noodle.dao.UserRepository;
 import de.nordakademie.iaa.noodle.model.User;
-import de.nordakademie.iaa.noodle.services.exceptions.ConflictException;
 import de.nordakademie.iaa.noodle.services.exceptions.EntityNotFoundException;
 import de.nordakademie.iaa.noodle.services.exceptions.ServiceException;
 import de.nordakademie.iaa.noodle.services.interfaces.UserService;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.dao.DataIntegrityViolationException;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Propagation;
 import org.springframework.transaction.annotation.Transactional;
@@ -69,14 +67,9 @@ public class UserServiceImpl implements UserService {
      * {@inheritDoc}
      */
     @Override
-    public User createNewUser(String email, String fullName, String passwordHash) throws ConflictException {
-        try {
-            User user = new User(email, fullName, passwordHash);
-            userRepository.save(user);
-            return user;
-        } catch (DataIntegrityViolationException e) {
-            // EMail address already exists in the database.
-            throw new ConflictException("emailDuplicate");
-        }
+    public User createNewUser(String email, String fullName, String passwordHash) {
+        User user = new User(email, fullName, passwordHash);
+        userRepository.save(user);
+        return user;
     }
 }

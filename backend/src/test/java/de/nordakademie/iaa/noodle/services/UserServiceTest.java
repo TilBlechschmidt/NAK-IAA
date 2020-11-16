@@ -82,18 +82,6 @@ class UserServiceTest {
     }
 
     @Test
-    void testCreateNewUserDuplicateEmail() {
-        doThrow(mock(DataIntegrityViolationException.class))
-            .when(userRepository)
-            .save(any());
-
-        ConflictException exception = assertThrows(ConflictException.class,
-            () -> userService.createNewUser("EMAIL", "FULL_NAME", "PASSWORD_HASH"));
-
-        assertEquals("emailDuplicate", exception.getMessage());
-    }
-
-    @Test
     void testCreateNewUser() throws ConflictException {
         User user = userService.createNewUser("EMAIL", "FULL_NAME", "PASSWORD_HASH");
 

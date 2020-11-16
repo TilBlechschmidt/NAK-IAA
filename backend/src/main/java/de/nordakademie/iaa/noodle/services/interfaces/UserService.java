@@ -2,7 +2,6 @@ package de.nordakademie.iaa.noodle.services.interfaces;
 
 import de.nordakademie.iaa.noodle.dao.UserRepository;
 import de.nordakademie.iaa.noodle.model.User;
-import de.nordakademie.iaa.noodle.services.exceptions.ConflictException;
 import de.nordakademie.iaa.noodle.services.exceptions.EntityNotFoundException;
 
 /**
@@ -45,7 +44,6 @@ public interface UserService {
      * @param fullName     The full name of the user.
      * @param passwordHash The password hash.
      * @return The new user.
-     * @throws ConflictException Thrown, when there is already a user with the given email.
      */
-    User createNewUser(String email, String fullName, String passwordHash) throws ConflictException;
+    User createNewUser(String email, String fullName, String passwordHash);
 }

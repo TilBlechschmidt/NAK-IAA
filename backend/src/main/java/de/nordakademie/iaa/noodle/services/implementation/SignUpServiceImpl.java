@@ -8,6 +8,7 @@ import de.nordakademie.iaa.noodle.services.exceptions.PasswordException;
 import de.nordakademie.iaa.noodle.services.interfaces.*;
 import de.nordakademie.iaa.noodle.services.model.UserDetails;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.dao.DataIntegrityViolationException;
 import org.springframework.stereotype.Service;
 
 /**
@@ -64,6 +65,11 @@ public class SignUpServiceImpl implements SignUpService {
 
     private User createUser(String password, UserDetails userDetails) throws ConflictException, PasswordException {
         String passwordHash = passwordService.hashPassword(password);
-        return userService.createNewUser(userDetails.getEmail(), userDetails.getFullName(), passwordHash);
+        try {
+            return userService.createNewUser(userDetails.getEmail(), userDetails.getFullName(), passwordHash);
+        } catch (DataIntegrityViolationException e) {
+            // EMail address already exists in the database.
+            throw new ConflictException("emailDuplicate");
+        }
     }
 }
