@@ -2,6 +2,10 @@ import {body, endpoint, request, response, String} from "@airtasker/spot";
 import {EMail} from "./types";
 import {ServiceUnavailableErrorResponseTemplate} from "../types";
 
+/*
+ * @author Noah Peeters
+ */
+
 /** Requests a token to create an account */
 @endpoint({
     method: "POST",

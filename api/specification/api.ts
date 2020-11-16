@@ -1,5 +1,11 @@
 import {api, config} from "@airtasker/spot";
 
+/*
+ * @author Til Blechschmidt
+ * These are non-doc comments because the code-gen uses doc-comments
+ * for other purposes.
+ */
+
 import './account/auth';
 import './account/activate';
 import './account/request';

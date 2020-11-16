@@ -8,6 +8,10 @@ import {
 } from "../../types";
 import {ResponseDTO, ResponseValueDTO} from "./types";
 
+/*
+ * @author Til Blechschmidt
+ */
+
 /** Responds to an existing survey as the user associated with the provided credentials */
 @endpoint({
     method: "POST",

@@ -1,5 +1,9 @@
 import {DateTime, Int64, String} from "@airtasker/spot";
 
+/*
+ * @author Noah Peeters & Til Blechschmidt
+ */
+
 /** Unique resource identifier */
 export type Identifier = Int64;
 

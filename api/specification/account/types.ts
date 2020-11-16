@@ -1,6 +1,10 @@
 import {String} from '@airtasker/spot';
 import {Identifier} from "../types";
 
+/*
+ * @author Til Blechschmidt
+ */
+
 /** Electronic mail address as defined in [RFC 5322 (Section 3.4.1)](https://tools.ietf.org/html/rfc5322#section-3.4.1) */
 export type EMail = String;
 

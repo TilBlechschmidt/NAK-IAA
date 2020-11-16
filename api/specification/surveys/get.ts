@@ -6,6 +6,10 @@ import {
 } from "../types";
 import {SurveyDTO} from "./types";
 
+/*
+ * @author Til Blechschmidt
+ */
+
 /** Fetches a survey by its unique identifier */
 @endpoint({
     method: "GET",

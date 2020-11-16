@@ -2,6 +2,10 @@ import {body, endpoint, Int32, queryParams, request, response} from "@airtasker/
 import {MalformedRequestErrorResponse, UnauthorizedErrorResponse} from "../types";
 import {QuerySurveysResult} from "./types";
 
+/*
+ * @author Til Blechschmidt
+ */
+
 /** Retrieves a list of survey metadata with optional filters */
 @endpoint({
     method: "GET",

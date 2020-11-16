@@ -1,6 +1,10 @@
 import {Identifier} from "../../types";
 import {IdentifiableUserDTO} from "../../account/types";
 
+/*
+ * @author Til Blechschmidt
+ */
+
 export interface ResponseValueDTO {
     timeslotID: Identifier;
     value: boolean;

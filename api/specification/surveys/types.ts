@@ -3,6 +3,10 @@ import {ResponseDTO} from './responses/types';
 import {Identifier} from "../types";
 import {IdentifiableUserDTO} from "../account/types";
 
+/*
+ * @author Til Blechschmidt & Noah Peeters
+ */
+
 /** Short title to be displayed in survey list (max. 64 characters) */
 export type SurveyTitle = String;
 

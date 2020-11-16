@@ -7,6 +7,10 @@ import {
 } from "../../types";
 import {ResponseDTO} from "./types";
 
+/*
+ * @author Til Blechschmidt
+ */
+
 /** Fetches a survey response by its unique identifier */
 @endpoint({
     method: "GET",
