@@ -117,25 +117,21 @@ export class DetailViewComponent implements OnInit {
     submit(): void {
         this.titleOrDescriptionTooLongError = false;
         this.timeSlotsEmptyError = false;
-        this.emptyTitleError = false;
 
-        if (this.title === '') {
-            this.emptyTitleError = true;
-        }
+        this.emptyTitleError = this.title === '';
 
         if (this.title.length > 2048 || this.description.length > 2048) {
             this.titleOrDescriptionTooLongError = true;
         }
 
-
         if (this.timeSlots.length < 1) {
             this.timeSlotsEmptyError = true;
         }
 
-        if (this.timeSlotsEmptyError || this.titleOrDescriptionTooLongError || this.emptyTitleError) {
+        if (this.duplicateError || this.timeSlotsEmptyError || this.titleOrDescriptionTooLongError ||
+            this.emptyTitleError || this.endDateBeforeStartDateError || this.equalsError) {
             return;
         }
-
 
         if (this.isEditable) {
             if (this.haveTimeslotsChanged()) {
@@ -178,7 +174,7 @@ export class DetailViewComponent implements OnInit {
         return timeSlot.end ? {
             start: this.dateService.formatISO(timeSlot.start),
             end: this.dateService.formatISO(timeSlot.end)
-        } : { start: this.dateService.formatISO(timeSlot.start)};
+        } : {start: this.dateService.formatISO(timeSlot.start)};
     }
 
     convertTimeSlotToHumanReadable(timeSlot: TimeslotDto): TimeslotDto {
@@ -232,20 +228,27 @@ export class DetailViewComponent implements OnInit {
     }
 
     updateTimeSlot(itemIndex: number, updatedTimeSlot: TimeslotBo): void {
+        if (this.errorValidation(updatedTimeSlot)) {
+            return;
+        }
+        this.timeSlots[itemIndex] = updatedTimeSlot;
+    }
+
+    errorValidation(timeSlot: TimeslotBo): boolean {
         this.endDateBeforeStartDateError = false;
         this.equalsError = false;
 
-        if (updatedTimeSlot.end && this.dateService.isEqual(updatedTimeSlot.start, updatedTimeSlot.end)) {
+        if (timeSlot.end && this.dateService.isEqual(timeSlot.start, timeSlot.end)) {
             this.equalsError = true;
-            return;
+            return true;
         }
 
-        if (updatedTimeSlot.end && this.dateService.isBefore(updatedTimeSlot.end, updatedTimeSlot.start)) {
+        if (timeSlot.end && this.dateService.isBefore(timeSlot.end, timeSlot.start)) {
             this.endDateBeforeStartDateError = true;
-            return;
+            return true;
         }
 
-        this.timeSlots[itemIndex] = updatedTimeSlot;
+        return false;
     }
 
     onDelete(index: number): void {
@@ -280,6 +283,10 @@ export class DetailViewComponent implements OnInit {
     }
 
     createTimeslot(timeslot: TimeslotBo): void {
+        if (this.errorValidation(timeslot)) {
+            return;
+        }
+
         this.duplicateError = false;
         if (this.timeSlots.filter(ts => ts.start === timeslot.start && ts.end === timeslot.end).length > 0) {
             this.duplicateError = true;
@@ -300,17 +307,17 @@ export interface TimeslotBo {
 }
 
 export function timeslotDtoToBo(dto: TimeslotDto): TimeslotBo {
-    return { id: dto.id, start: dto.start, end: dto.end };
+    return {id: dto.id, start: dto.start, end: dto.end};
 }
 
 export function timeslotCreationDtoToBo(dto: TimeslotCreationDto): TimeslotBo {
-    return { start: dto.start, end: dto.end };
+    return {start: dto.start, end: dto.end};
 }
 
 export function timeslotBoToDto(bo: TimeslotBo): TimeslotDto {
-    return { id: bo.id ? bo.id : 0, start: bo.start, end: bo.end ? bo.end : '' };
+    return {id: bo.id ? bo.id : 0, start: bo.start, end: bo.end ? bo.end : ''};
 }
 
 export function timeslotBoToCreationDto(bo: TimeslotBo): TimeslotCreationDto {
-    return { start: bo.start, end: bo.end ? bo.end : '' };
+    return {start: bo.start, end: bo.end ? bo.end : ''};
 }
