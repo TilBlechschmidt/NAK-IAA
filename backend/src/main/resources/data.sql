@@ -20,23 +20,28 @@
 
 -- PW = password0
 INSERT INTO USER (ID, EMAIL, FULL_NAME, PASSWORD_HASH)
-VALUES (0, 'Name0@example.com', 'Name0', '$2a$10$.U2xt8HHisWlSGDdUfBO4e4RpgZ41CYVb/YnC/F/XWHT1.gBepqDW');
+VALUES (0, 'donald.trump@example.com', 'Donald Trump',
+        '$2a$10$.U2xt8HHisWlSGDdUfBO4e4RpgZ41CYVb/YnC/F/XWHT1.gBepqDW');
 
 -- PW = password1
 INSERT INTO USER (ID, EMAIL, FULL_NAME, PASSWORD_HASH)
-VALUES (1, 'Name1@example.com', 'Name1', '$2a$10$Ls0kE/AydHiuaHFdZXJXBuPpp4O51XC2vt.qfk4RlfVLn8OCry4aG');
+VALUES (1, 'barack.obama@example.com', 'Barack Obama',
+        '$2a$10$Ls0kE/AydHiuaHFdZXJXBuPpp4O51XC2vt.qfk4RlfVLn8OCry4aG');
 
 -- PW = password2
 INSERT INTO USER (ID, EMAIL, FULL_NAME, PASSWORD_HASH)
-VALUES (2, 'Name2@example.com', 'Name2', '$2a$10$VxrZo8ixzU09.72TdMVew.CYbou0XwCN5c6Wza7fYPYKa4pdJLx7i');
+VALUES (2, 'georg.bush@example.com', 'George W. Bush',
+        '$2a$10$VxrZo8ixzU09.72TdMVew.CYbou0XwCN5c6Wza7fYPYKa4pdJLx7i');
 
 -- PW = password3
 INSERT INTO USER (ID, EMAIL, FULL_NAME, PASSWORD_HASH)
-VALUES (3, 'Name3@example.com', 'Name3', '$2a$10$6mAknVUkgduqjCOmUePP7uO.Bgibgbbd9dpv.bJdGDUu11sXB6gz.');
+VALUES (3, 'george.washington@example.com', 'George Washington',
+        '$2a$10$6mAknVUkgduqjCOmUePP7uO.Bgibgbbd9dpv.bJdGDUu11sXB6gz.');
 
 -- PW = password4
 INSERT INTO USER (ID, EMAIL, FULL_NAME, PASSWORD_HASH)
-VALUES (4, 'Name4@examle.com', 'Name4', '$2a$10$upLmX5blX639STzhEuLwZ.PiFLHEBJXeglUPuKiYLpxvTvyyI1ppm');
+VALUES (4, 'kennedy@example.com', 'John F. Kennedy',
+        '$2a$10$upLmX5blX639STzhEuLwZ.PiFLHEBJXeglUPuKiYLpxvTvyyI1ppm');
 
 -------------
 -- SURVEYS --
@@ -44,19 +49,19 @@ VALUES (4, 'Name4@examle.com', 'Name4', '$2a$10$upLmX5blX639STzhEuLwZ.PiFLHEBJXe
 
 -- Survey without participations
 INSERT INTO SURVEY (ID, TITLE, DESCRIPTION, CREATOR_ID, SELECTED_TIMESLOT_ID)
-VALUES (10, 'Example Survey 1', 'This example survey does not have any participations.', 0, null);
+VALUES (10, 'Wahlveranstaltung New York', 'Ich werde von meinem letzten Golfspiel berichten.', 0, null);
 
 -- Survey with participations
 INSERT INTO SURVEY (ID, TITLE, DESCRIPTION, CREATOR_ID, SELECTED_TIMESLOT_ID)
-VALUES (11, 'Example Survey 2', 'This example survey has two responses (User 2 & 3).', 1, null);
+VALUES (11, 'Einführung Obamacare', 'So ein Gesundheitssystem ist glaube ich ganz sinnvoll.', 1, null);
 
 -- Survey with changes
 INSERT INTO SURVEY (ID, TITLE, DESCRIPTION, CREATOR_ID, SELECTED_TIMESLOT_ID)
-VALUES (12, 'Example Survey 3', 'This example survey had two responses (User 2 & 3), but was modified.', 1, null);
+VALUES (12, 'IAA Noten', 'Veröffentlichung der IAA Noten', 1, null);
 
 -- Closed Survey
 INSERT INTO SURVEY (ID, TITLE, DESCRIPTION, CREATOR_ID, SELECTED_TIMESLOT_ID)
-VALUES (13, 'Example Survey 4', 'This example survey is closed (Participants 0 & 1).', 2, null);
+VALUES (13, 'Beginn des 5. Weltkriegs', 'Wann soll der fünfte Weltkrieg losgehen?', 2, null);
 
 --------------------
 -- PARTICIPATIONS --
@@ -118,21 +123,21 @@ VALUES (63, 33);
 
 -- Survey 1
 INSERT INTO TIMESLOT (ID, SURVEY_ID, START, END)
-VALUES (70, 10, '2020-02-20 02:20:00Z', null);
+VALUES (70, 10, '2020-08-20 18:00:00Z', '2020-08-20 21:00:00Z');
 INSERT INTO TIMESLOT (ID, SURVEY_ID, START, END)
-VALUES (71, 10, '2020-02-21 02:20:00Z', null);
+VALUES (71, 10, '2020-08-21 18:00:00Z', '2020-08-21 21:00:00Z');
 
 -- Survey 2
 INSERT INTO TIMESLOT (ID, SURVEY_ID, START, END)
-VALUES (72, 11, '2020-02-20 02:20:00Z', '2020-02-20 03:20:00Z');
+VALUES (72, 11, '2010-03-23 00:00:00Z', null);
 INSERT INTO TIMESLOT (ID, SURVEY_ID, START, END)
-VALUES (73, 11, '2020-02-21 02:20:00Z', '2020-02-21 03:20:00Z');
+VALUES (73, 11, '2010-03-16 00:00:00Z', null);
 
 -- Survey 3
 INSERT INTO TIMESLOT (ID, SURVEY_ID, START, END)
-VALUES (74, 12, '2020-02-20 02:20:00Z', null);
+VALUES (74, 12, '2020-11-30 17:00:00Z', null);
 INSERT INTO TIMESLOT (ID, SURVEY_ID, START, END)
-VALUES (75, 12, '2020-02-21 02:20:00Z', null);
+VALUES (75, 12, '2020-12-06 17:00:00Z', null);
 
 -- Survey 4
 INSERT INTO TIMESLOT (ID, SURVEY_ID, START, END)
