@@ -8,6 +8,10 @@ import {
 } from '../types';
 import {RegistrationUserDTO} from "./request";
 
+/*
+ * @author Noah Peeters
+ */
+
 /** Registers a new user account */
 @endpoint({
     method: "POST",

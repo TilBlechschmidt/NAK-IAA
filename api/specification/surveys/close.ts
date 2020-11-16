@@ -9,6 +9,10 @@ import {
 } from "../types";
 import {SurveyMetadataDTO} from "./types";
 
+/*
+ * @author Til Blechschmidt
+ */
+
 /** Ends the survey and notifies all participants */
 @endpoint({
     method: "PATCH",

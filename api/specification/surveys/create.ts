@@ -7,6 +7,10 @@ import {
 } from "../types";
 import {SurveyCreationMetadataDTO, SurveyMetadataDTO} from "./types";
 
+/*
+ * @author Til Blechschmidt
+ */
+
 /** Creates a new survey for other users to participate */
 @endpoint({
     method: "POST",

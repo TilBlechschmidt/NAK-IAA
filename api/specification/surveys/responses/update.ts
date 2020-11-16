@@ -9,6 +9,10 @@ import {
 import {ResponseDTO} from "./types";
 import {CreateResponseRequest} from "./create";
 
+/*
+ * @author Til Blechschmidt
+ */
+
 /** Updates an existing response */
 @endpoint({
     method: "PATCH",

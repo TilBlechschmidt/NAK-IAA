@@ -2,6 +2,10 @@ import {endpoint, request, body, response} from "@airtasker/spot";
 import {JWT, MalformedRequestErrorResponse, UnauthorizedErrorResponseTemplate} from "../types";
 import {EMail, Password, UserDTO} from "./types";
 
+/*
+ * @author Til Blechschmidt & Noah Peeters
+ */
+
 /** Generates credentials to make authenticated requests with a limited lifetime */
 @endpoint({
     method: "POST",

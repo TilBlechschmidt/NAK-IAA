@@ -7,6 +7,10 @@ import {
 } from "../types";
 import {SurveyMetadataDTO} from "./types";
 
+/*
+ * @author Til Blechschmidt
+ */
+
 /** Irreversibly deletes a survey and all associated responses */
 @endpoint({
     method: "DELETE",

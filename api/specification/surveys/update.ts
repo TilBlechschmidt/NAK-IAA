@@ -8,6 +8,10 @@ import {
 } from "../types";
 import {SurveyCreationMetadataDTO, SurveyMetadataDTO} from "./types";
 
+/*
+ * @author Til Blechschmidt
+ */
+
 /** Updates metadata of survey <strong>and deletes all responses</strong> */
 @endpoint({
     method: "PUT",

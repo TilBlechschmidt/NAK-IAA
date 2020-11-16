@@ -1,6 +1,10 @@
 import { readFileSync, writeFileSync } from 'fs-extra';
 import { parse, stringify } from 'yaml'
 
+/**
+ * @author Til Blechschmidt
+ */
+
 const securityPath = 'security.json';
 const specificationPath = 'target/api.yml';
 
